@@ -1,0 +1,22 @@
+.row{
+    height:40px;
+    display: flex;
+    border-bottom: 1px solid #ccc
+}
+.row div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.time{
+ width:40%;
+}
+.id{
+ width:15%;
+}
+.change{
+width:15%
+}
+.message{
+  width:30%
+}

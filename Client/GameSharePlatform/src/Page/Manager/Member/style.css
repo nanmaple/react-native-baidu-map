@@ -1,0 +1,19 @@
+.rowItem{
+    height:40px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+}
+
+.nickName{
+    flex:1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.score{
+    flex:1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}

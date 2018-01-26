@@ -1,13 +1,12 @@
-*/.laya/chrome/
-*/.laya/astool/
-*/bin/js/
-*/bin/res/
-*/release/
+*/**/.laya/chrome/
+*/**/.laya/astool/
+*/**/release
 .svn
 .svn - 副本
 # OSX
 #
 .DS_Store
+
 # Xcode
 #
 build/
@@ -56,6 +55,3 @@ buck-out/
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
-LayaGame_Monkey/bin/js/Utils/Url.js
-LayaGame_Monkey/bin/js/Utils/Url.js.map
-LayaGame_Monkey/src/Utils/test.ts

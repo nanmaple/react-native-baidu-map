@@ -1,0 +1,45 @@
+.header {
+    composes: flexbox from '../../Style/Base/flex.css';
+    height: 44px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.header>div {
+    height: 100%;
+}
+
+.info {
+    composes: flexbox from '../../Style/Base/flex.css';
+    composes: flex1 from '../../Style/Base/flex.css';
+    composes: flexaligncenter from '../../Style/Base/flex.css';
+}
+
+.info label {
+    line-height: 32px;
+    vertical-align: middle;
+    color: rgb(231, 172, 94);
+    font-size: 14px;
+}
+
+.manager {
+    composes: flex1 from '../../Style/Base/flex.css';
+    text-align: right;
+}
+
+.manager .button {
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    width: 52px;
+    background: #6d6868;
+    color: #ffffff;
+    margin-right: 20px;
+    margin-top: 12px;
+    text-align: center;
+}
+
+.logo {
+    width: 32px;
+    height: 32px;
+    margin:0 12px;
+}

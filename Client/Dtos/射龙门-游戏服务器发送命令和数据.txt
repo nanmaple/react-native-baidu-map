@@ -1,0 +1,133 @@
+﻿1. socket连接成功
+	命令: GameCommand.MSG_GAME_INIT
+	数据: InitGameDto
+
+2. 游戏开始
+	命令: GameCommand.MSG_GAME_START
+	数据: StartGameDto
+
+3. 游戏结束
+	命令: GameCommand.MSG_GAME_GAMERESULT
+	数据: CardInfoDto
+
+4.结算完成
+	命令: GameCommand.MSG_GAME_SETTLERESULT
+	数据: GameResultDto
+
+4.投注返回
+	命令: GameCommand.MSG_GAME_BETRESULT
+	数据: BetResultDto
+
+    public class InitGameDto
+    {
+        /// <summary>
+        /// 限额
+        /// </summary>
+        public LimitDto Limit { get; set; }
+        /// <summary>
+        /// 历史
+        /// </summary>
+        public List<HistoryRoundDto> History { get; set; }
+        /// <summary>
+        /// 游戏状态
+        /// </summary>
+        public GameStatus Status { get; set; }
+        /// <summary>
+        /// 局号
+        /// </summary>
+        public string RoundID { get; set; }
+        /// <summary>
+        /// 投注时间
+        /// </summary>
+        public int BetTime { get; set; }
+        /// <summary>
+        /// 牌信息
+        /// </summary>
+        public CardInfoDto Cards { get; set; }
+        /// <summary>
+        /// 赔率
+        /// </summary>
+        public Dictionary<BetPosType, decimal> Odds { get; set; }
+        /// <summary>
+        /// 总投注
+        /// </summary>
+        public Dictionary<BetPosType, decimal> TotalBet { get; set; }
+    }
+    public class StartGameDto
+    {
+        /// <summary>
+        /// 局号
+        /// </summary>
+        public string RoundID { get; set; }
+        /// <summary>
+        /// 投注时间
+        /// </summary>
+        public int BetTime { get; set; }
+        /// <summary>
+        /// 第一张牌
+        /// </summary>
+        public short FirstCard { get; set; }
+        /// <summary>
+        /// 第二张牌
+        /// </summary>
+        public short SecondCard { get; set; }
+        /// <summary>
+        /// 赔率
+        /// </summary>
+        public Dictionary<BetPosType, decimal> Odds { get; set; }
+    }
+    public class CardInfoDto
+    {
+        /// <summary>
+        /// 第一张牌
+        /// </summary>
+        public short FirstCard { get; set; }
+        /// <summary>
+        /// 第二张牌
+        /// </summary>
+        public short SecondCard { get; set; }
+        /// <summary>
+        /// 第三张牌(游戏状态为投注状态时, 这张牌为空)
+        /// </summary>
+        public short ThirdCard { get; set; }
+    }
+    public class GameResultDto
+    {
+        /// <summary>
+        /// 结算结果 key: 投注位置, value: 输赢金额
+        /// </summary>
+        public Dictionary<int, decimal> SettleResult { get; set; }
+        /// <summary>
+        /// 游戏结果(CardInfoDto)
+        /// </summary>
+        public string GameResult { get; set; }
+    }
+    public class HistoryRoundDto
+    { /// <summary>
+        /// 局号
+        /// </summary>
+        public string RoundID { get; set; }
+        /// <summary>
+        /// 第一张牌
+        /// </summary>
+        public short FirstCard { get; set; }
+        /// <summary>
+        /// 第二张牌
+        /// </summary>
+        public short SecondCard { get; set; }
+        /// <summary>
+        /// 第三张牌
+        /// </summary>
+        public short ThirdCard { get; set; }
+    }
+    public class LimitDto
+    {
+        /// <summary>
+        /// 最小投注
+        /// </summary>
+        public decimal MinBet { get; set; }
+        /// <summary>
+        /// 最大投注
+        /// </summary>
+        public decimal MaxBet { get; set; }
+    }

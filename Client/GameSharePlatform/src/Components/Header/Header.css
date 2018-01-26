@@ -1,0 +1,21 @@
+.memberManage{
+    height:40px;
+    background: burlywood;
+    display: flex;
+}
+
+.memberManage div{
+    flex:1;
+    display: flex;
+    align-items: center;
+    
+}
+.back{
+    justify-content: flex-start;
+}
+.title{
+    justify-content: center;
+}
+.action{
+    justify-content: flex-end;
+}

@@ -1,0 +1,32 @@
+.rowItem{
+    height: 40px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+}
+.rowItem div{
+    display: flex;
+    align-items: center;
+}
+.memSoc{
+    flex:1;
+    justify-content: flex-start;
+}
+.mySoc{
+    flex:1;
+    justify-content: flex-end;
+
+}
+.inputScore{
+    flex:10;
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+}
+.addScore{
+    flex:1;
+    color:#f00;
+}
+.reduceScore{
+    flex:1;
+    color:#0f0;
+}
