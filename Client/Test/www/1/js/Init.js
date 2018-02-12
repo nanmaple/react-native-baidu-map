@@ -34,7 +34,9 @@ var InitState = /** @class */ (function () {
         //调用DebugTool调试面板
         // Laya.DebugTool.init();
         //显示FPS
-        Laya.Stat.show(0, 0);
+        // if (GameConfig.IsDebug) {
+        //     Laya.Stat.show(0, 0);
+        // }
         /***********调试相关**********/
         /***********舞台设置**********/
         Laya.stage.bgColor = "#ffffff";

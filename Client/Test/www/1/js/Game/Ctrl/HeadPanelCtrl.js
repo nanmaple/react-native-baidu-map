@@ -10,13 +10,13 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var HeadPanelCtrl = /** @class */ (function (_super) {
     __extends(HeadPanelCtrl, _super);
-    function HeadPanelCtrl(headPanel, noteRecordPanel, rulePanel, memberInfo, parentID) {
+    function HeadPanelCtrl(headPanel, noteRecordPanel, rulePanel, memberInfo, parentID, isTourists) {
         var _this = _super.call(this) || this;
         _this.headPanel = headPanel;
         //创建头部面板UI实例
         var grHandler = Laya.Handler.create(_this, _this.OnClickGR, null, false);
         var ruleHandler = Laya.Handler.create(_this, _this.OnClickRule, null, false);
-        _this.headPanel.SetInfo(memberInfo, parentID, grHandler, ruleHandler);
+        _this.headPanel.SetInfo(memberInfo, parentID, grHandler, ruleHandler, isTourists);
         _this.noteRecordPanelCtrl = new NoteRecordPanelCtrl(noteRecordPanel);
         _this.rulePanel = rulePanel;
         return _this;
@@ -38,7 +38,7 @@ var HeadPanelCtrl = /** @class */ (function (_super) {
      * @param money
      */
     HeadPanelCtrl.prototype.ChangeMoney = function (money) {
-        this.headPanel.ChangeMoney(Math.floor(money));
+        this.headPanel.ChangeMoney(money);
     };
     return HeadPanelCtrl;
 }(Laya.Sprite));

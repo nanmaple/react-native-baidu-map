@@ -84,7 +84,7 @@ var ScenePanel;
         BetPanel.prototype.BindClick = function () {
             var language = new LanguageUtils.Language();
             //绑定投注按钮
-            for (var i = 1; i <= 9; i++) {
+            for (var i = 1; i <= 13; i++) {
                 var betBoxChild = this.BetBox.getChildByName(Enum.BetPosType[i]);
                 //绑定点击事件 
                 betBoxChild.on(Laya.Event.CLICK, this, this.Bet, [i - 1]);
@@ -113,8 +113,17 @@ var ScenePanel;
          */
         BetPanel.prototype.GetChipsPoint = function () {
             for (var i = 0; i < this.chipsBtn.length; i++) {
-                var x = this.chipsBtn[i].getBounds().x, y = this.chipsBtn[i].getBounds().y, width = this.chipsBtn[i].getBounds().width, height = this.chipsBtn[i].getBounds().height;
-                this.chipsPoint.push(this.chipsBtn[i].parent.localToGlobal(new Laya.Point(x, y)));
+                var width = this.chipsBtn[i].getBounds().width;
+                var height = this.chipsBtn[i].getBounds().height;
+                var x = this.chipsBtn[i].getBounds().x + width / 2;
+                var y = this.chipsBtn[i].getBounds().y + height / 2;
+                if (GameConfig.RatioType) {
+                    x = x * GameConfig.HeightWidth;
+                }
+                else {
+                    y = y * GameConfig.WidthHeight;
+                }
+                this.chipsPoint.push(new Laya.Point(this.Chips.x + x, this.Chips.y + y));
             }
         };
         /**
@@ -123,16 +132,18 @@ var ScenePanel;
         */
         BetPanel.prototype.GetBetBtnPoint = function () {
             for (var i = 0; i < this.betMoneyLabelArr.length; i++) {
-                var x = this.betMoneyLabelArr[i].getBounds().x;
-                var y = this.betMoneyLabelArr[i].getBounds().y;
                 var width = this.betMoneyLabelArr[i].getBounds().width;
                 var height = this.betMoneyLabelArr[i].getBounds().height;
-                var point = this.betMoneyLabelArr[i].parent.localToGlobal(new Laya.Point(x, y));
+                var x = this.betMoneyLabelArr[i].getBounds().x + width / 2 + this.betMoneyLabelArr[i].parent.x;
+                var y = this.betMoneyLabelArr[i].getBounds().y + height / 2 + this.betMoneyLabelArr[i].parent.y;
                 if (GameConfig.RatioType) {
-                    point.y += 498;
+                    x = x * GameConfig.HeightWidth;
+                    y += 498;
                 }
                 else {
+                    y = y * GameConfig.WidthHeight;
                 }
+                var point = new Laya.Point(this.BetBox.x + x, this.BetBox.y + y);
                 this.betBtnPoint.push(point);
             }
         };
@@ -185,6 +196,7 @@ var ScenePanel;
                 Data: i + 1
             };
             this.handler.runWith(params);
+            Utils.BackgroundMusic.PlaySounds("sound/bet.wav");
         };
         /**
          * 设置不同位置的投注总金额
@@ -254,17 +266,19 @@ var ScenePanel;
             this.maxBet = limit.MaxBet;
             //设置最小限额
             this.minBet = limit.MinBet;
+            this.maxBetLabel.text = "\u6700\u5927:" + limit.MaxBet;
+            this.minBetLabel.text = "\u6700\u5C0F:" + limit.MinBet;
         };
         /**
          * 重置按钮皮肤
          */
         BetPanel.prototype.RestSkin = function () {
-            for (var index = 0; index < 9; index++) {
+            for (var index = 0; index < 12; index++) {
             }
         }; /**
          * 结算结果
          */
-        BetPanel.prototype.SettleResult = function (data) {
+        BetPanel.prototype.SettleResult = function (data, betData) {
             //总赢数目
             var win = 0;
             var gameResult = JSON.parse(data.GameResult);
@@ -275,36 +289,31 @@ var ScenePanel;
                     if (card == 7) {
                         var pos = Number(i);
                         if (Enum.BetPosType.BIG == pos) {
-                            msg.push("大");
+                            this.betBtnArr[Number(i) - 1].gray = false;
                             continue;
                         }
                         else if (Enum.BetPosType.SMALL == pos) {
-                            msg.push("小");
+                            this.betBtnArr[Number(i) - 1].gray = false;
                             continue;
                         }
                         else if (Enum.BetPosType.ODD == pos) {
-                            msg.push("单");
+                            this.betBtnArr[Number(i) - 1].gray = false;
                             continue;
                         }
                         else if (Enum.BetPosType.EVEN == pos) {
-                            msg.push("双");
+                            this.betBtnArr[Number(i) - 1].gray = false;
                             continue;
                         }
                     }
-                    win += data.SettleResult[i];
                     this.betBtnArr[Number(i) - 1].gray = false;
+                    if (data.SettleResult[i] > 100) {
+                        data.SettleResult[i] = Utils.Money.Format(data.SettleResult[i], 0);
+                    }
+                    this.betMoneyLabelArr[Number(i) - 1].label = data.SettleResult[i];
                     this.guessSuccess = true;
                 }
             }
-            if (this.guessSuccess) {
-                var backMsg = msg.length > 0 ? "," + msg.join(',') + "\u4E3A\u548C\u5C40\u9000\u8FD8\u672C\u91D1" : "";
-                this.ShowMsg("\u731C\u4E2D\u4E86\uFF1A" + Math.round(win) + backMsg);
-                this.guessSuccess = false;
-            }
-            else if (msg.length > 0) {
-                this.ShowMsg(msg.join(',') + "\u4E3A\u548C\u5C40\u9000\u8FD8\u672C\u91D1");
-            }
-            else {
+            if (!this.guessSuccess) {
                 this.ShowMsg("很遗憾，再接再厉");
             }
         };
@@ -396,18 +405,23 @@ var ScenePanel;
             //设置状态数
             flyChip.stateNum = 1;
             flyChip.label = this.chipPrice.toString();
+            flyChip.anchorX = 0.5;
+            flyChip.anchorY = 0.5;
             //设置初始位置为当前选择的筹码的位置
-            flyChip.pos((this.chipsPoint[this.selectedChipNum.toString()].x), (this.chipsPoint[this.selectedChipNum.toString()].y) - 40);
+            flyChip.pos((this.chipsPoint[this.selectedChipNum.toString()].x), (this.chipsPoint[this.selectedChipNum.toString()].y));
             flyChip.skin = this.chipsNormalSkin;
+            var obj = { x: endX, y: endY, scaleX: 1, scaleY: 1 };
             if (GameConfig.RatioType) {
-                flyChip.scale(GameConfig.HeightWidth, 1);
+                flyChip.scale(1.1 * GameConfig.HeightWidth, 1.1);
+                obj.scaleX = GameConfig.HeightWidth;
             }
             else {
-                flyChip.scale(1, GameConfig.WidthHeight);
+                flyChip.scale(1.1, 1.1 * GameConfig.WidthHeight);
+                obj.scaleY = GameConfig.WidthHeight;
             }
             this.addChild(flyChip);
             //开始缓动
-            Laya.Tween.to(flyChip, { x: endX, y: endY }, 700, Laya.Ease.cubicInOut, Laya.Handler.create(this, this.ChipsFlyCallBack, [flyChip, curBetPosChip, value], false));
+            Laya.Tween.to(flyChip, obj, 700, Laya.Ease.cubicInOut, Laya.Handler.create(this, this.ChipsFlyCallBack, [flyChip, curBetPosChip, value], false));
         };
         /**
          * 筹码动画回调

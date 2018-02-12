@@ -10,7 +10,7 @@ namespace CacheData {
          * 获取用户缓存的key
          */
         private GetMemberInfoKey(gameID: number): string {
-            return `MemberInfo-${gameID}-cache`;
+            return `UserInfo-${gameID}-CacheKey`;
         }
         /**
          * 获取会员授权信息
@@ -30,7 +30,7 @@ namespace CacheData {
          * 设置授权信息
          * @param dto 
          */
-        public SetMemberInfo(gameID: number, dto: BaseDto.MemberInfoDto): boolean {
+        public SetMemberInfo(gameID: number, dto: BaseDto.MemberInfoDto, day?: number): boolean {
             if (!this.memberInfo) {
                 this.memberInfo = new BaseDto.MemberInfoDto();
             }
@@ -41,9 +41,19 @@ namespace CacheData {
             this.memberInfo.MemberId = dto.MemberId !== undefined ? dto.MemberId : this.memberInfo.MemberId;
             let storage: Utils.Storage = new Utils.Storage();
             let key: string = this.GetMemberInfoKey(gameID);
-            storage.Set(key, this.memberInfo,this.cacheType);
+            storage.Set(key, this.memberInfo,this.cacheType, day);
             return true;
         }
 
-    }
+        /**
+         * 清空缓存数据
+         * @param gameID 游戏ID
+         */
+        public ClearMemberInfo(gameID: number): boolean {
+            this.memberInfo = null;
+            let storage: Utils.Storage = new Utils.Storage();
+            let key: string = this.GetMemberInfoKey(gameID);
+            storage.Set(key, null, this.cacheType);
+            return true;
+        }    }
 } 

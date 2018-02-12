@@ -34,6 +34,10 @@ namespace BaseDto {
      */
     export class LoginSuccessDto {
         /**
+         * 会员id
+         */
+        public MemberId:number;
+        /**
          * 用户Token
          */
         public SessionToken: string;
@@ -45,6 +49,10 @@ namespace BaseDto {
          * 账号是否关闭
          */
         public Closed: boolean;
+        /**
+         * 分数
+         */
+        public Score: string = null;
     }
 
     /**

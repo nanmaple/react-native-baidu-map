@@ -30,24 +30,29 @@ var ScenePanel;
          * @param grHandler
          * @param ruleHandler
          */
-        HeadPanel.prototype.SetInfo = function (memberInfo, parentID, grHandler, ruleHandler) {
+        HeadPanel.prototype.SetInfo = function (memberInfo, parentID, grHandler, ruleHandler, isTourists) {
             this.grHandler = grHandler;
             this.ruleHandler = ruleHandler;
             this.parentID = parentID;
-            if (memberInfo) {
+            if (memberInfo && !isTourists) {
                 //显示头像
                 this.info.visible = true; //显示头像
                 //隐藏关注按钮
                 this.headPic.skin = memberInfo.HeadImageUrl;
                 this.nickname.text = memberInfo.Nickname ? memberInfo.Nickname : memberInfo.Account;
-                this.score.text = Utils.Money.Format(memberInfo.Score, 0);
+                this.score.text = Utils.Money.Format(memberInfo.Score);
             }
             else {
                 //隐藏头像
                 //显示关注按钮
                 this.info.visible = false;
                 this.attention.visible = true;
-                this.score.text = Utils.Money.Format(0, 0);
+                if (memberInfo && memberInfo.Score) {
+                    this.score.text = Utils.Money.Format(memberInfo.Score);
+                }
+                else {
+                    this.score.text = Utils.Money.Format(0);
+                }
             }
             this.moneyEffect = new NumberGradualChangeEffect(this.score);
             this.btnRule.on(Laya.Event.CLICK, this, this.onRuleHandler);
@@ -70,7 +75,7 @@ var ScenePanel;
          * 点击关注
          */
         HeadPanel.prototype.ClickAttention = function () {
-            Laya.Browser.window.location.href = GameConfig.GetWeChatUrl(GameConfig.GameID, this.parentID);
+            Laya.Browser.window.location.href = GameConfig.GetWeChatUrl(this.parentID, true);
         };
         /**
          * 改变金额

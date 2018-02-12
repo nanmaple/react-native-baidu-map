@@ -29,9 +29,12 @@ var HistoryPanelCtrl = (function (_super) {
     HistoryPanelCtrl.prototype.SetHistoryData = function (history) {
         //添加list数据
         this.listArr = [];
+        this.roundIDArr = [];
         if (!history) {
+            this.historyPanel.listPanel.visible = false;
             return;
         }
+        this.historyPanel.listPanel.visible = true;
         this.index = history.length;
         for (var i = 0; i < this.index; i++) {
             var dto = {
@@ -40,9 +43,10 @@ var HistoryPanelCtrl = (function (_super) {
                 poker2: { skin: this.GetPokerUrl(history[i].ThirdCard) }
             };
             this.listArr.unshift(dto);
+            this.roundIDArr.push({ RoundID: history[i].RoundID });
         }
         //实现list滚动
-        // this.ListPanelScenes._list.vScrollBarSkin = "";
+        // this.historyPanel._list.vScrollBarSkin = "";
         //将this.arr数据赋值到列表数据源。
         this.historyPanel._list.array = this.listArr;
         //renderHandler:单元格渲染处理器(默认返回参数cell:Box,index:int)。
@@ -72,21 +76,29 @@ var HistoryPanelCtrl = (function (_super) {
      * 增加历史记录
      */
     HistoryPanelCtrl.prototype.AddHistoryList = function (data) {
-        //增加单元格数据源
-        var dto = {
-            poker0: { skin: this.GetPokerUrl(data.FirstCard) },
-            poker1: { skin: this.GetPokerUrl(data.SecondCard) },
-            poker2: { skin: this.GetPokerUrl(data.ThirdCard) }
-        };
-        this.listArr.unshift(dto);
-        this.historyPanel._list.array = this.listArr;
-    };
-    /**
-     * 设置投注限额
-     * @param limit
-     */
-    HistoryPanelCtrl.prototype.SetLimit = function (limit) {
-        this.historyPanel.SetLimit(limit);
+        var _this = this;
+        //滚动历史列表
+        this.historyPanel.ScrollHistoryList(Laya.Handler.create(this, function () {
+            //增加单元格数据源
+            var dto = {
+                poker0: { skin: _this.GetPokerUrl(data.Cards.FirstCard) },
+                poker1: { skin: _this.GetPokerUrl(data.Cards.SecondCard) },
+                poker2: { skin: _this.GetPokerUrl(data.Cards.ThirdCard) }
+            };
+            _this.listArr.unshift(dto);
+            var pokerReData = false; //重复的牌数据
+            for (var i = 0; i < _this.index; i++) {
+                if (_this.roundIDArr[i].RoundID == data.RoundID) {
+                    pokerReData = true;
+                }
+            }
+            if (pokerReData) {
+                return;
+            }
+            else {
+                _this.historyPanel._list.array = _this.listArr;
+            }
+        }));
     };
     return HistoryPanelCtrl;
 }(Laya.Sprite));

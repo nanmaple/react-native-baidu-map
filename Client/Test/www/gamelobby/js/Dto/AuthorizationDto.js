@@ -31,6 +31,10 @@ var BaseDto;
              * 是否多账号
              */
             this.IsMulti = false;
+            /**
+             * 是否是游客
+             */
+            this.IsTourists = true;
         }
         return AuthorizationDto;
     }());

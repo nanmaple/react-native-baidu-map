@@ -34,11 +34,8 @@ class BetPanelCtrl {
         if (memberInfo && memberInfo.Score) {
             this.balance = Number(memberInfo.Score);
         }
-        //添加个人信息到舞台
-        //账号关闭，禁用投注
-        if (this.isClose) {
-            this.betPanel.DisabledAllBtn();
-        }
+        //禁用投注
+        this.betPanel.DisabledAllBtn();
     }
 
     /**
@@ -65,6 +62,8 @@ class BetPanelCtrl {
             //初始化界面
             this.betPanel.GameInit(this.lastBetPosMsg, data.Limit);
             this.betPanel.SetBetting(true);
+            //重置确认投注按钮
+            this.betPanel.SetBetBtn(false);
         }
         else {
             //结果初始化
@@ -119,7 +118,9 @@ class BetPanelCtrl {
             this.betPanel.ShowMsg("投注成功");
         } else {
             //根据错误码转换对应错误信息
-            let errorMsg: string = dto.ErrorCode.toString();
+
+            let language: LanguageUtils.Language = new LanguageUtils.Language();
+            let errorMsg: string = language.GetLanguage(BaseEnum.BetErrorCode[dto.ErrorCode], GameConfig.GameID);
             //提示错误信息
             this.betPanel.ShowMsg(errorMsg);
             //还原上次成功的投注状态
@@ -156,7 +157,7 @@ class BetPanelCtrl {
         }
         this.balance = data.Balance;
         //输赢动画效果
-        this.betPanel.SettleResult(data);
+        this.betPanel.SettleResult(data, this.lastBetPosMsg);
         //清除上一个注单投注成功的投注信息
         this.lastBetPosMsg = new Object();
     }
@@ -199,6 +200,7 @@ class BetPanelCtrl {
     private BetPosType(posType: Enum.BetPosType): void {
         let length: number = this.currentBetPosMsg.length;
         let hasPos: boolean = false;
+        if(this.currentOdds[posType] == 0 ) return;
         //当前位置已投注金额
         let allBetSocre: number = 0;
         if (this.lastBetPosMsg && this.lastBetPosMsg.hasOwnProperty(posType)) {
@@ -218,6 +220,9 @@ class BetPanelCtrl {
                     if (willAllBetMoney > this.balance) {
                         //todo 多语言处理
                         this.betPanel.ShowMsg("余额不足");
+                        if (!this.currentBetPosMsg || this.currentBetPosMsg.length == 0) {
+                            this.betPanel.DisabledBetBtn();
+                        }
                         return;
                     }
                     this.currentBetSocre = willAllBetMoney;
@@ -238,6 +243,9 @@ class BetPanelCtrl {
                     if (willAllBetMoney > this.balance) {
                         //todo 多语言处理
                         this.betPanel.ShowMsg("余额不足");
+                        if (!this.currentBetPosMsg || this.currentBetPosMsg.length == 0) {
+                            this.betPanel.DisabledBetBtn();
+                        }
                         return;
                     }
                     this.currentBetSocre = willAllBetMoney;
@@ -261,6 +269,9 @@ class BetPanelCtrl {
                 if (willAllBetMoney > this.balance) {
                     //todo 多语言处理
                     this.betPanel.ShowMsg("余额不足");
+                    if (!this.currentBetPosMsg || this.currentBetPosMsg.length == 0) {
+                        this.betPanel.DisabledBetBtn();
+                    }
                     return;
                 }
                 this.currentBetSocre = willAllBetMoney;
@@ -285,6 +296,9 @@ class BetPanelCtrl {
                 if (willAllBetMoney > this.balance) {
                     //todo 多语言处理
                     this.betPanel.ShowMsg("余额不足");
+                    if (!this.currentBetPosMsg || this.currentBetPosMsg.length == 0) {
+                        this.betPanel.DisabledBetBtn();
+                    }
                     return;
                 }
                 //累加当前投注额度
@@ -322,7 +336,10 @@ class BetPanelCtrl {
      */
     public SetMsgID(id: string): void {
         //将当前局投注注单赋值到已发送的队列中;
-        this.sendBetPosMsg[id] = this.currentBetPosMsg;
+        let dto:Dto.SendBetDto = new Dto.SendBetDto();
+        dto.Time = new Date().getTime();
+        dto.Data = this.currentBetPosMsg;
+        this.sendBetPosMsg[id] = dto;
         this.currentBetPosMsg = new Array<Dto.BetDto>();
         this.currentBetSocre = 0;
     }
@@ -358,11 +375,13 @@ class BetPanelCtrl {
     private ReSend(): void {
         for (var key in this.sendBetPosMsg) {
             //需要重发的消息存在，则重发
-            if (this.sendBetPosMsg[key]) {
-                let dto: Dto.HandlerDto = new Dto.HandlerDto();
-                dto.MsgID = key;
-                dto.Data = this.sendBetPosMsg[key];
-                this.handler.runWith(dto);
+            if (this.sendBetPosMsg[key]){
+                if(this.sendBetPosMsg[key].Time){
+                    let dto: Dto.HandlerDto = new Dto.HandlerDto();
+                    dto.MsgID = key;
+                    dto.Data = this.sendBetPosMsg[key].Data;
+                    this.handler.runWith(dto);
+                }
             }
         }
     }

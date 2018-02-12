@@ -2,7 +2,7 @@
 class GameMain {
     private gameLoadCtrl: ScenePanel.GameLoadCtrl;
     private Storage: Utils.Storage;
-    public GameCtrl:GameCtrl;
+    public GameCtrl: GameCtrl;
     constructor() {
         // 初始化舞台,配置信息
         let init: InitState = new InitState();

@@ -1,12 +1,9 @@
-import { GetScoreLogsApi } from './Config';
+import { GetBetRecordApi } from './Config';
 
-import { ListParamsDto, ListParamsCtrlDto, ScoreRecordDto } from '../Dto/ScoreRecordDto';
+import { ListParamsDto, ListParamsCtrlDto, ScoreRecordDto } from '../Dto/GameRecordDto';
 
-import BaseCtrl from '../Base/BaseCtrl';
+import BaseCtrl from './BaseCtrl';
 export default class ScoreRecordCtrl extends BaseCtrl {
-
-
-
     /**
      * 获取所有子级会员分数参数
      */
@@ -16,42 +13,42 @@ export default class ScoreRecordCtrl extends BaseCtrl {
     }
 
     /**
-    * 获取所有子级会员分数
+    * 获取游戏记录
     * @param isRefresh 是否刷新
     * @param handler 回调
     */
-    public GetScoreRecord(isRefresh: boolean, handler: Function): void {
+    public GetScoreRecord(isRefresh: boolean, handler: Function, gameId?: number): void {
         if (this.ChildScoreListParams.IsLoading) {
             return;
         }
         this.ChildScoreListParams.IsLoading = true;
         if (isRefresh) {
-            this.ChildScoreListParams.LogId = null;
+            this.ChildScoreListParams.LastId = null;
             this.ChildScoreListParams.IsNoMore = false;
         }
 
         let dto: ListParamsDto = new ListParamsDto();
-        dto.LogId = this.ChildScoreListParams.LogId;
+        if (gameId) {
+            dto.GameId = gameId;
+        }
+        dto.LastId = this.ChildScoreListParams.LastId;
         dto.PageSize = this.ChildScoreListParams.PageSize;
-        dto.TransactionType = 1;
-        dto.Desc = true;
 
-        this.webApi.Post(GetScoreLogsApi, dto).then((data: Array<ScoreRecordDto>) => {
-            console.log("GetChildScoreList Success", data);
+        this.webApi.Post(GetBetRecordApi, dto).then((data: Array<ScoreRecordDto>) => {
             if (data) {
                 let length = data.length;
                 if (data.length < this.ChildScoreListParams.PageSize) {
                     this.ChildScoreListParams.IsNoMore = true;
                 } else {
-                    //this.ChildScoreListParams.LogId = data[length - 1].MemberId;
+                    this.ChildScoreListParams.LastId = data[length - 1].Id;
                 }
                 this.ChildScoreListParams.IsLoading = false;
-                handler(data, [isRefresh]);
+                handler(data, [isRefresh,this.ChildScoreListParams.IsNoMore]);
             }
         }, (error: string) => {
             this.ChildScoreListParams.IsLoading = false;
             console.log("GetChildScoreList error", error);
-            handler(null, [isRefresh], error);
+            handler(null, [isRefresh,this.ChildScoreListParams.IsNoMore], error);
         })
     }
 

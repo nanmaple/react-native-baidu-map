@@ -22,6 +22,10 @@ var BaseDto;
      */
     var LoginSuccessDto = /** @class */ (function () {
         function LoginSuccessDto() {
+            /**
+             * 分数
+             */
+            this.Score = null;
         }
         return LoginSuccessDto;
     }());

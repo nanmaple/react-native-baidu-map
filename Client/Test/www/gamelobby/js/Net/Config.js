@@ -8,6 +8,10 @@ var Net;
          */
         ApiConfig.Login = GameConfig.WebApiBaseUrl + "/Member/Login";
         /**
+         * 游客登录
+         */
+        ApiConfig.LoginByTourists = GameConfig.WebApiBaseUrl + "/Member/DemoAccountLogin";
+        /**
          * 登录检测
          */
         ApiConfig.LoginCheck = GameConfig.WebApiBaseUrl + "/Member/LoginByToken";

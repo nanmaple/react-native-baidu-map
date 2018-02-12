@@ -15,7 +15,7 @@ class InitState {
         //设置横竖屏
         Laya.stage.screenMode = Laya.Stage.SCREEN_HORIZONTAL;
         //开启锯齿
-        Config.isAntialias = true;
+        Config.isAntialias = false;
 
         /***********调试相关**********/
         //调用DebugPanel调试面板
@@ -23,7 +23,9 @@ class InitState {
         //调用DebugTool调试面板
         // Laya.DebugTool.init();
         //显示FPS
-        // Laya.Stat.show(0, 0);
+        if (GameConfig.IsDebug) {
+            Laya.Stat.show(0, 0);
+        }
         /***********调试相关**********/
 
         /***********舞台设置**********/

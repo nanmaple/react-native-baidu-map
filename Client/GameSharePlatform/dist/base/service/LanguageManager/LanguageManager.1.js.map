@@ -1,1 +1,0 @@
-{"version":3,"file":"LanguageManager.1.js","sourceRoot":"","sources":["../../../../src/Base/Service/LanguageManager/LanguageManager.1.tsx"],"names":[],"mappings":";;AAAA,4DAAqD;AAErD;IAEI;;OAEG;IACI,WAAW;QACd,MAAM,CAAC,kBAAQ,CAAC,QAAQ,CAAC,WAAW,EAAE,CAAC;IAC3C,CAAC;IAEM,WAAW,CAAC,QAAsB;QACrC,MAAM,CAAC,kBAAQ,CAAC,QAAQ,CAAC,WAAW,CAAC,QAAQ,CAAC,CAAC;IACnD,CAAC;CACJ;AAZD,kCAYC"}

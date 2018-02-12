@@ -1,5 +1,5 @@
 // 程序入口
-var GameMain = (function () {
+var GameMain = /** @class */ (function () {
     function GameMain() {
         this.memberServer = new MemberManager.Member();
         this.dto = new BaseDto.LoginDto();
@@ -9,14 +9,14 @@ var GameMain = (function () {
         //获取地址栏中code
         this.dto.Code = Utils.Url.GetQuery("code");
         //获取地址栏中state参数，即父级（推荐人）ID
-        this.dto.ParentID = Utils.Url.GetQuery("parentID");
+        this.dto.ParentID = Utils.Url.GetQuery("parentid");
         //获取地址栏中的游戏id
-        this.dto.GameID = Utils.Url.GetQuery("gameID");
-        var isTest = Utils.Url.GetQuery("testID");
-        if (!isTest) {
-            //登录
-            this.memberServer.Login(this.dto, Laya.Handler.create(this, this.LoginCallback));
+        this.dto.GameID = Utils.Url.GetQuery("gameid");
+        if (!this.dto.GameID) {
+            this.dto.GameID = 1;
         }
+        //登录
+        this.memberServer.Login(this.dto, Laya.Handler.create(this, this.LoginCallback));
     }
     /**
      * 登录回调

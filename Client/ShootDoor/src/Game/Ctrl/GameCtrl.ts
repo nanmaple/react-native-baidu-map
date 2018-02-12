@@ -8,6 +8,10 @@ class GameCtrl extends BaseCtrl {
     private HistoryPanelCtrl: HistoryPanelCtrl;   //历史记录面板控制类
     private TimePanelCtrl: TimePanelCtrl;   //时间面板控制类
     private RoundPanelCtrl: RoundPanelCtrl;
+
+    private LoadingPanel: ScenePanel.LoadingPanel;
+    private isAnimateEnd: boolean = false;
+    private settleData: Dto.GameResultDto = null;
     /**
      * 页面关闭回调
      * @param onClose 回调Handler
@@ -16,28 +20,47 @@ class GameCtrl extends BaseCtrl {
         super(GameConfig.GameID);
         //绑定关闭页面事件回调
         this.onClose = onClose;
+        
         //添加UI到舞台
         this.gameScenes = new ScenePanel.GameScenes();
-
-        Net.WebApi.instance.SetToken();
-
+        //loading界面
+        this.LoadingPanel = this.gameScenes.loadingPanel;
+        this.LoadingPanel.ShowConnect();
         //创建游戏状态控制类实例
-        this.RoundPanelCtrl = new RoundPanelCtrl(this.gameScenes.roundPanel); 
+        this.RoundPanelCtrl = new RoundPanelCtrl(this.gameScenes.roundPanel);
         //创建扑克牌面板控制类实例
         this.CardPanelCtrl = new CardPanelCtrl(this.gameScenes.cardPanel, this.gameScenes.footballPanel);
+        //第三张牌翻转结束回调
+        this.CardPanelCtrl.EndGameHander(Laya.Handler.create(this, this.FlipEnd, null, false));
         //创建投注控制实例
-        this.BetCtrl = new BetPanelCtrl(this.gameScenes.betPanel, Laya.Handler.create(this, this.SendHandelr, null, false), this.authorizationInfo.IsClose,this.memberInfo);
+        this.BetCtrl = new BetPanelCtrl(this.gameScenes.betPanel, Laya.Handler.create(this, this.SendHandelr, null, false), this.authorizationInfo.IsClose, this.memberInfo);
         //创建历史记录面板控制类实例
         this.HistoryPanelCtrl = new HistoryPanelCtrl(this.gameScenes.historyPanel);
+
         //创建时间面板控制类实例
         this.TimePanelCtrl = new TimePanelCtrl(this.gameScenes.timePanel);
         //创建游戏头部面板控制类实例
-        this.HeadPanelCtrl = new HeadPanelCtrl(this.gameScenes.headPanel, this.gameScenes.noteReocrdPanel, this.gameScenes.rulePanel, this.memberInfo, this.parentID);
+        this.HeadPanelCtrl = new HeadPanelCtrl(this.gameScenes.headPanel, this.gameScenes.noteReocrdPanel, this.gameScenes.rulePanel, this.memberInfo, this.parentID, this.authorizationInfo.IsTourists);
         //创建tipCtrl
-        if (!this.memberInfo) {
+        if (this.authorizationInfo.IsTourists) {
             let tipsCtrl: TipsPanelCtrl = new TipsPanelCtrl(this.gameScenes.tipsPanel);
             tipsCtrl.Show();
         }
+    }
+
+    /**
+     * 分享回调
+     * @param status 分享结果类型 1.分享成功 0.取消分享 -1.分享失败
+     */
+    public WeChatShareHandler(status: number): void {
+    }
+
+    /**
+     * 网络状态
+     * @param networkType 网络状态
+     */
+    public OnNoNetwork(): void {
+
     }
 
     /**
@@ -45,7 +68,6 @@ class GameCtrl extends BaseCtrl {
      * @param data 
      */
     public OnConnectHandler(): void {
-        console.log("侦听:Socket连接");
     }
 
     /**
@@ -53,7 +75,7 @@ class GameCtrl extends BaseCtrl {
      * @param data 
      */
     public OnCloseHandler(): void {
-        console.log("侦听:Socket关闭");
+        this.LoadingPanel.ShowConnect();
     }
 
     /**
@@ -61,7 +83,6 @@ class GameCtrl extends BaseCtrl {
      * @param data 
      */
     public OnErrorHandler(message: string): void {
-        console.log("侦听:Socket错误");
     }
 
     /**
@@ -69,7 +90,7 @@ class GameCtrl extends BaseCtrl {
      * @param data 
      */
     public OnWillReconnectHandler(): void {
-        console.log("侦听:Socket重连");
+        this.LoadingPanel.ShowConnect();
     }
 
     /**
@@ -77,7 +98,8 @@ class GameCtrl extends BaseCtrl {
      * @param data 
      */
     public OnLogoutHandler(): void {
-        console.log("侦听:登出");
+        this.LoadingPanel.HideConnect();
+
     }
 
     /**
@@ -85,7 +107,6 @@ class GameCtrl extends BaseCtrl {
      * @param data 
      */
     public OnAckHandler(data: any): void {
-        console.log("侦听:Ack");
         this.BetCtrl.BetAck(data);
     }
 
@@ -110,13 +131,14 @@ class GameCtrl extends BaseCtrl {
      * @param data 游戏初始化信息
      */
     public OnGameInit(data: Dto.InitGameDto): void {
+        this.LoadingPanel.HideConnect();
         if (data && data.RoundID) {
             this.RoundPanelCtrl.SetGameRound(data.RoundID);
         }
 
         if (data.Status == 0) {
             this.RoundPanelCtrl.SetGameState(0);
-        }        
+        }
         //投注状态
         //1.显示当前剩余投注时间data.BetTime
         if (data.Status == 1 && data.BetTime >= 0) {
@@ -129,7 +151,7 @@ class GameCtrl extends BaseCtrl {
         }
         //3.显示当前牌面data.Cards
         if (data && data.Cards) {
-            this.CardPanelCtrl.InitGame(data.Cards);
+            this.CardPanelCtrl.InitGame({RoundID:data.RoundID,Cards:data.Cards});
         }
 
         //4.显示历史记录data.History
@@ -137,10 +159,11 @@ class GameCtrl extends BaseCtrl {
             this.HistoryPanelCtrl.SetHistoryData(data.History);
         }
 
-        if(data&&data.Limit){
-            this.HistoryPanelCtrl.SetLimit(data.Limit);
+        if (data && data.Balance) {
+            //改变总金额
+            this.HeadPanelCtrl.ChangeMoney(data.Balance);
         }
-        console.log("MSG:游戏初始化", data);
+
     }
 
     /**
@@ -152,7 +175,6 @@ class GameCtrl extends BaseCtrl {
             this.RoundPanelCtrl.SetGameRound(data.RoundID);
         }
         this.RoundPanelCtrl.SetGameState(1);        //计时开始
-        console.log("MSG:游戏开始", data);
         //1.显示赔率
         if (data && data.Odds) {
             //开始游戏
@@ -165,6 +187,8 @@ class GameCtrl extends BaseCtrl {
         }
         //3.重置牌面，显示第一和第二张牌
         this.CardPanelCtrl.StartGame(data);
+        this.isAnimateEnd = false;
+        this.settleData = null;
 
     }
     /**
@@ -172,7 +196,6 @@ class GameCtrl extends BaseCtrl {
      * @param data 游戏投注结果信息
      */
     public OnBetResult(data: Dto.BetResultDto): void {
-        console.log("MSG:游戏投注结果", data);
         //投注结果返回
         this.BetCtrl.BetResult(data);
         if (!this.authorizationInfo.IsClose && data.Success) {
@@ -185,7 +208,7 @@ class GameCtrl extends BaseCtrl {
      * 游戏停止投注回调
      */
     public OnStopBet(): void {
-        console.log("MSG:游戏停止投注");
+        Utils.BackgroundMusic.PlaySounds("sound/csz1.wav");
     }
 
     /**
@@ -194,28 +217,44 @@ class GameCtrl extends BaseCtrl {
      */
     public OnGameResult(data: Dto.CardInfoDto): void {
         this.RoundPanelCtrl.SetGameState(2);
-        console.log("MSG:游戏结束", data);
+        Laya.timer.once(5000, this, () => {
+            this.RoundPanelCtrl.SetGameState(3);
+            this.isAnimateEnd = true;
+            if (this.settleData) {
+                //显示输赢效果
+                this.BetCtrl.SettleResult(this.settleData);
+            }
+        })
         //禁用面板按钮
         this.BetCtrl.GameResult();
         //翻转第三张牌及足球效果
         this.CardPanelCtrl.EndGame(data);
         //停止时间
         this.TimePanelCtrl.EndGameTime();
-        //第三张牌翻转结束回调
-        this.CardPanelCtrl.EndGameHander(Laya.Handler.create(this,()=>{
-            //添加历史记录
-            this.HistoryPanelCtrl.AddHistoryList(data);
-        }))
     }
+
+    /**
+     * 游戏结束牌翻转
+     */
+    public FlipEnd(data: any): void {
+        //牌飞入
+        this.gameScenes.FlyPoker(data.Cards);
+        //添加历史记录
+        this.HistoryPanelCtrl.AddHistoryList(data);
+    }
+
     /**
      * 游戏结算回调
      * @param data 游戏结算结果信息
      */
     public OnSettleResult(data: Dto.GameResultDto): void {
-        this.RoundPanelCtrl.SetGameState(3);
-        console.log("MSG:游戏结算", data);
-        //显示输赢效果
-        this.BetCtrl.SettleResult(data);
+        this.RoundPanelCtrl.SetGameState(4);
+        if (this.isAnimateEnd) {
+            //显示输赢效果
+            this.BetCtrl.SettleResult(data);
+        } else {
+            this.settleData = data;
+        }
         if (!this.authorizationInfo.IsClose) {
             //改变总金额
             this.HeadPanelCtrl.ChangeMoney(data.Balance);
@@ -227,6 +266,5 @@ class GameCtrl extends BaseCtrl {
      * @param data 游戏其他信息
      */
     public OnGameOther(data: any): void {
-        console.log("MSG:游戏其他信息", data);
     }
 }

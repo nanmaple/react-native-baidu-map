@@ -25,7 +25,7 @@ var ScenePanel;
             }
             _this.visible = false;
             _this._recordList.visible = false;
-            _this.isLoading.visible = false;
+            _this.noBetData.visible = false;
             _this.close.on(Laya.Event.CLICK, _this, _this.CloseNoteRecord);
             _this.back.on(Laya.Event.CLICK, _this, _this.BackNoteRecordList);
             _this.recordHome.on(Laya.Event.MOUSE_DOWN, _this, _this.OnMouseDown);
@@ -45,7 +45,14 @@ var ScenePanel;
             this.event("OnMouseUp");
         };
         /**
-         * 显示投注记录
+         * 显示是否有投注记录提示
+         * @param show
+         */
+        NoteRecordPanel.prototype.ShowNoBetRecord = function (show) {
+            this.noBetData.visible = show;
+        };
+        /**
+         * 显示投注记录面板
          * @param show 投注记录列表是否显示
          */
         NoteRecordPanel.prototype.ShowNoteRecord = function (show) {
@@ -55,11 +62,9 @@ var ScenePanel;
             this.visible = true;
             if (show) {
                 this._recordList.visible = true;
-                this.isLoading.visible = false;
             }
             else {
                 this._recordList.visible = false;
-                this.isLoading.visible = true;
             }
         };
         /**
@@ -74,6 +79,8 @@ var ScenePanel;
          */
         NoteRecordPanel.prototype.CloseNoteRecord = function () {
             this.visible = false;
+            this.dataArr = [];
+            this.betDetailList.dataSource = this.dataArr;
             this.closeRecordHander.run();
         };
         /**
@@ -81,9 +88,10 @@ var ScenePanel;
          * @param data 投注详情数据
          */
         NoteRecordPanel.prototype.GoNoteRecordDetail = function (data) {
-            Laya.Tween.to(this.recordBox, { x: -930 }, 500, Laya.Ease.quadOut);
+            Laya.Tween.to(this.recordBox, { x: -1000 }, 500, Laya.Ease.quadOut);
             //投注结果显示
-            this.betResult.text = this.BetResult(data.total);
+            this.betResult.text = this.BetResult(data.total.text);
+            this.roundId.text = data.roundId.text;
             //投注结果数据
             this.betResultData = data.gameData[data.gameData.length - 1];
             this.GetBetResultPokerData(this.betResultData);

@@ -1,22 +1,32 @@
 .row{
     height:40px;
     display: flex;
-    border-bottom: 1px solid #ccc
+    border-bottom: 1px solid #ccc;
+    background:#fff;
+    padding:0 20px 0 20px;
 }
 .row div{
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 .time{
- width:40%;
+ flex: 4;
+ justify-content: flex-start
 }
-.id{
- width:15%;
+.childAccount,.parentAccount,.acount{
+    flex:2;
+    justify-content: center;
 }
-.change{
-width:15%
+.accountJia{
+    flex:2;
+    justify-content: center;
+    color:#30bf27;
 }
-.message{
-  width:30%
+.accountJian{
+    flex:2;
+    justify-content: center;
+}
+.remark{
+    flex:2;
+    justify-content: flex-end
 }

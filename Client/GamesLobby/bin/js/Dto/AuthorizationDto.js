@@ -1,6 +1,6 @@
 var BaseDto;
 (function (BaseDto) {
-    var MultiAccountDto = (function () {
+    var MultiAccountDto = /** @class */ (function () {
         function MultiAccountDto() {
         }
         return MultiAccountDto;
@@ -9,7 +9,7 @@ var BaseDto;
     /**
      * 授权登录信息Dto
      */
-    var AuthorizationDto = (function () {
+    var AuthorizationDto = /** @class */ (function () {
         function AuthorizationDto() {
             /**
              * Token
@@ -31,6 +31,10 @@ var BaseDto;
              * 是否多账号
              */
             this.IsMulti = false;
+            /**
+             * 是否是游客
+             */
+            this.IsTourists = true;
         }
         return AuthorizationDto;
     }());

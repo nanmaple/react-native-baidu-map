@@ -2,11 +2,8 @@ import { GetScoreLogsApi } from './Config';
 
 import { ListParamsDto, ListParamsCtrlDto, ScoreRecordDto } from '../Dto/ScoreRecordDto';
 
-import BaseCtrl from '../Base/BaseCtrl';
+import BaseCtrl from './BaseCtrl';
 export default class ScoreRecordCtrl extends BaseCtrl {
-
-
-
     /**
      * 获取所有子级会员分数参数
      */
@@ -33,25 +30,22 @@ export default class ScoreRecordCtrl extends BaseCtrl {
         let dto: ListParamsDto = new ListParamsDto();
         dto.LogId = this.ChildScoreListParams.LogId;
         dto.PageSize = this.ChildScoreListParams.PageSize;
-        dto.TransactionType = 1;
         dto.Desc = true;
 
         this.webApi.Post(GetScoreLogsApi, dto).then((data: Array<ScoreRecordDto>) => {
-            console.log("GetChildScoreList Success", data);
             if (data) {
                 let length = data.length;
                 if (data.length < this.ChildScoreListParams.PageSize) {
                     this.ChildScoreListParams.IsNoMore = true;
                 } else {
-                    //this.ChildScoreListParams.LogId = data[length - 1].MemberId;
+                    this.ChildScoreListParams.LogId = data[length - 1].ID;
                 }
                 this.ChildScoreListParams.IsLoading = false;
-                handler(data, [isRefresh]);
+                handler(data, [isRefresh, this.ChildScoreListParams.IsNoMore]);
             }
         }, (error: string) => {
             this.ChildScoreListParams.IsLoading = false;
-            console.log("GetChildScoreList error", error);
-            handler(null, [isRefresh], error);
+            handler(null, [isRefresh, this.ChildScoreListParams.IsNoMore], error);
         })
     }
 

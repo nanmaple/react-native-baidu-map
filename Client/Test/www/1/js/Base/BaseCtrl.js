@@ -8,6 +8,7 @@ var BaseCtrl = /** @class */ (function () {
      * @param gameID
      */
     function BaseCtrl(gameID) {
+        var _this = this;
         this.gameID = gameID;
         this.parentID = Utils.Url.GetQuery("parentID");
         //从会员服务中获取用户信息
@@ -18,10 +19,8 @@ var BaseCtrl = /** @class */ (function () {
         this.memberInfo = memberServer.GetMemberInfo();
         //获取会员ID
         var memberId = this.memberInfo != null ? this.memberInfo.MemberId : 0;
-        //设备ID
-        var deviceId = "123456";
         //生成socket 地址
-        var socketUrl = GameConfig.GetSocketUrl(memberId, deviceId, this.authorizationInfo.SocketToken);
+        var socketUrl = GameConfig.GetSocketUrl(memberId, this.authorizationInfo.SocketToken);
         //创建socket
         this.socket = new ServiceManager.SocketManager();
         //连接事件侦听
@@ -42,7 +41,35 @@ var BaseCtrl = /** @class */ (function () {
         this.socket.on(ServiceManager.SocketEvent.OnSystemPush, this, this.OnSystemPushHandler);
         //启动连接
         this.socket.Connect(socketUrl);
+        var wechat = new Utils.WeChat();
+        Laya.timer.loop(2000, this, function () {
+            wechat.GetNetworkType(Laya.Handler.create(_this, _this.GetNetworkSuccess, null, false));
+        });
+        var successHandler = Laya.Handler.create(this, this.WeChatShareHandler, null, false);
+        var authorizeDto = GameConfig.GetWeChatShareDto(this.parentID, true);
+        //分享微信好友
+        wechat.ShareAppMessage(authorizeDto.Title, authorizeDto.Desc, authorizeDto.ImgUrl, authorizeDto.Link, successHandler);
+        //分享QQ
+        wechat.ShareQQ(authorizeDto.Title, authorizeDto.Desc, authorizeDto.ImgUrl, authorizeDto.Link, successHandler);
+        var dto = GameConfig.GetWeChatShareDto(this.parentID, false);
+        //分享朋友圈
+        wechat.ShareTimeline(dto.Title, dto.ImgUrl, dto.Link, successHandler);
+        //分享qq空间
+        wechat.ShareQZone(dto.Title, dto.Desc, dto.ImgUrl, dto.Link, successHandler);
     }
+    /**
+     * 网络状态
+     * @param networkType 网络状态
+     */
+    BaseCtrl.prototype.GetNetworkSuccess = function (networkType) {
+        if (networkType) {
+            this.socket.SetNetwork(true);
+        }
+        else {
+            this.socket.SetNetwork(false);
+        }
+        this.OnNoNetwork();
+    };
     /**
      * 发送消息
      * @param data 消息内容

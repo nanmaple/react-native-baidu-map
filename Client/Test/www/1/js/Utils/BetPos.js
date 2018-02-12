@@ -36,6 +36,18 @@ var Utils;
             if (type == Enum.BetPosType.BLACK) {
                 result = "黑";
             }
+            if (type == Enum.BetPosType.LOUT) {
+                result = "左偏";
+            }
+            if (type == Enum.BetPosType.ROUT) {
+                result = "右偏";
+            }
+            if (type == Enum.BetPosType.LHIT) {
+                result = "左撞柱";
+            }
+            if (type == Enum.BetPosType.RHIT) {
+                result = "右撞柱";
+            }
             return result;
         };
         return BetPos;

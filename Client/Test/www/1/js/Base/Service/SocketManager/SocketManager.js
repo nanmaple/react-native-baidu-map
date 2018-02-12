@@ -36,6 +36,14 @@ var ServiceManager;
          * 连接
          * @param token
          */
+        SocketManager.prototype.SetNetwork = function (status) {
+            //启动连接
+            this.socket.SetNetwork(status);
+        };
+        /**
+         * 连接
+         * @param token
+         */
         SocketManager.prototype.Connect = function (url) {
             //启动连接
             this.socket.Connect(url);
@@ -101,7 +109,6 @@ var ServiceManager;
          * 接收消息
          */
         SocketManager.prototype.OnMessage = function (message) {
-            // console.log(message);
             if (!message)
                 return;
             var messageDto;
@@ -109,7 +116,6 @@ var ServiceManager;
                 messageDto = JSON.parse(message);
             }
             catch (error) {
-                console.log(error);
                 return;
             }
             switch (messageDto.Command) {

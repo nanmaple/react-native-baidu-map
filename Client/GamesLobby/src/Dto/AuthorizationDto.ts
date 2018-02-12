@@ -41,5 +41,13 @@ namespace BaseDto {
          * 多账号信息
          */
         public Accounts: Array<MultiAccountDto>;
+        /**
+         * 是否是游客
+         */
+        public IsTourists: boolean = true;
+        /**
+         * 父级ID
+         */
+        public ParentID:string;
     }
 }

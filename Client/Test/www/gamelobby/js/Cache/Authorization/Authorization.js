@@ -12,7 +12,7 @@ var CacheData;
          * 获取用户缓存的key
          */
         Authorization.prototype.GetAuthorizationKey = function (gameID) {
-            return "Authorization-" + gameID + "-Key";
+            return "Authorization-" + gameID + "-CacheKey";
         };
         /**
          * 获取会员授权信息
@@ -30,7 +30,7 @@ var CacheData;
          * 设置授权信息
          * @param dto
          */
-        Authorization.prototype.SetAuthorization = function (gameID, dto) {
+        Authorization.prototype.SetAuthorization = function (gameID, dto, day) {
             if (!this.authorization) {
                 this.authorization = new BaseDto.AuthorizationDto();
             }
@@ -38,10 +38,23 @@ var CacheData;
             this.authorization.SocketToken = dto.SocketToken !== undefined ? dto.SocketToken : this.authorization.SocketToken;
             this.authorization.Token = dto.Token !== undefined ? dto.Token : this.authorization.Token;
             this.authorization.IsMulti = dto.IsMulti !== undefined ? dto.IsMulti : this.authorization.IsMulti;
+            this.authorization.IsTourists = dto.IsTourists !== undefined ? dto.IsTourists : this.authorization.IsTourists;
             this.authorization.Accounts = dto.Accounts !== undefined ? dto.Accounts : this.authorization.Accounts;
+            this.authorization.IsClose = dto.IsClose !== undefined ? dto.IsClose : this.authorization.IsClose;
             var storage = new Utils.Storage();
             var key = this.GetAuthorizationKey(gameID);
-            storage.Set(key, this.authorization, this.cacheType);
+            storage.Set(key, this.authorization, this.cacheType, day);
+            return true;
+        };
+        /**
+         * 清空缓存数据
+         * @param gameID 游戏ID
+         */
+        Authorization.prototype.ClearAuthorization = function (gameID) {
+            this.authorization = null;
+            var storage = new Utils.Storage();
+            var key = this.GetAuthorizationKey(gameID);
+            storage.Set(key, null, this.cacheType);
             return true;
         };
         Authorization.instance = new Authorization();

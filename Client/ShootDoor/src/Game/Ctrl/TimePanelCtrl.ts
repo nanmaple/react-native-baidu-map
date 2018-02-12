@@ -10,12 +10,14 @@ class TimePanelCtrl extends Laya.Sprite{
      */
     public StartGameTime(time: number): void {
         this.timePanel.timeEffect.StartGameTime(time);
-        this.pos(1190,100);
+        this.timePanel.visible = true;
     }
     /**
      * 游戏时间结束
      */
     public EndGameTime(): void {
         this.timePanel.timeEffect.EndGameTime();
+        this.timePanel.visible = false;
+        Utils.BackgroundMusic.PlaySounds("sound/csz1.wav");
     }
 }

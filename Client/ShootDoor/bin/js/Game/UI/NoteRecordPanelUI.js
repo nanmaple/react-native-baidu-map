@@ -25,6 +25,7 @@ var ScenePanel;
             }
             _this.visible = false;
             _this._recordList.visible = false;
+            _this.noBetData.visible = false;
             _this.isLoading.visible = false;
             _this.close.on(Laya.Event.CLICK, _this, _this.CloseNoteRecord);
             _this.back.on(Laya.Event.CLICK, _this, _this.BackNoteRecordList);
@@ -45,21 +46,29 @@ var ScenePanel;
             this.event("OnMouseUp");
         };
         /**
-         * 显示投注记录
-         * @param show 投注记录列表是否显示
+         * 显示投注记录面板
+         * @param list 投注列表是否显示
+         * @param isLoading 正在加载是否显示
+         * @param noRecord 无投注记录是否显示
+         * @param isActive 是否初始化
          */
-        NoteRecordPanel.prototype.ShowNoteRecord = function (show) {
-            if (show === void 0) { show = false; }
-            //重置
-            this.recordBox.x = 0;
-            this.visible = true;
-            if (show) {
-                this._recordList.visible = true;
-                this.isLoading.visible = false;
+        NoteRecordPanel.prototype.ShowNoteRecord = function (list, isLoading, noRecord, isActive) {
+            if (list === void 0) { list = false; }
+            if (isLoading === void 0) { isLoading = false; }
+            if (noRecord === void 0) { noRecord = false; }
+            if (isActive === void 0) { isActive = false; }
+            if (isActive) {
+                //重置
+                this.recordBox.x = 0;
+                this.visible = isActive;
+                this._recordList.visible = list;
+                this.isLoading.visible = isLoading;
+                this.noBetData.visible = noRecord;
             }
             else {
-                this._recordList.visible = false;
-                this.isLoading.visible = true;
+                this._recordList.visible = list;
+                this.isLoading.visible = isLoading;
+                this.noBetData.visible = noRecord;
             }
         };
         /**
@@ -74,6 +83,8 @@ var ScenePanel;
          */
         NoteRecordPanel.prototype.CloseNoteRecord = function () {
             this.visible = false;
+            this.dataArr = [];
+            this.betDetailList.dataSource = this.dataArr;
             this.closeRecordHander.run();
         };
         /**
@@ -81,9 +92,10 @@ var ScenePanel;
          * @param data 投注详情数据
          */
         NoteRecordPanel.prototype.GoNoteRecordDetail = function (data) {
-            Laya.Tween.to(this.recordBox, { x: -930 }, 500, Laya.Ease.quadOut);
+            Laya.Tween.to(this.recordBox, { x: -1000 }, 500, Laya.Ease.quadOut);
             //投注结果显示
-            this.betResult.text = this.BetResult(data.total);
+            this.betResult.text = this.BetResult(data.total.text);
+            this.roundId.text = data.roundId.text;
             //投注结果数据
             this.betResultData = data.gameData[data.gameData.length - 1];
             this.GetBetResultPokerData(this.betResultData);

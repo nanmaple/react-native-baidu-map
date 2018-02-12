@@ -1,39 +1,47 @@
 D .
+D sound
+R FA3E2FFB bet.wav
+R CF1B9D1C csz1.wav
+R 759FB6B8 hotdoor.mp3
+R F57C2ED7 kickball.mp3
+R 408861D9 shootfail.wav
+R 9FED3CE6 shootsuccess.mp3
 D ui
 P 4952F22F attention.png
 P 77B3A78D back.png
-P 3DA2B8B3 betrecord.png
-R 3C614B8D bg.png
-R FA779932 bg_alert.png
-R 30411C6F bg_bet.png
+P 021FD09C betrecord.png
+R 79D320FE bg.png
+R 577CD16E bg_alert.png
+R 5F047BC3 bg_bet.png
 P A3238834 bg_chip .png
-R 7666D9EA bg_chips.png
-R EC078A2D bg_door.png
-R F0675EBC bg_header.png
-R 6B9B2F0A bg_histrory.png
+R C39D2622 bg_chips.png
+R 3FD7116B bg_door.png
+R A739205E bg_header.png
+R 0EA70827 bg_histrory.png
 P 954C1145 bg_info.png
-P 5369BB23 bg_money.png
-R 295B15FE bg_record.png
-R 3F1D316B bg_round.png
-P 7AE231D1 bg_time.png
+P C4BFFCC6 bg_money.png
+R 5C94EABC bg_record.png
+R 637EAD1B bg_round.png
+P 6199215C bg_time.png
 P 5C977BB8 btn_chip.png
-P 3B4133D5 cancel.png
+P DB6FF241 cancel.png
 P EC8AD455 charge.png
 P B08B63FC chip_s.png
 P 60053BEA clip_number.png
 P 37A8BABC close.png
-P 02EA0DCA confirm.png
+P 074168DC confirm.png
 P C7A39D13 football.png
-P AFC0E547 gr.png
+P 6686CBB6 go.png
+P EB631500 gr.png
 P 4E35846D loading.png
 R 3947C27C mask.png
-P 8C3CA00B ok.png
-R 33CD1D2A recordLine.png
-P 3CE0CBC6 rule.png
+P C55710AE ok.png
+R 8167FC33 recordLine.png
+P ACAACF72 rule.png
 P 6A6F42C3 ruleTitle.png
-R E58EDB04 tip.png
+R FB3A8759 tip.png
 P DF53CC40 tipclose.png
-P F67F2873 title.png
+P 194513E0 title.png
 P 6E701098 userImg.png
 D ui/poker
 P 314E6F59 1.png

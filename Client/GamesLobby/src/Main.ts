@@ -13,14 +13,14 @@ class GameMain {
         //获取地址栏中code
         this.dto.Code = Utils.Url.GetQuery("code");
         //获取地址栏中state参数，即父级（推荐人）ID
-        this.dto.ParentID = Utils.Url.GetQuery("parentID");
+        this.dto.ParentID = Utils.Url.GetQuery("parentid");
         //获取地址栏中的游戏id
-        this.dto.GameID = Utils.Url.GetQuery("gameID");
-        let isTest = Utils.Url.GetQuery("testID");
-        if (!isTest) {
-            //登录
-            this.memberServer.Login(this.dto, Laya.Handler.create(this, this.LoginCallback));
+        this.dto.GameID = Utils.Url.GetQuery("gameid");
+        if (!this.dto.GameID) {
+            this.dto.GameID = 1;
         }
+        //登录
+        this.memberServer.Login(this.dto, Laya.Handler.create(this, this.LoginCallback));
     }
 
     /**
@@ -63,8 +63,8 @@ class GameMain {
         this.accountUI.accountList.vScrollBarSkin = "";
         this.accountUI.login.visible = false;
         this.accountUI.accountList.visible = true;
-        this.accountUI.accountList.renderHandler =new Laya.Handler(this, this.renderHandler);
-        this.accountUI.accountList.mouseHandler =new Laya.Handler(this, this.onSelect);
+        this.accountUI.accountList.renderHandler = new Laya.Handler(this, this.renderHandler);
+        this.accountUI.accountList.mouseHandler = new Laya.Handler(this, this.onSelect);
     }
 
     private renderHandler(cell: Laya.Box, index: number): void {
@@ -74,17 +74,17 @@ class GameMain {
         let data: BaseDto.MultiAccountDto = this.list[index] as BaseDto.MultiAccountDto;
         //根据子节点的名字listNumber，获取子节点对象。 
         let accountBox: Laya.Box = cell.getChildByName("item").getChildByName("accountBox") as Laya.Box;
-        let agentBox: Laya.Box = cell.getChildByName("item").getChildByName("agentBox") as Laya.Box;         
+        let agentBox: Laya.Box = cell.getChildByName("item").getChildByName("agentBox") as Laya.Box;
         let account: Laya.Label = accountBox.getChildByName("account") as Laya.Label;
         let agent: Laya.Label = agentBox.getChildByName("agent") as Laya.Label;
         //label渲染列表文本（序号）
         agent.text = data.ParentNickname;
-        if(!data.Account && data.Account.length == 0){
+        if (!data.Account && data.Account.length == 0) {
             accountBox.visible = false;
             agentBox.centerX = 0;
             return;
         }
-        else{
+        else {
             //label渲染列表文本（序号）
             account.text = data.Account;
         }
@@ -95,12 +95,12 @@ class GameMain {
      * @param index 编号
      */
     private onSelect(e: Event, index: number): void {
-        if(e.type == Laya.Event.CLICK){
+        if (e.type == Laya.Event.CLICK) {
             this.accountUI.login.visible = true;
             this.accountUI.accountList.visible = false;
             this.dto.MemberID = this.list[index].MemberId;
             this.memberServer.LoginByID(this.dto, Laya.Handler.create(this, this.LoginCallback));
-        }  
+        }
     }
 }
 new GameMain();

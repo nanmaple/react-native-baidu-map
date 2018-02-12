@@ -7,7 +7,7 @@ var Utils;
     /**
      * Http类，
      */
-    var Http = (function () {
+    var Http = /** @class */ (function () {
         function Http() {
             this.headers = [
                 "Accept", "application/json",

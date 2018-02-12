@@ -16,13 +16,11 @@ var ScenePanel;
             var _this = _super.call(this) || this;
             //创建时间效果
             _this.timeEffect = new TimeEffect(_this.time);
-            _this.top = 105;
+            _this.visible = false;
             if (GameConfig.RatioType) {
-                _this.right = 20 + 34 * GameConfig.HeightWidth;
                 _this.scale(GameConfig.HeightWidth, 1);
             }
             else {
-                _this.right = 54;
                 _this.scale(1, GameConfig.WidthHeight);
             }
             return _this;

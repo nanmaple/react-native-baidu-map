@@ -8,33 +8,46 @@ var Utils;
          * 投注类型结果转换
          */
         BetPos.transform = function (type) {
+            var language = new LanguageUtils.Language();
             var result;
             if (type == Enum.BetPosType.IN) {
-                result = "射进";
+                result = language.GetLanguage(Enum.BetPosType[type].toLowerCase());
             }
             if (type == Enum.BetPosType.OUT) {
-                result = "射偏";
+                result = language.GetLanguage(Enum.BetPosType[type].toLowerCase());
             }
             if (type == Enum.BetPosType.HIT) {
-                result = "撞柱";
+                result = language.GetLanguage(Enum.BetPosType[type].toLowerCase());
             }
             if (type == Enum.BetPosType.BIG) {
-                result = "大";
+                result = language.GetLanguage(Enum.BetPosType[type].toLowerCase());
             }
             if (type == Enum.BetPosType.SMALL) {
-                result = "小";
+                result = language.GetLanguage(Enum.BetPosType[type].toLowerCase());
             }
             if (type == Enum.BetPosType.ODD) {
-                result = "单";
+                result = language.GetLanguage(Enum.BetPosType[type].toLowerCase());
             }
             if (type == Enum.BetPosType.EVEN) {
-                result = "双";
+                result = language.GetLanguage(Enum.BetPosType[type].toLowerCase());
             }
             if (type == Enum.BetPosType.RED) {
-                result = "红";
+                result = language.GetLanguage(Enum.BetPosType[type].toLowerCase());
             }
             if (type == Enum.BetPosType.BLACK) {
-                result = "黑";
+                result = language.GetLanguage(Enum.BetPosType[type].toLowerCase());
+            }
+            if (type == Enum.BetPosType.LOUT) {
+                result = language.GetLanguage("leftOut");
+            }
+            if (type == Enum.BetPosType.ROUT) {
+                result = language.GetLanguage("rightOut");
+            }
+            if (type == Enum.BetPosType.LHIT) {
+                result = language.GetLanguage("leftHit");
+            }
+            if (type == Enum.BetPosType.RHIT) {
+                result = language.GetLanguage("rightHit");
             }
             return result;
         };

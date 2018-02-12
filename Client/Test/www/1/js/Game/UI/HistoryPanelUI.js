@@ -23,15 +23,47 @@ var ScenePanel;
             else {
                 _this.history.scale(1, GameConfig.WidthHeight);
             }
+            _this.listBoxH = _this.listPanel.height / 5;
             return _this;
         }
         /**
-         * 设置投注限额
-         * @param limit
+         * 滚动历史列表
          */
-        HistoryPanel.prototype.SetLimit = function (limit) {
-            this.maxBetLabel.text = "\u6700\u5927\u989D\u5EA6:" + limit.MaxBet;
-            this.minBetLabel.text = "\u6700\u5C0F\u989D\u5EA6:" + limit.MinBet;
+        HistoryPanel.prototype.ScrollHistoryList = function (hander) {
+            Laya.Tween.to(this._list, { y: this.listBoxH }, 2000, Laya.Ease.quadInOut, Laya.Handler.create(this, this.ResetHistoryList));
+            this.hander = hander;
+        };
+        /**
+         * 重置历史列表
+         */
+        HistoryPanel.prototype.ResetHistoryList = function () {
+            this._list.y = 0;
+            this.hander.run();
+        };
+        /**
+         * 获取牌面结束位置和宽高
+         */
+        HistoryPanel.prototype.GetEndFlyPoker = function () {
+            if (!this.flyPoker) {
+                this.flyPoker = [{ x: 0, y: 0, width: 0, height: 0 }, { x: 0, y: 0, width: 0, height: 0 }, { x: 0, y: 0, width: 0, height: 0 }];
+                //循环创建扑克牌数组
+                for (var i = 0; i < 3; i++) {
+                    var poker = this["pokerPos" + i];
+                    if (GameConfig.RatioType) {
+                        this.flyPoker[i].width = poker.width * GameConfig.HeightWidth;
+                        this.flyPoker[i].height = poker.height;
+                        this.flyPoker[i].x = poker.x * GameConfig.HeightWidth + 20 + this.flyPoker[i].width / 2;
+                        this.flyPoker[i].y = poker.y + 100 + this.flyPoker[i].height / 2;
+                    }
+                    else {
+                        this.flyPoker[i].width = poker.width;
+                        this.flyPoker[i].height = poker.height * GameConfig.WidthHeight;
+                        this.flyPoker[i].x = poker.x + 20 + this.flyPoker[i].width / 2;
+                        this.flyPoker[i].y = poker.y * GameConfig.WidthHeight + 100 + this.flyPoker[i].height / 2;
+                    }
+                }
+            }
+            return this.flyPoker;
         };
         return HistoryPanel;
     }(ui.HistoryRecordUI));

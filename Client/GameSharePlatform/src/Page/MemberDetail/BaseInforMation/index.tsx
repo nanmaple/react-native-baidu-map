@@ -1,28 +1,44 @@
 import * as React from 'react';
 import { withRouter } from "react-router-dom";
 
+
+import { Switch, Toast, Dialog } from "react-weui";
+import CompToast, { ToastType } from '../../../Components/Toast';
+import { HocAlert } from "../../../Components/Alert/HOCAlert";
+
 import MemberCtrl from "../../../Controller/MemberCtrl";
 import MemberInfoDto from "../../../Dto/MemberInfoDto";
+import { TransferScoreDto } from "../../../Dto/MemberInfoDto";
+
+import { InfoItemInput, InfoItemButton, InfoItemCheckBox, InfoItemLabel } from '../../../Components/InfoItem';
+import LanguageManager from '../../../Language/LanguageManager';
+import { ErrorCode } from '../../../Enum/ErrorCode';
+import Money from "../../../Utils/Money";
 const baseInforStyle = require("./style.css");
+const EditImg = require("../../../Image/edit.png");
 
 class BaseInformation extends React.Component<any, any> {
     private MemberCtrl: MemberCtrl = new MemberCtrl();
+    private languageManager: LanguageManager;
+    private toast: any;
     constructor(props: any) {
         super(props);
         this.state = {
-            memberId: "",
-            memberInfor: {},
-
-            oldRemark: "",
-            memberClose: true,
-            scoreValue: 0,
-            newRemark: "",
-            memberRemark: "",
-            PassWord: "······"
-
+            memberId: "",              //会员ID
+            account: "",               //账户
+            close: true,               //会员状态
+            myScore: 0,                //我的分数
+            score: 0,                  //会员分数
+            remark: "",               //会员备注
+            password: "******",       //密码
+            headImageUrl: "",         //头像
+            phoneNumber: "",          //电话
+            memberNickname: "",       //会员昵称
+            agent: false,            // 是否是代理
         }
     }
     componentDidMount() {
+        this.ShowToast("加载中...", ToastType.Loading);
         let memberId = this.props.match.params.memberId;
         this.setState({
             memberId
@@ -30,241 +46,226 @@ class BaseInformation extends React.Component<any, any> {
         this.MemberCtrl.GetMemberInfo(memberId, this.Handler);
     }
 
+    /**
+     * 提示信息
+     * @param errorKey 提示信息
+     * @param  type 信息类型
+     */
+    private ShowToast = (errorKey: string, type: ToastType = ToastType.Success): void => {
+        if (!this.languageManager) {
+            this.languageManager = new LanguageManager();
+        }
+        let msg: string = this.languageManager.GetErrorMsg(errorKey);
+        this.toast.Show(msg, type);
+    }
+
+
+    /**
+     * 获取会员信息handler回调
+     */
     public Handler = (data: MemberInfoDto, isRefresh: boolean, error?: string): void => {
+        this.toast.Hide();
         if (error) {
             //todo 提示错误信息
+            this.ShowToast(error, ToastType.Error);
             return;
         }
         this.setState({
-            memberInfor: data,
-            oldRemark: data.Remark,
-            memberClose: data.Closed,
-            newRemark: data.Remark,
-
+            account: data.Account,
+            close: data.Closed,
+            remark: data.Remark,
+            myScore: data.MyScore,
+            score: data.Score,
+            memberNickname: data.MemberNickname,
+            headImageUrl: data.HeadImageUrl,
+            phoneNumber: data.PhoneNumber,
+            agent: data.Agent,
         });
 
     }
-    /**
-     * 进取分输入监听
-     * @param event 事件对象
-     */
-    private scoreChange = (event: any): void => {
-        let value = event.target.value;
-        if (isNaN(value)) {
-            alert("只能输入数字");
-            return;
-        }
-        this.setState({
-            scoreValue: event.target.value
-        });
-    }
-    /**
-     * 备注输入框监听
-     * @param event 事件对象
-     */
-    private remarkChange = (event: any): void => {
-        this.setState({
-            newRemark: event.target.value
-        });
-    }
-    /**
-     * 密码输入框监听
-     * @param event 事件对象
-     */
-    private PassWordChange = (event: any): void => {
-        this.setState({
-            PassWord: event.target.value
-        });
-    }
+
+
     /**
      * 进分取分
      * @param type 类型 in-进分 out-取分
      */
-    private SetScore = (type: any): void => {
+    private SetScore = (type: any, scoreValue: any): void => {
+        let { myScore, score } = this.state;
+        this.ShowToast(ErrorCode[ErrorCode.Wait], ToastType.Wait);
         let MemberId = this.state.memberId,
-            Amount = Number(this.state.scoreValue);
+            Amount = Number(scoreValue);
         if (type === "in") {
+            if (Amount > myScore) {
+                this.ShowToast("超出限额", ToastType.Error);
+                return;
+            }
             this.MemberCtrl.TransferIn(MemberId, Amount, this.SetScoreHandle);
         } else {
+            if (Amount > score) {
+                this.ShowToast("超出限额", ToastType.Error);
+                return;
+            }
             this.MemberCtrl.TransferOut(MemberId, Amount, this.SetScoreHandle);
         }
     }
-    private SetScoreHandle = (state: any, data: any[], error?: any) => {
+    /**
+     * 设置进取分回调
+     */
+    private SetScoreHandle = (data: TransferScoreDto, params: any[], error?: any) => {
+        this.toast.Hide();
         if (error) {
-            console.log(error);
+            this.ShowToast(error, ToastType.Error);
         } else {
-            console.log(data);
+            this.ShowToast(ErrorCode[ErrorCode.Success], ToastType.Success);
+            this.setState({ myScore: data.MyScore, score: data.Score })
         }
     }
+
     /**
      * 修改备注
+     * @param remark 备注信息
      */
-    private SetRemark = () => {
-        let MemberId = this.state.memberId,
-            Remark = this.state.newRemark;
-        if (this.state.oldRemark == Remark) {
-            console.log("昵称未变化");
+    private SetRemark = (remark: string) => {
+        this.ShowToast(ErrorCode[ErrorCode.Wait], ToastType.Wait);
+        let MemberId = this.state.memberId;
+        if (!remark) {
+            this.ShowToast(ErrorCode[ErrorCode.RemarkNoNull], ToastType.Error);
+            return;
+        } else if (this.state.remark == remark) {
+            this.ShowToast(ErrorCode[ErrorCode.RemarkNoChange], ToastType.Error);
             return;
         } else {
-            this.MemberCtrl.SetRemark(MemberId, Remark, this.SetRemarkHandle);
+            this.ShowToast(ErrorCode[ErrorCode.Success], ToastType.Success);
+            this.MemberCtrl.SetRemark(MemberId, remark, this.SetRemarkHandle);
         }
 
     }
-    private SetRemarkHandle = (state: any, data: any[], error?: any) => {
+    /**
+     * 设置备注回调
+     */
+    private SetRemarkHandle = (state: any, data: Array<any>, error?: any) => {
+        this.toast.Hide();
         if (error) {
-            console.log(error);
+            this.ShowToast(error, ToastType.Error);
         } else {
+            this.ShowToast(ErrorCode[ErrorCode.Success], ToastType.Success);
             this.setState({
-                oldRemark: data[1]
+                remark: data[1]
             })
         }
     }
+
     /**
      * 修改会员状态
      */
     private SetMemberClosed = () => {
+        this.ShowToast(ErrorCode[ErrorCode.Wait], ToastType.Wait);
         let MemberId = this.state.memberId,
             Close = !this.state.memberClose;
         this.MemberCtrl.UpdateCloseStatus(MemberId, Close, this.SetMemberClosedHandle);
-
     }
-
+    /**
+     * 会员状态回调
+     */
     private SetMemberClosedHandle = (state: any, data: any[], error?: any) => {
+        this.toast.Hide();
         if (error) {
-            console.log(error);
+            this.ShowToast(error, ToastType.Error);
         } else {
+            this.ShowToast(ErrorCode[ErrorCode.Success], ToastType.Success);
             this.setState({
                 memberClose: data[1]
             })
         }
     }
     /**
-     * 设置密码
+     * 设置代理提示 只能设置一次
+     * 确定将进行设置
      */
-    private SetPassWord = () => {
+    private agentPrompt = () => {
+        this.props.showAlert({
+            title: "警告", content: "代理只能设置一次!!!", buttons: [
+                {
+                    type: 'default',
+                    label: '取消',
+                    onClick: this.props.hideAlert
+                },
+                {
+                    type: 'primary',
+                    label: '确定',
+                    onClick: this.SetMemberAgent
+                }
+            ],
+        });
+    }
+    /**
+     * 设置会员为代理
+    */
+    private SetMemberAgent = () => {
+        this.props.hideAlert();
+        this.ShowToast(ErrorCode[ErrorCode.Wait], ToastType.Wait);
+        let MemberId = this.state.memberId;
+        this.MemberCtrl.SetAgent(MemberId, this.SetMemberAgentHandle);
+    }
+    /**
+     * 设置会员为代理callback
+     */
+    private SetMemberAgentHandle = (state: any, data: any[], error?: any) => {
+        this.toast.Hide();
+        if (error) {
+            this.ShowToast(error, ToastType.Error);
+        } else {
+            this.ShowToast(ErrorCode[ErrorCode.Success], ToastType.Success);
+            this.setState({
+                agent: data[1]
+            })
+        }
+    }
+
+    /**
+     * 设置密码
+     * @param password 密码
+     */
+    private SetPassWord = (password: string) => {
+        this.ShowToast(ErrorCode[ErrorCode.Wait], ToastType.Wait);
         let MemberId = this.state.memberId,
-            Password = this.state.PassWord;
+            Password = password;
         this.MemberCtrl.SetChildPassword(MemberId, Password, this.SetPassWordHandle);
     }
 
+    /**
+     * 设置密码回调
+     */
     private SetPassWordHandle = (state: any, data: any[], error?: any) => {
+        this.toast.Hide();
         if (error) {
-            console.log(error);
+            this.ShowToast(error, ToastType.Error);
         } else {
+            this.ShowToast(ErrorCode[ErrorCode.Success], ToastType.Success);
             this.setState({
-                PassWord: data[1]
+                password: "******"
             })
         }
 
     }
-    /**
-     * 显示会员和自己的分数
-     * @param MemberSocre 会员分数
-     * @param MyScore 自己分数
-     */
-    private renderScore = (MemberSocre: any = 0, MyScore: any = 0) => {
-        return <div className={baseInforStyle.rowItem}>
-            <div className={baseInforStyle.memSoc}>会员分数：{Math.round(MemberSocre)}</div>
-            <div className={baseInforStyle.mySoc}>我的分数：{Math.round(MyScore)}</div>
-        </div>
-    }
-    /**
-      * 渲染进分取分
-    */
-    private renderChangeScore = () => {
-        return <div className={baseInforStyle.rowItem}>
-            <label className={baseInforStyle.inputScore}>
-                输入分数:<input type="text" value={this.state.scoreValue} placeholder={"0"} onChange={this.scoreChange} />
-            </label>
-            <div className={baseInforStyle.addScore} onClick={() => this.SetScore("in")}>进分</div>
-            <div className={baseInforStyle.reduceScore} onClick={() => this.SetScore("out")}>取分</div>
-        </div>
-    }
 
-    /**
-     * 渲染备注
-    */
-    private renderSetRemark = (MemberRemark: any) => {
-        return <div className={baseInforStyle.rowItem}>
-            <label className={baseInforStyle.inputScore}>
-                备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注:<input type="text" placeholder={this.state.oldRemark} value={this.state.newRemark} onChange={this.remarkChange} />
-            </label>
-            <div onClick={() => { this.SetRemark() }} className={baseInforStyle.mySoc}>修改</div>
-        </div>
-    }
-
-    /**
-     * 渲染状态
-    */
-    private renderSetState = (MemberClosed: any) => {
-        return <div className={baseInforStyle.rowItem}>
-            <div className={baseInforStyle.memSoc}>状态：{MemberClosed ? "关闭" : "正常"}</div>
-            <div onClick={() => this.SetMemberClosed()} className={baseInforStyle.mySoc}>修改</div>
-        </div>
-    }
-
-    /**
-     * 显示账号
-    */
-    private renderAccount = (Account: any = "暂无") => {
-        return <div className={baseInforStyle.rowItem}>
-            <div className={baseInforStyle.memSoc}>账号:{Account}</div>
-        </div>
-    }
-
-    /**
-       * 显示密码
-    */
-    private renderSetPassWord = () => {
-        return <div className={baseInforStyle.rowItem}>
-            <label className={baseInforStyle.inputScore}>
-                密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:<input type="password" value={this.state.PassWord} onChange={this.PassWordChange} />
-            </label>
-            <div onClick={() => { this.SetPassWord() }} className={baseInforStyle.mySoc}>修改</div>
-        </div>
-    }
-
-    /**
-     * 显示电话
-    */
-    private renderPhone = (PhoneNumber: any = "暂无") => {
-        return <div className={baseInforStyle.rowItem}>
-            <div className={baseInforStyle.memSoc}>手机号:{PhoneNumber}</div>
-        </div>
-    }
     render() {
-        console.log(this.state.memberInfor);
-        let { memberClose, memberRemark } = this.state;
-        let { MemberSocre, MemberNickname, Account, MyScore, PhoneNumber, HeadImageUrl } = this.state.memberInfor;
+        let { score, memberNickname, account, myScore, phoneNumber, headImageUrl, toastMsg, alertMsg } = this.state;
         return (
             <div className={baseInforStyle.container}>
-                {
-                    this.renderScore(MemberSocre, MyScore)
-                }
-                {
-                    this.renderChangeScore()
-                }
-                {
-                    this.renderSetRemark(memberRemark)
-                }
-                {
-                    this.renderSetState(memberClose)
-                }
-                {
-                    this.renderSetPassWord()
-                }
-                {
-                    this.renderAccount()
-                }
-                {
-                    this.renderPhone(PhoneNumber)
-                }
-
-
+                <CompToast ref={(c) => this.toast = c} />
+                <InfoItemLabel memberSocre={Money.Format(score)} myScore={Money.Format(myScore)} />
+                <InfoItemButton label={"分数"} memberSocre={Money.Format(score)} myScore={Money.Format(myScore)} handler={this.SetScore} />
+                <InfoItemInput label={"备注"} value={this.state.remark} handler={this.SetRemark}></InfoItemInput>
+                <InfoItemCheckBox label={"状态"} trueText={"正常"} falseText={"关闭"} memberClosed={this.state.memberClose} handler={this.SetMemberClosed} />
+                <InfoItemCheckBox label={"设为代理"} trueText={"已经设置为代理"} falseText={"注意只能设置一次"} agent={this.state.agent} memberClosed={!this.state.agent} handler={this.agentPrompt} />
+                <InfoItemInput label={"账号"} value={memberNickname} disable={true}></InfoItemInput>
+                <InfoItemInput label={"密码"} value={this.state.password} handler={this.SetPassWord}></InfoItemInput>
+                <InfoItemInput label={"手机号"} value={phoneNumber} disable={true}></InfoItemInput>
 
             </div>
         );
     }
 }
 
-export default withRouter(BaseInformation);
+export default withRouter(HocAlert(BaseInformation));

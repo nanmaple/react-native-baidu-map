@@ -39,11 +39,9 @@ abstract class BaseCtrl {
         //获取会员信息
         this.memberInfo = memberServer.GetMemberInfo();
         //获取会员ID
-        let memberId: number = this.memberInfo != null ? this.memberInfo.MemberId : 0;
-        //设备ID
-        let deviceId: string = "123456";
+        let memberId: number = this.memberInfo != null ? this.memberInfo.MemberId : 1;
         //生成socket 地址
-        let socketUrl = GameConfig.GetSocketUrl(memberId, deviceId, this.authorizationInfo.SocketToken);
+        let socketUrl = GameConfig.GetSocketUrl(memberId, this.authorizationInfo.SocketToken);
 
         //创建socket
         this.socket = new ServiceManager.SocketManager();
@@ -65,7 +63,52 @@ abstract class BaseCtrl {
         this.socket.on(ServiceManager.SocketEvent.OnSystemPush, this, this.OnSystemPushHandler);
         //启动连接
         this.socket.Connect(socketUrl);
+
+        let wechat: Utils.WeChat = new Utils.WeChat();
+        Laya.timer.loop(2000, this, () => {
+            wechat.GetNetworkType(Laya.Handler.create(this, this.GetNetworkSuccess, null, false));
+        });
+
+        let successHandler: Laya.Handler = Laya.Handler.create(this, this.WeChatShareHandler, null, false);
+        
+        let authorizeDto: BaseDto.WeChatShareDto = GameConfig.GetWeChatShareDto(memberId.toString(), true);
+        //分享微信好友
+        wechat.ShareAppMessage(authorizeDto.Title, authorizeDto.Desc, authorizeDto.ImgUrl, authorizeDto.Link, successHandler);
+        //分享QQ
+        wechat.ShareQQ(authorizeDto.Title, authorizeDto.Desc, authorizeDto.ImgUrl, authorizeDto.Link, successHandler);
+
+        let dto: BaseDto.WeChatShareDto = GameConfig.GetWeChatShareDto(memberId.toString(), false);
+        //分享朋友圈
+        wechat.ShareTimeline(dto.Title, dto.ImgUrl, dto.Link, successHandler);
+        //分享qq空间
+        wechat.ShareQZone(dto.Title, dto.Desc, dto.ImgUrl, dto.Link, successHandler);
     }
+
+    /**
+     * 网络状态
+     * @param networkType 网络状态
+     */
+    public GetNetworkSuccess(networkType: any): void {
+        if (networkType) {
+            this.socket.SetNetwork(true);
+        } else {
+            this.socket.SetNetwork(false);
+        }
+        this.OnNoNetwork();
+    }
+
+
+    /**
+     * 分享回调
+     * @param status 分享结果类型 1.分享成功 0.取消分享 -1.分享失败
+     */
+    abstract WeChatShareHandler(status: number): void;
+
+    /**
+     * 侦听Socket连接事件
+     */
+    abstract OnNoNetwork(): void;
+
     /**
      * 侦听Socket连接事件
      */

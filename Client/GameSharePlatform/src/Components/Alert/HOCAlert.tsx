@@ -1,51 +1,59 @@
-import * as React from "react";
+import * as React from 'react';
+import { Dialog } from "react-weui";
+import 'weui';
+import 'react-weui/build/packages/react-weui.css';
 const style = require("./HocAlert.css");
 interface IOption {
-    alertShow?: false,
-    Title?: string,
-    Content?: string,
-    HideOk?: boolean,
-    HideCancel?: boolean,
-    Ok?: Function,
-    Cancel?: Function,
-    OkText?: string,
-    CancelText?: string,
-    OkColor?: string,
-    CancelColor?: string
+    title?: string,   //标题
+    content?: any,    //内容
+    buttons?: {}[]    //按钮
 }
-export const Enhance = (ComposedComponent: any, option: IOption) => class extends React.Component<any, any> {
+/**
+ * alert高阶组件
+ * @param ComposedComponent 组件
+ * @param option  参数
+ */
+export const HocAlert = (ComposedComponent: any, option?: IOption) => class extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            alertShow: false,
-            Title: "提示",
-            Content: "内容区域",
-            HideOk: false,
-            HideCancel: false,
-            Ok: null,
-            Cancel: null,
-            OkText: "确定",
-            CancelText: "取消",
-            OkColor: "#3a66b3",
-            CancelColor: "gray",
-            ...option,
+            showAlert: false,
+            title: "提示",
+            content: "内容区域",
+            buttons: [
+                {
+                    type: 'default',
+                    label: '取消',
+                    onClick: this.hide
+                },
+                {
+                    type: 'primary',
+                    label: '确定',
+                    onClick: this.hide
+                }
+            ],
+            ...option
         }
-
-
     }
+    /**
+     * 显示alert
+     * @param params 接口IOption类型
+     */
     show = (params: any) => {
-        let newState = Object.assign({}, this.state, params, { alertShow: true })
+        let newState = Object.assign({}, this.state, params, { showAlert: true })
         this.setState(
             newState
         );
     }
+    /**
+     * 隐藏alert
+     * @param params 接口IOption类型
+     */
     hide = (params: any) => {
-        let newState = Object.assign({}, this.state, params, { alertShow: false })
+        let newState = Object.assign({}, this.state, params, { showAlert: false })
         this.setState({
-            alertShow: false
+            showAlert: false
         });
-    }
-    componentDidMount() {
     }
     render() {
         let newProps = {
@@ -54,20 +62,9 @@ export const Enhance = (ComposedComponent: any, option: IOption) => class extend
         }
         return (
             <div>
-                {
-                    this.state.alertShow && (<div className={style.modal}>
-                        <div className={style.alertContainer}>
-                            <h3 className={style.alertTitle}>{this.state.Title}</h3>
-                            <div className={style.alertContent}>
-                                {this.state.Content}
-                            </div>
-                            <div className={style.alertBtn}>
-                                <div style={{ color: this.state.OkColor }} className={style.alertBtnitem}>{this.state.OkText}</div>
-                                <div style={{ color: this.state.CancelColor }} className={style.alertBtnitem} onClick={this.hide}>{this.state.CancelText}</div>
-                            </div>
-                        </div>
-                    </div>)
-                }
+                <Dialog type="ios" title={this.state.title} buttons={this.state.buttons} show={this.state.showAlert}>
+                    {this.state.content}
+                </Dialog>
                 <ComposedComponent {...this.props} {...newProps} />
             </div>
 

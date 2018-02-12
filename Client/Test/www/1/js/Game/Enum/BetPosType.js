@@ -6,7 +6,7 @@ var Enum;
         BetPosType[BetPosType["IN"] = 1] = "IN";
         //射偏
         BetPosType[BetPosType["OUT"] = 2] = "OUT";
-        //中柱
+        //撞柱
         BetPosType[BetPosType["HIT"] = 3] = "HIT";
         //大
         //第三张牌是A、2、3、4、5、6为小；7为和；8、9、10、J、Q、K为大。赔率：大1.97 小1.97 如果为7点（即和局）则退回本金
@@ -26,5 +26,13 @@ var Enum;
         //黑
         //第三张牌是红桃、方块为红；黑桃、梅花为黑。赔率：红1.97 黑1.97
         BetPosType[BetPosType["BLACK"] = 9] = "BLACK";
+        //左偏
+        BetPosType[BetPosType["LOUT"] = 10] = "LOUT";
+        //右偏
+        BetPosType[BetPosType["ROUT"] = 11] = "ROUT";
+        //左撞柱
+        BetPosType[BetPosType["LHIT"] = 12] = "LHIT";
+        //右撞柱
+        BetPosType[BetPosType["RHIT"] = 13] = "RHIT";
     })(BetPosType = Enum.BetPosType || (Enum.BetPosType = {}));
 })(Enum || (Enum = {}));

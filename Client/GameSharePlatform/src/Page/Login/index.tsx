@@ -1,18 +1,21 @@
 import * as React from 'react';
 import {
-    Link,
-    Prompt
+    Link
 } from 'react-router-dom';
 import UserCtrl from "../../Controller/UserCtrl";
-import { ResultEnum, MultiAccountDto, LoginResultDto } from '../../Base';
+import { ResultEnum, LoginResultDto } from '../../Dto/LoginInfoDto';
+import { MultiAccountDto } from '../../Dto/AuthorizationDto';
 
 import { HomeRoute } from '../../Route/Config';
+const styles = require("./style.css");
+const rightImg = require("../../Image/right.png");
 
-export default class Home extends React.Component<any, any> {
+export default class Login extends React.Component<any, any> {
     private userCtrl: UserCtrl = new UserCtrl();
     constructor(props: any) {
         super(props);
         this.state = {
+            isShowLogin: true,
             accountList: []
         };
     }
@@ -29,6 +32,8 @@ export default class Home extends React.Component<any, any> {
             this.setState({ accountList: response.Data });
         } else if (response.Result == ResultEnum.ERROR) {
             this.Redirect();
+        } else if (response.Result == ResultEnum.Tourist) {
+            this.Redirect();
         } else if (response.Result == ResultEnum.NO) {
             this.Redirect();
         }
@@ -39,45 +44,67 @@ export default class Home extends React.Component<any, any> {
      * 重定向
      */
     private Redirect = (): void => {
-        this.props.history.push(HomeRoute);
+        this.setState({ isShowLogin: false });
+        this.props.loginComplete();
     }
 
     /**
      * 选中回调
      * @param index 编号
      */
-    private onSelect = (memberID: number): void => {
+    private OnSelect = (memberID: number): void => {
         this.userCtrl.LoginByID(memberID, this.LoginCallback);
+    }
+
+    /**
+     * 渲染多账号
+     */
+    private renderAccountItem = (rowItem: MultiAccountDto, index: number) => {
+        return (<div onClick={() => { this.OnSelect(rowItem.MemberId) }} key={index} className={styles.rowItem} >
+            <div className={styles.nickName}>
+                <div className={styles.number}>
+                    代理：
+                </div>
+                <div className={styles.name}>
+                    {rowItem.ParentNickname}
+                </div></div>
+            <div className={styles.score}>
+                <div>
+                    {rowItem.Account ? `账号:${rowItem.Account}` : ""}
+                </div>
+                <div>
+                    <img src={rightImg} />
+                </div>
+            </div>
+        </div >)
     }
 
     private renderLogin = (): any => {
         if (this.state.accountList && this.state.accountList.length > 0) {
             return (
-                <ul>
+                <div className={styles.listContent}>
                     {
-                        this.state.accountList.map((item: MultiAccountDto) => {
-                            return (
-                                <li className="" key={item.MemberId} onClick={() => { this.onSelect(item.MemberId) }}>
-                                    <div className="fx1">账号：{item.Account}</div>
-                                    <div className="fx1 text-right">代理：{item.ParentNickname}</div>
-                                </li>
-                            )
+                        this.state.accountList.map((item: MultiAccountDto, index: number) => {
+                            return this.renderAccountItem(item, index);
                         })
                     }
-                </ul>
+                </div>
             )
         } else {
             return (
-                <div>
-                    登录中...
+                <div className={styles.logining}>
+                    加载中...
                 </div>
             )
         }
     }
 
     render() {
+        if (!this.state.isShowLogin) {
+            return null;
+        }
         return (
-            <div className="login">
+            <div className={styles.login}>
                 {this.renderLogin()}
             </div>
         );

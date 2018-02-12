@@ -1,15 +1,14 @@
-import { GetChildScoreListApi, GetMemberInfoApi, UpdateCloseStatusApi, SetRemarkApi, TransferInApi, TransferOutApi, SetChildPasswordApi, GetTransferLogApi } from './Config';
+import { SetSetAgentApi,GetChildScoreListApi, GetMemberInfoApi, UpdateCloseStatusApi, SetRemarkApi, TransferInApi, TransferOutApi, SetChildPasswordApi, GetTransferLogApi } from './Config';
 
 import { ListParamsDto, ListParamsCtrlDto, TransferLogDto, TransferLogCtrlDto } from '../Dto/ChildListParamsDto';
 import MemberInfoDto from '../Dto/MemberInfoDto';
 import ChildScoreDto from '../Dto/ChildListDto';
-import { ErrorCodeExtends } from '../Enum/ErrorCode';
+import { ErrorCode } from '../Enum/ErrorCode';
 import Verification from '../Utils/Verification';
 
-import BaseCtrl from '../Base/BaseCtrl';
+import BaseCtrl from './BaseCtrl';
 
 export default class MemberCtrl extends BaseCtrl {
-
     /**
      * 获取所有子级会员分数参数
      */
@@ -42,7 +41,6 @@ export default class MemberCtrl extends BaseCtrl {
         dto.PageSize = this.ChildScoreListParams.PageSize;
 
         this.webApi.Post(GetChildScoreListApi, dto).then((data: Array<ChildScoreDto>) => {
-            console.log("GetChildScoreList Success", data);
             if (data) {
                 let length = data.length;
                 if (data.length < this.ChildScoreListParams.PageSize) {
@@ -51,11 +49,11 @@ export default class MemberCtrl extends BaseCtrl {
                     this.ChildScoreListParams.LastId = data[length - 1].MemberId;
                 }
                 this.ChildScoreListParams.IsLoading = false;
-                handler(data, [isRefresh]);
+                handler(data, [isRefresh, this.ChildScoreListParams.IsNoMore]);
             }
         }, (error: string) => {
             this.ChildScoreListParams.IsLoading = false;
-            handler(null, [isRefresh], error);
+            handler(null, [isRefresh, this.ChildScoreListParams.IsNoMore], error);
         })
     }
 
@@ -81,7 +79,6 @@ export default class MemberCtrl extends BaseCtrl {
         dto.MemberId = memberId;
 
         this.webApi.Post(GetTransferLogApi, dto).then((data: Array<ChildScoreDto>) => {
-            console.log("GetTransferLog Success", data);
             if (data) {
                 let length = data.length;
                 if (data.length < this.ChildScoreListParams.PageSize) {
@@ -94,7 +91,6 @@ export default class MemberCtrl extends BaseCtrl {
             }
         }, (error: string) => {
             this.TransferLogParams.IsLoading = false;
-            console.log("GetTransferLog error", error);
             handler(null, [memberId, isRefresh], error);
         })
     }
@@ -109,12 +105,10 @@ export default class MemberCtrl extends BaseCtrl {
             MemberId: memberId
         }
         this.webApi.Post(GetMemberInfoApi, dto).then((data: MemberInfoDto) => {
-            console.log("GetMemberInfo Success", data);
             if (data) {
                 handler(data, [memberId]);
             }
         }, (error: string) => {
-            console.log("GetMemberInfo error", error);
             handler(null, [memberId], error);
         })
     }
@@ -131,10 +125,8 @@ export default class MemberCtrl extends BaseCtrl {
             Remark: remark
         }
         this.webApi.Post(SetRemarkApi, dto).then((data: any) => {
-            console.log("SetRemark Success", data);
             handler(null, [memberId, remark]);
         }, (error: string) => {
-            console.log("SetRemark error", error);
             handler(null, [memberId, remark], error);
         })
     }
@@ -151,11 +143,25 @@ export default class MemberCtrl extends BaseCtrl {
             Close: close
         }
         this.webApi.Post(UpdateCloseStatusApi, dto).then((data: any) => {
-            console.log("UpdateCloseStatus Success", data);
             handler(null, [memberId, close]);
         }, (error: string) => {
-            console.log("UpdateCloseStatus error", error);
             handler(null, [memberId, close], error);
+        })
+    }
+
+        /**
+     * 设置代理
+     * @param memberId 会员id
+     * @param handler 回调
+     */
+    public SetAgent(memberId: number, handler: Function): void {
+        let dto: any = {
+            MemberId: memberId,
+        }
+        this.webApi.Post(SetSetAgentApi, dto).then((data: any) => {
+            handler(null, [memberId,true]);
+        }, (error: string) => {
+            handler(null, [memberId,false], error);
         })
     }
 
@@ -168,7 +174,7 @@ export default class MemberCtrl extends BaseCtrl {
     public TransferIn(memberId: number, amount: number, handler: Function): void {
         //进分值必须大于0
         if (typeof amount !== "number" || amount <= 0) {
-            handler(null, [memberId, amount], this.languageManager.GetErrorMsg(ErrorCodeExtends.AmountError));
+            handler(null, [memberId, amount], ErrorCode[ErrorCode.AmountError]);
             return
         }
         let dto: any = {
@@ -176,10 +182,8 @@ export default class MemberCtrl extends BaseCtrl {
             Amount: amount
         }
         this.webApi.Post(TransferInApi, dto).then((data: any) => {
-            console.log("TransferIn Success", data);
-            handler(null, [memberId, amount]);
+            handler(data, [memberId, amount]);
         }, (error: string) => {
-            console.log("TransferIn error", error);
             handler(null, [memberId, amount], error);
         })
     }
@@ -193,7 +197,7 @@ export default class MemberCtrl extends BaseCtrl {
     public TransferOut(memberId: number, amount: number, handler: Function): void {
         //出分值必须大于0
         if (typeof amount !== "number" || amount <= 0) {
-            handler(null, [memberId, amount], this.languageManager.GetErrorMsg(ErrorCodeExtends.AmountError));
+            handler(null, [memberId, amount],ErrorCode[ErrorCode.AmountError]);
             return;
         }
         let dto: any = {
@@ -201,10 +205,8 @@ export default class MemberCtrl extends BaseCtrl {
             Amount: amount
         }
         this.webApi.Post(TransferOutApi, dto).then((data: any) => {
-            console.log("TransferOut Success", data);
-            handler(null, [memberId, amount]);
+            handler(data, [memberId, amount]);
         }, (error: string) => {
-            console.log("TransferOut error", error);
             handler(null, [memberId, amount], error);
         })
     }
@@ -218,7 +220,7 @@ export default class MemberCtrl extends BaseCtrl {
     public SetChildPassword(memberId: number, password: string, handler: Function): void {
         //出分值必须大于0
         if (!Verification.Password(password)) {
-            handler(null, [memberId, password], this.languageManager.GetErrorMsg(ErrorCodeExtends.PasswordFormatError));
+            handler(null, [memberId, password], ErrorCode[ErrorCode.PasswordFormatError]);
             return;
         }
         let dto: any = {
@@ -226,10 +228,8 @@ export default class MemberCtrl extends BaseCtrl {
             Password: password
         }
         this.webApi.Post(SetChildPasswordApi, dto).then((data: any) => {
-            console.log("SetChildPassword Success", data);
             handler(null, [memberId, password]);
         }, (error: string) => {
-            console.log("SetChildPassword error", error);
             handler(null, [memberId, password], error);
         })
     }

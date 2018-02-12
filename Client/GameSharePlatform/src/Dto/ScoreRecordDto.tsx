@@ -7,7 +7,7 @@ export class ListParamsDto {
     /**
      * 每页条数
      */
-    public PageSize: number = 10;
+    public PageSize: number = 20;
     /**
      * 交易类型
      */

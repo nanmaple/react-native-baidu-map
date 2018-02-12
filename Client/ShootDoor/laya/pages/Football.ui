@@ -28,7 +28,7 @@
         {
             "x":15,
             "type":"Label",
-            "props":{"y":375,"x":667,"wordWrap":true,"width":400,"var":"shootInfo","valign":"middle","text":"射中啦!","styleSkin":"ui/prompt/label.png","strokeColor":"#79cf1b","stroke":2,"pivotY":50,"pivotX":200,"overflow":"hidden","height":100,"fontSize":50,"font":"Helvetica","color":"#117a1e","bold":true,"align":"center"},
+            "props":{"y":375,"x":667,"wordWrap":true,"width":400,"var":"shootInfo","valign":"middle","text":"射中啦!","styleSkin":"ui/prompt/label.png","strokeColor":"#d00400","stroke":5,"pivotY":50,"pivotX":200,"overflow":"hidden","height":100,"fontSize":50,"font":"Helvetica","color":"#fbff70","bold":true,"align":"center"},
             "nodeParent":1,
             "label":"Label(shootInfo)",
             "isOpen":true,

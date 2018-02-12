@@ -1,11 +1,5 @@
 module.exports = {
     entry: "./src/index.tsx",
-    output: {
-        filename: "bundle.js",
-        path: __dirname + "/dist",
-        publicPath: '/dist/',
-    },
-
     devtool: "source-map",
 
     resolve: {
@@ -29,12 +23,12 @@ module.exports = {
         },
         {
             test: /\.css$/,
-            loader: "style-loader!css-loader?modules",
+            loader: "style-loader!css-loader?modules&localIdentName=[local]_[hash:base64:5]",
             exclude: /node_modules/
         },
         {
             test: /\.(png|jpe?g|gif)/,
-            loader: "url-loader?limit=8192"
+            loader: "url-loader?limit=8192&name=images/[hash:8].[name].[ext]"
         }
         ]
     },

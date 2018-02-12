@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":1,
-    "selecteID":7,
+    "selectedBox":3,
+    "selecteID":8,
     "props":{"y":0,"x":0,"width":212,"sceneColor":"#ffffff","height":538},
     "nodeParent":-1,
     "label":"View",
@@ -18,7 +18,7 @@
             "props":{"y":0,"x":0,"var":"history","skin":"ui/bg_histrory.png"},
             "nodeParent":1,
             "label":"Image(history)",
-            "isOpen":false,
+            "isOpen":true,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
@@ -26,92 +26,126 @@
             "child":[
                 {
                     "x":30,
-                    "type":"List",
-                    "props":{"y":8,"x":0,"width":220,"var":"_list","spaceY":5,"repeatY":5,"height":433},
+                    "type":"Panel",
+                    "props":{"y":15,"x":0,"width":210,"var":"listPanel","height":500},
                     "nodeParent":7,
-                    "label":"List(_list)",
-                    "isOpen":false,
+                    "label":"Panel(listPanel)",
+                    "isOpen":true,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
-                    "compId":4,
-                    "child":[
-                        {
-                            "type":"Box",
-                            "props":{"y":0,"x":1,"renderType":"render","name":"historyRecord"},
-                            "nodeParent":4,
-                            "label":"Box(historyRecord)",
-                            "isOpen":false,
-                            "isDirectory":true,
-                            "isAniNode":false,
-                            "hasChild":true,
-                            "compId":3,
-                            "child":[
-                                {
-                                    "type":"Image",
-                                    "props":{"y":8,"x":11,"width":56,"skin":"ui/poker/1.png","name":"poker0","height":72},
-                                    "nodeParent":3,
-                                    "label":"Image(poker0)",
-                                    "isDirectory":false,
-                                    "isAniNode":false,
-                                    "hasChild":false,
-                                    "compId":8,
-                                    "child":[
-                                        ]
-                                },
-                                {
-                                    "type":"Image",
-                                    "props":{"y":8,"x":78,"width":56,"skin":"ui/poker/1.png","name":"poker2","height":72},
-                                    "nodeParent":3,
-                                    "label":"Image(poker2)",
-                                    "isDirectory":false,
-                                    "isAniNode":false,
-                                    "hasChild":false,
-                                    "compId":9,
-                                    "child":[
-                                        ]
-                                },
-                                {
-                                    "type":"Image",
-                                    "props":{"y":8,"x":145,"width":56,"skin":"ui/poker/1.png","name":"poker1","height":72},
-                                    "nodeParent":3,
-                                    "label":"Image(poker1)",
-                                    "isDirectory":false,
-                                    "isAniNode":false,
-                                    "hasChild":false,
-                                    "compId":10,
-                                    "child":[
-                                        ]
-                                }]
-                        }]
-                },
-                {
-                    "x":30,
-                    "type":"Label",
-                    "props":{"y":446,"x":30,"var":"minBetLabel","text":"最小额度:xxxx","fontSize":24,"color":"#0012ff"},
-                    "nodeParent":7,
-                    "label":"Label(minBetLabel)",
-                    "isDirectory":false,
-                    "isAniNode":true,
-                    "hasChild":false,
                     "compId":11,
                     "child":[
-                        ]
-                },
-                {
-                    "x":30,
-                    "type":"Label",
-                    "props":{"y":484,"x":30,"var":"maxBetLabel","text":"最大额度:xxxx","fontSize":24,"color":"#0012ff"},
-                    "nodeParent":7,
-                    "label":"Label(maxBetLabel)",
-                    "isDirectory":false,
-                    "isAniNode":true,
-                    "hasChild":false,
-                    "compId":12,
-                    "child":[
-                        ]
+                        {
+                            "x":45,
+                            "type":"List",
+                            "props":{"y":0,"x":0,"width":210,"var":"_list","spaceY":0,"repeatY":5,"height":500},
+                            "nodeParent":11,
+                            "label":"List(_list)",
+                            "isOpen":true,
+                            "isDirectory":true,
+                            "isAniNode":true,
+                            "hasChild":true,
+                            "compId":4,
+                            "child":[
+                                {
+                                    "x":60,
+                                    "type":"Box",
+                                    "props":{"y":0,"x":0,"width":210,"renderType":"render","name":"historyRecord","height":100},
+                                    "nodeParent":4,
+                                    "label":"Box(historyRecord)",
+                                    "isOpen":true,
+                                    "isDirectory":true,
+                                    "isAniNode":false,
+                                    "hasChild":true,
+                                    "compId":3,
+                                    "child":[
+                                        {
+                                            "x":75,
+                                            "type":"Image",
+                                            "props":{"y":10,"x":7,"width":60,"skin":"ui/poker/pkbg.png","name":"poker0","height":80},
+                                            "nodeParent":3,
+                                            "label":"Image(poker0)",
+                                            "isDirectory":false,
+                                            "isAniNode":false,
+                                            "hasChild":false,
+                                            "compId":8,
+                                            "child":[
+                                                ]
+                                        },
+                                        {
+                                            "x":75,
+                                            "type":"Image",
+                                            "props":{"y":10,"x":74,"width":60,"skin":"ui/poker/pkbg.png","name":"poker2","height":80},
+                                            "nodeParent":3,
+                                            "label":"Image(poker2)",
+                                            "isDirectory":false,
+                                            "isAniNode":false,
+                                            "hasChild":false,
+                                            "compId":9,
+                                            "child":[
+                                                ]
+                                        },
+                                        {
+                                            "x":75,
+                                            "type":"Image",
+                                            "props":{"y":10,"x":141,"width":60,"skin":"ui/poker/pkbg.png","name":"poker1","height":80},
+                                            "nodeParent":3,
+                                            "label":"Image(poker1)",
+                                            "isDirectory":false,
+                                            "isAniNode":false,
+                                            "hasChild":false,
+                                            "compId":10,
+                                            "child":[
+                                                ]
+                                        }]
+                                }]
+                        }]
                 }],
             "$LOCKED":false
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"y":25,"x":7,"width":60,"visible":false,"var":"pokerPos0","skin":"ui/poker/pkbg.png","height":80},
+            "nodeParent":1,
+            "label":"Image(pokerPos0)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":15,
+            "child":[
+                ],
+            "$HIDDEN":true
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"y":25,"x":73,"width":60,"visible":false,"var":"pokerPos2","skin":"ui/poker/pkbg.png","height":80},
+            "nodeParent":1,
+            "label":"Image(pokerPos2)",
+            "isOpen":true,
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":16,
+            "child":[
+                ],
+            "$HIDDEN":true
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"y":25,"x":141,"width":60,"visible":false,"var":"pokerPos1","skin":"ui/poker/pkbg.png","height":80},
+            "nodeParent":1,
+            "label":"Image(pokerPos1)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":17,
+            "child":[
+                ],
+            "$HIDDEN":true
         }],
     "animations":[
         {

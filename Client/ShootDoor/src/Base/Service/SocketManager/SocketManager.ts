@@ -21,6 +21,14 @@ namespace ServiceManager {
             params.OnWillReconnect = Laya.Handler.create(this, this.OnWillReconnect, null, false);
             this.socket.Init(params);
         }
+        /**
+         * 连接
+         * @param token 
+         */
+        public SetNetwork(status:boolean) {
+            //启动连接
+            this.socket.SetNetwork(status);
+        }
 
         /**
          * 连接
@@ -96,14 +104,12 @@ namespace ServiceManager {
          * 接收消息
          */
         private OnMessage(message: string): void {
-            // console.log(message);
             if (!message) return;
             let messageDto: BaseDto.MessageDto;
             try {
                 messageDto = JSON.parse(message) as BaseDto.MessageDto;
             }
             catch (error) {
-                console.log(error);
                 return;
             }
 

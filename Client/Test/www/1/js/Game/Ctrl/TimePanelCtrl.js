@@ -21,13 +21,15 @@ var TimePanelCtrl = /** @class */ (function (_super) {
      */
     TimePanelCtrl.prototype.StartGameTime = function (time) {
         this.timePanel.timeEffect.StartGameTime(time);
-        this.pos(1190, 100);
+        this.timePanel.visible = true;
     };
     /**
      * 游戏时间结束
      */
     TimePanelCtrl.prototype.EndGameTime = function () {
         this.timePanel.timeEffect.EndGameTime();
+        this.timePanel.visible = false;
+        Utils.BackgroundMusic.PlaySounds("sound/csz1.wav");
     };
     return TimePanelCtrl;
 }(Laya.Sprite));

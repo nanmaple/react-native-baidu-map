@@ -1,5 +1,5 @@
 import * as React from "react";
-const switchStyle = require("./css/SwitchButton.css");
+const switchStyle = require("./SwitchButton.css");
 class SwitchButton extends React.Component<any, any> {
     constructor(props: any) {
         super(props);

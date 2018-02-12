@@ -30,8 +30,10 @@ var HistoryPanelCtrl = /** @class */ (function (_super) {
         //添加list数据
         this.listArr = [];
         if (!history) {
+            this.historyPanel.listPanel.visible = false;
             return;
         }
+        this.historyPanel.listPanel.visible = true;
         this.index = history.length;
         for (var i = 0; i < this.index; i++) {
             var dto = {
@@ -42,7 +44,7 @@ var HistoryPanelCtrl = /** @class */ (function (_super) {
             this.listArr.unshift(dto);
         }
         //实现list滚动
-        // this.ListPanelScenes._list.vScrollBarSkin = "";
+        // this.historyPanel._list.vScrollBarSkin = "";
         //将this.arr数据赋值到列表数据源。
         this.historyPanel._list.array = this.listArr;
         //renderHandler:单元格渲染处理器(默认返回参数cell:Box,index:int)。
@@ -72,21 +74,18 @@ var HistoryPanelCtrl = /** @class */ (function (_super) {
      * 增加历史记录
      */
     HistoryPanelCtrl.prototype.AddHistoryList = function (data) {
-        //增加单元格数据源
-        var dto = {
-            poker0: { skin: this.GetPokerUrl(data.FirstCard) },
-            poker1: { skin: this.GetPokerUrl(data.SecondCard) },
-            poker2: { skin: this.GetPokerUrl(data.ThirdCard) }
-        };
-        this.listArr.unshift(dto);
-        this.historyPanel._list.array = this.listArr;
-    };
-    /**
-     * 设置投注限额
-     * @param limit
-     */
-    HistoryPanelCtrl.prototype.SetLimit = function (limit) {
-        this.historyPanel.SetLimit(limit);
+        var _this = this;
+        //滚动历史列表
+        this.historyPanel.ScrollHistoryList(Laya.Handler.create(this, function () {
+            //增加单元格数据源
+            var dto = {
+                poker0: { skin: _this.GetPokerUrl(data.FirstCard) },
+                poker1: { skin: _this.GetPokerUrl(data.SecondCard) },
+                poker2: { skin: _this.GetPokerUrl(data.ThirdCard) }
+            };
+            _this.listArr.unshift(dto);
+            _this.historyPanel._list.array = _this.listArr;
+        }));
     };
     return HistoryPanelCtrl;
 }(Laya.Sprite));

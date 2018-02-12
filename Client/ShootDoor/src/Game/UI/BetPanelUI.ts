@@ -52,7 +52,6 @@ namespace ScenePanel {
                 this.BetBox.scale(1, GameConfig.WidthHeight);
             }
         }
-
         /**
         * 设置点击事件回调handler回调
         * @param handler 
@@ -71,8 +70,6 @@ namespace ScenePanel {
             this.isBetting = isBetting;
         }
 
-
-
         /**
     	* 给每一个Button绑定点击事件
     	* 为每一个Label绑定DataChange
@@ -82,7 +79,7 @@ namespace ScenePanel {
         private BindClick(): void {
             let language: LanguageUtils.Language = new LanguageUtils.Language();
             //绑定投注按钮
-            for (let i = 1; i <= 9; i++) {
+            for (let i = 1; i <= 13; i++) {
                 let betBoxChild: any = this.BetBox.getChildByName(Enum.BetPosType[i]);
                 //绑定点击事件 
                 betBoxChild.on(Laya.Event.CLICK, this, this.Bet, [i - 1]);
@@ -112,11 +109,16 @@ namespace ScenePanel {
          */
         private GetChipsPoint(): void {
             for (let i = 0; i < this.chipsBtn.length; i++) {
-                let x = this.chipsBtn[i].getBounds().x,
-                    y = this.chipsBtn[i].getBounds().y,
-                    width = this.chipsBtn[i].getBounds().width,
-                    height = this.chipsBtn[i].getBounds().height;
-                this.chipsPoint.push((this.chipsBtn[i].parent as Laya.Image).localToGlobal(new Laya.Point(x, y)));
+                let width = this.chipsBtn[i].getBounds().width;
+                let height = this.chipsBtn[i].getBounds().height;
+                let x = this.chipsBtn[i].getBounds().x + width / 2;
+                let y = this.chipsBtn[i].getBounds().y + height / 2;
+                if (GameConfig.RatioType) {
+                    x = x * GameConfig.HeightWidth;
+                } else {
+                    y = y * GameConfig.WidthHeight;
+                }
+                this.chipsPoint.push(new Laya.Point(this.Chips.x + x, this.Chips.y + y));
             }
         }
         /**
@@ -125,16 +127,18 @@ namespace ScenePanel {
         */
         private GetBetBtnPoint(): void {
             for (let i = 0; i < this.betMoneyLabelArr.length; i++) {
-                let x = this.betMoneyLabelArr[i].getBounds().x;
-                let y = this.betMoneyLabelArr[i].getBounds().y;
                 let width = this.betMoneyLabelArr[i].getBounds().width;
                 let height = this.betMoneyLabelArr[i].getBounds().height;
-                let point: Laya.Point = (this.betMoneyLabelArr[i].parent as Laya.Image).localToGlobal(new Laya.Point(x, y));
-
+                let x = this.betMoneyLabelArr[i].getBounds().x + width / 2 + (this.betMoneyLabelArr[i].parent as Laya.Image).x;
+                let y = this.betMoneyLabelArr[i].getBounds().y + height / 2 + (this.betMoneyLabelArr[i].parent as Laya.Image).y;
                 if (GameConfig.RatioType) {
-                    point.y += 498;
-                } else {
+                    x = x * GameConfig.HeightWidth;
+                    y += 498;
                 }
+                else {
+                    y = y * GameConfig.WidthHeight;
+                }
+                let point = new Laya.Point(this.BetBox.x + x, this.BetBox.y + y);
                 this.betBtnPoint.push(point);
             }
         }
@@ -192,6 +196,7 @@ namespace ScenePanel {
                 Data: i + 1
             }
             this.handler.runWith(params);
+            Utils.BackgroundMusic.PlaySounds("sound/bet.wav");
         }
 
         /**
@@ -265,18 +270,20 @@ namespace ScenePanel {
             this.maxBet = limit.MaxBet;
             //设置最小限额
             this.minBet = limit.MinBet;
+            this.maxBetLabel.text = `最大:${limit.MaxBet}`;
+            this.minBetLabel.text = `最小:${limit.MinBet}`;
         }
 
         /**
          * 重置按钮皮肤
          */
         private RestSkin(): void {
-            for (var index = 0; index < 9; index++) {
+            for (var index = 0; index < 12; index++) {
             }
         }        /**
          * 结算结果
          */
-        public SettleResult(data): void {
+        public SettleResult(data: Dto.GameResultDto, betData: any): void {
             //总赢数目
             let win: number = 0;
             let gameResult: Dto.CardInfoDto = JSON.parse(data.GameResult);
@@ -287,33 +294,29 @@ namespace ScenePanel {
                     if (card == 7) {
                         let pos: Enum.BetPosType = Number(i);
                         if (Enum.BetPosType.BIG == pos) {
-                            msg.push("大");
+                            (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
                             continue;
                         } else if (Enum.BetPosType.SMALL == pos) {
-                            msg.push("小");
+                            (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
                             continue;
                         } else if (Enum.BetPosType.ODD == pos) {
-                            msg.push("单");
+                            (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
                             continue;
                         } else if (Enum.BetPosType.EVEN == pos) {
-                            msg.push("双");
+                            (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
                             continue;
                         }
                     }
-                    win += data.SettleResult[i];                                                                                                                                                                                                                                    
-                    this.betBtnArr[Number(i) - 1].gray = false;
+                    (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
+                    if(data.SettleResult[i] > 100){
+                        data.SettleResult[i] = Utils.Money.Format(data.SettleResult[i], 0);
+                    }
+                    (this.betMoneyLabelArr[Number(i) - 1] as Laya.Button).label = data.SettleResult[i];
 
                     this.guessSuccess = true;
                 }
             }
-            if (this.guessSuccess) {
-                let backMsg: string = msg.length > 0 ? `,${msg.join(',')}为和局退还本金` : ``;
-                this.ShowMsg(`猜中了：${Math.round(win)}${backMsg}`);
-                this.guessSuccess = false;
-            } else if (msg.length > 0) {
-                this.ShowMsg(`${msg.join(',')}为和局退还本金`);
-            }
-            else {
+            if (!this.guessSuccess) {
                 this.ShowMsg("很遗憾，再接再厉");
             }
 
@@ -412,19 +415,23 @@ namespace ScenePanel {
             //设置状态数
             flyChip.stateNum = 1;
             flyChip.label = this.chipPrice.toString();
+            flyChip.anchorX = 0.5;
+            flyChip.anchorY = 0.5;
             //设置初始位置为当前选择的筹码的位置
-            flyChip.pos((this.chipsPoint[this.selectedChipNum.toString()].x), (this.chipsPoint[this.selectedChipNum.toString()].y) - 40);
+            flyChip.pos((this.chipsPoint[this.selectedChipNum.toString()].x), (this.chipsPoint[this.selectedChipNum.toString()].y));
             flyChip.skin = this.chipsNormalSkin;
-
+            let obj: any = { x: endX, y: endY, scaleX: 1, scaleY: 1 }
             if (GameConfig.RatioType) {
-                flyChip.scale(GameConfig.HeightWidth, 1);
+                flyChip.scale(1.1 * GameConfig.HeightWidth, 1.1);
+                obj.scaleX = GameConfig.HeightWidth;
             } else {
-                flyChip.scale(1, GameConfig.WidthHeight);
+                flyChip.scale(1.1, 1.1 * GameConfig.WidthHeight);
+                obj.scaleY = GameConfig.WidthHeight;
             }
             this.addChild(flyChip);
 
             //开始缓动
-            Laya.Tween.to(flyChip, { x: endX, y: endY }, 700, Laya.Ease.cubicInOut, Laya.Handler.create(this, this.ChipsFlyCallBack, [flyChip, curBetPosChip, value], false));
+            Laya.Tween.to(flyChip, obj, 700, Laya.Ease.cubicInOut, Laya.Handler.create(this, this.ChipsFlyCallBack, [flyChip, curBetPosChip, value], false));
 
         }
 

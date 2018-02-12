@@ -1,22 +1,42 @@
 .row{
     height:40px;
     display: flex;
-    border-bottom: 1px solid #ccc
+    border-bottom: 1px solid #ccc;
+    background:#fff;
+    padding:0 20px 0 20px;
+}
+.rowTitle{
+    height:40px;
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    background:#fff;
+    padding:0 20px 0 20px;
+    align-items: center
 }
 .row div{
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 .time{
- width:40%;
+   flex:2;
+   justify-content: flex-start
 }
-.id{
- width:15%;
+.changeIn{
+    display: flex;
+    flex:1;
+    justify-content: center;
+    color:#30bf27;
 }
-.change{
-width:15%
+.changeOut{
+    display: flex;
+    flex:1;
+    justify-content: center;
 }
 .message{
-  width:30%
+    display: flex;
+    flex:1;
+    justify-content: flex-end
+}
+.container {
+    min-height: 100%;
 }

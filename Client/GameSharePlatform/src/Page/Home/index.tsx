@@ -3,42 +3,109 @@ import {
     Link,
     Prompt
 } from 'react-router-dom';
+
+import { AuthorizationDto } from '../../Dto/AuthorizationDto';
+import CacheManager, { CacheType, UserInfo, Authorization } from '../../Service/CacheManager/CacheManager';
+
+import { GetRedirectUrl } from "../../GameConfig";
+import CompToast, { ToastType } from '../../Components/Toast';
+import LanguageManager from '../../Language/LanguageManager';
+import { ErrorCode } from '../../Enum/ErrorCode';
+import { GetQuery } from '../../Utils/Url';
+import * as GameConfig from '../../GameConfig';
+
+
+import { MemberRoute } from '../../Route/Config';
 import UserCtrl from "../../Controller/UserCtrl";
-import { ResultEnum, MemberInfoDto } from '../../Base';
-
-import { ManagerRoute,MemberRoute } from '../../Route/Config';
-
 import Money from '../../Utils/Money';
-
-const logoImg = require("../../Style/Image/logo.png");
+const logoImg = require("../../Image/logo.png");
 const style = require("./style.css");
 
 export default class Home extends React.Component<any, any> {
     private userCtrl: UserCtrl = new UserCtrl();
+    private toast: any;
+    private languageManager: LanguageManager;
     constructor(props: any) {
         super(props);
         this.state = {
             isLogin: this.userCtrl.IsLogin(),
             isClose: this.userCtrl.IsClose(),
-            memberInfo: this.userCtrl.GetMemberInfoByLocal()
+            memberInfo: this.userCtrl.GetMemberInfoByLocal(),
+            gameList: []
         }
     }
-    tabClick=(index:number)=>{
-           console.log(index);
+    /**
+     * 提示信息
+     * @param errorKey 提示信息
+     * @param  type 信息类型
+    */
+    private ShowToast = (errorKey: string, type: ToastType = ToastType.Success): void => {
+        if (!this.languageManager) {
+            this.languageManager = new LanguageManager();
+        }
+        let msg: string = this.languageManager.GetErrorMsg(errorKey);
+        this.toast.Show(msg, type);
     }
-    renderBtn = (): any => {
+    /**
+     * 游戏跳转
+     * @param id  游戏ID
+     * @param url 游戏地址
+     */
+    private GameLogin = (id: number) => {
+        let isLogin = this.userCtrl.GameLogin(id);
+        if (isLogin) {
+            window.location.href = GetRedirectUrl(id)
+        }
+        else {
+            //todo
+            this.ShowToast("token_Error", ToastType.Error);
+
+        }
+    }
+    /**
+     *点击关注 
+     */
+    private Attention = () => {
+        //获取地址栏中state参数，即父级（推荐人）ID
+        let parentID: string = GetQuery("parentid");
+        if (!parentID) {
+            parentID = "1";
+        }
+        let link = GameConfig.GetWeChatShareDto(parentID, true).Link;
+        this.props.history.replace(link);
+
+    }
+    /**
+     * 渲染按钮
+     */
+    public renderButton = (): any => {
         if (!this.state.isLogin) {
-            return (<Link to={MemberRoute} className={style.button}>关注</Link>)
+            return (<div onClick={this.Attention} className={style.button}>关注</div>)
         } else if (this.state.isClose) {
             return null;
         } else {
             return (<Link to={MemberRoute} className={style.button}>管理</Link>)
         }
     }
-
+    private renderGameList = (item: any, index: number) => {
+        return (
+            <div key={index} className={style.rowItem} onClick={() => { this.GameLogin(item.id) }}>
+                <div className={style.img}>
+                    <img src={item.imgUrl} />
+                </div>
+                <div className={style.gameMsg}>
+                    <div className={style.name}>{item.name}<span>点击进入游戏 ></span></div>
+                    <div className={style.start}>推荐指数:{item.star}</div>
+                </div>
+            </div>
+        )
+    }
     render() {
+        let { gameList } = this.state;
+        gameList = [{ imgUrl: logoImg, name: " 射龙门", star: "五颗星", id: 1 }];
         return (
             <div className="home">
+                <CompToast ref={(c) => this.toast = c} />
                 <div className={style.header}>
                     <div className={style.info} >
                         <img src={logoImg} alt="" className={style.logo} />
@@ -50,12 +117,17 @@ export default class Home extends React.Component<any, any> {
                     </div>
                     <div className={style.manager}>
                         {
-                            this.renderBtn()
+                            this.renderButton()
                         }
                     </div>
-          
                 </div>
-                <Link to={MemberRoute} className={style.button}>会员管理</Link>
+                <div className={style.gameList}>
+                    {
+                        gameList.map((item: any, index: number) => {
+                            return this.renderGameList(item, index);
+                        })
+                    }
+                </div>
             </div>
         );
     }

@@ -6,6 +6,14 @@ var Net;
         /**
          * 获取投注记录信息
          */
-        ApiConfig.GetBetRecord = GameConfig.WebApiBaseUrl + "/Bet/GetBetRecord";
+        ApiConfig.GetBetRecord = GameConfig.BetWebApiBaseUrl + "/Bet/GetBetRecord";
+        /**
+         * 游客登录
+         */
+        ApiConfig.LoginByTourists = GameConfig.WebApiBaseUrl + "/Member/DemoAccountLogin";
+        /**
+         * 获取微信js签名信息
+         */
+        ApiConfig.GetJsSignature = GameConfig.WebApiBaseUrl + "/WeChat/GetJsSignature";
     })(ApiConfig = Net.ApiConfig || (Net.ApiConfig = {}));
 })(Net || (Net = {}));

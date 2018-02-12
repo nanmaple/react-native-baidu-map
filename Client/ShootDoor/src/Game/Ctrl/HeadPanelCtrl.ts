@@ -3,14 +3,14 @@ class HeadPanelCtrl extends Laya.Sprite {
     private noteRecordPanelCtrl: NoteRecordPanelCtrl;  //投注记录面板控制类
     private rulePanel: ScenePanel.RulePanel;  //游戏规则面板UI类
     private score: Laya.Label;    //会员分数
-    constructor(headPanel: ScenePanel.HeadPanel,noteRecordPanel: ScenePanel.NoteRecordPanel,rulePanel:ScenePanel.RulePanel,memberInfo: BaseDto.MemberInfoDto, parentID: string) {
+    constructor(headPanel: ScenePanel.HeadPanel, noteRecordPanel: ScenePanel.NoteRecordPanel, rulePanel: ScenePanel.RulePanel, memberInfo: BaseDto.MemberInfoDto, parentID: string, isTourists: boolean) {
         super();
         this.headPanel = headPanel;
         //创建头部面板UI实例
         let grHandler: Laya.Handler = Laya.Handler.create(this, this.OnClickGR, null, false);
         let ruleHandler: Laya.Handler = Laya.Handler.create(this, this.OnClickRule, null, false);
 
-        this.headPanel.SetInfo(memberInfo,parentID, grHandler, ruleHandler);
+        this.headPanel.SetInfo(memberInfo, parentID, grHandler, ruleHandler, isTourists);
         this.noteRecordPanelCtrl = new NoteRecordPanelCtrl(noteRecordPanel);
         this.rulePanel = rulePanel;
     }
@@ -33,7 +33,7 @@ class HeadPanelCtrl extends Laya.Sprite {
      * @param money 
      */
     public ChangeMoney(money: number): void {
-        this.headPanel.ChangeMoney(Math.floor(money));
+        this.headPanel.ChangeMoney(money);
     }
 
 }

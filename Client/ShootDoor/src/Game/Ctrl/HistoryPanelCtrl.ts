@@ -3,6 +3,7 @@ class HistoryPanelCtrl extends Laya.Sprite {
     private listArr: Array<any>;   //历史记录数据
     private index: number = 0;  //记录条数
     private dataCards: Array<number>;  //扑克牌数据
+    private roundIDArr: Array<any>;   //历史牌数据局号
     constructor(historyPanel: ScenePanel.HistoryPanel) {
         super();
         this.historyPanel = historyPanel;
@@ -20,9 +21,12 @@ class HistoryPanelCtrl extends Laya.Sprite {
     public SetHistoryData(history: Array<Dto.HistoryRoundDto>): void {
         //添加list数据
         this.listArr = [];
+        this.roundIDArr = [];
         if (!history) {
+            this.historyPanel.listPanel.visible = false;
             return;
         }
+        this.historyPanel.listPanel.visible = true;
         this.index = history.length;
         for (let i: number = 0; i < this.index; i++) {
             let dto: any = {
@@ -31,9 +35,10 @@ class HistoryPanelCtrl extends Laya.Sprite {
                 poker2: { skin: this.GetPokerUrl(history[i].ThirdCard) }
             }
             this.listArr.unshift(dto);
+            this.roundIDArr.push({RoundID:history[i].RoundID});
         }
         //实现list滚动
-        // this.ListPanelScenes._list.vScrollBarSkin = "";
+        // this.historyPanel._list.vScrollBarSkin = "";
         //将this.arr数据赋值到列表数据源。
         this.historyPanel._list.array = this.listArr;
         //renderHandler:单元格渲染处理器(默认返回参数cell:Box,index:int)。
@@ -61,22 +66,29 @@ class HistoryPanelCtrl extends Laya.Sprite {
     /**
      * 增加历史记录
      */
-    public AddHistoryList(data: Dto.CardInfoDto): void {
-        //增加单元格数据源
-        let dto: any = {
-            poker0: { skin: this.GetPokerUrl(data.FirstCard) },
-            poker1: { skin: this.GetPokerUrl(data.SecondCard) },
-            poker2: { skin: this.GetPokerUrl(data.ThirdCard) }
-        }
-        this.listArr.unshift(dto);
-        this.historyPanel._list.array = this.listArr;
-    }
-
-    /**
-     * 设置投注限额
-     * @param limit 
-     */
-    public SetLimit(limit: Dto.LimitDto): void {
-        this.historyPanel.SetLimit(limit);
+    public AddHistoryList(data: any): void {
+        
+        //滚动历史列表
+        this.historyPanel.ScrollHistoryList(Laya.Handler.create(this, () => {
+            //增加单元格数据源
+            let dto: any = {
+                poker0: { skin: this.GetPokerUrl(data.Cards.FirstCard) },
+                poker1: { skin: this.GetPokerUrl(data.Cards.SecondCard) },
+                poker2: { skin: this.GetPokerUrl(data.Cards.ThirdCard) }
+            }
+            this.listArr.unshift(dto);
+            let pokerReData:boolean = false;   //重复的牌数据
+            for (let i: number = 0; i < this.index; i++) {
+                if(this.roundIDArr[i].RoundID == data.RoundID){
+                    pokerReData = true;
+                }
+            }
+            if(pokerReData){
+                return;
+            }else{
+                this.historyPanel._list.array = this.listArr;
+            }
+        }));
+        
     }
 }

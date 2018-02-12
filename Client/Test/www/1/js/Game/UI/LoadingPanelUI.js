@@ -19,6 +19,8 @@ var ScenePanel;
             _this.centerX = 0;
             _this.centerY = 0;
             _this.visible = false;
+            _this.on(Laya.Event.CLICK, _this, function () {
+            });
             return _this;
         }
         /**
@@ -34,6 +36,22 @@ var ScenePanel;
         LoadingPanel.prototype.HideLoading = function () {
             this.visible = false;
             this.loadingAni.stop();
+        };
+        /**
+         * 显示Connect Server
+         */
+        LoadingPanel.prototype.ShowConnect = function () {
+            this.visible = true;
+            this.connectServer.visible = true;
+            this.loadingAni.visible = false;
+        };
+        /**
+         * 隐藏Connect Server
+         */
+        LoadingPanel.prototype.HideConnect = function () {
+            this.visible = false;
+            this.connectServer.visible = false;
+            this.loadingAni.visible = true;
         };
         return LoadingPanel;
     }(ui.LoadingUI));

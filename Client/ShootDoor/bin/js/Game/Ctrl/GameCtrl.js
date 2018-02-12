@@ -16,15 +16,21 @@ var GameCtrl = (function (_super) {
      */
     function GameCtrl(onClose) {
         var _this = _super.call(this, GameConfig.GameID) || this;
+        _this.isAnimateEnd = false;
+        _this.settleData = null;
         //绑定关闭页面事件回调
         _this.onClose = onClose;
         //添加UI到舞台
         _this.gameScenes = new ScenePanel.GameScenes();
-        Net.WebApi.instance.SetToken();
+        //loading界面
+        _this.LoadingPanel = _this.gameScenes.loadingPanel;
+        _this.LoadingPanel.ShowConnect();
         //创建游戏状态控制类实例
         _this.RoundPanelCtrl = new RoundPanelCtrl(_this.gameScenes.roundPanel);
         //创建扑克牌面板控制类实例
         _this.CardPanelCtrl = new CardPanelCtrl(_this.gameScenes.cardPanel, _this.gameScenes.footballPanel);
+        //第三张牌翻转结束回调
+        _this.CardPanelCtrl.EndGameHander(Laya.Handler.create(_this, _this.FlipEnd, null, false));
         //创建投注控制实例
         _this.BetCtrl = new BetPanelCtrl(_this.gameScenes.betPanel, Laya.Handler.create(_this, _this.SendHandelr, null, false), _this.authorizationInfo.IsClose, _this.memberInfo);
         //创建历史记录面板控制类实例
@@ -32,55 +38,64 @@ var GameCtrl = (function (_super) {
         //创建时间面板控制类实例
         _this.TimePanelCtrl = new TimePanelCtrl(_this.gameScenes.timePanel);
         //创建游戏头部面板控制类实例
-        _this.HeadPanelCtrl = new HeadPanelCtrl(_this.gameScenes.headPanel, _this.gameScenes.noteReocrdPanel, _this.gameScenes.rulePanel, _this.memberInfo, _this.parentID);
+        _this.HeadPanelCtrl = new HeadPanelCtrl(_this.gameScenes.headPanel, _this.gameScenes.noteReocrdPanel, _this.gameScenes.rulePanel, _this.memberInfo, _this.parentID, _this.authorizationInfo.IsTourists);
         //创建tipCtrl
-        if (!_this.memberInfo) {
+        if (_this.authorizationInfo.IsTourists) {
             var tipsCtrl = new TipsPanelCtrl(_this.gameScenes.tipsPanel);
             tipsCtrl.Show();
         }
         return _this;
     }
     /**
+     * 分享回调
+     * @param status 分享结果类型 1.分享成功 0.取消分享 -1.分享失败
+     */
+    GameCtrl.prototype.WeChatShareHandler = function (status) {
+    };
+    /**
+     * 网络状态
+     * @param networkType 网络状态
+     */
+    GameCtrl.prototype.OnNoNetwork = function () {
+    };
+    /**
      * 侦听Socket连接事件
      * @param data
      */
     GameCtrl.prototype.OnConnectHandler = function () {
-        console.log("侦听:Socket连接");
     };
     /**
      * 侦听Socket关闭事件
      * @param data
      */
     GameCtrl.prototype.OnCloseHandler = function () {
-        console.log("侦听:Socket关闭");
+        this.LoadingPanel.ShowConnect();
     };
     /**
      * 侦听Socket错误事件
      * @param data
      */
     GameCtrl.prototype.OnErrorHandler = function (message) {
-        console.log("侦听:Socket错误");
     };
     /**
      * 侦听Socket连接事件
      * @param data
      */
     GameCtrl.prototype.OnWillReconnectHandler = function () {
-        console.log("侦听:Socket重连");
+        this.LoadingPanel.ShowConnect();
     };
     /**
      * 侦听登出事件
      * @param data
      */
     GameCtrl.prototype.OnLogoutHandler = function () {
-        console.log("侦听:登出");
+        this.LoadingPanel.HideConnect();
     };
     /**
      * Ack回调
      * @param data
      */
     GameCtrl.prototype.OnAckHandler = function (data) {
-        console.log("侦听:Ack");
         this.BetCtrl.BetAck(data);
     };
     /**
@@ -99,6 +114,7 @@ var GameCtrl = (function (_super) {
      * @param data 游戏初始化信息
      */
     GameCtrl.prototype.OnGameInit = function (data) {
+        this.LoadingPanel.HideConnect();
         if (data && data.RoundID) {
             this.RoundPanelCtrl.SetGameRound(data.RoundID);
         }
@@ -117,16 +133,16 @@ var GameCtrl = (function (_super) {
         }
         //3.显示当前牌面data.Cards
         if (data && data.Cards) {
-            this.CardPanelCtrl.InitGame(data.Cards);
+            this.CardPanelCtrl.InitGame({ RoundID: data.RoundID, Cards: data.Cards });
         }
         //4.显示历史记录data.History
         if (data && data.History) {
             this.HistoryPanelCtrl.SetHistoryData(data.History);
         }
-        if (data && data.Limit) {
-            this.HistoryPanelCtrl.SetLimit(data.Limit);
+        if (data && data.Balance) {
+            //改变总金额
+            this.HeadPanelCtrl.ChangeMoney(data.Balance);
         }
-        console.log("MSG:游戏初始化", data);
     };
     /**
      * 游戏开始回调
@@ -137,7 +153,6 @@ var GameCtrl = (function (_super) {
             this.RoundPanelCtrl.SetGameRound(data.RoundID);
         }
         this.RoundPanelCtrl.SetGameState(1); //计时开始
-        console.log("MSG:游戏开始", data);
         //1.显示赔率
         if (data && data.Odds) {
             //开始游戏
@@ -149,13 +164,14 @@ var GameCtrl = (function (_super) {
         }
         //3.重置牌面，显示第一和第二张牌
         this.CardPanelCtrl.StartGame(data);
+        this.isAnimateEnd = false;
+        this.settleData = null;
     };
     /**
      * 游戏投注结果回调
      * @param data 游戏投注结果信息
      */
     GameCtrl.prototype.OnBetResult = function (data) {
-        console.log("MSG:游戏投注结果", data);
         //投注结果返回
         this.BetCtrl.BetResult(data);
         if (!this.authorizationInfo.IsClose && data.Success) {
@@ -167,7 +183,7 @@ var GameCtrl = (function (_super) {
      * 游戏停止投注回调
      */
     GameCtrl.prototype.OnStopBet = function () {
-        console.log("MSG:游戏停止投注");
+        Utils.BackgroundMusic.PlaySounds("sound/csz1.wav");
     };
     /**
      * 游戏结束回调
@@ -176,28 +192,43 @@ var GameCtrl = (function (_super) {
     GameCtrl.prototype.OnGameResult = function (data) {
         var _this = this;
         this.RoundPanelCtrl.SetGameState(2);
-        console.log("MSG:游戏结束", data);
+        Laya.timer.once(5000, this, function () {
+            _this.RoundPanelCtrl.SetGameState(3);
+            _this.isAnimateEnd = true;
+            if (_this.settleData) {
+                //显示输赢效果
+                _this.BetCtrl.SettleResult(_this.settleData);
+            }
+        });
         //禁用面板按钮
         this.BetCtrl.GameResult();
         //翻转第三张牌及足球效果
         this.CardPanelCtrl.EndGame(data);
         //停止时间
         this.TimePanelCtrl.EndGameTime();
-        //第三张牌翻转结束回调
-        this.CardPanelCtrl.EndGameHander(Laya.Handler.create(this, function () {
-            //添加历史记录
-            _this.HistoryPanelCtrl.AddHistoryList(data);
-        }));
+    };
+    /**
+     * 游戏结束牌翻转
+     */
+    GameCtrl.prototype.FlipEnd = function (data) {
+        //牌飞入
+        this.gameScenes.FlyPoker(data.Cards);
+        //添加历史记录
+        this.HistoryPanelCtrl.AddHistoryList(data);
     };
     /**
      * 游戏结算回调
      * @param data 游戏结算结果信息
      */
     GameCtrl.prototype.OnSettleResult = function (data) {
-        this.RoundPanelCtrl.SetGameState(3);
-        console.log("MSG:游戏结算", data);
-        //显示输赢效果
-        this.BetCtrl.SettleResult(data);
+        this.RoundPanelCtrl.SetGameState(4);
+        if (this.isAnimateEnd) {
+            //显示输赢效果
+            this.BetCtrl.SettleResult(data);
+        }
+        else {
+            this.settleData = data;
+        }
         if (!this.authorizationInfo.IsClose) {
             //改变总金额
             this.HeadPanelCtrl.ChangeMoney(data.Balance);
@@ -208,7 +239,6 @@ var GameCtrl = (function (_super) {
      * @param data 游戏其他信息
      */
     GameCtrl.prototype.OnGameOther = function (data) {
-        console.log("MSG:游戏其他信息", data);
     };
     return GameCtrl;
 }(BaseCtrl));

@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset='utf-8' />
-	<title>www.layabox.com</title>
+	<title>ShootDoor</title>
 	<meta name="viewport" content="user-scalable=no,target-densitydpi=device-dpi" />
 	<meta name="renderer" content="webkit">
 	<meta name='apple-mobile-web-app-capable' content='yes' />
@@ -37,11 +37,15 @@
 	<script type="text/javascript" src="libs/laya.debugtool.js"></script>
 	<!--设备相关功能/需要时添加-->
 	<script type="text/javascript" src="libs/laya.device.js"></script>
+	<!--设备相关功能/需要时添加-->
+	<script type="text/javascript" src="libs/laya.wxmini.js"></script>
 	<!-- 物理引擎matter.js -->
 	<!--用户自定义顺序文件添加到这里-->
 	<!--jsfile--Custom-->
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 	<script src="js/GameConfig.js"></script>
 	<script src="js/Init.js"></script>
+	<script src="js/Base/Utils/WeChat.js"></script>
 	<script src="js/Base/Utils/Storage.js"></script>
 	<script src="js/Base/Utils/Guid.js"></script>
 	<script src="js/Base/Utils/Http.js"></script>
@@ -55,9 +59,8 @@
 	<script src="js/Base/Dto/MessageDto.js"></script>
 	<script src="js/Base/Dto/MemberInfoDto.js"></script>
 	<script src="js/Base/Dto/LoginDto.js"></script>
+	<script src="js/Base/Dto/WeChatShareDto.js"></script>
 	<script src="js/Base/Dto/AuthorizationDto.js"></script>
-	<script src="js/Base/WebApi/index.js"></script>
-	<script src="js/Base/WebApi/Config.js"></script>
 	<script src="js/Base/Cache/MemberInfo/IMemberInfo.js"></script>
 	<script src="js/Base/Cache/Authorization/IAuthorization.js"></script>
 	<script src="js/Base/Cache/Authorization/Authorization.js"></script>
@@ -91,6 +94,7 @@
 	<script src="js/Game/Enum/BetResult.js"></script>
 	<script src="js/Game/Dto/StartGameDto.js"></script>
 	<script src="js/Game/Dto/SendDto.js"></script>
+	<script src="js/Game/Dto/SendBetDto.js"></script>
 	<script src="js/Game/Dto/InitGameDto.js"></script>
 	<script src="js/Game/Dto/BetResultDto.js"></script>
 	<script src="js/Game/Dto/BetDto.js"></script>
@@ -122,7 +126,6 @@
 	<script src="js/Game/UI/TipsPanelUI.js"></script>
 	<script src="js/Game/UI/RoundPanelUI.js"></script>
 	<script src="js/Game/UI/RulePanelUI.js"></script>
-
 	<!--jsfile--Custom-->
 	<!--自定义的js(src文件夹下)文件自动添加到下面jsfile模块标签里面里-->
 	<!--删除标签，ide不会自动添加js文件，请谨慎操作-->

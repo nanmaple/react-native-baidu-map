@@ -6,7 +6,7 @@ var Net;
      * WebApi层
      * 单例 使用WebApi.instance
      */
-    var WebApi = (function () {
+    var WebApi = /** @class */ (function () {
         function WebApi() {
             //token存储
             this.header = {
@@ -54,6 +54,32 @@ var Net;
         ;
         /**
          * 登录检查
+         * @param dto 登录参数Dto
+         * @param successHandler 成功回调
+         * @param errorhandler 错误回调
+         */
+        WebApi.prototype.LoginByTourists = function (dto, successHandler, errorhandler) {
+            var obj = {
+                DeviceType: dto.DeviceType,
+                DeviceId: dto.DeviceId
+            };
+            //请求调Net的api，
+            this.http.Post(Net.ApiConfig.LoginByTourists, obj, null, function (response) {
+                console.log("LoginByTourists成功回调");
+                if (response.Result == Enum.ErrorCode.Success) {
+                    successHandler.runWith(response.Data);
+                }
+                else {
+                    errorhandler.runWith(response.Result);
+                }
+            }, function (error) {
+                console.log("LoginByTourists失败回调");
+                errorhandler.runWith(error.toString());
+            });
+        };
+        ;
+        /**
+         * 登录检查
          * @param token token值
          * @param successHandler 成功回调
          * @param errorhandler 错误回调
@@ -69,7 +95,7 @@ var Net;
                     successHandler.runWith(response.Data);
                 }
                 else {
-                    errorhandler.runWith(response.ErrorCode);
+                    errorhandler.runWith(response.Result);
                 }
             }, function (error) {
                 console.log("LoginCheck失败回调");
@@ -99,7 +125,7 @@ var Net;
                     successHandler.runWith(response.Data);
                 }
                 else {
-                    errorhandler.runWith(response.ErrorCode);
+                    errorhandler.runWith(response.Result);
                 }
             }, function (error) {
                 console.log("LoginCheck失败回调");
@@ -120,16 +146,16 @@ var Net;
                     successHandler.runWith(response.Data);
                 }
                 else {
-                    errorhandler.runWith(response.ErrorCode);
+                    errorhandler.runWith(response.Result);
                 }
             }, function (error) {
                 console.log("GetMemberInfo失败回调");
                 errorhandler.runWith(error.toString());
             });
         };
+        //单例
+        WebApi.instance = new WebApi();
         return WebApi;
     }());
-    //单例
-    WebApi.instance = new WebApi();
     Net.WebApi = WebApi;
 })(Net || (Net = {}));

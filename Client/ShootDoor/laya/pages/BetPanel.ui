@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":1,
-    "selecteID":158,
+    "selectedBox":160,
+    "selecteID":116,
     "props":{"y":0,"x":0,"width":1334,"sceneColor":"#fff","height":750},
     "nodeParent":-1,
     "label":"View",
@@ -18,16 +18,15 @@
             "props":{"width":1335,"var":"BetBox","skin":"ui/bg_bet.png","height":252,"centerX":0,"bottom":0},
             "nodeParent":1,
             "label":"Image(BetBox)",
-            "isOpen":true,
+            "isOpen":false,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
             "compId":159,
             "child":[
                 {
-                    "x":30,
                     "type":"Box",
-                    "props":{"y":28,"x":556,"width":272,"visible":true,"name":"IN","height":116},
+                    "props":{"y":22,"x":627,"width":133,"visible":true,"name":"IN","height":130},
                     "nodeParent":159,
                     "label":"Box(IN)",
                     "isOpen":true,
@@ -37,9 +36,8 @@
                     "compId":163,
                     "child":[
                         {
-                            "x":45,
                             "type":"Label",
-                            "props":{"y":20,"x":100,"width":60,"valign":"middle","text":"射进：","height":40,"fontSize":28,"color":"#faf114","align":"center"},
+                            "props":{"y":20,"x":36,"width":60,"valign":"middle","text":"射进","height":40,"fontSize":28,"color":"#faf114","align":"center"},
                             "nodeParent":163,
                             "label":"Label",
                             "isDirectory":false,
@@ -50,9 +48,8 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Label",
-                            "props":{"y":60,"x":110,"width":60,"valign":"middle","text":"---","height":40,"fontSize":28,"color":"#faf114","align":"center"},
+                            "props":{"y":60,"x":36,"width":60,"valign":"middle","text":"---","height":40,"fontSize":28,"color":"#faf114","align":"center"},
                             "nodeParent":163,
                             "label":"Label",
                             "isDirectory":false,
@@ -63,9 +60,8 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Button",
-                            "props":{"y":60,"x":56,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","anchorY":0.5,"anchorX":0.5},
+                            "props":{"y":32,"x":66,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","anchorY":0.5,"anchorX":0.5},
                             "nodeParent":163,
                             "label":"Button",
                             "isDirectory":false,
@@ -77,9 +73,8 @@
                         }]
                 },
                 {
-                    "x":30,
                     "type":"Box",
-                    "props":{"y":28,"x":284,"width":272,"name":"OUT","height":116},
+                    "props":{"y":22,"x":281,"width":346,"name":"OUT","height":65},
                     "nodeParent":159,
                     "label":"Box(OUT)",
                     "isOpen":true,
@@ -89,9 +84,8 @@
                     "compId":162,
                     "child":[
                         {
-                            "x":45,
                             "type":"Label",
-                            "props":{"y":20,"x":100,"width":60,"valign":"middle","text":"射偏:","height":40,"fontSize":28,"color":"#faf114","align":"center"},
+                            "props":{"y":12,"x":95,"width":60,"valign":"middle","text":"射偏","height":40,"fontSize":28,"color":"#faf114","align":"center"},
                             "nodeParent":162,
                             "label":"Label",
                             "isDirectory":false,
@@ -102,9 +96,8 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Label",
-                            "props":{"y":60,"x":100,"width":60,"valign":"middle","text":"---","height":40,"fontSize":28,"color":"#faf114","align":"center"},
+                            "props":{"y":12,"x":175,"width":60,"valign":"middle","text":"---","height":40,"fontSize":28,"color":"#faf114","align":"center"},
                             "nodeParent":162,
                             "label":"Label",
                             "isDirectory":false,
@@ -115,9 +108,8 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Button",
-                            "props":{"y":60,"x":56,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","anchorY":0.5,"anchorX":0.5},
+                            "props":{"y":32,"x":120,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","anchorY":0.5,"anchorX":0.5},
                             "nodeParent":162,
                             "label":"Button",
                             "isDirectory":false,
@@ -125,13 +117,13 @@
                             "hasChild":false,
                             "compId":182,
                             "child":[
-                                ]
+                                ],
+                            "$HIDDEN":false
                         }]
                 },
                 {
-                    "x":30,
                     "type":"Box",
-                    "props":{"y":28,"x":832,"width":272,"name":"HIT","height":116},
+                    "props":{"y":22,"x":761,"width":346,"name":"HIT","height":65},
                     "nodeParent":159,
                     "label":"Box(HIT)",
                     "isOpen":true,
@@ -141,9 +133,8 @@
                     "compId":164,
                     "child":[
                         {
-                            "x":45,
                             "type":"Label",
-                            "props":{"y":20,"x":100,"width":60,"valign":"middle","text":"撞解:","height":40,"fontSize":28,"color":"#faf114","align":"center"},
+                            "props":{"y":12,"x":95,"width":60,"valign":"middle","text":"撞柱","height":40,"fontSize":28,"color":"#faf114","align":"center"},
                             "nodeParent":164,
                             "label":"Label",
                             "isDirectory":false,
@@ -154,9 +145,8 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Label",
-                            "props":{"y":60,"x":100,"width":60,"valign":"middle","text":"---","height":40,"fontSize":28,"color":"#faf114","align":"center"},
+                            "props":{"y":12,"x":175,"width":60,"valign":"middle","text":"---","height":40,"fontSize":28,"color":"#faf114","align":"center"},
                             "nodeParent":164,
                             "label":"Label",
                             "isOpen":true,
@@ -168,9 +158,8 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Button",
-                            "props":{"y":60,"x":56,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","anchorY":0.5,"anchorX":0.5},
+                            "props":{"y":32,"x":120,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","anchorY":0.5,"anchorX":0.5},
                             "nodeParent":164,
                             "label":"Button",
                             "isDirectory":false,
@@ -178,13 +167,13 @@
                             "hasChild":false,
                             "compId":196,
                             "child":[
-                                ]
+                                ],
+                            "$HIDDEN":false
                         }]
                 },
                 {
-                    "x":30,
                     "type":"Box",
-                    "props":{"y":148,"x":556,"width":132,"name":"BIG","height":104},
+                    "props":{"y":156,"x":556,"width":132,"name":"BIG","height":95},
                     "nodeParent":159,
                     "label":"Box(BIG)",
                     "isOpen":true,
@@ -194,9 +183,8 @@
                     "compId":168,
                     "child":[
                         {
-                            "x":45,
                             "type":"Label",
-                            "props":{"y":10,"width":60,"valign":"middle","text":"大:","height":40,"fontSize":24,"color":"#faf114","centerX":0,"align":"center"},
+                            "props":{"y":10,"width":60,"valign":"middle","text":"大:","height":40,"fontSize":24,"color":"#ffbf66","centerX":0,"align":"center"},
                             "nodeParent":168,
                             "label":"Label",
                             "isDirectory":false,
@@ -208,9 +196,8 @@
                             "$HIDDEN":false
                         },
                         {
-                            "x":45,
                             "type":"Label",
-                            "props":{"y":60,"width":60,"valign":"middle","text":"---","height":30,"fontSize":24,"color":"#faf114","centerX":0,"align":"center"},
+                            "props":{"y":50,"width":60,"valign":"middle","text":"---","height":30,"fontSize":24,"color":"#ffbf66","centerX":0,"align":"center"},
                             "nodeParent":168,
                             "label":"Label",
                             "isDirectory":false,
@@ -221,9 +208,8 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Button",
-                            "props":{"y":52,"x":68,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","anchorY":0.5,"anchorX":0.5},
+                            "props":{"y":47,"x":66,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","anchorY":0.5,"anchorX":0.5},
                             "nodeParent":168,
                             "label":"Button",
                             "isDirectory":false,
@@ -236,9 +222,8 @@
                         }]
                 },
                 {
-                    "x":30,
                     "type":"Box",
-                    "props":{"y":148,"x":692,"width":132,"name":"SMALL","height":104},
+                    "props":{"y":156,"x":692,"width":132,"name":"SMALL","height":95},
                     "nodeParent":159,
                     "label":"Box(SMALL)",
                     "isOpen":true,
@@ -248,9 +233,8 @@
                     "compId":169,
                     "child":[
                         {
-                            "x":45,
                             "type":"Label",
-                            "props":{"y":10,"width":60,"valign":"middle","text":"小:","height":40,"fontSize":24,"color":"#faf114","centerX":0,"align":"center"},
+                            "props":{"y":10,"width":60,"valign":"middle","text":"小:","height":40,"fontSize":24,"color":"#66fcff","centerX":0,"align":"center"},
                             "nodeParent":169,
                             "label":"Label",
                             "isDirectory":false,
@@ -261,9 +245,8 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Label",
-                            "props":{"y":60,"width":60,"valign":"middle","text":"---","height":30,"fontSize":24,"color":"#faf114","centerX":0,"align":"center"},
+                            "props":{"y":50,"width":60,"valign":"middle","text":"---","height":30,"fontSize":24,"color":"#66fcff","centerX":0,"align":"center"},
                             "nodeParent":169,
                             "label":"Label",
                             "isDirectory":false,
@@ -274,9 +257,8 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Button",
-                            "props":{"y":52,"x":68,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","anchorY":0.5,"anchorX":0.5},
+                            "props":{"y":47,"x":66,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","anchorY":0.5,"anchorX":0.5},
                             "nodeParent":169,
                             "label":"Button",
                             "isDirectory":false,
@@ -289,9 +271,8 @@
                         }]
                 },
                 {
-                    "x":30,
                     "type":"Box",
-                    "props":{"y":148,"x":832,"width":132,"name":"ODD","height":104},
+                    "props":{"y":156,"x":832,"width":132,"name":"ODD","height":95},
                     "nodeParent":159,
                     "label":"Box(ODD)",
                     "isOpen":true,
@@ -301,9 +282,8 @@
                     "compId":170,
                     "child":[
                         {
-                            "x":45,
                             "type":"Label",
-                            "props":{"y":10,"width":60,"valign":"middle","text":"单:","height":40,"fontSize":24,"color":"#faf114","centerX":0,"align":"center"},
+                            "props":{"y":10,"width":60,"valign":"middle","text":"单:","height":40,"fontSize":24,"color":"#ffbf66","centerX":0,"align":"center"},
                             "nodeParent":170,
                             "label":"Label",
                             "isDirectory":false,
@@ -314,9 +294,8 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Label",
-                            "props":{"y":60,"width":60,"valign":"middle","text":"---","height":30,"fontSize":24,"color":"#faf114","centerX":0,"align":"center"},
+                            "props":{"y":50,"width":60,"valign":"middle","text":"---","height":30,"fontSize":24,"color":"#ffbf66","centerX":0,"align":"center"},
                             "nodeParent":170,
                             "label":"Label",
                             "isDirectory":false,
@@ -327,9 +306,8 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Button",
-                            "props":{"y":52,"x":68,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","anchorY":0.5,"anchorX":0.5},
+                            "props":{"y":47,"x":66,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","anchorY":0.5,"anchorX":0.5},
                             "nodeParent":170,
                             "label":"Button",
                             "isDirectory":false,
@@ -342,9 +320,8 @@
                         }]
                 },
                 {
-                    "x":30,
                     "type":"Box",
-                    "props":{"y":148,"x":968,"width":148,"name":"EVEN","height":104},
+                    "props":{"y":156,"x":968,"width":148,"name":"EVEN","height":95},
                     "nodeParent":159,
                     "label":"Box(EVEN)",
                     "isOpen":true,
@@ -354,9 +331,8 @@
                     "compId":167,
                     "child":[
                         {
-                            "x":45,
                             "type":"Label",
-                            "props":{"y":10,"width":60,"valign":"middle","text":"双:","height":40,"fontSize":24,"color":"#faf114","centerX":0,"align":"center"},
+                            "props":{"y":10,"width":60,"valign":"middle","text":"双:","height":40,"fontSize":24,"color":"#66fcff","centerX":0,"align":"center"},
                             "nodeParent":167,
                             "label":"Label",
                             "isDirectory":false,
@@ -367,9 +343,8 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Label",
-                            "props":{"y":60,"width":60,"valign":"middle","text":"---","height":30,"fontSize":24,"color":"#faf114","centerX":0,"align":"center"},
+                            "props":{"y":50,"width":60,"valign":"middle","text":"---","height":30,"fontSize":24,"color":"#66fcff","centerX":0,"align":"center"},
                             "nodeParent":167,
                             "label":"Label",
                             "isDirectory":false,
@@ -380,9 +355,8 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Button",
-                            "props":{"y":26,"x":76,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","centerY":0,"anchorY":0.5,"anchorX":0.5},
+                            "props":{"y":47,"x":74,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","anchorY":0.5,"anchorX":0.5},
                             "nodeParent":167,
                             "label":"Button",
                             "isDirectory":false,
@@ -394,9 +368,8 @@
                         }]
                 },
                 {
-                    "x":30,
                     "type":"Box",
-                    "props":{"y":148,"x":268,"width":148,"name":"RED","height":104},
+                    "props":{"y":157,"x":268,"width":148,"name":"RED","height":95},
                     "nodeParent":159,
                     "label":"Box(RED)",
                     "isOpen":true,
@@ -406,9 +379,8 @@
                     "compId":166,
                     "child":[
                         {
-                            "x":45,
                             "type":"Label",
-                            "props":{"y":10,"width":60,"valign":"middle","text":"红:","height":40,"fontSize":24,"color":"#faf114","centerX":0,"align":"center"},
+                            "props":{"y":10,"width":60,"valign":"middle","text":"红:","height":40,"fontSize":24,"color":"#ffbf66","centerX":0,"align":"center"},
                             "nodeParent":166,
                             "label":"Label",
                             "isDirectory":false,
@@ -419,9 +391,8 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Label",
-                            "props":{"y":60,"width":60,"valign":"middle","text":"---","height":30,"fontSize":24,"color":"#faf114","centerX":0,"align":"center"},
+                            "props":{"y":50,"width":60,"valign":"middle","text":"---","height":30,"fontSize":24,"color":"#ffbf66","centerX":0,"align":"center"},
                             "nodeParent":166,
                             "label":"Label",
                             "isDirectory":false,
@@ -432,9 +403,8 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Button",
-                            "props":{"y":52,"x":76,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","anchorY":0.5,"anchorX":0.5},
+                            "props":{"y":47,"x":74,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","anchorY":0.5,"anchorX":0.5},
                             "nodeParent":166,
                             "label":"Button",
                             "isDirectory":false,
@@ -446,9 +416,8 @@
                         }]
                 },
                 {
-                    "x":30,
                     "type":"Box",
-                    "props":{"y":148,"x":420,"width":132,"name":"BLACK","height":104},
+                    "props":{"y":156,"x":420,"width":132,"name":"BLACK","height":95},
                     "nodeParent":159,
                     "label":"Box(BLACK)",
                     "isOpen":true,
@@ -458,9 +427,8 @@
                     "compId":165,
                     "child":[
                         {
-                            "x":45,
                             "type":"Label",
-                            "props":{"y":10,"width":60,"valign":"middle","text":"黑:","height":40,"fontSize":24,"color":"#faf114","centerX":0,"align":"center"},
+                            "props":{"y":10,"width":60,"valign":"middle","text":"黑:","height":40,"fontSize":24,"color":"#66fcff","centerX":0,"align":"center"},
                             "nodeParent":165,
                             "label":"Label",
                             "isDirectory":false,
@@ -471,9 +439,8 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Label",
-                            "props":{"y":60,"width":60,"valign":"middle","text":"---","height":30,"fontSize":24,"color":"#faf114","centerX":0,"align":"center"},
+                            "props":{"y":50,"width":60,"valign":"middle","text":"---","height":30,"fontSize":24,"color":"#66fcff","centerX":0,"align":"center"},
                             "nodeParent":165,
                             "label":"Label",
                             "isDirectory":false,
@@ -484,9 +451,8 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Button",
-                            "props":{"x":68,"width":72,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","height":74,"centerY":-1,"anchorY":0.5,"anchorX":0.5},
+                            "props":{"y":47,"x":66,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","anchorY":0.5,"anchorX":0.5},
                             "nodeParent":165,
                             "label":"Button",
                             "isDirectory":false,
@@ -496,12 +462,210 @@
                             "child":[
                                 ]
                         }]
+                },
+                {
+                    "type":"Box",
+                    "props":{"y":90,"x":279,"width":173,"name":"LOUT","height":65},
+                    "nodeParent":159,
+                    "label":"Box(LOUT)",
+                    "isOpen":true,
+                    "isDirectory":true,
+                    "isAniNode":true,
+                    "hasChild":true,
+                    "compId":201,
+                    "child":[
+                        {
+                            "type":"Label",
+                            "props":{"y":12,"x":25,"width":60,"valign":"middle","text":"左","height":40,"fontSize":28,"color":"#faf114","align":"center"},
+                            "nodeParent":201,
+                            "label":"Label",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":202,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "type":"Label",
+                            "props":{"y":12,"x":80,"width":80,"valign":"middle","text":"---","height":40,"fontSize":28,"color":"#faf114","align":"center"},
+                            "nodeParent":201,
+                            "label":"Label",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":203,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "type":"Button",
+                            "props":{"y":32,"x":50,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","anchorY":0.5,"anchorX":0.5},
+                            "nodeParent":201,
+                            "label":"Button",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":204,
+                            "child":[
+                                ],
+                            "$HIDDEN":false
+                        }]
+                },
+                {
+                    "type":"Box",
+                    "props":{"y":90,"x":453,"width":173,"name":"ROUT","height":65},
+                    "nodeParent":159,
+                    "label":"Box(ROUT)",
+                    "isOpen":true,
+                    "isDirectory":true,
+                    "isAniNode":true,
+                    "hasChild":true,
+                    "compId":205,
+                    "child":[
+                        {
+                            "type":"Label",
+                            "props":{"y":12,"x":25,"width":60,"valign":"middle","text":"右","height":40,"fontSize":28,"color":"#faf114","align":"center"},
+                            "nodeParent":205,
+                            "label":"Label",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":206,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "type":"Label",
+                            "props":{"y":12,"x":80,"width":80,"valign":"middle","text":"---","height":40,"fontSize":28,"color":"#faf114","align":"center"},
+                            "nodeParent":205,
+                            "label":"Label",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":207,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "type":"Button",
+                            "props":{"y":32,"x":50,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","anchorY":0.5,"anchorX":0.5},
+                            "nodeParent":205,
+                            "label":"Button",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":208,
+                            "child":[
+                                ],
+                            "$HIDDEN":false
+                        }]
+                },
+                {
+                    "type":"Box",
+                    "props":{"y":90,"x":764,"width":173,"name":"LHIT","height":65},
+                    "nodeParent":159,
+                    "label":"Box(LHIT)",
+                    "isOpen":true,
+                    "isDirectory":true,
+                    "isAniNode":true,
+                    "hasChild":true,
+                    "compId":209,
+                    "child":[
+                        {
+                            "type":"Label",
+                            "props":{"y":12,"x":25,"width":60,"valign":"middle","text":"左","height":40,"fontSize":28,"color":"#faf114","align":"center"},
+                            "nodeParent":209,
+                            "label":"Label",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":210,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "type":"Label",
+                            "props":{"y":12,"x":80,"width":80,"valign":"middle","text":"---","height":40,"fontSize":28,"color":"#faf114","align":"center"},
+                            "nodeParent":209,
+                            "label":"Label",
+                            "isOpen":true,
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":211,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "type":"Button",
+                            "props":{"y":32,"x":50,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","anchorY":0.5,"anchorX":0.5},
+                            "nodeParent":209,
+                            "label":"Button",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":212,
+                            "child":[
+                                ],
+                            "$HIDDEN":false
+                        }]
+                },
+                {
+                    "type":"Box",
+                    "props":{"y":90,"x":938,"width":173,"name":"RHIT","height":65},
+                    "nodeParent":159,
+                    "label":"Box(RHIT)",
+                    "isOpen":true,
+                    "isDirectory":true,
+                    "isAniNode":true,
+                    "hasChild":true,
+                    "compId":213,
+                    "child":[
+                        {
+                            "type":"Label",
+                            "props":{"y":12,"x":25,"width":60,"valign":"middle","text":"右","height":40,"fontSize":28,"color":"#faf114","align":"center"},
+                            "nodeParent":213,
+                            "label":"Label",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":214,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "type":"Label",
+                            "props":{"y":12,"x":80,"width":80,"valign":"middle","text":"---","height":40,"fontSize":28,"color":"#faf114","align":"center"},
+                            "nodeParent":213,
+                            "label":"Label",
+                            "isOpen":true,
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":215,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "type":"Button",
+                            "props":{"y":32,"x":50,"visible":false,"stateNum":"1","skin":"ui/btn_chip.png","labelSize":20,"label":"0","anchorY":0.5,"anchorX":0.5},
+                            "nodeParent":213,
+                            "label":"Button",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":216,
+                            "child":[
+                                ],
+                            "$HIDDEN":false
+                        }]
                 }]
         },
         {
             "x":15,
             "type":"Label",
-            "props":{"width":1334,"visible":false,"var":"MsgPanel","text":"恭喜你猜中了","strokeColor":"#0c44f3","stroke":5,"fontSize":60,"color":"#e81915","centerY":0,"centerX":0,"bold":true,"anchorY":0.5,"anchorX":0.5,"align":"center"},
+            "props":{"width":1334,"visible":false,"var":"MsgPanel","text":"恭喜你猜中了","strokeColor":"#d00400","stroke":5,"fontSize":60,"color":"#fbff70","centerY":0,"centerX":0,"bold":true,"anchorY":0.5,"anchorX":0.5,"align":"center"},
             "nodeParent":1,
             "label":"Label(MsgPanel)",
             "isDirectory":false,
@@ -514,7 +678,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"var":"Chips","top":100,"skin":"ui/bg_chips.png","right":22,"anchorY":0.5,"anchorX":0.5},
+            "props":{"width":152,"var":"Chips","top":100,"skin":"ui/bg_chips.png","right":22},
             "nodeParent":1,
             "label":"Image(Chips)",
             "isOpen":true,
@@ -526,7 +690,7 @@
                 {
                     "x":30,
                     "type":"Button",
-                    "props":{"y":160,"x":76,"stateNum":"1","skin":"ui/chip_s.png","scaleY":1.1,"scaleX":1.1,"labelSize":20,"labelColors":"#f00","label":"5","anchorY":0.5,"anchorX":0.5},
+                    "props":{"y":60,"x":75,"stateNum":"1","skin":"ui/chip_s.png","scaleY":1.1,"scaleX":1.1,"labelSize":20,"labelColors":"#f00","label":"5","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":160,
                     "label":"Button",
                     "isDirectory":false,
@@ -539,7 +703,7 @@
                 {
                     "x":30,
                     "type":"Button",
-                    "props":{"y":244,"x":76,"stateNum":"1","skin":"ui/btn_chip.png","scaleY":0.9,"scaleX":0.9,"labelSize":20,"labelColors":"#f00","label":"10","anchorY":0.5,"anchorX":0.5},
+                    "props":{"y":148,"x":75,"stateNum":"1","skin":"ui/btn_chip.png","scaleY":0.9,"scaleX":0.9,"labelSize":20,"labelColors":"#f00","label":"10","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":160,
                     "label":"Button",
                     "isDirectory":false,
@@ -552,7 +716,7 @@
                 {
                     "x":30,
                     "type":"Button",
-                    "props":{"y":325,"x":76,"stateNum":"1","skin":"ui/btn_chip.png","scaleY":0.9,"scaleX":0.9,"labelSize":20,"labelColors":"#f00","label":"20","anchorY":0.5,"anchorX":0.5},
+                    "props":{"y":233,"x":75,"stateNum":"1","skin":"ui/btn_chip.png","scaleY":0.9,"scaleX":0.9,"labelSize":20,"labelColors":"#f00","label":"20","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":160,
                     "label":"Button",
                     "isDirectory":false,
@@ -565,7 +729,7 @@
                 {
                     "x":30,
                     "type":"Button",
-                    "props":{"y":405,"x":76,"stateNum":"1","skin":"ui/btn_chip.png","scaleY":0.9,"scaleX":0.9,"labelSize":20,"labelColors":"#f00","label":"50","anchorY":0.5,"anchorX":0.5},
+                    "props":{"y":317,"x":75,"stateNum":"1","skin":"ui/btn_chip.png","scaleY":0.9,"scaleX":0.9,"labelSize":20,"labelColors":"#f00","label":"50","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":160,
                     "label":"Button",
                     "isDirectory":false,
@@ -578,13 +742,39 @@
                 {
                     "x":30,
                     "type":"Button",
-                    "props":{"y":485,"x":76,"stateNum":"1","skin":"ui/btn_chip.png","scaleY":0.9,"scaleX":0.9,"labelSize":20,"labelColors":"#f00","label":"100","anchorY":0.5,"anchorX":0.5},
+                    "props":{"y":403,"x":75,"stateNum":"1","skin":"ui/btn_chip.png","scaleY":0.9,"scaleX":0.9,"labelSize":20,"labelColors":"#f00","label":"100","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":160,
                     "label":"Button",
                     "isDirectory":false,
                     "isAniNode":true,
                     "hasChild":false,
                     "compId":120,
+                    "child":[
+                        ]
+                },
+                {
+                    "x":30,
+                    "type":"Label",
+                    "props":{"y":455,"x":24,"var":"minBetLabel","text":"最小:xxxx","fontSize":24,"color":"#0012ff"},
+                    "nodeParent":160,
+                    "label":"Label(minBetLabel)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":199,
+                    "child":[
+                        ]
+                },
+                {
+                    "x":30,
+                    "type":"Label",
+                    "props":{"y":490,"x":24,"var":"maxBetLabel","text":"最大:xxxx","fontSize":24,"color":"#0012ff"},
+                    "nodeParent":160,
+                    "label":"Label(maxBetLabel)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":200,
                     "child":[
                         ]
                 }]

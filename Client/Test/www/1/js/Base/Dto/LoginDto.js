@@ -5,6 +5,14 @@ var BaseDto;
      */
     var LoginDto = /** @class */ (function () {
         function LoginDto() {
+            /**
+             * 设备号
+             */
+            this.DeviceId = "123456";
+            /**
+             * 设备号
+             */
+            this.DeviceType = "MOBILE";
         }
         return LoginDto;
     }());
@@ -14,6 +22,10 @@ var BaseDto;
      */
     var LoginSuccessDto = /** @class */ (function () {
         function LoginSuccessDto() {
+            /**
+             * 分数
+             */
+            this.Score = null;
         }
         return LoginSuccessDto;
     }());

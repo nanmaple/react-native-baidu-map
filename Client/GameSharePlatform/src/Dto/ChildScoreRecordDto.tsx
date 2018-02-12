@@ -7,7 +7,7 @@ export class ListParamsDto {
     /**
      * 每页条数
      */
-    public PageSize: number = 10;
+    public PageSize: number = 20;
     /**
      * 会员ID
     */
@@ -28,20 +28,12 @@ export class ListParamsCtrlDto extends ListParamsDto {
 }
 
 export class ScoreRecordDto {
-    /**
-     * 变化数目
-     */
-    public Changed: number;
-    /**
-     * id
-     */
-    public Id: number;
-    /**
-     * 备注
-     */
-    public Remark: string;
-    /**
-     * 时间
-     */
-    public UpdateTime: string;
+      public Id: number;
+      public TransferId: string;
+      public MemberAccount:string;
+      public ParentAccount:string;
+      public Amount: 5.0;
+      public TransferTime: string;
+      public TransferIP:string;
+      public Remark: string
 }

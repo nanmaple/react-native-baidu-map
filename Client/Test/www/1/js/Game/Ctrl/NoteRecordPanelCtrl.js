@@ -13,8 +13,8 @@ var NoteRecordPanelCtrl = /** @class */ (function (_super) {
     function NoteRecordPanelCtrl(noteRecordPanel) {
         var _this = _super.call(this) || this;
         _this.noMoreData = false; //没有更多数据
+        _this.isActiveData = true; //初始化数据
         _this.scrollValue = 0; //列表滚动位置
-        _this.listShow = false; //列表显示状态
         _this.noteRecordPanel = noteRecordPanel;
         _this.betRecordPageDto = new Dto.BetRecordPageDto();
         _this.betRecordPageDto.GameId = GameConfig.GameID;
@@ -47,9 +47,6 @@ var NoteRecordPanelCtrl = /** @class */ (function (_super) {
      * 显示投注面板
      */
     NoteRecordPanelCtrl.prototype.ShowNoteRecord = function () {
-        // if (GameConfig.IsDebug) {
-        Net.WebApi.instance.SetToken(GameConfig.DebugToken);
-        // }
         this.DownRefresh();
         //实现list滚动
         this.noteRecordPanel._recordList.vScrollBarSkin = "";
@@ -76,8 +73,7 @@ var NoteRecordPanelCtrl = /** @class */ (function (_super) {
      * @param record 投注记录数据
      */
     NoteRecordPanelCtrl.prototype.GetNoteRecordData = function (record) {
-        this.listShow = true;
-        this.noteRecordPanel.ShowNoteRecord(this.listShow);
+        this.noteRecordPanel.ShowNoteRecord(true);
         //添加list数据
         this.listArr = [];
         this.index = record.length;
@@ -85,10 +81,9 @@ var NoteRecordPanelCtrl = /** @class */ (function (_super) {
             var dto = {
                 betTime: { text: Utils.Time.transform(record[i].BetTime, 1) },
                 betDate: { text: Utils.Time.transform(record[i].BetTime, 0) },
-                bureauNum: { text: record[i].GameData[record[i].GameData.length - 1].TransferID },
-                betResult: { text: this.BetResult(record[i].Total) },
+                roundId: { text: record[i].RoundId },
                 gameData: record[i].GameData,
-                total: record[i].Total,
+                total: { text: record[i].Total },
             };
             this.listArr.push(dto);
         }
@@ -110,10 +105,16 @@ var NoteRecordPanelCtrl = /** @class */ (function (_super) {
             data[i].GameData = JSON.parse(data[i].GameData);
         }
         if (!data || data.length == 0) {
+            if (this.isActiveData) {
+                this.noteRecordPanel.ShowNoBetRecord(true);
+            }
             this.noMoreData = true;
             return;
         }
         else {
+            if (this.isActiveData) {
+                this.noteRecordPanel.ShowNoBetRecord(false);
+            }
             this.GetNoteRecordData(data);
             this.betRecordPageDto.LastId = data[data.length - 1].Id;
         }
@@ -123,13 +124,13 @@ var NoteRecordPanelCtrl = /** @class */ (function (_super) {
      * @param data
      */
     NoteRecordPanelCtrl.prototype.Error = function (data) {
-        console.log(data);
     };
     /**
      * 上拉加载
      */
     NoteRecordPanelCtrl.prototype.UpLoading = function () {
-        Net.WebApi.instance.GetBetRecord(this.betRecordPageDto, Laya.Handler.create(this, this.Success, null, false), Laya.Handler.create(this, this.Error, null, false));
+        this.isActiveData = false;
+        Net.WebApi.GetInstance().GetBetRecord(this.betRecordPageDto, Laya.Handler.create(this, this.Success, null, false), Laya.Handler.create(this, this.Error, null, false));
     };
     /**
      * 下拉刷新
@@ -137,10 +138,10 @@ var NoteRecordPanelCtrl = /** @class */ (function (_super) {
     NoteRecordPanelCtrl.prototype.DownRefresh = function () {
         this.betRecordPageDto.LastId = null;
         this.noMoreData = false;
+        this.isActiveData = true;
         this.dataArr = [];
-        this.listShow = false;
-        this.noteRecordPanel.ShowNoteRecord(this.listShow);
-        Net.WebApi.instance.GetBetRecord(this.betRecordPageDto, Laya.Handler.create(this, this.Success, null, false), Laya.Handler.create(this, this.Error, null, false));
+        this.noteRecordPanel.ShowNoteRecord(false);
+        Net.WebApi.GetInstance().GetBetRecord(this.betRecordPageDto, Laya.Handler.create(this, this.Success, null, false), Laya.Handler.create(this, this.Error, null, false));
     };
     /**
      *渲染List
@@ -161,12 +162,12 @@ var NoteRecordPanelCtrl = /** @class */ (function (_super) {
         //根据子节点的名字，获取子节点对象。   
         var betTime = cell.getChildByName("betTime");
         var betDate = cell.getChildByName("betDate");
-        var bureauNum = cell.getChildByName("bureauNum");
-        var betResult = cell.getChildByName("betResult");
+        var roundId = cell.getChildByName("roundId");
+        var total = cell.getChildByName("total");
         betTime.text = data.betTime.text;
         betDate.text = data.betDate.text;
-        bureauNum.text = data.bureauNum.text;
-        betResult.text = data.betResult.text;
+        roundId.text = data.roundId.text;
+        total.text = data.total.text;
     };
     /**
      *鼠标事件添加
@@ -182,18 +183,6 @@ var NoteRecordPanelCtrl = /** @class */ (function (_super) {
             //记录当前条目所包含组件的数据信息
             var data = this.dataArr[index];
             this.noteRecordPanel.GoNoteRecordDetail(data);
-        }
-    };
-    /**
-    * 投注结果
-    * @param total 投注收益
-    */
-    NoteRecordPanelCtrl.prototype.BetResult = function (total) {
-        if (total > 0) {
-            return "赢";
-        }
-        else {
-            return "输";
         }
     };
     return NoteRecordPanelCtrl;

@@ -31,7 +31,7 @@ namespace Utils.Socket {
          * 是否重连
          */
         ResetConnect: boolean;
-        
+
         constructor(resetConnect = true) {
             this.ResetConnect = resetConnect;
         }
@@ -61,5 +61,10 @@ namespace Utils.Socket {
          * 获取连接状态
          */
         GetConnectState(): boolean;
+        /**
+         * 设置网络状态，网络通畅，则可以重连，网络连接断开，则不重连
+         * @param status 网络是否通畅 
+         */
+        SetNetwork(status: boolean): void;
     }
 }

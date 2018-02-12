@@ -80,6 +80,10 @@ namespace Dto {
          */
         public Limit: LimitDto;
         /**
+         * 余额
+         */
+        public Balance: number;
+        /**
          * 历史
          */
         public History: Array<HistoryRoundDto>;

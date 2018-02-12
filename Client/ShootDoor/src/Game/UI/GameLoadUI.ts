@@ -11,5 +11,10 @@ namespace ScenePanel {
         public LoadProgress(progress: number): void {
             this.progressLabel.text = Math.round(progress * 100) + "%";
         }
+
+        public LoadError(error: string): void {
+            Laya.Browser.window.alert("用户登录错误");
+            // Laya.Browser.window.location.href = GameConfig.GetDomainUrl(Utils.Url.GetQuery("parentid"));
+        }
     }
 }

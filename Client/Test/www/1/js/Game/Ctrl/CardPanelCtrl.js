@@ -50,8 +50,9 @@ var CardPanelCtrl = /** @class */ (function (_super) {
             for (var i = 0; i < _this.pokerNum; i++) {
                 _this.cardPanel.pokerCards[i].HidePoker();
             }
+            _this.endGameHander.runWith(data);
+            //调用足球动画
             _this.FootBallAnimation(_this.dataCards);
-            _this.endGameHander.run();
         });
     };
     /**
@@ -82,9 +83,17 @@ var CardPanelCtrl = /** @class */ (function (_super) {
         if ((Third > First && Third > Second && (First < Second || First == Second)) || (Third < First && Third < Second && First > Second)) {
             this.footBallPanel.ShootRight();
         }
-        //射到门柱
-        if (Third == First || Third == Second) {
-            this.footBallPanel.ShootGoalPost();
+        //射到门柱左边
+        if (Third == First && Third == Second) {
+            this.footBallPanel.ShootGoalPost(2);
+        }
+        //射到门柱左边
+        if (Third == First) {
+            this.footBallPanel.ShootGoalPost(0);
+        }
+        //射到门柱右边
+        if (Third == Second) {
+            this.footBallPanel.ShootGoalPost(1);
         }
     };
     return CardPanelCtrl;

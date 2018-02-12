@@ -22,7 +22,8 @@ var CardPanelCtrl = (function (_super) {
      * @param data 牌信息
      */
     CardPanelCtrl.prototype.InitGame = function (data) {
-        this.dataCards = [data.FirstCard, data.SecondCard, data.ThirdCard];
+        this.roundID = data.RoundID;
+        this.dataCards = [data.Cards.FirstCard, data.Cards.SecondCard, data.Cards.ThirdCard];
         for (var i = 0; i < this.pokerNum; i++) {
             this.cardPanel.pokerCards[i].InitPoker(this.dataCards[i]);
         }
@@ -32,6 +33,7 @@ var CardPanelCtrl = (function (_super) {
      * @param data 游戏开始信息
      */
     CardPanelCtrl.prototype.StartGame = function (data) {
+        this.roundID = data.RoundID;
         this.dataCards = [data.FirstCard, data.SecondCard, null];
         for (var i = 0; i < this.pokerNum; i++) {
             this.cardPanel.pokerCards[i].ShowPoker(this.dataCards[i]);
@@ -50,8 +52,9 @@ var CardPanelCtrl = (function (_super) {
             for (var i = 0; i < _this.pokerNum; i++) {
                 _this.cardPanel.pokerCards[i].HidePoker();
             }
+            _this.endGameHander.runWith({ RoundID: _this.roundID, Cards: data });
+            //调用足球动画
             _this.FootBallAnimation(_this.dataCards);
-            _this.endGameHander.run();
         });
     };
     /**
@@ -82,9 +85,17 @@ var CardPanelCtrl = (function (_super) {
         if ((Third > First && Third > Second && (First < Second || First == Second)) || (Third < First && Third < Second && First > Second)) {
             this.footBallPanel.ShootRight();
         }
-        //射到门柱
-        if (Third == First || Third == Second) {
-            this.footBallPanel.ShootGoalPost();
+        //射到门柱左边
+        if (Third == First && Third == Second) {
+            this.footBallPanel.ShootGoalPost(2);
+        }
+        //射到门柱左边
+        if (Third == First) {
+            this.footBallPanel.ShootGoalPost(0);
+        }
+        //射到门柱右边
+        if (Third == Second) {
+            this.footBallPanel.ShootGoalPost(1);
         }
     };
     return CardPanelCtrl;

@@ -2,7 +2,7 @@ export default class MemberInfoDto {
     /**
      * 会员分数
      */
-    public MemberSocre: number;
+    public Score: number;
     /**
      * 会员昵称
      */
@@ -31,4 +31,20 @@ export default class MemberInfoDto {
      * 会员头像
      */
     public HeadImageUrl: string;
+    /**
+     * 是否是代理
+     */
+    Agent: boolean;
+}
+
+export class TransferScoreDto {
+
+    /**
+     * 我的分数
+     */
+    public MyScore: number;
+    /**
+     * 会员分数
+     */
+    public Score: number;
 }

@@ -21,6 +21,10 @@ var ScenePanel;
         GameLoadScenes.prototype.LoadProgress = function (progress) {
             this.progressLabel.text = Math.round(progress * 100) + "%";
         };
+        GameLoadScenes.prototype.LoadError = function (error) {
+            Laya.Browser.window.alert("用户登录错误");
+            // Laya.Browser.window.location.href = GameConfig.GetDomainUrl(Utils.Url.GetQuery("parentid"));
+        };
         return GameLoadScenes;
     }(ui.GameLoadUI));
     ScenePanel.GameLoadScenes = GameLoadScenes;

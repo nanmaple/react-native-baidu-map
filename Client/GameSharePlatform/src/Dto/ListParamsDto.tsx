@@ -7,7 +7,7 @@ export class ListParamsDto {
     /**
      * 每页条数
      */
-    public PageSize: number = 10;
+    public PageSize: number = 20;
 }
 
 export class ListParamsCtrlDto extends ListParamsDto {

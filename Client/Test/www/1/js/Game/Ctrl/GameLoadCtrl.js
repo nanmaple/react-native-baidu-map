@@ -14,11 +14,57 @@ var ScenePanel;
         __extends(GameLoadCtrl, _super);
         function GameLoadCtrl(onGameLoadSuccess) {
             var _this = _super.call(this) || this;
+            _this.isLoginSuccess = false;
+            _this.isLoadSuccess = false;
             _this.onGameLoadSuccess = onGameLoadSuccess;
+            //从会员服务中获取用户信息
+            var memberServer = new ServiceManager.MemberManager(GameConfig.GameID);
+            //获取Socket Token
+            var authorizationInfo = memberServer.GetSocketInfo();
+            if (!authorizationInfo.SocketToken || !authorizationInfo.Token) {
+                var parentId = Utils.Url.GetQuery("parentid");
+                var dto = new BaseDto.LoginDto();
+                dto.DeviceType = GameConfig.DeviceType;
+                dto.DeviceId = GameConfig.DeviceId;
+                var successHandler = Laya.Handler.create(_this, _this.LoginSuccess, null, false);
+                var errorHandler = Laya.Handler.create(_this, _this.LoginError, null, false);
+                memberServer.LoginByTourists(dto, authorizationInfo.Token, successHandler, errorHandler);
+            }
+            else {
+                _this.isLoginSuccess = true;
+            }
+            var url = Laya.Browser.window.location.href;
+            memberServer.GetJsSignature(url, Laya.Handler.create(_this, _this.GetWeChatSuccess, null, false));
             //加载游戏开资源
             _this.onLoaded();
             return _this;
         }
+        /**
+         * 获取微信配置信息成功
+         */
+        GameLoadCtrl.prototype.GetWeChatSuccess = function (dto) {
+            var wechat = new Utils.WeChat();
+            wechat.Init(dto);
+        };
+        /**
+         * 登录成功
+         */
+        GameLoadCtrl.prototype.LoginSuccess = function () {
+            this.isLoginSuccess = true;
+            if (this.isLoadSuccess) {
+                this.onGameLoadSuccess.run();
+            }
+        };
+        /**
+         * 登录失败
+         */
+        GameLoadCtrl.prototype.LoginError = function (error) {
+            this.gameLoadScenes.LoadError(error);
+            this.isLoginSuccess = true;
+            if (this.isLoadSuccess) {
+                this.onGameLoadSuccess.run();
+            }
+        };
         /**
          * 开始加载游戏资源
          */
@@ -40,7 +86,10 @@ var ScenePanel;
          * 游戏资源加载完成
          */
         GameLoadCtrl.prototype.onLoadResource = function () {
-            this.onGameLoadSuccess.run();
+            this.isLoadSuccess = true;
+            if (this.isLoginSuccess) {
+                this.onGameLoadSuccess.run();
+            }
         };
         return GameLoadCtrl;
     }(Laya.Sprite));

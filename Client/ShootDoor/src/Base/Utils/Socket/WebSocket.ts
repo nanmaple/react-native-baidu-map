@@ -139,5 +139,16 @@ namespace Utils.Socket {
             }
             return this.socket.connected;
         }
+
+
+        /**
+         * 设置网络状态，网络通畅，则可以重连，网络连接断开，则不重连
+         * @param status 网络是否通畅 
+         */
+        public SetNetwork(status: boolean): void {
+            if (this.isReConnect != status) {
+                this.isReConnect = status;
+            }
+        }
     }
 }

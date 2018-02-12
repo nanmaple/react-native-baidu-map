@@ -1,4 +1,28 @@
-import { WebApiBaseUrl } from '../GameConfig';
+import { WebApiBaseUrl, BetWebApiBaseUrl } from '../GameConfig';
+/**
+ * 登录
+ */
+export const Login = `${WebApiBaseUrl}/Member/Login`;
+/**
+ * 登录检测
+ */
+export const LoginCheck = `${WebApiBaseUrl}/Member/LoginByToken`;
+/**
+ * 游客登录
+ */
+export const LoginByTourist = `${WebApiBaseUrl}/Member/DemoAccountLogin`;
+/**
+ * 通过id和临时token登录
+ */
+export const LoginById = `${WebApiBaseUrl}/Member/SelectMember`;
+/**
+ * 获取会员信息
+ */
+export const GetMemberInfo = `${WebApiBaseUrl}/Member/GetUserProfile`;
+/**
+ * 获取微信js签名信息
+ */
+export const GetJsSignature = `${WebApiBaseUrl}/WeChat/GetJsSignature`;
 
 /**
  * 获取所有子级会员分数
@@ -54,3 +78,24 @@ export const GetTransferLogApi = `${WebApiBaseUrl}/Member/GetTransferLog`;
  * 重置手机号码
  */
 export const ResetPhoneNumberApi = `${WebApiBaseUrl}/Member/ResetPhoneNumber`;
+/**
+ * 设置代理
+ */
+export const SetSetAgentApi = `${WebApiBaseUrl}/Member/SetAgent`;
+
+
+
+
+/**
+ * 获取投注记录
+ */
+export const GetBetRecordApi = `${BetWebApiBaseUrl}/Bet/GetBetRecord`;
+
+/**
+ * 获取自己以及子级的报表
+ */
+export const GetReportApi = `${BetWebApiBaseUrl}/Bet/GetReport`;
+/**
+ * 获取自己以及子级的游戏输赢
+ */
+export const GetGameReportApi = `${BetWebApiBaseUrl}/Bet/GetGameReport`;

@@ -2,11 +2,8 @@ import { GetTransferLogApi } from './Config';
 
 import { ListParamsDto, ListParamsCtrlDto, ScoreRecordDto } from '../Dto/ChildScoreRecordDto';
 
-import BaseCtrl from '../Base/BaseCtrl';
+import BaseCtrl from './BaseCtrl';
 export default class ScoreRecordCtrl extends BaseCtrl {
-
-
-
     /**
      * 获取所有子级会员分数参数
      */
@@ -36,7 +33,6 @@ export default class ScoreRecordCtrl extends BaseCtrl {
         dto.MemberId = memberId;
 
         this.webApi.Post(GetTransferLogApi, dto).then((data: Array<ScoreRecordDto>) => {
-            console.log("GetChildScoreList Success", data);
             if (data) {
                 let length = data.length;
                 if (data.length < this.ChildScoreListParams.PageSize) {
@@ -45,12 +41,11 @@ export default class ScoreRecordCtrl extends BaseCtrl {
                     this.ChildScoreListParams.LastId = data[length - 1].Id;
                 }
                 this.ChildScoreListParams.IsLoading = false;
-                handler(data, [isRefresh]);
+                handler(data, [isRefresh, this.ChildScoreListParams.IsNoMore]);
             }
         }, (error: string) => {
             this.ChildScoreListParams.IsLoading = false;
-            console.log("GetChildScoreList error", error);
-            handler(null, [isRefresh], error);
+            handler(null, [isRefresh,this.ChildScoreListParams.IsNoMore], error);
         })
     }
 

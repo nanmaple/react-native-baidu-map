@@ -11,7 +11,7 @@ var CacheData;
          * 获取用户缓存的key
          */
         MemberInfo.prototype.GetMemberInfoKey = function (gameID) {
-            return "MemberInfo-" + gameID + "-cache";
+            return "UserInfo-" + gameID + "-CacheKey";
         };
         /**
          * 获取会员授权信息
@@ -29,7 +29,7 @@ var CacheData;
          * 设置授权信息
          * @param dto
          */
-        MemberInfo.prototype.SetMemberInfo = function (gameID, dto) {
+        MemberInfo.prototype.SetMemberInfo = function (gameID, dto, day) {
             if (!this.memberInfo) {
                 this.memberInfo = new BaseDto.MemberInfoDto();
             }
@@ -40,7 +40,18 @@ var CacheData;
             this.memberInfo.MemberId = dto.MemberId !== undefined ? dto.MemberId : this.memberInfo.MemberId;
             var storage = new Utils.Storage();
             var key = this.GetMemberInfoKey(gameID);
-            storage.Set(key, this.memberInfo, this.cacheType);
+            storage.Set(key, this.memberInfo, this.cacheType, day);
+            return true;
+        };
+        /**
+         * 清空缓存数据
+         * @param gameID 游戏ID
+         */
+        MemberInfo.prototype.ClearMemberInfo = function (gameID) {
+            this.memberInfo = null;
+            var storage = new Utils.Storage();
+            var key = this.GetMemberInfoKey(gameID);
+            storage.Set(key, null, this.cacheType);
             return true;
         };
         MemberInfo.instance = new MemberInfo();

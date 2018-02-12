@@ -1,6 +1,6 @@
 var Utils;
 (function (Utils) {
-    var Check = (function () {
+    var Check = /** @class */ (function () {
         function Check() {
         }
         Check.isArray = function (arg) {

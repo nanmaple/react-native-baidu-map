@@ -24,4 +24,17 @@ export class Time {
         }
         return getTime;
     }
+    /**
+     * 获取下一个月
+     *
+     * @date 格式为yyyy-mm-dd的日期，如：2014-01-25
+     */
+    static GetNextMonth(date: Date, month: number) {
+        //date.setMonth(date.getMonth() + month);
+        let y: number = date.getFullYear();
+        let m: number = date.getMonth() + 1 + month;
+        let d: number = date.getDate();
+        let formatwdate = y + '/' + m + '/' + d;
+        return formatwdate;
+    }
 }

@@ -2,7 +2,7 @@
 /// <reference path="../../GameConfig.ts"/>
 /// <reference path="../../Dto/AuthorizationDto.ts"/>
 namespace CacheData {
-    export class Authorization implements IAuthorization { 
+    export class Authorization implements IAuthorization {
         static readonly instance = new Authorization();
         private authorization: BaseDto.AuthorizationDto = null;
         private cacheType = GameConfig.CacheType !== undefined ? GameConfig.CacheType : Utils.StorageType.LOCALSTORAGE;
@@ -11,7 +11,7 @@ namespace CacheData {
          * 获取用户缓存的key
          */
         private GetAuthorizationKey(gameID: number): string {
-            return `Authorization-${gameID}-Key`;
+            return `Authorization-${gameID}-CacheKey`;
         }
 
         /**
@@ -24,7 +24,7 @@ namespace CacheData {
 
             let storage: Utils.Storage = new Utils.Storage();
             let key: string = this.GetAuthorizationKey(gameID);
-            this.authorization = <BaseDto.AuthorizationDto>storage.Get(key,this.cacheType);
+            this.authorization = <BaseDto.AuthorizationDto>storage.Get(key, this.cacheType);
             return this.authorization;
         }
 
@@ -32,7 +32,7 @@ namespace CacheData {
          * 设置授权信息
          * @param dto 
          */
-        public SetAuthorization(gameID: number, dto: BaseDto.AuthorizationDto): boolean {
+        public SetAuthorization(gameID: number, dto: BaseDto.AuthorizationDto, day?: number): boolean {
             if (!this.authorization) {
                 this.authorization = new BaseDto.AuthorizationDto();
             }
@@ -40,10 +40,25 @@ namespace CacheData {
             this.authorization.SocketToken = dto.SocketToken !== undefined ? dto.SocketToken : this.authorization.SocketToken;
             this.authorization.Token = dto.Token !== undefined ? dto.Token : this.authorization.Token;
             this.authorization.IsMulti = dto.IsMulti !== undefined ? dto.IsMulti : this.authorization.IsMulti;
+            this.authorization.IsTourists = dto.IsTourists !== undefined ? dto.IsTourists : this.authorization.IsTourists;
             this.authorization.Accounts = dto.Accounts !== undefined ? dto.Accounts : this.authorization.Accounts;
+            this.authorization.IsClose = dto.IsClose !== undefined ? dto.IsClose : this.authorization.IsClose;
+            this.authorization.ParentID = dto.ParentID !== undefined ? dto.ParentID : this.authorization.ParentID;
             let storage: Utils.Storage = new Utils.Storage();
             let key: string = this.GetAuthorizationKey(gameID);
-            storage.Set(key, this.authorization,this.cacheType);
+            storage.Set(key, this.authorization, this.cacheType, day);
+            return true;
+        }
+
+        /**
+         * 清空缓存数据
+         * @param gameID 游戏ID
+         */
+        public ClearAuthorization(gameID: number): boolean {
+            this.authorization = null;
+            let storage: Utils.Storage = new Utils.Storage();
+            let key: string = this.GetAuthorizationKey(gameID);
+            storage.Set(key, null, this.cacheType);
             return true;
         }
     }

@@ -1,4 +1,4 @@
-var InitState = (function () {
+var InitState = /** @class */ (function () {
     function InitState() {
         //初始化引擎，不支持WebGL时自动切换到Canvas,宽高定义的越大，内存使用暴增
         Laya.init(GameConfig.DesignWidth, GameConfig.DesignHeight, Laya.WebGL);
@@ -15,14 +15,16 @@ var InitState = (function () {
         //设置横竖屏
         Laya.stage.screenMode = Laya.Stage.SCREEN_HORIZONTAL;
         //开启锯齿
-        Config.isAntialias = true;
+        Config.isAntialias = false;
         /***********调试相关**********/
         //调用DebugPanel调试面板
         // Laya.DebugPanel.init();
         //调用DebugTool调试面板
         // Laya.DebugTool.init();
         //显示FPS
-        // Laya.Stat.show(0, 0);
+        if (GameConfig.IsDebug) {
+            Laya.Stat.show(0, 0);
+        }
         /***********调试相关**********/
         /***********舞台设置**********/
         Laya.stage.bgColor = "#8cb48e";

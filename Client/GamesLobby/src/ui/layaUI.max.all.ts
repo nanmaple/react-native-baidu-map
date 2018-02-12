@@ -12,8 +12,6 @@ module ui {
         
             super.createChildren();
             this.createView(ui.AccountListUI.uiView);
-
         }
-
     }
 }

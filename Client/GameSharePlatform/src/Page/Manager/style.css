@@ -1,3 +1,15 @@
-.content{
-    padding: 0 15px 0 15px;
+.container {
+    position: absolute;
+    bottom: 0;
+    top: 44px;
+    left: 0;
+    right: 0;
+}
+
+.tabs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
 }

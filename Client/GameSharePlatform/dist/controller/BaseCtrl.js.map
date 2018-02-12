@@ -1,1 +1,0 @@
-{"version":3,"file":"BaseCtrl.js","sourceRoot":"","sources":["../../src/Controller/BaseCtrl.tsx"],"names":[],"mappings":";;AACA,kCAAyD;AAGzD;IAII;QACI,IAAI,CAAC,MAAM,GAAG,oBAAa,CAAC,WAAW,EAAE,CAAC;QAC1C,IAAI,CAAC,eAAe,GAAG,IAAI,sBAAe,EAAE,CAAC;IACjD,CAAC;CACJ;AARD,6BAQC"}

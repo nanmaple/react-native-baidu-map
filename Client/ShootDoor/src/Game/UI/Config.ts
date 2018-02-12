@@ -12,5 +12,13 @@ namespace ScenePanel {
         { url: "ui/bg_round.png", type: Laya.Loader.IMAGE },
         { url: "ui/bg_histrory.png", type: Laya.Loader.IMAGE },
         { url: "ui/bg_bet.png", type: Laya.Loader.IMAGE },
+        { url: "ui/bg_door.png", type: Laya.Loader.IMAGE },
+        { url: "ui/bg_chips.png", type: Laya.Loader.IMAGE },
+        { url: "sound/bet.wav", type: Laya.Loader.SOUND },
+        { url: "sound/csz1.wav", type: Laya.Loader.SOUND },
+        { url: "sound/hotdoor.mp3", type: Laya.Loader.SOUND },
+        { url: "sound/kickball.mp3", type: Laya.Loader.SOUND },
+        { url: "sound/shootfail.wav", type: Laya.Loader.SOUND },
+        { url: "sound/shootsuccess.mp3", type: Laya.Loader.SOUND },
     ]
 }
