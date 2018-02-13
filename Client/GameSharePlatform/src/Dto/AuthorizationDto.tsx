@@ -44,9 +44,9 @@ export class AuthorizationDto {
     /**
      * 是否是游客
      */
-    public IsTourist: boolean = true;
+    public IsTourists: boolean = true;
     /**
      * 父级ID
      */
-    public ParentID: string = "";
+    public ParentID: string = "1";
 }

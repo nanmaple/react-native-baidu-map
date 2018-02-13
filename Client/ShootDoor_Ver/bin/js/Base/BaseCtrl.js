@@ -10,7 +10,7 @@ var BaseCtrl = /** @class */ (function () {
     function BaseCtrl(gameID) {
         var _this = this;
         this.gameID = gameID;
-        this.parentID = Utils.Url.GetQuery("parentID");
+        this.parentID = Utils.Url.GetQuery("parentid");
         //从会员服务中获取用户信息
         var memberServer = new ServiceManager.MemberManager(this.gameID);
         //获取Socket Token

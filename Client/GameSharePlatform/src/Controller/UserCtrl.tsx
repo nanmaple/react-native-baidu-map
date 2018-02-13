@@ -37,17 +37,19 @@ export default class UserCtrl extends BaseCtrl {
 
         if (authorizationDto && authorizationDto.ParentID != parentId) {
             cacheAuthorization.ClearAuthorization();
-            authorizationDto =  cacheAuthorization.GetAuthorization();
+            authorizationDto = cacheAuthorization.GetAuthorization();
             let cacheMemberInfo: UserInfo = CacheManager.GetCache(CacheType.UserInfo);
             cacheMemberInfo.ClearUserInfo();
+            this.webApi.ClearToken();
+            console.log("clear parent");
         }
 
         if ((authorizationDto != null && code && code != authorizationDto.Code) || (authorizationDto == null && code)) {
             //1.存在存储的Code，传入Code存在且不等于存储的Code，直接使用Code登录
             //2.没有存储的Code，传入Code存在，直接使用Code登录
             this.LoginByCode(code, parentId, handler);
-        } else if (authorizationDto != null && authorizationDto.Token && !authorizationDto.IsTourist) {
-            //token存在，且不为
+        } else if (authorizationDto != null && authorizationDto.Token && !authorizationDto.IsTourists) {
+            //token存在，且不为游客
             this.LoginByToken(code, authorizationDto.Token, parentId, handler);
         } else {
             //其他均为游客模式登录
@@ -66,6 +68,7 @@ export default class UserCtrl extends BaseCtrl {
      * @param handler 回调
      */
     private LoginByCode(code: string, parentId: string, handler: Function) {
+        console.log("LoginByCode", code, parentId);
         //通过Code登录
         let loginByCodeDto: LoginByCodeDto = new LoginByCodeDto();
         loginByCodeDto.Code = code;
@@ -92,32 +95,38 @@ export default class UserCtrl extends BaseCtrl {
     * @param handler 登录回调事件
     */
     public LoginByID(memberId: number, handler: Function): void {
-        //获取地址栏中code
-        let code: string = GetQuery("code");
-        //获取地址栏中state参数，即父级（推荐人）ID
-        let parentID: string = GetQuery("parentid");
-        //从缓存中获取Code，包括Code，Token,GameToken
-        let cacheAuthorization: Authorization = CacheManager.GetCache(CacheType.Authorization);
-        let authorizationDto: AuthorizationDto = cacheAuthorization.GetAuthorization();
-        if (authorizationDto != null && authorizationDto.Token) {
-            let loginByIdDto: LoginByIdDto = new LoginByIdDto();
-            loginByIdDto.MemberID = memberId;
-            loginByIdDto.DeviceType = DeviceType;
-            loginByIdDto.DeviceId = DeviceId;
-            //设置token到单例webapi
-            this.webApi.SetToken(authorizationDto.Token);
-            //请求调Net的api，
-            this.webApi.Post(ApiConfig.LoginById, loginByIdDto).then((data: any) => {
-                console.log("LoginCheck成功回调");
-                this.LoginSuccess(data, code, parentID, false, handler);
-            }, (error: any) => {
-                console.log("LoginCheck失败回调");
-                this.LoginError(error, handler);
-            });
-        } else {
-            let result: LoginResultDto = new LoginResultDto();
-            result.Result = ResultEnum.NO;
-            handler(result);
+        try {
+
+            console.log("LoginByID", memberId);
+            //获取地址栏中code
+            let code: string = GetQuery("code");
+            //获取地址栏中state参数，即父级（推荐人）ID
+            let parentID: string = GetQuery("parentid");
+            //从缓存中获取Code，包括Code，Token,GameToken
+            let cacheAuthorization: Authorization = CacheManager.GetCache(CacheType.Authorization);
+            let authorizationDto: AuthorizationDto = cacheAuthorization.GetAuthorization();
+            if (authorizationDto != null && authorizationDto.Token) {
+                let loginByIdDto: LoginByIdDto = new LoginByIdDto();
+                loginByIdDto.MemberID = memberId;
+                loginByIdDto.DeviceType = DeviceType;
+                loginByIdDto.DeviceId = DeviceId;
+                //设置token到单例webapi
+                this.webApi.SetToken(authorizationDto.Token);
+                //请求调Net的api，
+                this.webApi.Post(ApiConfig.LoginById, loginByIdDto).then((data: any) => {
+                    console.log("LoginCheck成功回调");
+                    this.LoginSuccess(data, code, parentID, false, handler);
+                }, (error: any) => {
+                    console.log("LoginCheck失败回调");
+                    this.LoginError(error, handler);
+                });
+            } else {
+                let result: LoginResultDto = new LoginResultDto();
+                result.Result = ResultEnum.NO;
+                handler(result);
+            }
+        } catch (error) {
+            alert(JSON.stringify(error));
         }
     }
 
@@ -128,17 +137,23 @@ export default class UserCtrl extends BaseCtrl {
      * @param handler 回调
      */
     private LoginByToken(code: string, token: string, parentId: string, handler: Function) {
-        //token直接做登录验证
-        //设置token到单例webapi
-        this.webApi.SetToken(token);
-        //调用单例api的Post方法
-        this.webApi.Post(ApiConfig.LoginCheck, null).then((data: any) => {
-            console.log("LoginCheck成功回调");
-            this.LoginSuccess(data, code, parentId, false, handler);
-        }, (error: any) => {
-            console.log("LoginCheck失败回调");
-            this.LoginError(error, handler);
-        });
+        try {
+
+            console.log("LoginByToken", code, token, parentId);
+            //token直接做登录验证
+            //设置token到单例webapi
+            this.webApi.SetToken(token);
+            //调用单例api的Post方法
+            this.webApi.Post(ApiConfig.LoginCheck, null).then((data: any) => {
+                console.log("LoginCheck成功回调");
+                this.LoginSuccess(data, code, parentId, false, handler);
+            }, (error: any) => {
+                console.log("LoginCheck失败回调");
+                this.LoginError(error, handler);
+            });
+        } catch (error) {
+            alert(JSON.stringify(error));
+        }
     }
 
     /**
@@ -148,21 +163,27 @@ export default class UserCtrl extends BaseCtrl {
      * @param handler 回调
      */
     private LoginByTourist(code: string, token: string, parentId: string, handler: Function) {
-        let loginParamsDto: LoginParamsDto = new LoginParamsDto();
-        loginParamsDto.DeviceType = DeviceType;
-        loginParamsDto.DeviceId = DeviceId;
-        if (token) {
-            //设置token到单例webapi
-            this.webApi.SetToken(token);
+        try {
+            console.log("LoginByTourist", code, token, parentId);
+            let loginParamsDto: LoginParamsDto = new LoginParamsDto();
+            loginParamsDto.DeviceType = DeviceType;
+            loginParamsDto.DeviceId = DeviceId;
+            if (token) {
+                this.webApi.SetToken(token);
+            } else {
+                this.webApi.ClearToken();
+            }
+            //调用单例api的Post方法
+            this.webApi.Post(ApiConfig.LoginByTourist, loginParamsDto).then((data: any) => {
+                console.log("LoginCheck成功回调");
+                this.LoginSuccess(data, code, parentId, true, handler);
+            }, (error: any) => {
+                console.log("LoginCheck失败回调");
+                this.LoginError(error, handler);
+            });
+        } catch (error) {
+            alert(JSON.stringify(error));
         }
-        //调用单例api的Post方法
-        this.webApi.Post(ApiConfig.LoginByTourist, loginParamsDto).then((data: any) => {
-            console.log("LoginCheck成功回调");
-            this.LoginSuccess(data, code, parentId, true, handler);
-        }, (error: any) => {
-            console.log("LoginCheck失败回调");
-            this.LoginError(error, handler);
-        });
     }
 
 
@@ -171,26 +192,31 @@ export default class UserCtrl extends BaseCtrl {
      * @param response 会员信息
      */
     private LoginSuccess(response: LoginSuccessDto, code: string, parentId: string, isTourist: boolean, handler: Function) {
-        //返回结果是登录成功
-        let dto: AuthorizationDto = new AuthorizationDto();
-        dto.Code = code;
-        //微信只有一个账号
-        dto.Token = (response as LoginSuccessDto).SessionToken;
-        dto.SocketToken = (response as LoginSuccessDto).SocketToken;
-        dto.ParentID = parentId;
-        dto.IsMulti = false;
-        dto.IsTourist = isTourist;
-        //微信只有一个账号
-        dto.IsClose = (response as LoginSuccessDto).Closed;
-        //写入到WebApi
-        this.webApi.SetToken(dto.Token);
-        //写入缓存中
-        let cacheAuthorization: Authorization = CacheManager.GetCache(CacheType.Authorization);
-        cacheAuthorization.SetAuthorization(dto);
-        let result: LoginResultDto = new LoginResultDto();
-        result.Result = ResultEnum.LOGIN;
-        if (typeof handler === "function") {
-            handler(result);
+        try {
+            console.log("LoginSuccess", response, code, parentId);
+            //返回结果是登录成功
+            let dto: AuthorizationDto = new AuthorizationDto();
+            dto.Code = code;
+            //微信只有一个账号
+            dto.Token = (response as LoginSuccessDto).SessionToken;
+            dto.SocketToken = (response as LoginSuccessDto).SocketToken;
+            dto.ParentID = parentId;
+            dto.IsMulti = false;
+            dto.IsTourists = isTourist;
+            //微信只有一个账号
+            dto.IsClose = (response as LoginSuccessDto).Closed;
+            //写入到WebApi
+            this.webApi.SetToken(dto.Token);
+            //写入缓存中
+            let cacheAuthorization: Authorization = CacheManager.GetCache(CacheType.Authorization);
+            cacheAuthorization.SetAuthorization(dto);
+            let result: LoginResultDto = new LoginResultDto();
+            result.Result = ResultEnum.LOGIN;
+            if (typeof handler === "function") {
+                handler(result);
+            }
+        } catch (error) {
+            alert(JSON.stringify(error));
         }
     }
 
@@ -199,25 +225,30 @@ export default class UserCtrl extends BaseCtrl {
      * @param response 会员信息
      */
     private LoginMultiSuccess(response: LoginMultiAccountDto, code: string, parentId: string, isTourist: boolean, handler: Function) {
-        //返回结果是登录成功
-        let dto: AuthorizationDto = new AuthorizationDto();
-        dto.Code = code;
-        //微信有多个账号
-        dto.IsMulti = true;
-        dto.Token = response.TempToken;
-        dto.SocketToken = null;
-        dto.Accounts = response.Accounts;
-        dto.ParentID = parentId;
-        //是否是游客
-        dto.IsTourist = isTourist;
-        //写入缓存中
-        let cacheAuthorization: Authorization = CacheManager.GetCache(CacheType.Authorization);
-        cacheAuthorization.SetAuthorization(dto);
-        let result: LoginResultDto = new LoginResultDto();
-        result.Result = ResultEnum.MULTI;
-        result.Data = dto.Accounts;
-        if (typeof handler === "function") {
-            handler(result);
+        try {
+            console.log("LoginMultiSuccess", response, code, parentId);
+            //返回结果是登录成功
+            let dto: AuthorizationDto = new AuthorizationDto();
+            dto.Code = code;
+            //微信有多个账号
+            dto.IsMulti = true;
+            dto.Token = response.TempToken;
+            dto.SocketToken = null;
+            dto.Accounts = response.Accounts;
+            dto.ParentID = parentId;
+            //是否是游客
+            dto.IsTourists = isTourist;
+            //写入缓存中
+            let cacheAuthorization: Authorization = CacheManager.GetCache(CacheType.Authorization);
+            cacheAuthorization.SetAuthorization(dto);
+            let result: LoginResultDto = new LoginResultDto();
+            result.Result = ResultEnum.MULTI;
+            result.Data = dto.Accounts;
+            if (typeof handler === "function") {
+                handler(result);
+            }
+        } catch (error) {
+            alert(JSON.stringify(error));
         }
     }
 
@@ -226,12 +257,17 @@ export default class UserCtrl extends BaseCtrl {
      * @param error 
      */
     private LoginError(error: string, handler?: Function) {
-        console.log("LoginError", error);
-        let result: LoginResultDto = new LoginResultDto();
-        result.Result = ResultEnum.ERROR;
-        result.Data = error;
-        if (typeof handler === "function") {
-            handler(result);
+        try {
+            console.log("LoginError", error);
+            alert(error);
+            let result: LoginResultDto = new LoginResultDto();
+            result.Result = ResultEnum.ERROR;
+            result.Data = error;
+            if (typeof handler === "function") {
+                handler(result);
+            }
+        } catch (error) {
+            alert(JSON.stringify(error));
         }
     }
 
@@ -240,30 +276,36 @@ export default class UserCtrl extends BaseCtrl {
      * @param url 
      */
     public GetJsSignature(memberId: number) {
-        let wechat: WeChat = new WeChat();
-        let url: string = window.location.href.split("#")[0];
-        let obj = {
-            Url: encodeURIComponent(url),
+        try {
+            let wechat: WeChat = new WeChat();
+            let url: string = window.location.href.split("#")[0];
+            let obj = {
+                Url: encodeURIComponent(url),
+            }
+            //请求调Net的api，
+            this.webApi.Post(ApiConfig.GetJsSignature, obj).then((response: any) => {
+                // console.log("GetWeChatParams成功回调");
+                wechat.Init(response);
+                let authorizeDto: WeChatShareDto = GetWeChatShareDto(memberId.toString(), false);
+                //分享微信好友
+                wechat.ShareAppMessage(authorizeDto.Title, authorizeDto.Desc, authorizeDto.ImgUrl, authorizeDto.Link, this.WeChatShareHandler);
+
+                //分享QQ
+                wechat.ShareQQ(authorizeDto.Title, authorizeDto.Desc, authorizeDto.ImgUrl, authorizeDto.Link, this.WeChatShareHandler);
+
+                let dto: WeChatShareDto = GetWeChatShareDto(memberId.toString(), false);
+                //分享朋友圈
+                wechat.ShareTimeline(dto.Title, dto.ImgUrl, dto.Link, this.WeChatShareHandler);
+                //分享qq空间
+                wechat.ShareQZone(dto.Title, dto.Desc, dto.ImgUrl, dto.Link, this.WeChatShareHandler);
+            }, (error: any) => {
+                // console.log("获取微信配置信息失败", error);
+                alert(JSON.stringify(error));
+            });
+
+        } catch (error) {
+            alert(JSON.stringify(error));
         }
-        //请求调Net的api，
-        this.webApi.Post(ApiConfig.GetJsSignature, obj).then((response: any) => {
-            // console.log("GetWeChatParams成功回调");
-            wechat.Init(response);
-            let authorizeDto: WeChatShareDto = GetWeChatShareDto(memberId.toString(), false);
-            //分享微信好友
-            wechat.ShareAppMessage(authorizeDto.Title, authorizeDto.Desc, authorizeDto.ImgUrl, authorizeDto.Link, this.WeChatShareHandler);
-
-            //分享QQ
-            wechat.ShareQQ(authorizeDto.Title, authorizeDto.Desc, authorizeDto.ImgUrl, authorizeDto.Link, this.WeChatShareHandler);
-
-            let dto: WeChatShareDto = GetWeChatShareDto(memberId.toString(), false);
-            //分享朋友圈
-            wechat.ShareTimeline(dto.Title, dto.ImgUrl, dto.Link, this.WeChatShareHandler);
-            //分享qq空间
-            wechat.ShareQZone(dto.Title, dto.Desc, dto.ImgUrl, dto.Link, this.WeChatShareHandler);
-        }, (error: any) => {
-            // console.log("获取微信配置信息失败", error);
-        });
     }
 
 
@@ -280,18 +322,23 @@ export default class UserCtrl extends BaseCtrl {
      * 获取会员信息
      */
     public GetMemberInfo(handler: Function): void {
-        //请求调Net的api，
-        this.webApi.Post(ApiConfig.GetMemberInfo, null).then((response: any) => {
-            console.log("GetMemberInfo成功回调");
-            //写入缓存中
-            let cacheMemberInfo: UserInfo = CacheManager.GetCache(CacheType.UserInfo);
-            cacheMemberInfo.SetUserInfo(response);
-            this.GetJsSignature(response.MemberId);
-            handler(response);
-        }, (error: any) => {
-            console.log("GetMemberInfo失败回调");
-            this.LoginError(error.toString(), handler);
-        });
+        try {
+            //请求调Net的api，
+            this.webApi.Post(ApiConfig.GetMemberInfo, null).then((response: any) => {
+                console.log("GetMemberInfo成功回调");
+                //写入缓存中
+                let cacheMemberInfo: UserInfo = CacheManager.GetCache(CacheType.UserInfo);
+                cacheMemberInfo.SetUserInfo(response);
+                this.GetJsSignature(response.MemberId);
+                handler(response);
+            }, (error: any) => {
+                console.log("GetMemberInfo失败回调");
+                this.LoginError(error.toString(), handler);
+            });
+
+        } catch (error) {
+            alert(JSON.stringify(error));
+        }
     };
 
     /**

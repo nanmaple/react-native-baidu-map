@@ -31,7 +31,7 @@ abstract class BaseCtrl {
      */
     constructor(gameID: number) {
         this.gameID = gameID;
-        this.parentID = Utils.Url.GetQuery("parentID");
+        this.parentID = Utils.Url.GetQuery("parentid");
         //从会员服务中获取用户信息
         let memberServer = new ServiceManager.MemberManager(this.gameID);
         //获取Socket Token

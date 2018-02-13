@@ -45,6 +45,7 @@ class GameRecord extends React.Component<any, any> {
             memberId: null,
             nickName: null,          //昵称
             remark: null,            //备注
+            gameResultTotal: null,
         }
     }
     componentDidMount() {
@@ -63,6 +64,21 @@ class GameRecord extends React.Component<any, any> {
             remark
         })
         this.ReportCtrl.GetGameReport(startDate, endDate, true, this.Handler, memberID);
+    }
+    /**
+     * 计算汇总金额
+     * @param data api json数据
+    */
+    private calculateTotal = (data: any): void => {
+        let gameResultTotal = 0;
+        for (let i = 0, len = data.length; i < len; i++) {
+            gameResultTotal += data[i].TotalBet;
+
+        }
+        this.setState({
+            gameResultTotal: gameResultTotal,
+        })
+
     }
     /**
     * 显示日历
@@ -168,6 +184,7 @@ class GameRecord extends React.Component<any, any> {
      * 渲染数据
      */
     public renderData = () => {
+        let { gameResultTotal } = this.state;
         let { memberList, isNoMore, action } = this.state;
         if (!memberList || memberList.length == 0) {
             return (
@@ -184,6 +201,12 @@ class GameRecord extends React.Component<any, any> {
                             return this.renderReportItem(item, index);
                         })
                     }
+                    {/* <div className={styles.allTotal}>
+                        <div className={styles.totalName}>合计</div>
+                        <div className={gameResultTotal > 0 ? styles.allWin : styles.allLose}>
+                            {Money.Format(gameResultTotal)}
+                        </div>
+                    </div> */}
 
                 </div>
             )
@@ -196,7 +219,7 @@ class GameRecord extends React.Component<any, any> {
             <div className={styles.container}>
                 <CompToast ref={(c: any) => this.toast = c} />
                 <div className={styles.listTitle}>
-                    <div className={styles.title}>游戏结果{nickName&&nickName!="null" ? `---${nickName}` : null}{remark&&remark!="null" ? `(${remark})` : null}</div>
+                    <div className={styles.title}>游戏结果{nickName && nickName != "null" ? `---${nickName}` : null}{remark && remark != "null" ? `(${remark})` : null}</div>
                     <div className={styles.head}>
                         <div className={styles.timeContainer}>
                             <div className={styles.time} onClick={this.ShowStartPicker}>{this.state.startDate}</div>

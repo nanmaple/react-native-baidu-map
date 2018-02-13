@@ -16,7 +16,7 @@ export function GetWeChatShareDto(parentID: string, isAuthorize: boolean = true)
     let dto: any = {
         Title: "游戏分享平台",
         Desc: "精彩小游戏",
-        ImgUrl: `http://${Domain}/Image/logo.png`,
+        ImgUrl: `http://${Domain}/gameshareplatform/images/logo.png`,
         Link: ""
     }
     if (isAuthorize) {

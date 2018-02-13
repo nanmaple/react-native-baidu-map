@@ -1,9 +1,9 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":21,
-    "selecteID":14,
-    "props":{"width":1334,"sceneColor":"#f7f6f9","height":750},
+    "selectedBox":1,
+    "selecteID":3,
+    "props":{"width":750,"sceneColor":"#ffffff","height":1222},
     "nodeParent":-1,
     "label":"View",
     "isOpen":true,
@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"List",
-            "props":{"y":0,"x":0,"width":1334,"visible":false,"var":"accountList","spaceY":8,"repeatY":6,"height":750},
+            "props":{"y":0,"x":0,"width":750,"visible":false,"var":"accountList","spaceY":8,"repeatY":6,"height":1222},
             "nodeParent":1,
             "label":"List(accountList)",
             "isOpen":true,
@@ -27,49 +27,49 @@
                 {
                     "x":30,
                     "type":"Box",
-                    "props":{"y":0,"x":0,"width":1334,"renderType":"render","height":72},
+                    "props":{"y":0,"x":0,"width":750,"renderType":"render","height":72},
                     "nodeParent":2,
                     "label":"Box",
                     "isOpen":true,
                     "isDirectory":true,
                     "isAniNode":false,
                     "hasChild":true,
-                    "compId":6,
+                    "compId":4,
                     "child":[
                         {
                             "x":45,
                             "type":"Label",
-                            "props":{"y":0,"x":0,"width":1334,"valign":"middle","padding":"0,10,0,10","name":"item","mouseEnabled":true,"height":72,"fontSize":36,"color":"#338fff","borderColor":"#ddd","align":"left"},
-                            "nodeParent":6,
+                            "props":{"y":0,"x":0,"width":750,"valign":"middle","padding":"0,10,0,10","name":"item","mouseEnabled":true,"height":72,"fontSize":36,"color":"#338fff","borderColor":"#ddd","align":"left"},
+                            "nodeParent":4,
                             "label":"Label(item)",
                             "isOpen":true,
                             "isDirectory":true,
                             "isAniNode":false,
                             "hasChild":true,
-                            "compId":7,
+                            "compId":5,
                             "child":[
                                 {
                                     "x":60,
                                     "type":"Box",
-                                    "props":{"y":0,"x":0,"width":1334,"name":"agentBox","height":72},
-                                    "nodeParent":7,
+                                    "props":{"y":0,"x":0,"width":750,"name":"agentBox","height":72},
+                                    "nodeParent":5,
                                     "label":"Box(agentBox)",
                                     "isOpen":true,
                                     "isDirectory":true,
                                     "isAniNode":false,
                                     "hasChild":true,
-                                    "compId":21,
+                                    "compId":6,
                                     "child":[
                                         {
                                             "x":75,
                                             "type":"Label",
                                             "props":{"x":120,"width":220,"valign":"middle","text":"label","overflow":"hidden","name":"agent","height":72,"fontSize":32,"color":"#333","align":"left"},
-                                            "nodeParent":21,
+                                            "nodeParent":6,
                                             "label":"Label(agent)",
                                             "isDirectory":false,
                                             "isAniNode":false,
                                             "hasChild":false,
-                                            "compId":14,
+                                            "compId":7,
                                             "child":[
                                                 ]
                                         },
@@ -77,12 +77,12 @@
                                             "x":75,
                                             "type":"Label",
                                             "props":{"x":20,"width":100,"valign":"middle","text":"代理：","overflow":"hidden","height":72,"fontSize":32,"color":"#008000","align":"left"},
-                                            "nodeParent":21,
+                                            "nodeParent":6,
                                             "label":"Label",
                                             "isDirectory":false,
                                             "isAniNode":false,
                                             "hasChild":false,
-                                            "compId":19,
+                                            "compId":8,
                                             "child":[
                                                 ]
                                         },
@@ -90,12 +90,12 @@
                                             "x":75,
                                             "type":"Label",
                                             "props":{"y":0,"width":80,"valign":"middle","text":">","right":0,"overflow":"hidden","height":72,"fontSize":50,"font":"SimSun","color":"#ddd","align":"center"},
-                                            "nodeParent":21,
+                                            "nodeParent":6,
                                             "label":"Label",
                                             "isDirectory":false,
                                             "isAniNode":false,
                                             "hasChild":false,
-                                            "compId":23,
+                                            "compId":9,
                                             "child":[
                                                 ]
                                         }]
@@ -112,7 +112,7 @@
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
-            "compId":8,
+            "compId":3,
             "child":[
                 ]
         }],

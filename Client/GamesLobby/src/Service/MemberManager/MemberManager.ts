@@ -32,7 +32,7 @@ namespace MemberManager {
             //2.没有存储的Code，传入Code存在，直接使用Code登录
             if ((authorizationDto != null && dto.Code && dto.Code != authorizationDto.Code) || (authorizationDto == null && dto.Code)) {
                 //通过Code登录
-                let successHandler = Laya.Handler.create(this, this.LoginSuccess, [dto.Code, dto.ParentID, false, , handler], false);
+                let successHandler = Laya.Handler.create(this, this.LoginSuccess, [dto.Code, dto.ParentID, false, handler], false);
                 let errorHandler = Laya.Handler.create(this, this.LoginError, [handler], false);
                 Net.WebApi.instance.Login(dto, successHandler, errorHandler);
             } else if (authorizationDto != null && authorizationDto.Token && !authorizationDto.IsTourists) {

@@ -45,7 +45,7 @@ export default class Authorization implements IAuthorization {
         this.authorization.SocketToken = dto.SocketToken !== undefined ? dto.SocketToken : this.authorization.SocketToken;
         this.authorization.Token = dto.Token !== undefined ? dto.Token : this.authorization.Token;
         this.authorization.IsMulti = dto.IsMulti !== undefined ? dto.IsMulti : this.authorization.IsMulti;
-        this.authorization.IsTourist = dto.IsTourist !== undefined ? dto.IsTourist : this.authorization.IsTourist;
+        this.authorization.IsTourists = dto.IsTourists !== undefined ? dto.IsTourists : this.authorization.IsTourists;
         this.authorization.Accounts = dto.Accounts !== undefined ? dto.Accounts : this.authorization.Accounts;
         this.authorization.ParentID = dto.ParentID !== undefined ? dto.ParentID : this.authorization.ParentID;
         this.authorization.IsClose = dto.IsClose !== undefined ? dto.IsClose : this.authorization.IsClose;

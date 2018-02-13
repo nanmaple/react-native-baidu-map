@@ -69,13 +69,6 @@ class HistoryPanelCtrl extends Laya.Sprite {
      
         //滚动历史列表
         ScenePanel.GameUI.GetInstance().GetHistoryPanel().ScrollHistoryList(Laya.Handler.create(this, () => {
-            //增加单元格数据源
-            let dto: any = {
-                poker0: { skin: this.GetPokerUrl(data.Cards.FirstCard) },
-                poker1: { skin: this.GetPokerUrl(data.Cards.SecondCard) },
-                poker2: { skin: this.GetPokerUrl(data.Cards.ThirdCard) }
-            }
-            this.listArr.unshift(dto);
             let pokerReData:boolean = false;   //重复的牌数据
             for (let i: number = 0; i < this.index; i++) {
                 if(this.roundIDArr[i].RoundID == data.RoundID){
@@ -85,6 +78,13 @@ class HistoryPanelCtrl extends Laya.Sprite {
             if(pokerReData){
                 return;
             }else{
+                //增加单元格数据源
+                let dto: any = {
+                    poker0: { skin: this.GetPokerUrl(data.Cards.FirstCard) },
+                    poker1: { skin: this.GetPokerUrl(data.Cards.SecondCard) },
+                    poker2: { skin: this.GetPokerUrl(data.Cards.ThirdCard) }
+                }
+                this.listArr.unshift(dto);
                 ScenePanel.GameUI.GetInstance().GetHistoryPanel().SetListArray(this.listArr);
             } 
         }));

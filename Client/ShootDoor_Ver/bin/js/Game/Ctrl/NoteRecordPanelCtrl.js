@@ -12,6 +12,8 @@ var NoteRecordPanelCtrl = /** @class */ (function (_super) {
     __extends(NoteRecordPanelCtrl, _super);
     function NoteRecordPanelCtrl() {
         var _this = _super.call(this) || this;
+        _this.dataArr = []; //投注记录总数据
+        _this.listArr = []; //投注记录分页数据
         _this.noMoreData = false; //没有更多数据
         _this.isActiveData = false; //初始化数据
         _this.scrollValue = 0; //列表滚动位置
@@ -19,8 +21,8 @@ var NoteRecordPanelCtrl = /** @class */ (function (_super) {
         _this.betRecordPageDto = new Dto.BetRecordPageDto();
         _this.betRecordPageDto.GameId = GameConfig.GameID;
         _this.betRecordPageDto.PageSize = 10;
-        _this.gameUI.GetNoteRecordPanel().OnMouseDownHander(Laya.Handler.create(_this, _this.OnMouseDown, null, false));
-        _this.gameUI.GetNoteRecordPanel().OnMouseUpHander(Laya.Handler.create(_this, _this.OnMouseUp, null, false));
+        _this.gameUI.GetNoteRecordPanel().OnMouseDownHander(new Laya.Handler(_this, _this.OnMouseDown));
+        _this.gameUI.GetNoteRecordPanel().OnMouseUpHander(new Laya.Handler(_this, _this.OnMouseUp));
         _this.gameUI.GetNoteRecordPanel().CloseRecordHander(new Laya.Handler(_this, _this.CloseNoteRecord));
         return _this;
     }

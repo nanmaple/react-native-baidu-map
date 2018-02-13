@@ -22,7 +22,7 @@ var CardPanelCtrl = /** @class */ (function (_super) {
      */
     CardPanelCtrl.prototype.InitGame = function (data) {
         this.roundID = data.RoundID;
-        if (data.Cards == null) {
+        if (data.Cards == null || data.BetTime == 0) {
             return;
         }
         else {

@@ -33,9 +33,11 @@ namespace ScenePanel {
          * @param ruleHandler 
          */
         public SetInfo(memberInfo: BaseDto.MemberInfoDto, parentID: string, grHandler: Laya.Handler, ruleHandler: Laya.Handler, isTourists: boolean): void {
+            this.uiData.memberInfo = memberInfo;
             this.uiData.grHandler = grHandler;
             this.uiData.ruleHandler = ruleHandler;
             this.uiData.parentID = parentID;
+            this.uiData.isTourists = isTourists;
             if (memberInfo && !isTourists) {
                 //显示头像
                 this.ui.info.visible = true;   //显示头像

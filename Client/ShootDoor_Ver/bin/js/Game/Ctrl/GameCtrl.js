@@ -38,7 +38,8 @@ var GameCtrl = /** @class */ (function (_super) {
         // //创建时间面板控制类实例
         _this.TimePanelCtrl = new TimePanelCtrl();
         // //创建游戏头部面板控制类实例
-        _this.HeadPanelCtrl = new HeadPanelCtrl(_this.memberInfo, _this.parentID, _this.authorizationInfo.IsTourists);
+        _this.HeadPanelCtrl = new HeadPanelCtrl();
+        _this.HeadPanelCtrl.SetInfo(_this.memberInfo, _this.parentID, _this.authorizationInfo.IsTourists);
         //创建tipCtrl
         if (_this.authorizationInfo.IsTourists) {
             var tipsCtrl = new TipsPanelCtrl();
@@ -52,6 +53,7 @@ var GameCtrl = /** @class */ (function (_super) {
         this.cacheData.BetTimeStamp = nowDate;
         this.cacheData.BetTime = date < 0 ? 0 : date;
         this.OnGameInit(this.cacheData, true);
+        this.HeadPanelCtrl.SetInfo(this.memberInfo, this.parentID, this.authorizationInfo.IsTourists);
     };
     /**
      * 分享回调
@@ -147,7 +149,7 @@ var GameCtrl = /** @class */ (function (_super) {
         }
         //3.显示当前牌面data.Cards
         if (data && data.Cards) {
-            this.CardPanelCtrl.InitGame({ RoundID: data.RoundID, Cards: data.Cards });
+            this.CardPanelCtrl.InitGame({ RoundID: data.RoundID, Cards: data.Cards, BetTime: data.BetTime });
         }
         //4.显示历史记录data.History
         if (data && data.History) {

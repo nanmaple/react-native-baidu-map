@@ -45,27 +45,27 @@ var ScenePanel;
          * 鼠标按下时
          */
         NoteRecordPanelBaseUI.prototype.OnMouseDown = function () {
-            this.onMouseDownHander.runWith(this.ui.mouseY);
+            this.uiData.onMouseDownHander.runWith(this.ui.mouseY);
         };
         /**
          * 鼠标移开时
          */
         NoteRecordPanelBaseUI.prototype.OnMouseUp = function () {
-            this.onMouseUpHander.runWith(this.ui.mouseY);
+            this.uiData.onMouseUpHander.runWith(this.ui.mouseY);
         };
         /**
          * 鼠标按下回调
          * @param hander
          */
         NoteRecordPanelBaseUI.prototype.OnMouseDownHander = function (hander) {
-            this.onMouseDownHander = hander;
+            this.uiData.onMouseDownHander = hander;
         };
         /**
          * 鼠标移开回调
          * @param hander
          */
         NoteRecordPanelBaseUI.prototype.OnMouseUpHander = function (hander) {
-            this.onMouseUpHander = hander;
+            this.uiData.onMouseUpHander = hander;
         };
         /**
          * 初始化控制
@@ -237,7 +237,7 @@ var ScenePanel;
          */
         NoteRecordPanelBaseUI.prototype.SetRenderHander = function (hander) {
             this.uiData.renderHandler = hander;
-            this.ui._recordList.renderHandler = this.uiData.mouseHandler;
+            this.ui._recordList.renderHandler = this.uiData.renderHandler;
         };
         /**
          * 设置列表鼠标事件处理回调

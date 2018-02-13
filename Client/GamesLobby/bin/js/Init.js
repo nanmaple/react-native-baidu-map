@@ -27,7 +27,7 @@ var InitState = /** @class */ (function () {
         }
         /***********调试相关**********/
         /***********舞台设置**********/
-        Laya.stage.bgColor = "#8cb48e";
+        Laya.stage.bgColor = "#fff";
         /***********舞台设置**********/
     }
     return InitState;

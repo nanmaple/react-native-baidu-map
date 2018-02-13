@@ -33,9 +33,10 @@ export default class Report extends React.Component<any, any> {
             curReportList: [],  //当前显示的会员报表
             allReportList: [],   //请求过的所有的报表，包括每个层级的
             memberId: null,          //选择的子会员的ID
-            curTotal: "---",    //汇总
-            curTotalName: "我的汇总",  //汇总行对应昵称
+            curTotal: null,    //汇总
+            curTotalName: "我",  //汇总行对应昵称
             curRemark: null,          //汇总行备注
+            myTotal: null
         }
         this.ShowStartPicker = this.ShowStartPicker.bind(this);
     }
@@ -94,6 +95,9 @@ export default class Report extends React.Component<any, any> {
      */
     private calculateTotal = (data: any): void => {
         let total = 0, { OwnTotalBet, OwnTotalPay, ChildReportList } = data, totalBet = OwnTotalBet, totalPay = OwnTotalPay;
+        this.setState({
+            myTotal: Number((totalPay - totalBet).toFixed(2))
+        })
         for (let i = 0, len = ChildReportList.length; i < len; i++) {
             totalBet += ChildReportList[i].TotalBet;
             totalPay += ChildReportList[i].TotalPay;
@@ -101,7 +105,7 @@ export default class Report extends React.Component<any, any> {
         }
         total = Number((totalPay - totalBet).toFixed(2));
         this.setState({
-            curTotal: total
+            curTotal: total,
         })
 
     }
@@ -118,7 +122,7 @@ export default class Report extends React.Component<any, any> {
             memberId: item.MemberId,
             curTotalName: item.Nickname,
             curTotal: item.Total,
-            curRemark:item.Remark,
+            curRemark: item.Remark,
         })
         this.ReportCtrl.GetReport(startDate, endDate, true, this.Handler, "click", item.MemberId);
     }
@@ -197,7 +201,7 @@ export default class Report extends React.Component<any, any> {
                 <div className={styles.name}>{rowItem.Nickname}{rowItem.Remark ? `(${rowItem.Remark})` : null}</div>
 
                 <div className={styles.score}>
-                    <div>
+                    <div className={total > 0 ? styles.win : styles.lose}>
                         {Money.Format(total)}
                     </div>
                     <div>
@@ -209,7 +213,7 @@ export default class Report extends React.Component<any, any> {
     }
 
     render() {
-        let { curReportList, allReportList, curTotal, curTotalName,curRemark } = this.state;
+        let { curReportList, allReportList, curTotal, curTotalName, curRemark, myTotal } = this.state;
         let { ChildReportList, Total } = curReportList;
         return (
             <div>
@@ -221,26 +225,48 @@ export default class Report extends React.Component<any, any> {
                     </div>
                     <div className={styles.search} onClick={() => { this.searchReport() }}>查询</div>
                 </div>
+
                 {
                     allReportList.length > 0 ? (
                         <Link to={{
-                            pathname: `${GetDetailRoute("/report/gameResult/", allReportList.length > 1?`${this.state.memberId}_${curTotalName}_${curRemark}`:this.state.memberId)}`,
+                            pathname: `${GetDetailRoute("/report/gameResult/", allReportList.length > 1 ? `${this.state.memberId}_${curTotalName}_${curRemark}` : this.state.memberId)}`,
                         }} className={styles.head}>
-                            <div className={styles.type}>{allReportList.length > 1 ? curTotalName : "我的汇总"}</div>
+                            <div className={styles.type}>{allReportList.length > 1 ? curTotalName : "我"}</div>
                             {
                                 allReportList.length > 1 ? (<div onClick={(e) => { e.stopPropagation(); e.preventDefault(); this.back() }} className={styles.back}>返回父级</div>) : null
                             }
 
-                            <div className={styles.total}>{curTotal ? Money.Format(curTotal) : "---"}</div>
+                            <div className={myTotal > 0 ? styles.totalWin : styles.total}>{myTotal != null ? Money.Format(myTotal) : "---"}</div>
+                            <div className={styles.rightImg}>
+                                <img src={rightImg} />
+                            </div>
                         </Link>
                     ) : null
                 }
 
                 <div>
                     {
-                        ChildReportList && ChildReportList.length > 0 ? (ChildReportList.map((item: any, index: number) => {
-                            return this.renderReportItem(item, index);
-                        })) : <div className={styles.noChildren}>无数据</div>
+                        ChildReportList && ChildReportList.length > 0 ? (<div>
+                            {ChildReportList.map((item: any, index: number) => {
+                                return this.renderReportItem(item, index);
+                            })}
+                            <div className={styles.allTotal}>
+                                <div className={styles.totalName}>合计</div>
+                                <div className={curTotal > 0 ? styles.allWin : styles.allLose}>
+                                    {Money.Format(curTotal)}
+                                </div>
+                            </div>
+
+                        </div>) : (<div>
+                            <div className={styles.allTotal}>
+                                <div className={styles.totalName}>合计</div>
+                                <div className={curTotal > 0 ? styles.allWin : styles.allLose}>
+                                    {Money.Format(curTotal)}
+                                </div>
+                            </div>
+                            <div className={styles.noChildren}>无数据</div>
+
+                        </div>)
 
                     }
                 </div>

@@ -10,16 +10,17 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var HeadPanelCtrl = /** @class */ (function (_super) {
     __extends(HeadPanelCtrl, _super);
-    function HeadPanelCtrl(memberInfo, parentID, isTourists) {
+    function HeadPanelCtrl() {
         var _this = _super.call(this) || this;
         _this.gameUI = ScenePanel.GameUI.GetInstance();
-        //创建头部面板UI实例
-        var grHandler = Laya.Handler.create(_this, _this.OnClickGR, null, false);
-        var ruleHandler = Laya.Handler.create(_this, _this.OnClickRule, null, false);
-        _this.gameUI.GetHeadPanel().SetInfo(memberInfo, parentID, grHandler, ruleHandler, isTourists);
-        _this.noteRecordPanelCtrl = new NoteRecordPanelCtrl();
         return _this;
     }
+    HeadPanelCtrl.prototype.SetInfo = function (memberInfo, parentID, isTourists) {
+        //创建头部面板UI实例
+        var grHandler = Laya.Handler.create(this, this.OnClickGR, null, false);
+        var ruleHandler = Laya.Handler.create(this, this.OnClickRule, null, false);
+        this.gameUI.GetHeadPanel().SetInfo(memberInfo, parentID, grHandler, ruleHandler, isTourists);
+    };
     /**
      * 点击个人投注记录
      */

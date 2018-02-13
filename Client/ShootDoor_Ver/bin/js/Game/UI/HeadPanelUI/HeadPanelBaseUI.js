@@ -30,12 +30,15 @@ var ScenePanel;
          * @param ruleHandler
          */
         HeadPanelBaseUI.prototype.SetInfo = function (memberInfo, parentID, grHandler, ruleHandler, isTourists) {
+            this.uiData.memberInfo = memberInfo;
             this.uiData.grHandler = grHandler;
             this.uiData.ruleHandler = ruleHandler;
             this.uiData.parentID = parentID;
+            this.uiData.isTourists = isTourists;
             if (memberInfo && !isTourists) {
                 //显示头像
                 this.ui.info.visible = true; //显示头像
+                this.ui.attention.visible = false;
                 //隐藏关注按钮
                 this.ui.headPic.skin = memberInfo.HeadImageUrl;
                 this.ui.nickname.text = memberInfo.Nickname ? memberInfo.Nickname : memberInfo.Account;

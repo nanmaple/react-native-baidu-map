@@ -1,6 +1,6 @@
 var GameConfig;
 (function (GameConfig) {
-    GameConfig.IsDebug = true;
+    GameConfig.IsDebug = false;
     GameConfig.Domain = GameConfig.IsDebug ? "www.zyyft.cn" : "eg.s1.natapp.cc";
     GameConfig.WebApiBaseUrl = GameConfig.IsDebug ? "http://192.168.0.143:8200" : "http://eg.s1.natapp.cc/api";
     GameConfig.DesignWidth = 1334;

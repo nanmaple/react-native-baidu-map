@@ -27,10 +27,9 @@ var ScenePanel;
         { url: "ui/vertical/tip_v.png", type: Laya.Loader.IMAGE },
         { url: "sound/bet.wav", type: Laya.Loader.SOUND },
         { url: "sound/csz1.wav", type: Laya.Loader.SOUND },
-        { url: "sound/hitdoor.wav", type: Laya.Loader.SOUND },
+        { url: "sound/hitdoor.mp3", type: Laya.Loader.SOUND },
         { url: "sound/kickball.mp3", type: Laya.Loader.SOUND },
         { url: "sound/shootfail.wav", type: Laya.Loader.SOUND },
-        { url: "sound/shootsuccess.wav", type: Laya.Loader.SOUND },
-        { url: "sound/bkmusic.wav", type: Laya.Loader.SOUND },
+        { url: "sound/shootsuccess.mp3", type: Laya.Loader.SOUND },
     ];
 })(ScenePanel || (ScenePanel = {}));

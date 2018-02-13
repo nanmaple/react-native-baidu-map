@@ -16,7 +16,6 @@ var InitState = /** @class */ (function () {
         Laya.stage.alignV = Laya.Stage.ALIGN_MIDDLE;
         //开启锯齿
         Config.isAntialias = true;
-        // Laya.Browser.onAndriod ? this.VersionSwitch(1) : this.VersionSwitch(0);
         this.ScreenMonitor();
         /***********调试相关**********/
         //调用DebugPanel调试面板
@@ -43,7 +42,6 @@ var InitState = /** @class */ (function () {
         Laya.Browser.window.addEventListener(evt, function () { _this.listenerCallBack(); }, false);
     };
     InitState.prototype.listenerCallBack = function () {
-        Laya.stage.removeChildren();
         //判断android或者ios
         if (window.orientation == 0 || window.orientation == 180) {
             GameConfig.ScreenMode = 0;
@@ -67,13 +65,14 @@ var InitState = /** @class */ (function () {
                 Laya.stage.screenMode = Laya.Stage.SCREEN_VERTICAL;
             }
         }
-        Laya.stage.once(Laya.Event.RESIZE, this, this.VersionSwitch, [GameConfig.ScreenMode]);
+        Laya.stage.on(Laya.Event.RESIZE, this, this.VersionSwitch, [GameConfig.ScreenMode]);
     };
     /**
      * 横竖屏切换
      * @param version (0：竖屏  1：横屏)
      */
     InitState.prototype.VersionSwitch = function (version) {
+        Laya.stage.removeChildren();
         if (version == 0) {
             //设置竖屏
             GameConfig.LengthRatio = Laya.Browser.clientHeight / GameConfig.DesignLength;

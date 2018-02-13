@@ -56,7 +56,7 @@ var ScenePanel;
                 this.shootEndY = Laya.stage.height - this.goalBottom - 5;
                 this.shootEndX = Laya.stage.width / 2 + this.goalCenterX;
                 this.ui.shootInfo.text = "球进啦！";
-                this.shootResSound = "sound/shootsuccess.wav";
+                this.shootResSound = "sound/shootsuccess.mp3";
                 Laya.Tween.to(this.ui.football, { y: this.shootEndY, x: this.shootEndX }, 3000, Laya.Ease.backOut, Laya.Handler.create(this, this.ShootInfoShow));
             }
         };
@@ -121,7 +121,7 @@ var ScenePanel;
                     this.ui.shootInfo.text = "撞柱啦！";
                     this.shootEndX = (Laya.stage.width - this.goalW) / 2 + this.goalCenterX + this.footballR / 2;
                 }
-                this.shootResSound = "sound/hitdoor.wav";
+                this.shootResSound = "sound/hitdoor.mp3";
                 Laya.Tween.to(this.ui.football, { y: this.shootEndY, x: this.shootEndX }, 1500, Laya.Ease.backOut, Laya.Handler.create(this, this.OnPostBounce));
             }
         };

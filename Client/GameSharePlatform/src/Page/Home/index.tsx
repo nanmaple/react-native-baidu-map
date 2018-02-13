@@ -31,8 +31,12 @@ export default class Home extends React.Component<any, any> {
             isLogin: this.userCtrl.IsLogin(),
             isClose: this.userCtrl.IsClose(),
             memberInfo: this.userCtrl.GetMemberInfoByLocal(),
-            gameList: []
+            isTourists: this.userCtrl.GetAuthorizationDtoByLocal().IsTourists,
+            gmeList: []
         }
+    }
+    componentDidMount() {
+        //请求会员信息
     }
     /**
      * 提示信息
@@ -72,19 +76,22 @@ export default class Home extends React.Component<any, any> {
             parentID = "1";
         }
         let link = GameConfig.GetWeChatShareDto(parentID, true).Link;
-        this.props.history.replace(link);
+        window.location.replace(link);
 
     }
     /**
      * 渲染按钮
      */
     public renderButton = (): any => {
-        if (!this.state.isLogin) {
+        let { isTourists } = this.state;
+        if (isTourists) {
             return (<div onClick={this.Attention} className={style.button}>关注</div>)
+        } else if (!this.state.isLogin) {
+            return (<div onClick={this.Attention} className={style.button}>登录</div>)
         } else if (this.state.isClose) {
             return null;
-        } else {
-            return (<Link to={MemberRoute} className={style.button}>管理</Link>)
+        }else if(this.state.isLogin){
+           return (<Link to={MemberRoute} className={style.button}>管理</Link>)
         }
     }
     private renderGameList = (item: any, index: number) => {
@@ -103,6 +110,7 @@ export default class Home extends React.Component<any, any> {
     render() {
         let { gameList } = this.state;
         gameList = [{ imgUrl: logoImg, name: " 射龙门", star: "五颗星", id: 1 }];
+        let socre: string = this.state.memberInfo ? Money.Format(this.state.memberInfo.Score) : "0";
         return (
             <div className="home">
                 <CompToast ref={(c) => this.toast = c} />
@@ -111,7 +119,7 @@ export default class Home extends React.Component<any, any> {
                         <img src={logoImg} alt="" className={style.logo} />
                         {
                             this.state.isLogin ? (
-                                <label htmlFor="">{"分数：" + Money.Format(this.state.memberInfo.Score)}</label>
+                                <label htmlFor="">{"分数：" + socre }</label>
                             ) : null
                         }
                     </div>

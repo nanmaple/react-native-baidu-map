@@ -78,13 +78,6 @@ var HistoryPanelCtrl = /** @class */ (function (_super) {
         var _this = this;
         //滚动历史列表
         ScenePanel.GameUI.GetInstance().GetHistoryPanel().ScrollHistoryList(Laya.Handler.create(this, function () {
-            //增加单元格数据源
-            var dto = {
-                poker0: { skin: _this.GetPokerUrl(data.Cards.FirstCard) },
-                poker1: { skin: _this.GetPokerUrl(data.Cards.SecondCard) },
-                poker2: { skin: _this.GetPokerUrl(data.Cards.ThirdCard) }
-            };
-            _this.listArr.unshift(dto);
             var pokerReData = false; //重复的牌数据
             for (var i = 0; i < _this.index; i++) {
                 if (_this.roundIDArr[i].RoundID == data.RoundID) {
@@ -95,6 +88,13 @@ var HistoryPanelCtrl = /** @class */ (function (_super) {
                 return;
             }
             else {
+                //增加单元格数据源
+                var dto = {
+                    poker0: { skin: _this.GetPokerUrl(data.Cards.FirstCard) },
+                    poker1: { skin: _this.GetPokerUrl(data.Cards.SecondCard) },
+                    poker2: { skin: _this.GetPokerUrl(data.Cards.ThirdCard) }
+                };
+                _this.listArr.unshift(dto);
                 ScenePanel.GameUI.GetInstance().GetHistoryPanel().SetListArray(_this.listArr);
             }
         }));

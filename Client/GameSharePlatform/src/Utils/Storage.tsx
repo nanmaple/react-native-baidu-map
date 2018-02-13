@@ -17,7 +17,7 @@ export class Storage {
      * @param value 键值
      * @param day 过期时间(天数)
      */
-    public Set(key: string, value: any, type: StorageType = StorageType.LOCALSTORAGE, day: number = 7) {
+    public Set(key: string, value: any, type: StorageType = StorageType.LOCALSTORAGE, day: number = 4) {
         switch (type) {
             case StorageType.LOCALSTORAGE:
                 this.SetLocalStorage(key, value, day);

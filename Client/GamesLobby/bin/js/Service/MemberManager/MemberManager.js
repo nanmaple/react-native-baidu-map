@@ -27,19 +27,19 @@ var MemberManager;
             //2.没有存储的Code，传入Code存在，直接使用Code登录
             if ((authorizationDto != null && dto.Code && dto.Code != authorizationDto.Code) || (authorizationDto == null && dto.Code)) {
                 //通过Code登录
-                var successHandler = Laya.Handler.create(this, this.LoginSuccess, [dto.Code, false, handler], false);
+                var successHandler = Laya.Handler.create(this, this.LoginSuccess, [dto.Code, dto.ParentID, false, handler], false);
                 var errorHandler = Laya.Handler.create(this, this.LoginError, [handler], false);
                 Net.WebApi.instance.Login(dto, successHandler, errorHandler);
             }
             else if (authorizationDto != null && authorizationDto.Token && !authorizationDto.IsTourists) {
                 //token直接做登录验证
-                var successHandler = Laya.Handler.create(this, this.LoginSuccess, [dto.Code, false, handler], false);
+                var successHandler = Laya.Handler.create(this, this.LoginSuccess, [dto.Code, dto.ParentID, false, handler], false);
                 var errorHandler = Laya.Handler.create(this, this.LoginError, [handler], false);
                 Net.WebApi.instance.LoginCheck(authorizationDto.Token, successHandler, errorHandler);
             }
             else {
                 //游客登录
-                var successHandler = Laya.Handler.create(this, this.LoginSuccess, [dto.Code, true, handler], false);
+                var successHandler = Laya.Handler.create(this, this.LoginSuccess, [dto.Code, dto.ParentID, true, handler], false);
                 var errorHandler = Laya.Handler.create(this, this.LoginError, [handler], false);
                 Net.WebApi.instance.LoginByTourists(dto, successHandler, errorHandler);
             }
@@ -53,7 +53,7 @@ var MemberManager;
             //从缓存中获取Code，包括Code，Token,GameToken
             var authorizationDto = CacheData.Authorization.instance.GetAuthorization(this.gameID);
             if (authorizationDto != null && authorizationDto.Token) {
-                var successHandler = Laya.Handler.create(this, this.LoginSuccess, [undefined, false, handler], false);
+                var successHandler = Laya.Handler.create(this, this.LoginSuccess, [undefined, undefined, false, handler], false);
                 var errorHandler = Laya.Handler.create(this, this.LoginError, [handler], false);
                 Net.WebApi.instance.LoginByID(authorizationDto.Token, dto, successHandler, errorHandler);
             }
@@ -67,11 +67,12 @@ var MemberManager;
          * 登录成功回调
          * @param response 会员信息
          */
-        Member.prototype.LoginSuccess = function (code, isTourists, handler, response) {
+        Member.prototype.LoginSuccess = function (code, parentID, isTourists, handler, response) {
             console.log("LoginSuccess", code, response);
             //返回结果是登录成功
             var dto = new BaseDto.AuthorizationDto();
             dto.Code = code;
+            dto.ParentID = parentID;
             if (!response.Accounts) {
                 //token信息
                 dto.Token = response.SessionToken;
