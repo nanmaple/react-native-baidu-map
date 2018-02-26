@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":18,
-    "selecteID":22,
+    "selectedBox":25,
+    "selecteID":2,
     "props":{"y":0,"width":1334,"sceneColor":"#ffffff","height":100},
     "nodeParent":-1,
     "label":"View",
@@ -22,111 +22,123 @@
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
-            "compId":2,
+            "compId":25,
             "child":[
                 {
                     "x":30,
-                    "type":"Button",
-                    "props":{"y":4,"x":932,"width":124,"var":"btnGR","stateNum":"1","skin":"ui/gr.png","height":72},
-                    "nodeParent":2,
-                    "label":"Button(btnGR)",
-                    "isDirectory":false,
-                    "isAniNode":true,
-                    "hasChild":false,
-                    "compId":16,
-                    "child":[
-                        ]
-                },
-                {
-                    "x":30,
-                    "type":"Button",
-                    "props":{"y":4,"x":1130,"width":124,"var":"btnRule","stateNum":"1","skin":"ui/rule.png","height":72},
-                    "nodeParent":2,
-                    "label":"Button(btnRule)",
-                    "isDirectory":false,
-                    "isAniNode":true,
-                    "hasChild":false,
-                    "compId":17,
-                    "child":[
-                        ]
-                },
-                {
-                    "x":30,
                     "type":"Image",
-                    "props":{"y":5,"x":510,"width":313,"var":"money","skin":"ui/bg_money.png","height":73},
-                    "nodeParent":2,
-                    "label":"Image(money)",
+                    "props":{"y":0,"x":0,"width":1334,"var":"headBox","top":0,"height":93,"centerX":0},
+                    "nodeParent":25,
+                    "label":"Image(headBox)",
                     "isOpen":true,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
-                    "compId":18,
+                    "compId":2,
                     "child":[
                         {
                             "x":45,
-                            "type":"Label",
-                            "props":{"y":15,"x":77,"width":214,"var":"score","text":"0","overflow":"hidden","height":32,"fontSize":32,"color":"#333333","align":"center"},
-                            "nodeParent":18,
-                            "label":"Label(score)",
+                            "type":"Button",
+                            "props":{"y":4,"x":932,"width":124,"var":"btnGR","stateNum":"1","skin":"ui/gr.png","height":72},
+                            "nodeParent":2,
+                            "label":"Button(btnGR)",
                             "isDirectory":false,
                             "isAniNode":true,
                             "hasChild":false,
-                            "compId":22,
-                            "child":[
-                                ]
-                        }]
-                },
-                {
-                    "x":30,
-                    "type":"Image",
-                    "props":{"y":4,"x":76,"width":260,"var":"info","skin":"ui/bg_info.png","height":76},
-                    "nodeParent":2,
-                    "label":"Image(info)",
-                    "isOpen":false,
-                    "isDirectory":true,
-                    "isAniNode":true,
-                    "hasChild":true,
-                    "compId":19,
-                    "child":[
-                        {
-                            "type":"Label",
-                            "props":{"y":18,"x":82,"width":160,"var":"nickname","text":"xxxxxx","overflow":"hidden","height":32,"fontSize":32,"color":"#333333","align":"left"},
-                            "nodeParent":19,
-                            "label":"Label(nickname)",
-                            "isDirectory":false,
-                            "isAniNode":true,
-                            "hasChild":false,
-                            "compId":21,
+                            "compId":16,
                             "child":[
                                 ]
                         },
                         {
-                            "type":"Image",
-                            "props":{"y":8,"x":8,"width":56,"var":"headPic","skin":"ui/userImg.png","height":56},
-                            "nodeParent":19,
-                            "label":"Image(headPic)",
+                            "x":45,
+                            "type":"Button",
+                            "props":{"y":4,"x":1130,"width":124,"var":"btnRule","stateNum":"1","skin":"ui/rule.png","height":72},
+                            "nodeParent":2,
+                            "label":"Button(btnRule)",
                             "isDirectory":false,
                             "isAniNode":true,
                             "hasChild":false,
-                            "compId":20,
+                            "compId":17,
                             "child":[
                                 ]
-                        }]
-                },
-                {
-                    "x":30,
-                    "type":"Image",
-                    "props":{"y":4,"x":130,"width":124,"visible":false,"var":"attention","skin":"ui/attention.png","height":72},
-                    "nodeParent":2,
-                    "label":"Image(attention)",
-                    "isDirectory":false,
-                    "isAniNode":true,
-                    "hasChild":false,
-                    "compId":23,
-                    "child":[
-                        ]
-                }],
-            "$LOCKED":true
+                        },
+                        {
+                            "x":45,
+                            "type":"Image",
+                            "props":{"y":5,"x":510,"width":313,"var":"money","skin":"ui/bg_money.png","height":73},
+                            "nodeParent":2,
+                            "label":"Image(money)",
+                            "isOpen":false,
+                            "isDirectory":true,
+                            "isAniNode":true,
+                            "hasChild":true,
+                            "compId":18,
+                            "child":[
+                                {
+                                    "type":"Label",
+                                    "props":{"y":15,"x":77,"width":214,"var":"score","text":"0","overflow":"hidden","height":32,"fontSize":32,"color":"#333333","align":"center"},
+                                    "nodeParent":18,
+                                    "label":"Label(score)",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":22,
+                                    "child":[
+                                        ]
+                                }]
+                        },
+                        {
+                            "x":45,
+                            "type":"Image",
+                            "props":{"y":4,"x":76,"width":260,"var":"info","skin":"ui/bg_info.png","height":76},
+                            "nodeParent":2,
+                            "label":"Image(info)",
+                            "isOpen":false,
+                            "isDirectory":true,
+                            "isAniNode":true,
+                            "hasChild":true,
+                            "compId":19,
+                            "child":[
+                                {
+                                    "type":"Label",
+                                    "props":{"y":18,"x":82,"width":160,"var":"nickname","text":"xxxxxx","overflow":"hidden","height":32,"fontSize":32,"color":"#333333","align":"left"},
+                                    "nodeParent":19,
+                                    "label":"Label(nickname)",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":21,
+                                    "child":[
+                                        ]
+                                },
+                                {
+                                    "type":"Image",
+                                    "props":{"y":8,"x":8,"width":56,"var":"headPic","skin":"ui/userImg.png","height":56},
+                                    "nodeParent":19,
+                                    "label":"Image(headPic)",
+                                    "isDirectory":false,
+                                    "isAniNode":true,
+                                    "hasChild":false,
+                                    "compId":20,
+                                    "child":[
+                                        ]
+                                }]
+                        },
+                        {
+                            "x":45,
+                            "type":"Image",
+                            "props":{"y":4,"x":130,"width":124,"visible":false,"var":"attention","skin":"ui/attention.png","height":72},
+                            "nodeParent":2,
+                            "label":"Image(attention)",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":23,
+                            "child":[
+                                ]
+                        }],
+                    "$LOCKED":true
+                }]
         }],
     "animations":[
         {

@@ -16,6 +16,8 @@ namespace ScenePanel {
         { url: "ui/bg_door.png", type: Laya.Loader.IMAGE },
         { url: "ui/bg_chips.png", type: Laya.Loader.IMAGE },
         { url: "ui/vertical/bg_alert_v.png", type: Laya.Loader.IMAGE },
+        { url: "ui/vertical/bet_v.png", type: Laya.Loader.IMAGE },
+        { url: "ui/vertical/betBg_v.png", type: Laya.Loader.IMAGE },
         { url: "ui/vertical/bg_bet_v.png", type: Laya.Loader.IMAGE },
         { url: "ui/vertical/bg_chips_v.png", type: Laya.Loader.IMAGE },
         { url: "ui/vertical/bg_door_v.png", type: Laya.Loader.IMAGE },

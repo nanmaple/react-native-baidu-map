@@ -72,7 +72,7 @@ class GameRecord extends React.Component<any, any> {
     private calculateTotal = (data: any): void => {
         let gameResultTotal = 0;
         for (let i = 0, len = data.length; i < len; i++) {
-            gameResultTotal += data[i].TotalBet;
+            gameResultTotal = gameResultTotal + data[i].TotalPay - data[i].TotalBet;
 
         }
         this.setState({
@@ -149,7 +149,7 @@ class GameRecord extends React.Component<any, any> {
             return;
         }
         //初始化设置action为reset
-
+        this.calculateTotal(data);
         //刷新
         if (isRefresh) {
             this.setState({
@@ -201,12 +201,12 @@ class GameRecord extends React.Component<any, any> {
                             return this.renderReportItem(item, index);
                         })
                     }
-                    {/* <div className={styles.allTotal}>
+                    <div className={styles.allTotal}>
                         <div className={styles.totalName}>合计</div>
                         <div className={gameResultTotal > 0 ? styles.allWin : styles.allLose}>
                             {Money.Format(gameResultTotal)}
                         </div>
-                    </div> */}
+                    </div>
 
                 </div>
             )

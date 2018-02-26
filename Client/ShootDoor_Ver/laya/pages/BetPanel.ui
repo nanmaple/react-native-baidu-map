@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":160,
-    "selecteID":117,
+    "selectedBox":1,
+    "selecteID":218,
     "props":{"y":0,"x":0,"width":1334,"sceneColor":"#fff","height":750},
     "nodeParent":-1,
     "label":"View",
@@ -682,14 +682,13 @@
             "props":{"width":152,"var":"Chips","top":100,"skin":"ui/bg_chips.png","right":22},
             "nodeParent":1,
             "label":"Image(Chips)",
-            "isOpen":true,
+            "isOpen":false,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
             "compId":160,
             "child":[
                 {
-                    "x":30,
                     "type":"Button",
                     "props":{"y":60,"x":75,"stateNum":"1","skin":"ui/chip_s.png","scaleY":1.1,"scaleX":1.1,"labelSize":20,"labelColors":"#f00","label":"5","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":160,
@@ -702,7 +701,6 @@
                         ]
                 },
                 {
-                    "x":30,
                     "type":"Button",
                     "props":{"y":148,"x":75,"stateNum":"1","skin":"ui/chip_s.png","scaleY":1.1,"scaleX":1.1,"labelSize":20,"labelColors":"#f00","label":"10","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":160,
@@ -715,7 +713,6 @@
                         ]
                 },
                 {
-                    "x":30,
                     "type":"Button",
                     "props":{"y":233,"x":75,"stateNum":"1","skin":"ui/chip_s.png","scaleY":1.1,"scaleX":1.1,"labelSize":20,"labelColors":"#f00","label":"20","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":160,
@@ -728,7 +725,6 @@
                         ]
                 },
                 {
-                    "x":30,
                     "type":"Button",
                     "props":{"y":317,"x":75,"stateNum":"1","skin":"ui/chip_s.png","scaleY":1.1,"scaleX":1.1,"labelSize":20,"labelColors":"#f00","label":"50","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":160,
@@ -741,7 +737,6 @@
                         ]
                 },
                 {
-                    "x":30,
                     "type":"Button",
                     "props":{"y":403,"x":75,"stateNum":"1","skin":"ui/chip_s.png","scaleY":1.1,"scaleX":1.1,"labelSize":20,"labelColors":"#f00","label":"100","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":160,
@@ -754,7 +749,6 @@
                         ]
                 },
                 {
-                    "x":30,
                     "type":"Label",
                     "props":{"y":455,"x":24,"var":"minBetLabel","text":"最小:xxxx","fontSize":24,"color":"#0012ff"},
                     "nodeParent":160,
@@ -767,7 +761,6 @@
                         ]
                 },
                 {
-                    "x":30,
                     "type":"Label",
                     "props":{"y":490,"x":24,"var":"maxBetLabel","text":"最大:xxxx","fontSize":24,"color":"#0012ff"},
                     "nodeParent":160,
@@ -803,6 +796,32 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":198,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"width":1334,"var":"BetBg","height":252,"centerX":0,"bottom":0},
+            "nodeParent":1,
+            "label":"Image(BetBg)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":217,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"var":"ChipsBg"},
+            "nodeParent":1,
+            "label":"Image(ChipsBg)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":218,
             "child":[
                 ]
         }],

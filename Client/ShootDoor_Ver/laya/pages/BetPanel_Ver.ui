@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":3,
+    "selecteID":15,
     "props":{"width":750,"sceneColor":"#ffffff","height":1334},
     "nodeParent":-1,
     "label":"View",
@@ -15,17 +15,29 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"var":"Chips","skin":"ui/vertical/bg_chips_v.png","height":125,"centerX":0,"bottom":655,"anchorY":0.5,"anchorX":0.5},
+            "props":{"width":715,"var":"ChipsBg","skin":"ui/vertical/bg_chips_v.png","sizeGrid":"62,0,53,0","height":125,"centerX":0,"bottom":655},
+            "nodeParent":1,
+            "label":"Image(ChipsBg)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":68,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"width":715,"var":"Chips","height":125,"centerX":0,"bottom":655,"anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
             "label":"Image(Chips)",
-            "isOpen":true,
+            "isOpen":false,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
             "compId":3,
             "child":[
                 {
-                    "x":30,
                     "type":"Button",
                     "props":{"y":66,"x":211,"stateNum":"1","skin":"ui/chip_s.png","scaleY":1.1,"scaleX":1.1,"labelSize":20,"labelColors":"#f00","label":"5","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":3,
@@ -38,7 +50,6 @@
                         ]
                 },
                 {
-                    "x":30,
                     "type":"Button",
                     "props":{"y":66,"x":318,"stateNum":"1","skin":"ui/chip_s.png","scaleY":1.1,"scaleX":1.1,"labelSize":20,"labelColors":"#f00","label":"10","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":3,
@@ -51,7 +62,6 @@
                         ]
                 },
                 {
-                    "x":30,
                     "type":"Button",
                     "props":{"y":66,"x":431,"stateNum":"1","skin":"ui/chip_s.png","scaleY":1.1,"scaleX":1.1,"labelSize":20,"labelColors":"#f00","label":"20","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":3,
@@ -64,7 +74,6 @@
                         ]
                 },
                 {
-                    "x":30,
                     "type":"Button",
                     "props":{"y":66,"x":537,"stateNum":"1","skin":"ui/chip_s.png","scaleY":1.1,"scaleX":1.1,"labelSize":20,"labelColors":"#f00","label":"50","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":3,
@@ -77,7 +86,6 @@
                         ]
                 },
                 {
-                    "x":30,
                     "type":"Button",
                     "props":{"y":66,"x":636,"stateNum":"1","skin":"ui/chip_s.png","scaleY":1.1,"scaleX":1.1,"labelSize":20,"labelColors":"#f00","label":"100","anchorY":0.5,"anchorX":0.5},
                     "nodeParent":3,
@@ -90,7 +98,6 @@
                         ]
                 },
                 {
-                    "x":30,
                     "type":"Label",
                     "props":{"y":33,"x":25,"var":"minBetLabel","text":"最小:xxxx","fontSize":24,"color":"#ff001e"},
                     "nodeParent":3,
@@ -103,7 +110,6 @@
                         ]
                 },
                 {
-                    "x":30,
                     "type":"Label",
                     "props":{"y":68,"x":25,"var":"maxBetLabel","text":"最大:xxxx","fontSize":24,"color":"#ff001e"},
                     "nodeParent":3,
@@ -119,17 +125,29 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"width":750,"var":"BetBox","skin":"ui/vertical/bg_bet_v.png","height":642,"centerX":0,"bottom":0},
+            "props":{"width":750,"var":"BetBg","skin":"ui/vertical/betBg_v.png","sizeGrid":"0,0,0,0","height":642,"centerX":0,"bottom":0},
+            "nodeParent":1,
+            "label":"Image(BetBg)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":70,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"width":750,"var":"BetBox","skin":"ui/vertical/bet_v.png","height":642,"centerX":0,"bottom":0},
             "nodeParent":1,
             "label":"Image(BetBox)",
-            "isOpen":true,
+            "isOpen":false,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
             "compId":15,
             "child":[
                 {
-                    "x":30,
                     "type":"Box",
                     "props":{"y":8,"x":281,"width":470,"visible":true,"name":"IN","height":100},
                     "nodeParent":15,
@@ -179,7 +197,6 @@
                         }]
                 },
                 {
-                    "x":30,
                     "type":"Box",
                     "props":{"y":109,"x":441,"width":155,"name":"OUT","height":105},
                     "nodeParent":15,
@@ -229,7 +246,6 @@
                         }]
                 },
                 {
-                    "x":30,
                     "type":"Box",
                     "props":{"y":214,"x":441,"width":155,"name":"HIT","height":105},
                     "nodeParent":15,
@@ -280,7 +296,6 @@
                         }]
                 },
                 {
-                    "x":30,
                     "type":"Box",
                     "props":{"y":464,"x":281,"width":235,"name":"BIG","height":70},
                     "nodeParent":15,
@@ -332,7 +347,6 @@
                     "$HIDDEN":false
                 },
                 {
-                    "x":30,
                     "type":"Box",
                     "props":{"y":464,"x":517,"width":235,"name":"SMALL","height":70},
                     "nodeParent":15,
@@ -382,7 +396,6 @@
                         }]
                 },
                 {
-                    "x":30,
                     "type":"Box",
                     "props":{"y":320,"x":281,"width":235,"name":"ODD","height":70},
                     "nodeParent":15,
@@ -432,7 +445,6 @@
                         }]
                 },
                 {
-                    "x":30,
                     "type":"Box",
                     "props":{"y":320,"x":517,"width":235,"name":"EVEN","height":70},
                     "nodeParent":15,
@@ -482,7 +494,6 @@
                         }]
                 },
                 {
-                    "x":30,
                     "type":"Box",
                     "props":{"y":391,"x":281,"width":235,"name":"RED","height":70},
                     "nodeParent":15,
@@ -531,7 +542,6 @@
                         }]
                 },
                 {
-                    "x":30,
                     "type":"Box",
                     "props":{"y":391,"x":517,"width":235,"name":"BLACK","height":70},
                     "nodeParent":15,
@@ -580,7 +590,6 @@
                         }]
                 },
                 {
-                    "x":30,
                     "type":"Box",
                     "props":{"y":109,"x":281,"width":155,"name":"LOUT","height":105},
                     "nodeParent":15,
@@ -630,7 +639,6 @@
                         }]
                 },
                 {
-                    "x":30,
                     "type":"Box",
                     "props":{"y":109,"x":593,"width":155,"name":"ROUT","height":105},
                     "nodeParent":15,
@@ -680,7 +688,6 @@
                         }]
                 },
                 {
-                    "x":30,
                     "type":"Box",
                     "props":{"y":214,"x":281,"width":155,"name":"LHIT","height":105},
                     "nodeParent":15,
@@ -731,7 +738,6 @@
                         }]
                 },
                 {
-                    "x":30,
                     "type":"Box",
                     "props":{"y":214,"x":593,"width":155,"name":"RHIT","height":105},
                     "nodeParent":15,
@@ -785,7 +791,7 @@
         {
             "x":15,
             "type":"Label",
-            "props":{"width":750,"visible":false,"var":"MsgPanel","text":"恭喜你猜中了","strokeColor":"#d00400","stroke":5,"fontSize":60,"color":"#fbff70","centerY":0,"centerX":0,"bold":true,"anchorY":0.5,"anchorX":0.5,"align":"center"},
+            "props":{"y":667,"x":375,"width":750,"visible":false,"var":"MsgPanel","text":"恭喜你猜中了","strokeColor":"#d00400","stroke":5,"fontSize":60,"color":"#fbff70","centerY":0,"centerX":0,"bold":true,"anchorY":0.5,"anchorX":0.5,"align":"center"},
             "nodeParent":1,
             "label":"Label(MsgPanel)",
             "isDirectory":false,
@@ -798,7 +804,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"width":156,"var":"ConfirmBetBtn","skin":"ui/confirm.png","height":78,"centerX":267,"bottom":12,"anchorY":0.5,"anchorX":0.5},
+            "props":{"y":1283,"x":642,"width":156,"var":"ConfirmBetBtn","skin":"ui/confirm.png","height":78,"centerX":267,"bottom":12,"anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
             "label":"Image(ConfirmBetBtn)",
             "isDirectory":false,
@@ -811,7 +817,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":1283,"width":156,"var":"CancleBetBtn","skin":"ui/cancel.png","height":78,"centerX":14,"bottom":12,"anchorY":0.5,"anchorX":0.5},
+            "props":{"y":1283,"x":389,"width":156,"var":"CancleBetBtn","skin":"ui/cancel.png","height":78,"centerX":14,"bottom":12,"anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
             "label":"Image(CancleBetBtn)",
             "isDirectory":false,

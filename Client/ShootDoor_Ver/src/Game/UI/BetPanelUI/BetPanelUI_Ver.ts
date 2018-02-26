@@ -11,6 +11,7 @@ namespace ScenePanel {
                 this.ui.ConfirmBetBtn.scale(GameConfig.LengthShort, 1);
                 this.ui.Chips.scale(GameConfig.LengthShort, 1);
                 this.ui.BetBox.scale(GameConfig.LengthShort, 1);
+                this.ui.MsgPanel.scale(GameConfig.LengthShort, 1);
                 this.ui.CancleBetBtn.centerX = 14 * GameConfig.LengthShort;
                 this.ui.ConfirmBetBtn.centerX = 267 * GameConfig.LengthShort;
                 this.ui.Chips.bottom = 655;
@@ -18,9 +19,13 @@ namespace ScenePanel {
                 this.ui.CancleBetBtn.scale(1, GameConfig.ShortLength);
                 this.ui.ConfirmBetBtn.scale(1, GameConfig.ShortLength);
                 this.ui.Chips.scale(1, GameConfig.ShortLength);
+                this.ui.ChipsBg.scale(1, GameConfig.ShortLength);
                 this.ui.BetBox.scale(1, GameConfig.ShortLength);
+                this.ui.BetBg.scale(1, GameConfig.ShortLength);
+                this.ui.MsgPanel.scale(1, GameConfig.ShortLength);
                 this.baseX = 18;
                 this.ui.Chips.bottom = 655 * GameConfig.ShortLength;
+                this.ui.ChipsBg.bottom = 655 * GameConfig.ShortLength;
             }
             //绑定事件
             this.BindClick();

@@ -13,11 +13,13 @@ namespace ScenePanel {
                 this.ui.ConfirmBetBtn.scale(1, GameConfig.LengthShort);
                 this.ui.Chips.scale(1, GameConfig.LengthShort);
                 this.ui.BetBox.scale(1, GameConfig.LengthShort);
+                this.ui.MsgPanel.scale(1, GameConfig.LengthShort);
             } else {
                 this.ui.CancleBetBtn.scale(GameConfig.ShortLength, 1);
                 this.ui.ConfirmBetBtn.scale(GameConfig.ShortLength, 1);
                 this.ui.Chips.scale(GameConfig.ShortLength, 1);
                 this.ui.BetBox.scale(GameConfig.ShortLength, 1);
+                this.ui.MsgPanel.scale(GameConfig.ShortLength, 1);
             }
             //绑定事件
             this.BindClick();

@@ -6,6 +6,7 @@ class HeadPanelCtrl extends Laya.Sprite {
     constructor() {
         super();
         this.gameUI = ScenePanel.GameUI.GetInstance();
+        this.noteRecordPanelCtrl = new NoteRecordPanelCtrl();
     }
 
     public SetInfo(memberInfo: BaseDto.MemberInfoDto, parentID: string, isTourists: boolean):void{

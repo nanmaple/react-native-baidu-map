@@ -141,6 +141,7 @@ export default class Report extends React.Component<any, any> {
             allReportList: arr,
             curReportList: arr[arr.length - 1]
         })
+        this.calculateTotal(arr[arr.length - 1]);
     }
     /**
      * 查询报表
