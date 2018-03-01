@@ -33,6 +33,7 @@ namespace ScenePanel {
             if (this.uiData.isShow) {
                 this.SetScrollBarSkin();
                 this.SetListDetailShow();
+                this.SetListScrollValue();
                 this.SetListArray(this.uiData.listData);
                 this.SetMouseHander(this.uiData.mouseHandler);
                 this.SetRenderHander(this.uiData.renderHandler);
@@ -57,6 +58,7 @@ namespace ScenePanel {
          */
         public OnMouseUp(): void {
             this.uiData.onMouseUpHander.runWith(this.ui.mouseY);
+            this.uiData.listScrollValue = this.ui._recordList.scrollBar.value;
         }
         /**
          * 鼠标按下回调
@@ -268,6 +270,14 @@ namespace ScenePanel {
         public GetListScrollValue(): number {
             this.uiData.listScrollValue = this.ui._recordList.scrollBar.value;
             return this.uiData.listScrollValue;
+        }
+        /**
+         * 设置列表滚动距离
+         */
+        public SetListScrollValue(): void {
+            // let len:number = Math.round(this.uiData.listScrollValue / 100);
+            // this.ui._recordList.scrollTo(len);
+            this.ui._recordList.scrollBar.value = this.uiData.listScrollValue;
         }
         /**
          * 设置列表详情是否显示

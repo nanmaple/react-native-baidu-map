@@ -11,6 +11,8 @@ class GameCtrl extends BaseCtrl {
     private isAnimateEnd: boolean = false;
     private settleData: Dto.GameResultDto = null;
     private cacheData: Dto.CacheGameDto = null;
+    private ChangeMoneyHander: Laya.Handler;
+    private time:number = 0;
     /**
      * 页面关闭回调
      * @param onClose 回调Handler
@@ -44,12 +46,16 @@ class GameCtrl extends BaseCtrl {
             let tipsCtrl: TipsPanelCtrl = new TipsPanelCtrl();
             tipsCtrl.Show();
         }
-
+ 
     }
 
     private ReInit(): void {
         let nowDate: number = new Date().getTime();
-        let date: number = this.cacheData.BetTime - (nowDate - this.cacheData.BetTimeStamp) / 1000;   //相差秒数
+        let date: number;
+        if (!this.cacheData) {
+            return;
+        }
+        date = this.cacheData.BetTime - (nowDate - this.cacheData.BetTimeStamp) / 1000;   //相差秒数
         this.cacheData.BetTimeStamp = nowDate;
         this.cacheData.BetTime = date < 0 ? 0 : date;
         this.OnGameInit(this.cacheData, true);
@@ -76,6 +82,7 @@ class GameCtrl extends BaseCtrl {
      * @param data 
      */
     public OnConnectHandler(): void {
+        
     }
 
     /**
@@ -91,6 +98,7 @@ class GameCtrl extends BaseCtrl {
      * @param data 
      */
     public OnErrorHandler(message: string): void {
+        console.log(message)
     }
 
     /**
@@ -98,7 +106,7 @@ class GameCtrl extends BaseCtrl {
      * @param data 
      */
     public OnWillReconnectHandler(): void {
-        ScenePanel.GameUI.GetInstance().GetLoadingPanel().ShowConnect();
+        console.log("将要重连")
     }
 
     /**
@@ -107,7 +115,6 @@ class GameCtrl extends BaseCtrl {
      */
     public OnLogoutHandler(): void {
         ScenePanel.GameUI.GetInstance().GetLoadingPanel().HideConnect();
-
     }
 
     /**
@@ -154,7 +161,7 @@ class GameCtrl extends BaseCtrl {
         }
         //投注状态
         //1.显示当前剩余投注时间data.BetTime
-        if (data.Status == 1 && data.BetTime >= 0) {
+        if (data.Status == 1 && data.BetTime > 0) {
             this.TimePanelCtrl.StartGameTime(data.BetTime);
             this.RoundPanelCtrl.SetGameState(1);
         }
@@ -261,6 +268,9 @@ class GameCtrl extends BaseCtrl {
         Laya.timer.once(5000, this, () => {
             this.cacheData.Status = BaseEnum.GameStatus.SETTLE;
             this.RoundPanelCtrl.SetGameState(3);
+            if (this.ChangeMoneyHander) {
+                this.ChangeMoneyHander.run();
+            }
             this.isAnimateEnd = true;
             if (this.settleData) {
                 //显示输赢效果
@@ -304,7 +314,9 @@ class GameCtrl extends BaseCtrl {
         }
         if (!this.authorizationInfo.IsClose) {
             //改变总金额
-            this.HeadPanelCtrl.ChangeMoney(data.Balance);
+            this.ChangeMoneyHander = Laya.Handler.create(this, () => {
+                this.HeadPanelCtrl.ChangeMoney(data.Balance);
+            })
         }
     }
 

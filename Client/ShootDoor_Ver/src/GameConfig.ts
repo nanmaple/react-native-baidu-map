@@ -9,7 +9,7 @@ namespace GameConfig {
     export const Domain: string = IsDebug ? "www.zyyft.cn" : "eg.s1.natapp.cc";
     export const WebApiBaseUrl: string = IsDebug ? "http://192.168.0.143:8200" : `http://${Domain}/api`;
     export const BetWebApiBaseUrl: string = IsDebug ? "http://192.168.0.143:8201" : `http://${Domain}/report`;
-
+    
     export const DesignLength: number = 1334;
     export const DesignShort: number = 750;
     export let LengthRatio: number = 1;
@@ -19,6 +19,8 @@ namespace GameConfig {
     //RatioType true 长的一边比率大，短边被压缩，需要再压缩长边；false 短的一边比率大，
     export let RatioType: boolean = true;
     export let ScreenMode: number = 0;
+
+    export let SocketToken="";
 
     export function GetDomainUrl(parentId: string) {
         parentId = parentId ? `&parentid=${parentId}` : "";

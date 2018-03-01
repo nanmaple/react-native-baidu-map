@@ -15,16 +15,20 @@ var ScenePanel;
         function HeadPanelVer() {
             var _this = _super.call(this, false) || this;
             if (GameConfig.RatioType) {
-                _this.ui.btnGR.right = 375 * (1 - GameConfig.LengthShort) + 90 * GameConfig.LengthShort;
-                _this.ui.btnRule.right = 375 * (1 - GameConfig.LengthShort);
-                _this.ui.headBg.scale(GameConfig.LengthShort, 1);
+                // this.ui.btnGR.right = 375 * (1 - GameConfig.LengthShort) + 90 * GameConfig.LengthShort;
+                // this.ui.btnRule.right = 375 * (1 - GameConfig.LengthShort);
+                // this.ui.headBg.scale(GameConfig.LengthShort, 1);
                 _this.ui.btnGR.scale(GameConfig.LengthShort, 1);
                 _this.ui.btnRule.scale(GameConfig.LengthShort, 1);
+                _this.ui.info.scale(GameConfig.LengthShort, 1);
+                _this.ui.money.scale(GameConfig.LengthShort, 1);
+                _this.ui.attention.scale(GameConfig.LengthShort, 1);
             }
             else {
                 _this.ui.headBg.scale(1, GameConfig.ShortLength);
                 _this.ui.btnGR.scale(1, GameConfig.ShortLength);
                 _this.ui.btnRule.scale(1, GameConfig.ShortLength);
+                _this.ui.headBox.scale(1, GameConfig.ShortLength);
             }
             return _this;
         }

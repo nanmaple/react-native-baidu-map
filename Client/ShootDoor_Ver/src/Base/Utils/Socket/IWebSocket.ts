@@ -48,10 +48,7 @@ namespace Utils.Socket {
         /**
          * 连接
          */
-        Connect(socketUrl: string): void;/**
-         * 重连
-         */
-        ReConnect(): void 
+        Connect(socketUrl: string): void;
         /**
          * 关闭连接
          */

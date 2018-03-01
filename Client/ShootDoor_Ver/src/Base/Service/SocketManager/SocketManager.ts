@@ -25,7 +25,7 @@ namespace ServiceManager {
          * 连接
          * @param token 
          */
-        public SetNetwork(status:boolean) {
+        public SetNetwork(status: boolean) {
             //启动连接
             this.socket.SetNetwork(status);
         }
@@ -34,23 +34,15 @@ namespace ServiceManager {
          * 连接
          * @param token 
          */
-        public Connect(url: string):void {
+        public Connect(url: string): void {
             //启动连接
             this.socket.Connect(url);
         }
 
         /**
-         * 重连
-         */
-        public ReConnect():void {
-            //启动连接
-            this.socket.ReConnect();
-        }
-
-        /**
          * 关闭
          */
-        public Close():void {
+        public Close(): void {
             //启动连接
             this.socket.Close();
         }

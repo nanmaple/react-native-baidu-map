@@ -15,7 +15,7 @@ var ScenePanel;
         function HistoryPanelVer() {
             var _this = _super.call(this, false) || this;
             if (GameConfig.RatioType) {
-                _this.ui.left = 375 * (1 - GameConfig.LengthShort);
+                _this.ui.left = (280 * (1 - GameConfig.LengthShort)) / 2;
                 _this.ui.bottom = 0;
                 _this.ui.history.scale(GameConfig.LengthShort, 1);
             }

@@ -13,6 +13,7 @@ var HeadPanelCtrl = /** @class */ (function (_super) {
     function HeadPanelCtrl() {
         var _this = _super.call(this) || this;
         _this.gameUI = ScenePanel.GameUI.GetInstance();
+        _this.noteRecordPanelCtrl = new NoteRecordPanelCtrl();
         return _this;
     }
     HeadPanelCtrl.prototype.SetInfo = function (memberInfo, parentID, isTourists) {

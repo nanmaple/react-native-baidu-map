@@ -63,22 +63,46 @@ var ServiceManager;
             http.Post(Net.ApiConfig.LoginByTourists, obj, header, function (response) {
                 if (response.Result == BaseEnum.ErrorCode.Success) {
                     _this.LoginSuccess(response.Data, successHandler);
-                    successHandler.runWith(response.Data);
                 }
                 else {
                     errorhandler.runWith(response.Result);
+                    console.log(response.Result);
                 }
             }, function (error) {
                 errorhandler.runWith(error.toString());
+                console.log(error.toString());
             });
         };
         ;
+        MemberManager.prototype.GetSocketToken = function (token, successHandler, errorhandler) {
+            var header = {
+                Authorization: token
+            };
+            var obj = {
+                GameID: GameConfig.GameID
+            };
+            //http
+            var http = new Utils.Http();
+            //请求调Net的api，
+            http.Post(Net.ApiConfig.LoginGame, obj, header, function (response) {
+                if (response.Result == BaseEnum.ErrorCode.Success) {
+                    GameConfig.SocketToken = response.Data;
+                    successHandler.run();
+                }
+                else {
+                    errorhandler.runWith(response.Result);
+                    console.log(response.Result);
+                }
+            }, function (error) {
+                errorhandler.runWith(error.toString());
+                console.log(error.toString());
+            });
+        };
         MemberManager.prototype.LoginSuccess = function (response, successHandler) {
             //返回结果是登录成功
             var dto = new BaseDto.AuthorizationDto();
             //token信息
-            dto.Token = response.SessionToken;
-            dto.SocketToken = response.SocketToken;
+            dto.Token = response.Token;
             //是否有多个账号
             dto.IsMulti = false;
             //账号是否关闭
@@ -93,7 +117,7 @@ var ServiceManager;
             memberInfo.Score = response.Score;
             //写入缓存中
             BaseCache.MemberInfo.instance.SetMemberInfo(this.gameID, memberInfo, 1 / 150);
-            successHandler.run();
+            successHandler.runWith(dto.Token);
         };
         /**
          * 设置用户金额到缓存

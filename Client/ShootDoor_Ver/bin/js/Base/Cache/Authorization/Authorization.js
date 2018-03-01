@@ -36,7 +36,6 @@ var BaseCache;
             }
             this.authorization.Code = dto.Code !== undefined ? dto.Code : this.authorization.Code;
             this.authorization.Token = dto.Token !== undefined ? dto.Token : this.authorization.Token;
-            this.authorization.SocketToken = dto.SocketToken !== undefined ? dto.SocketToken : this.authorization.SocketToken;
             this.authorization.IsMulti = dto.IsMulti !== undefined ? dto.IsMulti : this.authorization.IsMulti;
             this.authorization.IsClose = dto.IsClose !== undefined ? dto.IsClose : this.authorization.IsClose;
             this.authorization.IsTourists = dto.IsTourists !== undefined ? dto.IsTourists : this.authorization.IsTourists;

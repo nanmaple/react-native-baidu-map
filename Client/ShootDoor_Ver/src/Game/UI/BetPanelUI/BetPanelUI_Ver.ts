@@ -10,10 +10,16 @@ namespace ScenePanel {
                 this.ui.CancleBetBtn.scale(GameConfig.LengthShort, 1);
                 this.ui.ConfirmBetBtn.scale(GameConfig.LengthShort, 1);
                 this.ui.Chips.scale(GameConfig.LengthShort, 1);
-                this.ui.BetBox.scale(GameConfig.LengthShort, 1);
+                for(let i:number = 0;i < 13;i++){
+                    let Box:Laya.Box = this.ui.BetBox.getChildAt(i) as Laya.Box;
+                    let child1:Laya.Label = Box.getChildAt(0) as Laya.Label;
+                    let child2:Laya.Label = Box.getChildAt(1) as Laya.Label;
+                    let child3:Laya.Button = Box.getChildAt(2) as Laya.Button;
+                    child1.scale(GameConfig.LengthShort, 1);
+                    child2.scale(GameConfig.LengthShort, 1);
+                    child3.scale(GameConfig.LengthShort, 1);
+                }
                 this.ui.MsgPanel.scale(GameConfig.LengthShort, 1);
-                this.ui.CancleBetBtn.centerX = 14 * GameConfig.LengthShort;
-                this.ui.ConfirmBetBtn.centerX = 267 * GameConfig.LengthShort;
                 this.ui.Chips.bottom = 655;
             } else {
                 this.ui.CancleBetBtn.scale(1, GameConfig.ShortLength);
@@ -31,7 +37,6 @@ namespace ScenePanel {
             this.BindClick();
             this.ChangeChip(this.uiData.selectedChipNum);
         }
-
 
         /**
          * 获取筹码坐标
@@ -53,7 +58,7 @@ namespace ScenePanel {
                 if (GameConfig.RatioType) {
                     x = x + this.chipsBtn[i].x * GameConfig.LengthShort;
                 } else {
-                    x = x + this.chipsBtn[i].x;
+                    x = x + this.chipsBtn[i].x; 
                 }
                 this.chipsPoint.push(new Laya.Point(x, y));
             }
@@ -64,7 +69,7 @@ namespace ScenePanel {
         */
         public GetBetBtnPoint(): void {
             let baseY: number = 1334;
-            let baseX: number = 375
+            let baseX: number = 375;
             if (GameConfig.RatioType) {
                 baseY = baseY - 642;
                 baseX = baseX * (1 - GameConfig.LengthShort);
@@ -77,10 +82,10 @@ namespace ScenePanel {
                 let x: number = this.betMoneyLabelArr[i].x + (this.betMoneyLabelArr[i].parent as Laya.Image).x;
                 let y: number = this.betMoneyLabelArr[i].y + (this.betMoneyLabelArr[i].parent as Laya.Image).y;
                 if (GameConfig.RatioType) {
-                    x = baseX + x * GameConfig.LengthShort;
+                    x = x;
                     y = baseY + y;
                 } else {
-                    x = baseX + x;
+                    x = x;
                     y = baseY + y * GameConfig.ShortLength;
                 }
                 let point = new Laya.Point(x, y);

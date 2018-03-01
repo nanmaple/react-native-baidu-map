@@ -36,11 +36,7 @@ namespace BaseDto {
         /**
          * 用户Token
          */
-        public SessionToken: string;
-        /**
-         * 游戏Token
-         */
-        public SocketToken: string;
+        public Token: string;
         /**
          * 账号是否关闭
          */

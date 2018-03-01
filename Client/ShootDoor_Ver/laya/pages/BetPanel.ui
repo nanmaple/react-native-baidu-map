@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":218,
+    "selecteID":158,
     "props":{"y":0,"x":0,"width":1334,"sceneColor":"#fff","height":750},
     "nodeParent":-1,
     "label":"View",
@@ -666,7 +666,7 @@
         {
             "x":15,
             "type":"Label",
-            "props":{"width":1334,"visible":false,"var":"MsgPanel","text":"恭喜你猜中了","strokeColor":"#d00400","stroke":5,"fontSize":60,"color":"#fbff70","centerY":0,"centerX":0,"bold":true,"anchorY":0.5,"anchorX":0.5,"align":"center"},
+            "props":{"width":1334,"visible":false,"var":"MsgPanel","text":"恭喜你猜中了","strokeColor":"#d00400","stroke":5,"fontSize":60,"color":"#fbff70","centerY":100,"centerX":0,"bold":true,"anchorY":0.5,"anchorX":0.5,"align":"center"},
             "nodeParent":1,
             "label":"Label(MsgPanel)",
             "isDirectory":false,

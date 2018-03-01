@@ -30,6 +30,7 @@ var ScenePanel;
             if (this.uiData.isShow) {
                 this.SetScrollBarSkin();
                 this.SetListDetailShow();
+                this.SetListScrollValue();
                 this.SetListArray(this.uiData.listData);
                 this.SetMouseHander(this.uiData.mouseHandler);
                 this.SetRenderHander(this.uiData.renderHandler);
@@ -52,6 +53,7 @@ var ScenePanel;
          */
         NoteRecordPanelBaseUI.prototype.OnMouseUp = function () {
             this.uiData.onMouseUpHander.runWith(this.ui.mouseY);
+            this.uiData.listScrollValue = this.ui._recordList.scrollBar.value;
         };
         /**
          * 鼠标按下回调
@@ -259,6 +261,14 @@ var ScenePanel;
         NoteRecordPanelBaseUI.prototype.GetListScrollValue = function () {
             this.uiData.listScrollValue = this.ui._recordList.scrollBar.value;
             return this.uiData.listScrollValue;
+        };
+        /**
+         * 设置列表滚动距离
+         */
+        NoteRecordPanelBaseUI.prototype.SetListScrollValue = function () {
+            // let len:number = Math.round(this.uiData.listScrollValue / 100);
+            // this.ui._recordList.scrollTo(len);
+            this.ui._recordList.scrollBar.value = this.uiData.listScrollValue;
         };
         /**
          * 设置列表详情是否显示

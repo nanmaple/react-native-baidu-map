@@ -12,6 +12,10 @@ var Net;
          */
         ApiConfig.LoginByTourists = GameConfig.WebApiBaseUrl + "/Member/DemoAccountLogin";
         /**
+         * 获取游客token
+         */
+        ApiConfig.LoginGame = GameConfig.WebApiBaseUrl + "/Member/LoginGame";
+        /**
          * 获取微信js签名信息
          */
         ApiConfig.GetJsSignature = GameConfig.WebApiBaseUrl + "/WeChat/GetJsSignature";

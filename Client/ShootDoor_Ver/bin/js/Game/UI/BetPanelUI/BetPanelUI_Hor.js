@@ -23,12 +23,14 @@ var ScenePanel;
                 _this.ui.ConfirmBetBtn.scale(1, GameConfig.LengthShort);
                 _this.ui.Chips.scale(1, GameConfig.LengthShort);
                 _this.ui.BetBox.scale(1, GameConfig.LengthShort);
+                _this.ui.MsgPanel.scale(1, GameConfig.LengthShort);
             }
             else {
                 _this.ui.CancleBetBtn.scale(GameConfig.ShortLength, 1);
                 _this.ui.ConfirmBetBtn.scale(GameConfig.ShortLength, 1);
                 _this.ui.Chips.scale(GameConfig.ShortLength, 1);
                 _this.ui.BetBox.scale(GameConfig.ShortLength, 1);
+                _this.ui.MsgPanel.scale(GameConfig.ShortLength, 1);
             }
             //绑定事件
             _this.BindClick();

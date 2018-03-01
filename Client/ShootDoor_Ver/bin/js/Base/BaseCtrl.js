@@ -20,7 +20,7 @@ var BaseCtrl = /** @class */ (function () {
         //获取会员ID
         var memberId = this.memberInfo != null ? this.memberInfo.MemberId : 1;
         //生成socket 地址
-        var socketUrl = GameConfig.GetSocketUrl(memberId, this.authorizationInfo.SocketToken);
+        this.socketUrl = GameConfig.GetSocketUrl(memberId, GameConfig.SocketToken);
         //创建socket
         this.socket = new ServiceManager.SocketManager();
         //连接事件侦听
@@ -40,7 +40,8 @@ var BaseCtrl = /** @class */ (function () {
         //系统推送
         this.socket.on(ServiceManager.SocketEvent.OnSystemPush, this, this.OnSystemPushHandler);
         //启动连接
-        this.socket.Connect(socketUrl);
+        this.socket.Connect(this.socketUrl);
+        console.log("连接：" + this.socketUrl);
         var wechat = new Utils.WeChat();
         Laya.timer.loop(2000, this, function () {
             wechat.GetNetworkType(Laya.Handler.create(_this, _this.GetNetworkSuccess, null, false));
@@ -56,6 +57,9 @@ var BaseCtrl = /** @class */ (function () {
         wechat.ShareTimeline(dto.Title, dto.ImgUrl, dto.Link, successHandler);
         //分享qq空间
         wechat.ShareQZone(dto.Title, dto.Desc, dto.ImgUrl, dto.Link, successHandler);
+        Laya.timer.loop(2000, this, function () {
+            // console.log("time-1");
+        });
     }
     /**
      * 网络状态
@@ -78,12 +82,6 @@ var BaseCtrl = /** @class */ (function () {
     BaseCtrl.prototype.Send = function (data, msgID) {
         if (msgID === void 0) { msgID = Utils.Guid.Create(); }
         this.socket.Send(data, msgID);
-    };
-    /**
-     * 重连
-     */
-    BaseCtrl.prototype.ReConnect = function () {
-        this.socket.ReConnect();
     };
     /**
      * 侦听游戏命令

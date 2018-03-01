@@ -25,6 +25,8 @@ abstract class BaseCtrl {
      * 父级ID
      */
     protected parentID: string;
+
+    private socketUrl:string;
     /**
      * 构造函数，传入游戏ID
      * @param gameID 
@@ -41,7 +43,7 @@ abstract class BaseCtrl {
         //获取会员ID
         let memberId: number = this.memberInfo != null ? this.memberInfo.MemberId : 1;
         //生成socket 地址
-        let socketUrl = GameConfig.GetSocketUrl(memberId, this.authorizationInfo.SocketToken);
+        this.socketUrl = GameConfig.GetSocketUrl(memberId, GameConfig.SocketToken);
 
         //创建socket
         this.socket = new ServiceManager.SocketManager();
@@ -62,8 +64,8 @@ abstract class BaseCtrl {
         //系统推送
         this.socket.on(ServiceManager.SocketEvent.OnSystemPush, this, this.OnSystemPushHandler);
         //启动连接
-        this.socket.Connect(socketUrl);
-
+        this.socket.Connect(this.socketUrl);
+        console.log("连接：" + this.socketUrl);
         let wechat: Utils.WeChat = new Utils.WeChat();
         Laya.timer.loop(2000, this, () => {
             wechat.GetNetworkType(Laya.Handler.create(this, this.GetNetworkSuccess, null, false));
@@ -82,6 +84,9 @@ abstract class BaseCtrl {
         wechat.ShareTimeline(dto.Title, dto.ImgUrl, dto.Link, successHandler);
         //分享qq空间
         wechat.ShareQZone(dto.Title, dto.Desc, dto.ImgUrl, dto.Link, successHandler);
+        Laya.timer.loop(2000,this,()=>{
+            // console.log("time-1");
+        })
     }
 
     /**
@@ -154,13 +159,6 @@ abstract class BaseCtrl {
      */
     protected Send(data: any, msgID: string = Utils.Guid.Create()): void {
         this.socket.Send(data, msgID);
-    }
-
-    /**
-     * 重连
-     */
-    protected ReConnect():void{
-        this.socket.ReConnect();
     }
 
     /**

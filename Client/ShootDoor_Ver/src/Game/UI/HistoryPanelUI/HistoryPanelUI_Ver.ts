@@ -3,7 +3,7 @@ namespace ScenePanel {
         constructor() {
             super(false);
             if (GameConfig.RatioType) {
-                this.ui.left = 375 * (1 - GameConfig.LengthShort);
+                this.ui.left = (280 * (1 - GameConfig.LengthShort)) / 2;
                 this.ui.bottom = 0;
                 this.ui.history.scale(GameConfig.LengthShort, 1);
             } else {

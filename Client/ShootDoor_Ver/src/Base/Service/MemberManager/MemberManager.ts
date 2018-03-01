@@ -15,7 +15,7 @@ namespace ServiceManager {
          * @param error 
          */
         private LoginError(error: number | string) {
-            
+
         }
 
         /**
@@ -69,22 +69,47 @@ namespace ServiceManager {
             http.Post(Net.ApiConfig.LoginByTourists, obj, header, (response: any) => {
                 if (response.Result == BaseEnum.ErrorCode.Success) {
                     this.LoginSuccess(response.Data, successHandler);
-                    successHandler.runWith(response.Data);
                 } else {
                     errorhandler.runWith(response.Result);
+                    console.log(response.Result);
                 }
             }, (error: any) => {
                 errorhandler.runWith(error.toString());
+                console.log(error.toString());
             });
         };
+
+        public GetSocketToken(token: string, successHandler: Laya.Handler,errorhandler: Laya.Handler): void {
+            let header = {
+                Authorization: token
+            }
+            let obj = {
+                GameID: GameConfig.GameID
+            }
+            //http
+            let http: Utils.Http = new Utils.Http();
+
+            //请求调Net的api，
+            http.Post(Net.ApiConfig.LoginGame, obj, header, (response: any) => {
+                if (response.Result == BaseEnum.ErrorCode.Success) {
+                    GameConfig.SocketToken = response.Data;
+                    successHandler.run();
+                } else {
+                    errorhandler.runWith(response.Result);
+                    console.log(response.Result);
+                }
+            }, (error: any) => {
+                errorhandler.runWith(error.toString());
+                console.log(error.toString());
+            });
+        }
 
 
         private LoginSuccess(response: BaseDto.LoginSuccessDto | BaseDto.LoginMultiAccountDto, successHandler: Laya.Handler) {
             //返回结果是登录成功
             let dto: BaseDto.AuthorizationDto = new BaseDto.AuthorizationDto();
             //token信息
-            dto.Token = (<BaseDto.LoginSuccessDto>response).SessionToken;
-            dto.SocketToken = (<BaseDto.LoginSuccessDto>response).SocketToken;
+            dto.Token = (<BaseDto.LoginSuccessDto>response).Token;
             //是否有多个账号
             dto.IsMulti = false;
             //账号是否关闭
@@ -100,7 +125,7 @@ namespace ServiceManager {
             memberInfo.Score = (<BaseDto.LoginSuccessDto>response).Score;
             //写入缓存中
             BaseCache.MemberInfo.instance.SetMemberInfo(this.gameID, memberInfo, 1 / 150);
-            successHandler.run();
+            successHandler.runWith(dto.Token);
         }
 
         /**

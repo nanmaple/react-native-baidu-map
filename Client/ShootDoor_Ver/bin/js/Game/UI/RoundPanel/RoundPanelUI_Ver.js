@@ -15,8 +15,11 @@ var ScenePanel;
         function RoundPanelVer() {
             var _this = _super.call(this, false) || this;
             if (GameConfig.RatioType) {
-                _this.ui.left = 375 * (1 - GameConfig.LengthShort);
-                _this.ui.round.scale(GameConfig.LengthShort, 1);
+                // this.ui.left = 375 * (1 - GameConfig.LengthShort);
+                // this.ui.round.scale(GameConfig.LengthShort, 1);
+                _this.ui.roundLabel.scale(GameConfig.LengthShort, 1);
+                _this.ui.gameRound.scale(GameConfig.LengthShort, 1);
+                _this.ui.gameState.scale(GameConfig.LengthShort, 1);
             }
             else {
                 _this.ui.round.scale(1, GameConfig.ShortLength);

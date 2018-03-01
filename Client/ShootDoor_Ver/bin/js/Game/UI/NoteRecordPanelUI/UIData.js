@@ -6,6 +6,7 @@ var ScenePanel;
             this.isDetailShow = false; //列表详情是否显示
             this.listData = []; //列表数据
             this.listDetailData = []; //列表详情数据
+            this.listScrollValue = 0; //列表滚动距离
         }
         NoteRecordPanelUIData.GetInstance = function () {
             if (!this.instance) {

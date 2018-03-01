@@ -28,23 +28,23 @@ var ScenePanel;
                 Laya.stage.addChild(_this.gameLoadScenes.GetUI());
             });
             //从会员服务中获取用户信息
-            var memberServer = new ServiceManager.MemberManager(GameConfig.GameID);
+            _this.memberServer = new ServiceManager.MemberManager(GameConfig.GameID);
             //获取Socket Token
-            var authorizationInfo = memberServer.GetSocketInfo();
-            if (!authorizationInfo.SocketToken || !authorizationInfo.Token) {
+            var authorizationInfo = _this.memberServer.GetSocketInfo();
+            if (!authorizationInfo.Token) {
                 var parentId = Utils.Url.GetQuery("parentid");
                 var dto = new BaseDto.LoginDto();
                 dto.DeviceType = GameConfig.DeviceType;
                 dto.DeviceId = GameConfig.DeviceId;
                 var successHandler = Laya.Handler.create(_this, _this.LoginSuccess, null, false);
                 var errorHandler = Laya.Handler.create(_this, _this.LoginError, null, false);
-                memberServer.LoginByTourists(dto, authorizationInfo.Token, successHandler, errorHandler);
+                _this.memberServer.LoginByTourists(dto, authorizationInfo.Token, successHandler, errorHandler);
             }
             else {
-                _this.isLoginSuccess = true;
+                _this.LoginSuccess(authorizationInfo.Token);
             }
             var url = Laya.Browser.window.location.href;
-            memberServer.GetJsSignature(url, Laya.Handler.create(_this, _this.GetWeChatSuccess, null, false));
+            _this.memberServer.GetJsSignature(url, Laya.Handler.create(_this, _this.GetWeChatSuccess, null, false));
             //加载游戏开资源
             _this.onLoaded();
             return _this;
@@ -59,27 +59,33 @@ var ScenePanel;
         /**
          * 登录成功
          */
-        GameLoadCtrl.prototype.LoginSuccess = function () {
-            this.isLoginSuccess = true;
-            if (this.isLoadSuccess) {
-                document.removeEventListener("screenMode", function () {
-                    console.log("screenMode");
-                });
-                this.onGameLoadSuccess.run();
-            }
+        GameLoadCtrl.prototype.LoginSuccess = function (token) {
+            var _this = this;
+            var successHandler = Laya.Handler.create(this, function () {
+                _this.isLoginSuccess = true;
+                if (_this.isLoadSuccess) {
+                    document.removeEventListener("screenMode", function () {
+                        console.log("screenMode");
+                    });
+                    _this.onGameLoadSuccess.run();
+                }
+            }, null, false);
+            var errorHandler = Laya.Handler.create(this, this.LoginError, null, false);
+            this.memberServer.GetSocketToken(token, successHandler, errorHandler);
         };
         /**
          * 登录失败
          */
         GameLoadCtrl.prototype.LoginError = function (error) {
+            //抛出错误提示
             this.gameLoadScenes.LoadError(error);
-            this.isLoginSuccess = true;
-            if (this.isLoadSuccess) {
-                document.removeEventListener("screenMode", function () {
-                    console.log("screenMode");
-                });
-                this.onGameLoadSuccess.run();
-            }
+            this.isLoginSuccess = false;
+            // if (this.isLoadSuccess) {
+            //     document.removeEventListener("screenMode", () => {
+            //         console.log("screenMode");
+            //     })
+            //     this.onGameLoadSuccess.run();
+            // }
         };
         /**
          * 开始加载游戏资源

@@ -15,7 +15,7 @@ namespace ScenePanel {
         public isDetailShow: boolean = false;  //列表详情是否显示
         public listData:any = [];   //列表数据
         public listDetailData:any = [];  //列表详情数据
-        public listScrollValue: number;   //列表滚动距离
+        public listScrollValue: number = 0;   //列表滚动距离
         public mouseHandler:Laya.Handler;
         public renderHandler:Laya.Handler;
     }

@@ -19,6 +19,7 @@ var GameCtrl = /** @class */ (function (_super) {
         _this.isAnimateEnd = false;
         _this.settleData = null;
         _this.cacheData = null;
+        _this.time = 0;
         //绑定关闭页面事件回调
         _this.onClose = onClose;
         //添加UI到舞台
@@ -49,7 +50,11 @@ var GameCtrl = /** @class */ (function (_super) {
     }
     GameCtrl.prototype.ReInit = function () {
         var nowDate = new Date().getTime();
-        var date = this.cacheData.BetTime - (nowDate - this.cacheData.BetTimeStamp) / 1000; //相差秒数
+        var date;
+        if (!this.cacheData) {
+            return;
+        }
+        date = this.cacheData.BetTime - (nowDate - this.cacheData.BetTimeStamp) / 1000; //相差秒数
         this.cacheData.BetTimeStamp = nowDate;
         this.cacheData.BetTime = date < 0 ? 0 : date;
         this.OnGameInit(this.cacheData, true);
@@ -85,13 +90,14 @@ var GameCtrl = /** @class */ (function (_super) {
      * @param data
      */
     GameCtrl.prototype.OnErrorHandler = function (message) {
+        console.log(message);
     };
     /**
      * 侦听Socket连接事件
      * @param data
      */
     GameCtrl.prototype.OnWillReconnectHandler = function () {
-        ScenePanel.GameUI.GetInstance().GetLoadingPanel().ShowConnect();
+        console.log("将要重连");
     };
     /**
      * 侦听登出事件
@@ -139,7 +145,7 @@ var GameCtrl = /** @class */ (function (_super) {
         }
         //投注状态
         //1.显示当前剩余投注时间data.BetTime
-        if (data.Status == 1 && data.BetTime >= 0) {
+        if (data.Status == 1 && data.BetTime > 0) {
             this.TimePanelCtrl.StartGameTime(data.BetTime);
             this.RoundPanelCtrl.SetGameState(1);
         }
@@ -239,6 +245,9 @@ var GameCtrl = /** @class */ (function (_super) {
         Laya.timer.once(5000, this, function () {
             _this.cacheData.Status = BaseEnum.GameStatus.SETTLE;
             _this.RoundPanelCtrl.SetGameState(3);
+            if (_this.ChangeMoneyHander) {
+                _this.ChangeMoneyHander.run();
+            }
             _this.isAnimateEnd = true;
             if (_this.settleData) {
                 //显示输赢效果
@@ -266,6 +275,7 @@ var GameCtrl = /** @class */ (function (_super) {
      * @param data 游戏结算结果信息
      */
     GameCtrl.prototype.OnSettleResult = function (data) {
+        var _this = this;
         console.log("结算", data);
         this.cacheData.Status = BaseEnum.GameStatus.SETTLEED;
         this.cacheData.TotalBet = data.SettleResult;
@@ -281,7 +291,9 @@ var GameCtrl = /** @class */ (function (_super) {
         }
         if (!this.authorizationInfo.IsClose) {
             //改变总金额
-            this.HeadPanelCtrl.ChangeMoney(data.Balance);
+            this.ChangeMoneyHander = Laya.Handler.create(this, function () {
+                _this.HeadPanelCtrl.ChangeMoney(data.Balance);
+            });
         }
     };
     /**

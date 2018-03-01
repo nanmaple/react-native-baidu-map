@@ -5,6 +5,7 @@ namespace ScenePanel {
         private isLoginSuccess: boolean = false;
         private isLoadSuccess: boolean = false;
         private eventDispatcher: laya.events.EventDispatcher = new laya.events.EventDispatcher();
+        private memberServer: ServiceManager.MemberManager;
         constructor(onGameLoadSuccess: Laya.Handler) {
             super();
             this.onGameLoadSuccess = onGameLoadSuccess;
@@ -17,22 +18,22 @@ namespace ScenePanel {
                 Laya.stage.addChild(this.gameLoadScenes.GetUI());
             })
             //从会员服务中获取用户信息
-            let memberServer = new ServiceManager.MemberManager(GameConfig.GameID);
+            this.memberServer = new ServiceManager.MemberManager(GameConfig.GameID);
             //获取Socket Token
-            let authorizationInfo = memberServer.GetSocketInfo();
-            if (!authorizationInfo.SocketToken || !authorizationInfo.Token) {
+            let authorizationInfo = this.memberServer.GetSocketInfo();
+            if (!authorizationInfo.Token) {
                 let parentId: string = Utils.Url.GetQuery("parentid");
                 let dto: BaseDto.LoginDto = new BaseDto.LoginDto();
                 dto.DeviceType = GameConfig.DeviceType;
                 dto.DeviceId = GameConfig.DeviceId;
                 let successHandler = Laya.Handler.create(this, this.LoginSuccess, null, false);
                 let errorHandler = Laya.Handler.create(this, this.LoginError, null, false);
-                memberServer.LoginByTourists(dto, authorizationInfo.Token, successHandler, errorHandler);
+                this.memberServer.LoginByTourists(dto, authorizationInfo.Token, successHandler, errorHandler);
             } else {
-                this.isLoginSuccess = true;
+                this.LoginSuccess(authorizationInfo.Token);
             }
             let url: string = Laya.Browser.window.location.href;
-            memberServer.GetJsSignature(url, Laya.Handler.create(this, this.GetWeChatSuccess, null, false));
+            this.memberServer.GetJsSignature(url, Laya.Handler.create(this, this.GetWeChatSuccess, null, false));
             //加载游戏开资源
             this.onLoaded();
         }
@@ -49,28 +50,33 @@ namespace ScenePanel {
         /**
          * 登录成功
          */
-        private LoginSuccess(): void {
-            this.isLoginSuccess = true;
-            if (this.isLoadSuccess) {
-                document.removeEventListener("screenMode", () => {
-                    console.log("screenMode");
-                })
-                this.onGameLoadSuccess.run();
-            }
+        private LoginSuccess(token: string): void {
+            let successHandler = Laya.Handler.create(this, () => {
+                this.isLoginSuccess = true;
+                if (this.isLoadSuccess) {
+                    document.removeEventListener("screenMode", () => {
+                        console.log("screenMode");
+                    })
+                    this.onGameLoadSuccess.run();
+                }
+            }, null, false);
+            let errorHandler = Laya.Handler.create(this, this.LoginError, null, false);
+            this.memberServer.GetSocketToken(token, successHandler, errorHandler);
         }
 
         /**
          * 登录失败
          */
         private LoginError(error: string): void {
+            //抛出错误提示
             this.gameLoadScenes.LoadError(error);
-            this.isLoginSuccess = true;
-            if (this.isLoadSuccess) {
-                document.removeEventListener("screenMode", () => {
-                    console.log("screenMode");
-                })
-                this.onGameLoadSuccess.run();
-            }
+            this.isLoginSuccess = false;
+            // if (this.isLoadSuccess) {
+            //     document.removeEventListener("screenMode", () => {
+            //         console.log("screenMode");
+            //     })
+            //     this.onGameLoadSuccess.run();
+            // }
         }
 
         /**

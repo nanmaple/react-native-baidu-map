@@ -49,13 +49,6 @@ var ServiceManager;
             this.socket.Connect(url);
         };
         /**
-         * 重连
-         */
-        SocketManager.prototype.ReConnect = function () {
-            //启动连接
-            this.socket.ReConnect();
-        };
-        /**
          * 关闭
          */
         SocketManager.prototype.Close = function () {
@@ -139,6 +132,7 @@ var ServiceManager;
                     this.event(ServiceManager.SocketEvent.OnError, messageDto.Data);
                     break;
                 case BaseEnum.MainCommand.MSG_KICKOUT:
+                    console.log("登出");
                     //登出，断开连接
                     this.socket.Close();
                     //广播上层-登出

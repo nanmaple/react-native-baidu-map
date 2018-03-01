@@ -18,6 +18,7 @@ namespace ScenePanel {
             this.ui.cacheAs = "bitmap";
             this.uiData = RulePanelUIData.GetInstance();
             this.ui.visible = this.uiData.isShow;
+            this.ui.txt.vScrollBarSkin = "";
             this.ui.close.on(Laya.Event.CLICK, this, this.CloseRule);
 
         }

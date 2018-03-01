@@ -16,5 +16,7 @@ namespace ServiceManager {
          * 获取会员信息
          */
         GetMemberInfo(): BaseDto.MemberInfoDto;
+        
+        GetSocketToken(token: string, successHandler: Laya.Handler,errorhandler: Laya.Handler): void
     }
 }

@@ -17,6 +17,7 @@ var GameConfig;
     //RatioType true 长的一边比率大，短边被压缩，需要再压缩长边；false 短的一边比率大，
     GameConfig.RatioType = true;
     GameConfig.ScreenMode = 0;
+    GameConfig.SocketToken = "";
     function GetDomainUrl(parentId) {
         parentId = parentId ? "&parentid=" + parentId : "";
         return "http://" + GameConfig.Domain + "?gameid=" + GameConfig.GameID + parentId;

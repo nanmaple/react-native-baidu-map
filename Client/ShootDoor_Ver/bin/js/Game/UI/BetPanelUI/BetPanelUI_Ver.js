@@ -22,18 +22,29 @@ var ScenePanel;
                 _this.ui.CancleBetBtn.scale(GameConfig.LengthShort, 1);
                 _this.ui.ConfirmBetBtn.scale(GameConfig.LengthShort, 1);
                 _this.ui.Chips.scale(GameConfig.LengthShort, 1);
-                _this.ui.BetBox.scale(GameConfig.LengthShort, 1);
-                _this.ui.CancleBetBtn.centerX = 14 * GameConfig.LengthShort;
-                _this.ui.ConfirmBetBtn.centerX = 267 * GameConfig.LengthShort;
+                for (var i = 0; i < 13; i++) {
+                    var Box = _this.ui.BetBox.getChildAt(i);
+                    var child1 = Box.getChildAt(0);
+                    var child2 = Box.getChildAt(1);
+                    var child3 = Box.getChildAt(2);
+                    child1.scale(GameConfig.LengthShort, 1);
+                    child2.scale(GameConfig.LengthShort, 1);
+                    child3.scale(GameConfig.LengthShort, 1);
+                }
+                _this.ui.MsgPanel.scale(GameConfig.LengthShort, 1);
                 _this.ui.Chips.bottom = 655;
             }
             else {
                 _this.ui.CancleBetBtn.scale(1, GameConfig.ShortLength);
                 _this.ui.ConfirmBetBtn.scale(1, GameConfig.ShortLength);
                 _this.ui.Chips.scale(1, GameConfig.ShortLength);
+                _this.ui.ChipsBg.scale(1, GameConfig.ShortLength);
                 _this.ui.BetBox.scale(1, GameConfig.ShortLength);
+                _this.ui.BetBg.scale(1, GameConfig.ShortLength);
+                _this.ui.MsgPanel.scale(1, GameConfig.ShortLength);
                 _this.baseX = 18;
                 _this.ui.Chips.bottom = 655 * GameConfig.ShortLength;
+                _this.ui.ChipsBg.bottom = 655 * GameConfig.ShortLength;
             }
             //绑定事件
             _this.BindClick();
@@ -86,11 +97,11 @@ var ScenePanel;
                 var x = this.betMoneyLabelArr[i].x + this.betMoneyLabelArr[i].parent.x;
                 var y = this.betMoneyLabelArr[i].y + this.betMoneyLabelArr[i].parent.y;
                 if (GameConfig.RatioType) {
-                    x = baseX + x * GameConfig.LengthShort;
+                    x = x;
                     y = baseY + y;
                 }
                 else {
-                    x = baseX + x;
+                    x = x;
                     y = baseY + y * GameConfig.ShortLength;
                 }
                 var point = new Laya.Point(x, y);
