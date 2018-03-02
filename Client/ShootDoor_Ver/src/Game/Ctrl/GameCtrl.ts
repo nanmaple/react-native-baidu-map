@@ -12,7 +12,6 @@ class GameCtrl extends BaseCtrl {
     private settleData: Dto.GameResultDto = null;
     private cacheData: Dto.CacheGameDto = null;
     private ChangeMoneyHander: Laya.Handler;
-    private time:number = 0;
     /**
      * 页面关闭回调
      * @param onClose 回调Handler
@@ -89,8 +88,9 @@ class GameCtrl extends BaseCtrl {
      * 侦听Socket关闭事件
      * @param data 
      */
-    public OnCloseHandler(): void {
+    public OnCloseHandler(message: string): void {
         ScenePanel.GameUI.GetInstance().GetLoadingPanel().ShowConnect();
+        console.log(message)
     }
 
     /**

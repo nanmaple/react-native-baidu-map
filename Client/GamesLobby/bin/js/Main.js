@@ -1,5 +1,5 @@
 // 程序入口
-var GameMain = /** @class */ (function () {
+var GameMain = (function () {
     function GameMain() {
         this.memberServer = new MemberManager.Member();
         this.dto = new BaseDto.LoginDto();

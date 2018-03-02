@@ -71,11 +71,9 @@ namespace ServiceManager {
                     this.LoginSuccess(response.Data, successHandler);
                 } else {
                     errorhandler.runWith(response.Result);
-                    console.log(response.Result);
                 }
             }, (error: any) => {
                 errorhandler.runWith(error.toString());
-                console.log(error.toString());
             });
         };
 
@@ -96,11 +94,9 @@ namespace ServiceManager {
                     successHandler.run();
                 } else {
                     errorhandler.runWith(response.Result);
-                    console.log(response.Result);
                 }
             }, (error: any) => {
                 errorhandler.runWith(error.toString());
-                console.log(error.toString());
             });
         }
 

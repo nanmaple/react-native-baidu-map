@@ -1,6 +1,6 @@
 var BaseDto;
 (function (BaseDto) {
-    var MultiAccountDto = /** @class */ (function () {
+    var MultiAccountDto = (function () {
         function MultiAccountDto() {
         }
         return MultiAccountDto;
@@ -9,16 +9,12 @@ var BaseDto;
     /**
      * 授权登录信息Dto
      */
-    var AuthorizationDto = /** @class */ (function () {
+    var AuthorizationDto = (function () {
         function AuthorizationDto() {
             /**
              * Token
              */
             this.Token = "";
-            /**
-             * 游戏token
-             */
-            this.SocketToken = "";
             /**
              * 微信Code
              */

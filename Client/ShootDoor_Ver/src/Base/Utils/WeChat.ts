@@ -33,7 +33,10 @@ namespace Utils {
                 console.log("未引入weixin.js");
             }
         }
-
+        /**
+         * 微信端浏览器网络监测
+         * @param handler 
+         */
         public GetNetworkType(handler: Laya.Handler): void {
             if (this.wx) {
                 this.wx.getNetworkType({
@@ -50,7 +53,18 @@ namespace Utils {
                 console.log("未引入weixin.js");
             }
         }
-
+        /**
+         * PC端浏览器网络监测
+         * @param handler 
+         */
+        public GetPcNetworkType(handler: Laya.Handler):void{
+            //网络连接
+            if(Laya.Browser.window.navigator.onLine == true){
+                 handler.runWith(true);
+             }else{
+                 handler.runWith(false);
+             }
+        }
         /**
          * 分享朋友圈
          * @param title 标题

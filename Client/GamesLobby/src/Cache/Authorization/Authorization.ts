@@ -37,7 +37,6 @@ namespace CacheData {
                 this.authorization = new BaseDto.AuthorizationDto();
             }
             this.authorization.Code = dto.Code !== undefined ? dto.Code : this.authorization.Code;
-            this.authorization.SocketToken = dto.SocketToken !== undefined ? dto.SocketToken : this.authorization.SocketToken;
             this.authorization.Token = dto.Token !== undefined ? dto.Token : this.authorization.Token;
             this.authorization.IsMulti = dto.IsMulti !== undefined ? dto.IsMulti : this.authorization.IsMulti;
             this.authorization.IsTourists = dto.IsTourists !== undefined ? dto.IsTourists : this.authorization.IsTourists;

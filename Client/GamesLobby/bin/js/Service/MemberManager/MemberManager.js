@@ -5,7 +5,7 @@
 /// <reference path="IMemberManager.ts" />
 var MemberManager;
 (function (MemberManager) {
-    var Member = /** @class */ (function () {
+    var Member = (function () {
         function Member() {
         }
         /**
@@ -75,8 +75,7 @@ var MemberManager;
             dto.ParentID = parentID;
             if (!response.Accounts) {
                 //token信息
-                dto.Token = response.SessionToken;
-                dto.SocketToken = response.SocketToken;
+                dto.Token = response.Token;
                 //是否有多个账号
                 dto.IsMulti = false;
                 //账号是否关闭
@@ -105,7 +104,6 @@ var MemberManager;
                 //微信有多个账号
                 dto.IsMulti = true;
                 dto.Token = response.TempToken;
-                dto.SocketToken = null;
                 dto.Accounts = response.Accounts;
                 //是否是游客
                 dto.IsTourists = isTourists;

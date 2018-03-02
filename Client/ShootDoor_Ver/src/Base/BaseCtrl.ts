@@ -67,8 +67,14 @@ abstract class BaseCtrl {
         this.socket.Connect(this.socketUrl);
         console.log("连接：" + this.socketUrl);
         let wechat: Utils.WeChat = new Utils.WeChat();
+        let isWeChat:boolean = Laya.Browser.window.navigator.userAgent.indexOf('MicroMessenger') >= 0 ;  //判断是否微信浏览器
+        console.log("是否微信浏览器：" + isWeChat);
         Laya.timer.loop(2000, this, () => {
-            wechat.GetNetworkType(Laya.Handler.create(this, this.GetNetworkSuccess, null, false));
+            if(isWeChat){
+                wechat.GetNetworkType(Laya.Handler.create(this, this.GetNetworkSuccess, null, false));
+            }else{
+                wechat.GetPcNetworkType(Laya.Handler.create(this, this.GetNetworkSuccess, null, false));
+            }
         });
 
         let successHandler: Laya.Handler = Laya.Handler.create(this, this.WeChatShareHandler, null, false);
@@ -84,9 +90,7 @@ abstract class BaseCtrl {
         wechat.ShareTimeline(dto.Title, dto.ImgUrl, dto.Link, successHandler);
         //分享qq空间
         wechat.ShareQZone(dto.Title, dto.Desc, dto.ImgUrl, dto.Link, successHandler);
-        Laya.timer.loop(2000,this,()=>{
-            // console.log("time-1");
-        })
+
     }
 
     /**
@@ -122,7 +126,7 @@ abstract class BaseCtrl {
     /**
      * 侦听Socket关闭事件
      */
-    abstract OnCloseHandler(): void;
+    abstract OnCloseHandler(message: string): void;
 
     /**
      * 侦听Socket错误事件

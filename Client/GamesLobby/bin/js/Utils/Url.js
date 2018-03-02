@@ -1,6 +1,6 @@
 var Utils;
 (function (Utils) {
-    var Url = /** @class */ (function () {
+    var Url = (function () {
         function Url() {
         }
         Url.GetQuery = function (name) {

@@ -26,7 +26,7 @@ namespace ServiceManager {
          * @param token 
          */
         public SetNetwork(status: boolean) {
-            //启动连接
+            //设置网络状态
             this.socket.SetNetwork(status);
         }
 
@@ -43,7 +43,7 @@ namespace ServiceManager {
          * 关闭
          */
         public Close(): void {
-            //启动连接
+            //关闭连接
             this.socket.Close();
         }
 
@@ -79,9 +79,9 @@ namespace ServiceManager {
         /**
          * 关闭链接
          */
-        private OnClosed(): void {
+        private OnClosed(message: string): void {
             //广播上层-关闭连接
-            this.event(ServiceManager.SocketEvent.OnClose);
+            this.event(ServiceManager.SocketEvent.OnClose,message);
         }
 
         /**

@@ -3,7 +3,7 @@ var BaseDto;
     /**
      * 授权登录信息Dto
      */
-    var MemberInfoDto = /** @class */ (function () {
+    var MemberInfoDto = (function () {
         function MemberInfoDto() {
             /**
              * 昵称

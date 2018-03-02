@@ -12,9 +12,7 @@ module ui {
         
             super.createChildren();
             this.createView(ui.AccountListUI.uiView);
-
         }
-
     }
 }
 
@@ -29,8 +27,6 @@ module ui {
         
             super.createChildren();
             this.createView(ui.AccountList_VerUI.uiView);
-
         }
-
     }
 }

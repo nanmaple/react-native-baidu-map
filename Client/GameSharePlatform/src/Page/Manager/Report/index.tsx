@@ -36,7 +36,8 @@ export default class Report extends React.Component<any, any> {
             curTotal: null,    //汇总
             curTotalName: "我",  //汇总行对应昵称
             curRemark: null,          //汇总行备注
-            myTotal: null
+            myTotal: null,
+            nameList: ["我"]         //汇总行昵称数组
         }
         this.ShowStartPicker = this.ShowStartPicker.bind(this);
     }
@@ -118,9 +119,12 @@ export default class Report extends React.Component<any, any> {
     private goToChild = (item: any) => {
         this.ShowToast("加载中...", ToastType.Loading);
         let { startDate, endDate } = this.state;
+        let arr = this.state.nameList;
+        arr.push(item.Nickname);
         this.setState({
             memberId: item.MemberId,
             curTotalName: item.Nickname,
+            nameList: arr,
             curTotal: item.Total,
             curRemark: item.Remark,
         })
@@ -130,8 +134,9 @@ export default class Report extends React.Component<any, any> {
      * 返回上一级
      */
     private back = () => {
-        let arr = this.state.allReportList;
+        let arr = this.state.allReportList, arrName = this.state.nameList;
         arr.pop();
+        arrName.pop();
         if (arr.length <= 1) {
             this.setState({
                 memberId: null
@@ -139,7 +144,9 @@ export default class Report extends React.Component<any, any> {
         }
         this.setState({
             allReportList: arr,
-            curReportList: arr[arr.length - 1]
+            nameList: arrName,
+            curReportList: arr[arr.length - 1],
+            curTotalName: arrName[arrName.length - 1],
         })
         this.calculateTotal(arr[arr.length - 1]);
     }

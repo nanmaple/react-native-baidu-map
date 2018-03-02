@@ -21,6 +21,7 @@ class CardPanelCtrl extends Laya.Sprite {
         }else{
             this.dataCards = [data.Cards.FirstCard, data.Cards.SecondCard, data.Cards.ThirdCard];
             for (let i: number = 0; i < this.pokerNum; i++) {
+                this.gameUI.GetCardPanel().HidePoker(i);
                 this.gameUI.GetCardPanel().InitPoker(this.dataCards[i],i);
             }
         }

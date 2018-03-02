@@ -40,7 +40,7 @@ namespace BaseDto {
         /**
          * 用户Token
          */
-        public SessionToken: string;
+        public Token: string;
         /**
          * 游戏Token
          */

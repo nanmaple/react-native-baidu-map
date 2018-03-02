@@ -2,7 +2,7 @@
 /// <reference path="../../Dto/MemberInfoDto.ts"/>
 var CacheData;
 (function (CacheData) {
-    var MemberInfo = /** @class */ (function () {
+    var MemberInfo = (function () {
         function MemberInfo() {
             this.memberInfo = null;
             this.cacheType = GameConfig.CacheType !== undefined ? GameConfig.CacheType : Utils.StorageType.LOCALSTORAGE;
@@ -54,8 +54,8 @@ var CacheData;
             storage.Set(key, null, this.cacheType);
             return true;
         };
-        MemberInfo.instance = new MemberInfo();
         return MemberInfo;
     }());
+    MemberInfo.instance = new MemberInfo();
     CacheData.MemberInfo = MemberInfo;
 })(CacheData || (CacheData = {}));

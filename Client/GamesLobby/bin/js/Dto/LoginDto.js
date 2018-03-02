@@ -3,7 +3,7 @@ var BaseDto;
     /**
      * 登录参数Token
      */
-    var LoginDto = /** @class */ (function () {
+    var LoginDto = (function () {
         function LoginDto() {
             /**
              * 设备号
@@ -20,7 +20,7 @@ var BaseDto;
     /**
      * 登录成功返回结果Dto
      */
-    var LoginSuccessDto = /** @class */ (function () {
+    var LoginSuccessDto = (function () {
         function LoginSuccessDto() {
             /**
              * 分数
@@ -33,7 +33,7 @@ var BaseDto;
     /**
      * 登录成功，但有多账号结果Dto
      */
-    var LoginMultiAccountDto = /** @class */ (function () {
+    var LoginMultiAccountDto = (function () {
         function LoginMultiAccountDto() {
         }
         return LoginMultiAccountDto;
@@ -61,7 +61,7 @@ var BaseDto;
     /**
      * 登录结果
      */
-    var LoginResultDto = /** @class */ (function () {
+    var LoginResultDto = (function () {
         function LoginResultDto() {
         }
         return LoginResultDto;

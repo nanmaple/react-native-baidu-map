@@ -3,7 +3,7 @@
 /// <reference path="../../Dto/AuthorizationDto.ts"/>
 var CacheData;
 (function (CacheData) {
-    var Authorization = /** @class */ (function () {
+    var Authorization = (function () {
         function Authorization() {
             this.authorization = null;
             this.cacheType = GameConfig.CacheType !== undefined ? GameConfig.CacheType : Utils.StorageType.LOCALSTORAGE;
@@ -35,7 +35,6 @@ var CacheData;
                 this.authorization = new BaseDto.AuthorizationDto();
             }
             this.authorization.Code = dto.Code !== undefined ? dto.Code : this.authorization.Code;
-            this.authorization.SocketToken = dto.SocketToken !== undefined ? dto.SocketToken : this.authorization.SocketToken;
             this.authorization.Token = dto.Token !== undefined ? dto.Token : this.authorization.Token;
             this.authorization.IsMulti = dto.IsMulti !== undefined ? dto.IsMulti : this.authorization.IsMulti;
             this.authorization.IsTourists = dto.IsTourists !== undefined ? dto.IsTourists : this.authorization.IsTourists;
@@ -58,8 +57,8 @@ var CacheData;
             storage.Set(key, null, this.cacheType);
             return true;
         };
-        Authorization.instance = new Authorization();
         return Authorization;
     }());
+    Authorization.instance = new Authorization();
     CacheData.Authorization = Authorization;
 })(CacheData || (CacheData = {}));

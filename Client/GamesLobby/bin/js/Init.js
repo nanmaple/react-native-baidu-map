@@ -1,4 +1,4 @@
-var InitState = /** @class */ (function () {
+var InitState = (function () {
     function InitState() {
         //初始化引擎，不支持WebGL时自动切换到Canvas,宽高定义的越大，内存使用暴增
         Laya.init(GameConfig.DesignWidth, GameConfig.DesignHeight, Laya.WebGL);

@@ -199,7 +199,6 @@ export default class UserCtrl extends BaseCtrl {
             dto.Code = code;
             //微信只有一个账号
             dto.Token = (response as LoginSuccessDto).SessionToken;
-            dto.SocketToken = (response as LoginSuccessDto).SocketToken;
             dto.ParentID = parentId;
             dto.IsMulti = false;
             dto.IsTourists = isTourist;
@@ -233,7 +232,6 @@ export default class UserCtrl extends BaseCtrl {
             //微信有多个账号
             dto.IsMulti = true;
             dto.Token = response.TempToken;
-            dto.SocketToken = null;
             dto.Accounts = response.Accounts;
             dto.ParentID = parentId;
             //是否是游客

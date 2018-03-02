@@ -6,7 +6,7 @@ var Net;
      * WebApi层
      * 单例 使用WebApi.instance
      */
-    var WebApi = /** @class */ (function () {
+    var WebApi = (function () {
         function WebApi() {
             //token存储
             this.header = {
@@ -153,9 +153,9 @@ var Net;
                 errorhandler.runWith(error.toString());
             });
         };
-        //单例
-        WebApi.instance = new WebApi();
         return WebApi;
     }());
+    //单例
+    WebApi.instance = new WebApi();
     Net.WebApi = WebApi;
 })(Net || (Net = {}));

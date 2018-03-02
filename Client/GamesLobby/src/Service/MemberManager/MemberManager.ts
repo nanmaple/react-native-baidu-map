@@ -79,8 +79,7 @@ namespace MemberManager {
             dto.ParentID = parentID;
             if (!(<BaseDto.LoginMultiAccountDto>response).Accounts) {
                 //token信息
-                dto.Token = (<BaseDto.LoginSuccessDto>response).SessionToken;
-                dto.SocketToken = (<BaseDto.LoginSuccessDto>response).SocketToken;
+                dto.Token = (<BaseDto.LoginSuccessDto>response).Token;
                 //是否有多个账号
                 dto.IsMulti = false;
                 //账号是否关闭
@@ -109,7 +108,6 @@ namespace MemberManager {
                 //微信有多个账号
                 dto.IsMulti = true;
                 dto.Token = (<BaseDto.LoginMultiAccountDto>response).TempToken;
-                dto.SocketToken = null;
                 dto.Accounts = (<BaseDto.LoginMultiAccountDto>response).Accounts;
                 //是否是游客
                 dto.IsTourists = isTourists;

@@ -11,8 +11,7 @@ namespace Utils.Socket {
         private OnWillReconnect: Laya.Handler;
         private OnMessage: Laya.Handler;
         private isReConnect: boolean = true;//是否重连
-        private reConnectTime: number = 4000;
-        private isReConnecting: boolean = false;
+        private reConnectTime: number = 3000;
         constructor() {
         }
 
@@ -61,7 +60,7 @@ namespace Utils.Socket {
         private onOpen(msg: any): void {
             Laya.timer.clear(this, this.Connect);
             this.OnConnect.run();
-            console.log("连接");
+            console.log("连接成功");
         }
 
         /**
@@ -69,7 +68,8 @@ namespace Utils.Socket {
          * @param msg 
          */
         private onClose(msg: any): void {
-            this.OnClosed.run();
+            console.log("断开连接" + this.isReConnect)
+            this.OnClosed.runWith(msg);
             if (this.isReConnect) {
                 Laya.timer.clear(this, this.Connect);
                 Laya.timer.once(this.reConnectTime, this, this.Connect, [this.url, true]);
@@ -81,6 +81,7 @@ namespace Utils.Socket {
          * @param msg 
          */
         private onError(error: any): void {
+            console.log("连接出错")
             this.OnError.runWith(error);
         }
         /**

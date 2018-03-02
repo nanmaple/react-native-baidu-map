@@ -22,10 +22,6 @@ namespace BaseDto {
          */
         public Token: string = "";
         /**
-         * 游戏token
-         */
-        public SocketToken: string = "";
-        /**
          * 微信Code
          */
         public Code: string = null;
