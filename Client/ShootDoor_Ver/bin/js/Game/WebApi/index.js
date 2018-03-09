@@ -36,12 +36,17 @@ var Net;
         WebApi.prototype.GetBetRecord = function (dto, successHandler, errorhandler) {
             this.http.Post(Net.ApiConfig.GetBetRecord, dto, this.header, function (response) {
                 if (response.Result == BaseEnum.ErrorCode.Success) {
-                    var dto_1 = new Dto.HandlerDto();
-                    dto_1.Data = response.Data;
-                    successHandler.runWith(dto_1);
+                    if (response.Data) {
+                        var dto_1 = new Dto.HandlerDto();
+                        dto_1.Data = response.Data;
+                        successHandler.runWith(dto_1);
+                    }
+                    else {
+                        errorhandler.runWith(BaseEnum.ErrorCode.SystemError);
+                    }
                 }
                 else {
-                    errorhandler.runWith(response.ErrorCode);
+                    errorhandler.runWith(response.Result);
                 }
             }, function (error) {
                 errorhandler.runWith(error.toString());

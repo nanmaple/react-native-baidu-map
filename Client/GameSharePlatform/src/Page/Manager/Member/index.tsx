@@ -26,7 +26,7 @@ const rightImg = require("../../../Image/right.png");
 export default class MemberList extends React.Component<any, any> {
     private memberCtrl: MemberCtrl = new MemberCtrl();
     private toast: any;
-    private languageManager: LanguageManager;
+    private languageManager: LanguageManager = new LanguageManager();
     constructor(props: any) {
         super(props);
         this.state = {
@@ -150,7 +150,7 @@ export default class MemberList extends React.Component<any, any> {
                         {rowItem.Nickname}{rowItem.Remark ? "(" + rowItem.Remark + ")" : ""}
                     </div></div>
                 <div className={styles.score}>
-                    <div>
+                    <div className={rowItem.Score==0?null:(rowItem.Score > 0 ? "zheng" : "fu")}>
                         {Money.Format(rowItem.Score)}
                     </div>
                     <div>
@@ -167,7 +167,7 @@ export default class MemberList extends React.Component<any, any> {
             return (
                 <div className="noData">
                     <CompToast ref={(c) => this.toast = c} />
-                    无数据
+                    {this.languageManager.GetErrorMsg("NoData")}
                 </div>
 
             )
@@ -175,7 +175,7 @@ export default class MemberList extends React.Component<any, any> {
         return (
             <div className={styles.container}>
                 <CompToast ref={(c) => this.toast = c} />
-                <Toast icon="loading" show={this.state.showLoading}>加载中</Toast>
+                <Toast icon="loading" show={this.state.showLoading}>{this.languageManager.GetErrorMsg("Loading")}</Toast>
                 <PullLoad
                     isBlockContainer={true}
                     downEnough={40}

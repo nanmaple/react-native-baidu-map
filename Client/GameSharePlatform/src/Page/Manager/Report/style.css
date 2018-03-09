@@ -6,13 +6,25 @@
     padding: 0 10px 0 10px;
     background:#fff;
 }
+.headdate{
+    height:40px;
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    align-items: center;
+    padding: 0 10px 0 10px;
+    background:#efeff4;
+}
 .head input{
     height:20px;
     font-size: 12px;
     text-align: center;
 }
+.headdate input{
+    height:20px;
+    font-size: 12px;
+    text-align: center;
+}
 .search{
-    width:36px;
     height:20px;
     display: flex;
     justify-content: center;
@@ -20,6 +32,7 @@
     background: #30bf27;
     border-radius: 4px;
     color:#fff;
+    padding: 0 5px;
 }
 .timeContainer{
    flex:5;
@@ -42,29 +55,42 @@
     align-items: center;
 }
 .win{
-    color: #30bf27;
+    color: #338ffe;
+}
+.lose{
+    color:#fd4d4d;
+}
+.ozero{
+    color:#333
 }
 .allTotal{
     display: flex;
     height: 40px;
     align-items: center;
-    background: #fff;
+    background: #ddd;
     border-bottom: 1px solid #ddd;
     padding: 0 10px 0 10px;
-    color: red;
+}
+.zero{
+    flex:1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color:#333;
 }
 .totalWin{
     flex:1;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    color:#30bf27;
+    color:#338ffe;
 }
 .total{
     flex:1;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    color:#fd4d4d;
 }
 .back{
     flex:1;
@@ -109,12 +135,20 @@
     justify-content: flex-start;
     align-items: center;
 }
+.allZero{
+    flex:1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color:#333;
+    margin-right: 20px;
+}
 .allWin{
     flex:1;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    color:#30bf27;
+    color:#338ffe;
     margin-right: 20px;
 }
 .allLose{
@@ -123,4 +157,5 @@
     align-items: center;
     justify-content: flex-end;
     margin-right: 20px;
+    color:#fd4d4d
 }

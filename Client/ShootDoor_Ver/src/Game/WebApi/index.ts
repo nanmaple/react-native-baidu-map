@@ -27,12 +27,16 @@ namespace Net {
              */
             public GetBetRecord(dto: Dto.BetRecordPageDto, successHandler: Laya.Handler, errorhandler: Laya.Handler) {
                   this.http.Post(Net.ApiConfig.GetBetRecord, dto, this.header, (response: any) => {
-                        if (response.Result == BaseEnum.ErrorCode.Success) {
-                              let dto: Dto.HandlerDto = new Dto.HandlerDto();
-                              dto.Data = response.Data;
-                              successHandler.runWith(dto);
+                        if (response.Result == BaseEnum.ErrorCode.Success) { 
+                              if(response.Data){
+                                    let dto: Dto.HandlerDto = new Dto.HandlerDto();
+                                    dto.Data = response.Data;
+                                    successHandler.runWith(dto);
+                              }else{
+                                    errorhandler.runWith(BaseEnum.ErrorCode.SystemError);
+                              }
                         } else {
-                              errorhandler.runWith(response.ErrorCode);
+                              errorhandler.runWith(response.Result);
                         }
                   }, (error: any) => {
                         errorhandler.runWith(error.toString());

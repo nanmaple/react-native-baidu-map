@@ -66,11 +66,9 @@ var ServiceManager;
                 }
                 else {
                     errorhandler.runWith(response.Result);
-                    console.log(response.Result);
                 }
             }, function (error) {
                 errorhandler.runWith(error.toString());
-                console.log(error.toString());
             });
         };
         ;
@@ -91,11 +89,9 @@ var ServiceManager;
                 }
                 else {
                     errorhandler.runWith(response.Result);
-                    console.log(response.Result);
                 }
             }, function (error) {
                 errorhandler.runWith(error.toString());
-                console.log(error.toString());
             });
         };
         MemberManager.prototype.LoginSuccess = function (response, successHandler) {

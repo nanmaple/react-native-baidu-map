@@ -1,12 +1,11 @@
 D .
 D sound
 R FA3E2FFB bet.wav
-R 339865AA bkmusic.wav
 R CF1B9D1C csz1.wav
-R C1439DD2 hitdoor.wav
+R 759FB6B8 hitdoor.mp3
 R F57C2ED7 kickball.mp3
 R 408861D9 shootfail.wav
-R 349C4D3E shootsuccess.wav
+R 9FED3CE6 shootsuccess.mp3
 D ui
 P 4952F22F attention.png
 P 77B3A78D back.png
@@ -40,7 +39,7 @@ P C55710AE ok.png
 R 8167FC33 recordLine.png
 P ACAACF72 rule.png
 P 6A6F42C3 ruleTitle.png
-R FB3A8759 tip.png
+R EC3ADF62 tip.png
 P DF53CC40 tipclose.png
 P 194513E0 title.png
 P 6E701098 userImg.png
@@ -98,3 +97,17 @@ P 56A2146E 7.png
 P 769ED93E 8.png
 P FB022E7E 9.png
 P 2677DD08 pkbg.png
+D ui/vertical
+R 817E2B33 bet_v1.png
+R C19A0BDD betBg_v.png
+R A47A4012 bg_alert_v.png
+R EF10BEB4 bg_bet_v.png
+R 9F0DFBB1 bg_chips_v.png
+R 399A7A96 bg_door_v.png
+R 6D55A75F bg_header_v.png
+R 9C9175FB bg_record_v.png
+R 924439B8 bg_round_v.png
+R B602DE64 bg_v.png
+P 53C6E90E gr_v.png
+P A907CAE3 rule_v.png
+R 1BCA4104 tip_v.png

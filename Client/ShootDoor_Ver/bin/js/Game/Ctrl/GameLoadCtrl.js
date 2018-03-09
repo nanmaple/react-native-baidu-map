@@ -80,12 +80,7 @@ var ScenePanel;
             //抛出错误提示
             this.gameLoadScenes.LoadError(error);
             this.isLoginSuccess = false;
-            // if (this.isLoadSuccess) {
-            //     document.removeEventListener("screenMode", () => {
-            //         console.log("screenMode");
-            //     })
-            //     this.onGameLoadSuccess.run();
-            // }
+            console.log(error);
         };
         /**
          * 开始加载游戏资源

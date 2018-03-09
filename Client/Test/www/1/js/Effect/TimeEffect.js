@@ -44,5 +44,11 @@ var TimeEffect = /** @class */ (function () {
         this.gameTime = 0;
         this.GameTimeUI(this.gameTime);
     };
+    /**
+     * 返回当前倒计时
+     */
+    TimeEffect.prototype.GetGameTime = function () {
+        return this.gameTime;
+    };
     return TimeEffect;
 }());

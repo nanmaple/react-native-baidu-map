@@ -10,10 +10,6 @@ var BaseDto;
              */
             this.Token = "";
             /**
-             * 游戏token
-             */
-            this.SocketToken = "";
-            /**
              * 微信Code
              */
             this.Code = null;

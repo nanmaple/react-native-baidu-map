@@ -10,6 +10,10 @@ var LanguageUtils;
         small: "Small",
         odd: "Odd",
         even: "Even",
+        lout: "Lout",
+        rout: "Rout",
+        lhit: "Lhit",
+        rhit: "Rhit",
         //投注信息
         betSuccess: "Bet-Success",
         betFail: "Bet-Fail",

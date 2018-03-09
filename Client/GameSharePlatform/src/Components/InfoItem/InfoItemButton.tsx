@@ -1,4 +1,5 @@
 import * as React from 'react';
+import LanguageManager from '../../Language/LanguageManager';
 
 const style = require("./style.css");
 
@@ -6,6 +7,7 @@ interface State {
     scoreValue: any,
 }
 export default class InfoItemButton extends React.Component<any, State> {
+    private languageManager: LanguageManager = new LanguageManager();
     constructor(props: any, state: State) {
         super(props);
         this.state = {
@@ -44,8 +46,8 @@ export default class InfoItemButton extends React.Component<any, State> {
                     {label}:<input type="number" value={this.state.scoreValue} onChange={this.scoreChange} />
                 </label>
                 <div className={style.changeScore}>
-                    <div className={style.addScore} onClick={() => this.props.handler("in", scoreValue)}>进分</div>
-                    <div className={style.reduceScore} onClick={() => this.props.handler("out", scoreValue)}>取分</div>
+                    <div className={style.addScore} onClick={() => this.props.handler("in", scoreValue)}>{this.languageManager.GetErrorMsg("InScore")}</div>
+                    <div className={style.reduceScore} onClick={() => this.props.handler("out", scoreValue)}>{this.languageManager.GetErrorMsg("OutScore")}</div>
                 </div>
             </div>)
     }

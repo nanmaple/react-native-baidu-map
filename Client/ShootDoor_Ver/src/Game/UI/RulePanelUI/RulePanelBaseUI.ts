@@ -20,7 +20,13 @@ namespace ScenePanel {
             this.ui.visible = this.uiData.isShow;
             this.ui.txt.vScrollBarSkin = "";
             this.ui.close.on(Laya.Event.CLICK, this, this.CloseRule);
-
+            let lang = Laya.Browser.window.navigator.language || Laya.Browser.window.navigator["userLanguage"];//常规浏览器语言和IE浏览器  
+            lang = lang.substr(0, 2);//截取lang前2位字符 
+            if(lang == 'zh'){
+                this.ui.title.skin = "ui/ruleTitle.png";
+            }else{
+                this.ui.title.skin = "ui/ruleTitle_EN.png";
+            }
         }
 
         /**

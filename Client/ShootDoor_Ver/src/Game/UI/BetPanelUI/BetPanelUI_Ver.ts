@@ -130,7 +130,7 @@ namespace ScenePanel {
 
             //开始缓动
             Laya.Tween.to(flyChip, obj, 700, Laya.Ease.cubicInOut, Laya.Handler.create(this, this.ChipsFlyCallBack, [flyChip, curBetPosChip, value], false));
-
+            this.flyChipArray.push(flyChip);
         }
     }
 }

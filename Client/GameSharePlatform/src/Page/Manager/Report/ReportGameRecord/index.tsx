@@ -23,7 +23,7 @@ const rightImg = require("../../../../Image/right.png");
 class ReportGameRecord extends React.Component<any, any> {
     private ReportCtrl: GameRecordCtrl = new GameRecordCtrl();
     private toast: any;
-    private languageManager: LanguageManager;
+    private languageManager: LanguageManager = new LanguageManager();
     constructor(props: any) {
         super(props);
         this.state = {
@@ -159,7 +159,7 @@ class ReportGameRecord extends React.Component<any, any> {
         if (!memberList || memberList.length == 0) {
             return (
                 <div className="noData">
-                    无数据
+                    {this.languageManager.GetErrorMsg("NoData")}
                 </div>
 
             )
@@ -191,14 +191,14 @@ class ReportGameRecord extends React.Component<any, any> {
         return (
             <div className={styles.container}>
                 <CompToast ref={(c: any) => this.toast = c} />
-                <Toast icon="loading" show={this.state.showLoading}>加载中</Toast>
+                <Toast icon="loading" show={this.state.showLoading}>{this.languageManager.GetErrorMsg("Loading")}</Toast>
                 <div className={styles.listTitle}>
-                    <div className={styles.title}>游戏记录</div>
+                    <div className={styles.title}>{this.languageManager.GetErrorMsg("GameRecord")}</div>
                     <div className={styles.head}>
-                        <div className={styles.roundId}>局号</div>
-                        <div className={styles.time}>时间</div>
-                        <div className={styles.bet}>投注</div>
-                        <div className={styles.payTitle}>赔付</div>
+                        <div className={styles.roundId}>{this.languageManager.GetErrorMsg("Round")}</div>
+                        <div className={styles.time}>{this.languageManager.GetErrorMsg("Time")}</div>
+                        <div className={styles.bet}>{this.languageManager.GetErrorMsg("Bet")}</div>
+                        <div className={styles.payTitle}>{this.languageManager.GetErrorMsg("Pay")}</div>
                     </div>
                     {this.renderData()}
                 </div>

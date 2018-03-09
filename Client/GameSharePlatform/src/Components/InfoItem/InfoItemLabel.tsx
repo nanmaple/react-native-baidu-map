@@ -1,9 +1,11 @@
 import * as React from 'react';
+import LanguageManager from '../../Language/LanguageManager';
 
 const style = require("./style.css");
 
 
 export default class InfoItemLabel extends React.PureComponent<any, any> {
+    private languageManager: LanguageManager = new LanguageManager();
     constructor(props: any) {
         super(props);
     }
@@ -15,8 +17,8 @@ export default class InfoItemLabel extends React.PureComponent<any, any> {
     public renderLabel = (MemberSocre: number, MyScore: number) => {
         return (
             <div className={style.rowItem}>
-                <div className={style.memSoc}>会员分数：{MemberSocre}</div>
-                <div className={style.mySoc}>我的分数：{MyScore}</div>
+                <div className={style.memSoc}>{this.languageManager.GetErrorMsg("MemberScore")}:{MemberSocre}</div>
+                <div className={style.mySoc}>{this.languageManager.GetErrorMsg("MyScore")}:{MyScore}</div>
             </div>
         )
 

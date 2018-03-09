@@ -10,26 +10,27 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var TimePanelCtrl = /** @class */ (function (_super) {
     __extends(TimePanelCtrl, _super);
-    function TimePanelCtrl(timePanel) {
-        var _this = _super.call(this) || this;
-        _this.timePanel = timePanel;
-        return _this;
+    function TimePanelCtrl() {
+        return _super.call(this) || this;
     }
     /**
      * 开始游戏时间
      * @param time 当局游戏时间
      */
     TimePanelCtrl.prototype.StartGameTime = function (time) {
-        this.timePanel.timeEffect.StartGameTime(time);
-        this.timePanel.visible = true;
+        ScenePanel.GameUI.GetInstance().GetTimePanel().StartGameTime(time);
     };
     /**
      * 游戏时间结束
      */
     TimePanelCtrl.prototype.EndGameTime = function () {
-        this.timePanel.timeEffect.EndGameTime();
-        this.timePanel.visible = false;
-        Utils.BackgroundMusic.PlaySounds("sound/csz1.wav");
+        ScenePanel.GameUI.GetInstance().GetTimePanel().EndGameTime();
+    };
+    /**
+     * 隐藏游戏时间
+     */
+    TimePanelCtrl.prototype.HideGameTime = function () {
+        ScenePanel.GameUI.GetInstance().GetTimePanel().HideGameTime();
     };
     return TimePanelCtrl;
 }(Laya.Sprite));

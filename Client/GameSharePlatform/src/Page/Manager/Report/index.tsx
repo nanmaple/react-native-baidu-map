@@ -19,7 +19,7 @@ const rightImg = require("../../../Image/right.png");
 export default class Report extends React.Component<any, any> {
     private ReportCtrl: ReportCtrl = new ReportCtrl();
     private toast: any;
-    private languageManager: LanguageManager;
+    private languageManager: LanguageManager = new LanguageManager();
     private timePicker1: any;
     private timePicker2: any;
     constructor(props: any) {
@@ -34,16 +34,16 @@ export default class Report extends React.Component<any, any> {
             allReportList: [],   //请求过的所有的报表，包括每个层级的
             memberId: null,          //选择的子会员的ID
             curTotal: null,    //汇总
-            curTotalName: "我",  //汇总行对应昵称
+            curTotalName: this.languageManager.GetErrorMsg("Me"),  //汇总行对应昵称
             curRemark: null,          //汇总行备注
             myTotal: null,
-            nameList: ["我"]         //汇总行昵称数组
+            nameList: [this.languageManager.GetErrorMsg("Me")]         //汇总行昵称数组
         }
         this.ShowStartPicker = this.ShowStartPicker.bind(this);
     }
 
     componentDidMount() {
-        this.ShowToast("加载中...", ToastType.Loading);
+        this.ShowToast(this.languageManager.GetErrorMsg("Loading"), ToastType.Loading);
         let { startDate, endDate } = this.state;
         this.ReportCtrl.GetReport(startDate, endDate, true, this.Handler, "search");
     }
@@ -117,7 +117,7 @@ export default class Report extends React.Component<any, any> {
      * @param endDate 终止时间
      */
     private goToChild = (item: any) => {
-        this.ShowToast("加载中...", ToastType.Loading);
+        this.ShowToast(this.languageManager.GetErrorMsg("Loading"), ToastType.Loading);
         let { startDate, endDate } = this.state;
         let arr = this.state.nameList;
         arr.push(item.Nickname);
@@ -154,7 +154,7 @@ export default class Report extends React.Component<any, any> {
      * 查询报表
      */
     private searchReport = () => {
-        this.ShowToast("加载中...", ToastType.Loading);
+        this.ShowToast(this.languageManager.GetErrorMsg("Loading"), ToastType.Loading);
         //获取起始时间
         let { startDate, endDate } = this.state;
         if (startDate == "") {
@@ -209,7 +209,7 @@ export default class Report extends React.Component<any, any> {
                 <div className={styles.name}>{rowItem.Nickname}{rowItem.Remark ? `(${rowItem.Remark})` : null}</div>
 
                 <div className={styles.score}>
-                    <div className={total > 0 ? styles.win : styles.lose}>
+                    <div className={total==0?styles.ozero:total > 0 ? styles.win : styles.lose}>
                         {Money.Format(total)}
                     </div>
                     <div>
@@ -226,12 +226,12 @@ export default class Report extends React.Component<any, any> {
         return (
             <div>
                 <CompToast ref={(c) => this.toast = c} />
-                <div className={styles.head}>
+                <div className={styles.headdate}>
                     <div className={styles.timeContainer}>
                         <div className={styles.time} onClick={this.ShowStartPicker}>{this.state.startDate}</div>
                         <div className={styles.time} onClick={this.ShowEndPicker}>{this.state.endDate}</div>
                     </div>
-                    <div className={styles.search} onClick={() => { this.searchReport() }}>查询</div>
+                    <div className={styles.search} onClick={() => { this.searchReport() }}>{this.languageManager.GetErrorMsg("Inquire")}</div>
                 </div>
 
                 {
@@ -239,12 +239,12 @@ export default class Report extends React.Component<any, any> {
                         <Link to={{
                             pathname: `${GetDetailRoute("/report/gameResult/", allReportList.length > 1 ? `${this.state.memberId}_${curTotalName}_${curRemark}` : this.state.memberId)}`,
                         }} className={styles.head}>
-                            <div className={styles.type}>{allReportList.length > 1 ? curTotalName : "我"}</div>
+                            <div className={styles.type}>{allReportList.length > 1 ? curTotalName : this.languageManager.GetErrorMsg("Me")}</div>
                             {
-                                allReportList.length > 1 ? (<div onClick={(e) => { e.stopPropagation(); e.preventDefault(); this.back() }} className={styles.back}>返回父级</div>) : null
+                                allReportList.length > 1 ? (<div onClick={(e) => { e.stopPropagation(); e.preventDefault(); this.back() }} className={styles.back}>Back</div>) : null
                             }
 
-                            <div className={myTotal > 0 ? styles.totalWin : styles.total}>{myTotal != null ? Money.Format(myTotal) : "---"}</div>
+                            <div className={myTotal==0?styles.zero:myTotal > 0 ? styles.totalWin : styles.total}>{myTotal != null ? Money.Format(myTotal) : "---"}</div>
                             <div className={styles.rightImg}>
                                 <img src={rightImg} />
                             </div>
@@ -259,20 +259,20 @@ export default class Report extends React.Component<any, any> {
                                 return this.renderReportItem(item, index);
                             })}
                             <div className={styles.allTotal}>
-                                <div className={styles.totalName}>合计</div>
-                                <div className={curTotal > 0 ? styles.allWin : styles.allLose}>
+                                <div className={styles.totalName}>{this.languageManager.GetErrorMsg("Total")}</div>
+                                <div className={curTotal==0?styles.allZero:curTotal > 0 ? styles.allWin : styles.allLose}>
                                     {Money.Format(curTotal)}
                                 </div>
                             </div>
 
                         </div>) : (<div>
                             <div className={styles.allTotal}>
-                                <div className={styles.totalName}>合计</div>
-                                <div className={curTotal > 0 ? styles.allWin : styles.allLose}>
+                                <div className={styles.totalName}>{this.languageManager.GetErrorMsg("Total")}</div>
+                                <div className={curTotal==0?styles.allZero:curTotal > 0 ? styles.allWin : styles.allLose}>
                                     {Money.Format(curTotal)}
                                 </div>
                             </div>
-                            <div className={styles.noChildren}>无数据</div>
+                            <div className={styles.noChildren}></div>
 
                         </div>)
 

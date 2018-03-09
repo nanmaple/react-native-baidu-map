@@ -8,13 +8,16 @@ var GameConfig;
     GameConfig.Domain = GameConfig.IsDebug ? "www.zyyft.cn" : "eg.s1.natapp.cc";
     GameConfig.WebApiBaseUrl = GameConfig.IsDebug ? "http://192.168.0.143:8200" : "http://" + GameConfig.Domain + "/api";
     GameConfig.BetWebApiBaseUrl = GameConfig.IsDebug ? "http://192.168.0.143:8201" : "http://" + GameConfig.Domain + "/report";
-    GameConfig.DesignWidth = 1334;
-    GameConfig.DesignHeight = 750;
-    GameConfig.HeightRatio = 1;
-    GameConfig.WidthRatio = 1;
-    GameConfig.HeightWidth = 1;
-    GameConfig.WidthHeight = 1;
-    GameConfig.RatioType = true; // true 宽比率大,false 高比率大
+    GameConfig.DesignLength = 1334;
+    GameConfig.DesignShort = 750;
+    GameConfig.LengthRatio = 1;
+    GameConfig.ShortRatio = 1;
+    GameConfig.LengthShort = 1;
+    GameConfig.ShortLength = 1;
+    //RatioType true 长的一边比率大，短边被压缩，需要再压缩长边；false 短的一边比率大，
+    GameConfig.RatioType = true;
+    GameConfig.ScreenMode = 0;
+    GameConfig.SocketToken = "";
     function GetDomainUrl(parentId) {
         parentId = parentId ? "&parentid=" + parentId : "";
         return "http://" + GameConfig.Domain + "?gameid=" + GameConfig.GameID + parentId;
@@ -29,11 +32,11 @@ var GameConfig;
     }
     GameConfig.GetSocketUrl = GetSocketUrl;
     //微信相关
-    GameConfig.AppId = GameConfig.IsDebug ? "wxbb5416518880be41" : "wxcf3db3f292310c00";
+    GameConfig.AppId = GameConfig.IsDebug ? "wxbb5416518880be41" : "wxa1db7b9e146cd997";
     function GetWeChatUrl(parentID, isAuthorize) {
         if (isAuthorize === void 0) { isAuthorize = true; }
         if (isAuthorize) {
-            return "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + this.AppId + "&redirect_uri=http%3A%2F%2F" + this.Domain + "%3fgameid%3d" + this.GameID + "%26parentid%3d" + parentID + "&response_type=code&scope=snsapi_base&state={state}#wechat_redirect";
+            return "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + this.AppId + "&redirect_uri=http%3A%2F%2F" + this.Domain + "%3fgameid%3d" + this.GameID + "%26parentid%3d" + parentID + "&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
         }
         else {
             return "http://" + this.Domain + "?gameid=" + this.GameID + "&parentid=" + parentID;
@@ -46,13 +49,13 @@ var GameConfig;
     function GetWeChatShareDto(parentID, isAuthorize) {
         if (isAuthorize === void 0) { isAuthorize = true; }
         var dto = {
-            Title: "射龙门",
+            Title: "ShootDoor",
             Desc: "射龙门H5游戏",
             ImgUrl: "",
             Link: ""
         };
         if (isAuthorize) {
-            dto.Link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + this.AppId + "&redirect_uri=http%3A%2F%2F" + this.Domain + "%3fgameid%3d" + this.GameID + "%26parentid%3d" + parentID + "&response_type=code&scope=snsapi_base&state={state}#wechat_redirect";
+            dto.Link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + this.AppId + "&redirect_uri=http%3A%2F%2F" + this.Domain + "%3fgameid%3d" + this.GameID + "%26parentid%3d" + parentID + "&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
         }
         else {
             dto.Link = "http://" + this.Domain + "?gameid=" + this.GameID + "&parentid=" + parentID;

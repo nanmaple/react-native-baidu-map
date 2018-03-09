@@ -14,6 +14,10 @@ var LanguageUtils;
         rout: "右",
         lhit: "左",
         rhit: "右",
+        leftOut: "左偏",
+        rightOut: "右偏",
+        leftHit: "左撞柱",
+        rightHit: "右撞柱",
         //投注信息
         betSuccess: "投注成功",
         betFail: "投注失败",
@@ -46,6 +50,6 @@ var LanguageUtils;
         /**
          * 超过限额
          */
-        OVER_LIMIT: "超过限额"
+        OVER_LIMIT: "超过限额",
     };
 })(LanguageUtils || (LanguageUtils = {}));

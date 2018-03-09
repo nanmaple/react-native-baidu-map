@@ -77,6 +77,8 @@ var GameMain = (function () {
             this.accountUI.login.visible = true;
             this.accountUI.accountList.visible = false;
         }
+        var language = new LanguageUtils.Language();
+        this.accountUI.login.text = language.GetLanguage("Login");
     };
     /**
      * 登录回调
@@ -107,7 +109,7 @@ var GameMain = (function () {
             this.accountUI.login.visible = false;
         }
         if (this.dto.GameID) {
-            Laya.Browser.window.location.replace(GameConfig.GetRedirectUrl(this.dto.GameID));
+            // Laya.Browser.window.location.replace(GameConfig.GetRedirectUrl(this.dto.GameID));
         }
         else {
             alert("游戏不存在");
@@ -129,14 +131,16 @@ var GameMain = (function () {
         }
     };
     GameMain.prototype.renderHandler = function (cell, index) {
+        var language = new LanguageUtils.Language();
         //如果索引不再可索引范围，则终止该函数
         if (index > this.list.length)
             return;
         //获取当前渲染条目的数据
         var data = this.list[index];
         //根据子节点的名字listNumber，获取子节点对象。 
-        var agentBox = cell.getChildByName("item").getChildByName("agentBox");
-        var agent = agentBox.getChildByName("agent");
+        var agent = cell.getChildByName("agent");
+        var agentLabel = cell.getChildByName("label");
+        agentLabel.text = language.GetLanguage("Agent");
         if (!data.Account && data.Account.length == 0) {
             //label渲染列表文本（序号）
             agent.text = data.ParentNickname;

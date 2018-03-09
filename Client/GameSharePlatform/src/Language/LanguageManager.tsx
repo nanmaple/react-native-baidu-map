@@ -29,7 +29,17 @@ export default class LanguageManager implements ILanguageManager {
      */
     public GetLanguage(): LanguageType {
         let cacheLanguage: Language = CacheManager.GetCache(CacheType.Language);
-        return cacheLanguage.GetLanguage();
+        let language: LanguageType = cacheLanguage.GetLanguage();
+        if (language == null) {
+            let lang: string = window.navigator.language || window.navigator.userLanguage;//常规浏览器语言和IE浏览器  
+            lang = lang.substr(0, 2);//截取lang前2位字符 
+            if (lang == 'zh') {
+                language = LanguageType.CH;
+            } else {
+                language = LanguageType.EN;
+            }
+        }
+        return language;
     }
 
 

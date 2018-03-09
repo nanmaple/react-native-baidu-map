@@ -1,5 +1,6 @@
 class PokerFlyEffect {
     private flyPoker: Array<Laya.Image> = new Array<Laya.Image>();
+    private roundID: string;
     constructor() {
         for (let i = 0; i < 3; i++) {
             let newflyPoker: Laya.Image = Laya.Pool.getItemByClass("flyPoker", Laya.Image);
@@ -18,7 +19,7 @@ class PokerFlyEffect {
         }
     }
 
-    public FlyPoker(dto: Dto.CardInfoDto,flyPoker: Array<any>, endFlyPoker: Array<any>): void {
+    public FlyPoker(dto: Dto.CardInfoDto, flyPoker: Array<any>, endFlyPoker: Array<any>): void {
         let i: number = 0;
         for (var key in dto) {
             if (dto.hasOwnProperty(key)) {
@@ -34,6 +35,13 @@ class PokerFlyEffect {
                 }, [i]));
                 i++;
             }
+        }
+    }
+
+    public ClearFlyPoker(): void {
+        for (let i = 0; i < 3; i++) {
+            Laya.Tween.clearAll(this.flyPoker[i]);
+            this.flyPoker[i].visible = false;
         }
     }
 }

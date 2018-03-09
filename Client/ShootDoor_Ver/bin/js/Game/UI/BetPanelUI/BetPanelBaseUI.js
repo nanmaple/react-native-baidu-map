@@ -31,6 +31,7 @@ var ScenePanel;
             this.chipsNormalSkin = "ui/btn_chip.png";
             this.chipsSelectSkin = "ui/chip_s.png";
             this.baseX = 18;
+            this.flyChipArray = new Array();
             if (isHor) {
                 this.ui = new ui.BetPanelUI();
             }
@@ -40,8 +41,7 @@ var ScenePanel;
             this.ui.zOrder = 5;
             this.uiData = ScenePanel.BetPanelUIData.GetInstance();
             this.ResetBetBtnLabel();
-            this.ui.ConfirmBetBtn.disabled = true;
-            this.ui.CancleBetBtn.disabled = true;
+            this.DisabledBetBtn(true);
         }
         /**
          * 获取UI
@@ -99,16 +99,39 @@ var ScenePanel;
         //还原btn样式,清空label
         BetPanelBaseUI.prototype.ResetBetBtnLabel = function () {
             //启用投注和撤销按钮
-            this.ui.ConfirmBetBtn.disabled = true;
-            this.ui.CancleBetBtn.disabled = true;
+            this.DisabledBetBtn(true);
             //还原数值            
             for (var i = 0, len = this.betBtnArr.length; i < len; i++) {
                 this.betMoneyLabelArr[i].label = "0";
                 this.betMoneyLabelArr[i].visible = false;
             }
         };
+        BetPanelBaseUI.prototype.ClearFlyChip = function () {
+            var length = this.flyChipArray.length;
+            for (var index = length - 1; index >= 0; index--) {
+                Laya.Tween.clearTween(this.flyChipArray[index]);
+                this.flyChipArray[index].removeSelf();
+                Laya.Pool.recover("flyChip", this.flyChipArray[index]);
+                this.flyChipArray.splice(index, 1);
+            }
+        };
+        /**
+         * 禁用所有按钮
+         */
+        BetPanelBaseUI.prototype.DisabledAllBtn = function () {
+            this.DisabledBetBtn(true);
+            this.DisabledBetPanel(true);
+        };
+        /**
+         * 禁用投注和取消按钮
+         */
+        BetPanelBaseUI.prototype.DisabledBetBtn = function (disabled) {
+            if (disabled === void 0) { disabled = true; }
+            this.ui.ConfirmBetBtn.disabled = disabled;
+            this.ui.CancleBetBtn.disabled = disabled;
+        };
         //修改全部投注按钮状态（启用禁用）
-        BetPanelBaseUI.prototype.SetBetBtn = function (disabled) {
+        BetPanelBaseUI.prototype.DisabledBetPanel = function (disabled) {
             for (var i = 0, len = this.betBtnArr.length; i < len; i++) {
                 this.betBtnArr[i].disabled = disabled;
             }
@@ -138,8 +161,7 @@ var ScenePanel;
           */
         BetPanelBaseUI.prototype.Bet = function (i) {
             //启用确认投注按钮
-            this.ui.ConfirmBetBtn.disabled = false;
-            this.ui.CancleBetBtn.disabled = false;
+            this.DisabledBetBtn(false);
             var params = {
                 Type: ClickType.ODDS,
                 Data: i + 1
@@ -212,26 +234,28 @@ var ScenePanel;
         /**
          * 游戏初始化
          */
-        BetPanelBaseUI.prototype.GameInit = function (BetResultMsg, unSureBetMsg, limit) {
-            //设置额度
-            this.SetLimit(limit);
-            //设置总投注金额
-            this.SetBetPos(BetResultMsg, unSureBetMsg);
-            //重置按钮皮肤
-            this.RestSkin();
+        BetPanelBaseUI.prototype.GameInit = function (BetResultMsg, unSureBetMsg, canBet) {
+            if (canBet) {
+                //禁用按钮
+                this.DisabledBetPanel(false);
+                this.SetBetting(true);
+                //设置总投注金额
+                this.SetBetPos(BetResultMsg, unSureBetMsg);
+            }
+            else {
+                this.SetBetting(false);
+                //设置总投注金额
+                this.SetBetPos(BetResultMsg);
+                //禁用按钮
+                this.DisabledAllBtn();
+            }
         };
         /**
          * 游戏结果
          */
-        BetPanelBaseUI.prototype.GameResult = function (BetResultMsg, unSureBetMsg, limit) {
-            //设置最大限额
-            if (limit) {
-                this.SetLimit(limit);
-            }
+        BetPanelBaseUI.prototype.GameResult = function (BetResultMsg) {
             //设置总投注金额
             this.SetBetPos(BetResultMsg);
-            //重置按钮皮肤
-            this.RestSkin();
             //禁用按钮
             this.DisabledAllBtn();
         };
@@ -241,24 +265,19 @@ var ScenePanel;
          * @param minBet
          */
         BetPanelBaseUI.prototype.SetLimit = function (limit) {
+            var language = new LanguageUtils.Language();
             //设置最大限额
             this.maxBet = limit.MaxBet;
             //设置最小限额
             this.minBet = limit.MinBet;
-            this.ui.maxBetLabel.text = "\u6700\u5927:" + limit.MaxBet;
-            this.ui.minBetLabel.text = "\u6700\u5C0F:" + limit.MinBet;
-        };
-        /**
-         * 重置按钮皮肤
-         */
-        BetPanelBaseUI.prototype.RestSkin = function () {
-            for (var index = 0; index < 12; index++) {
-            }
+            this.ui.maxBetLabel.text = language.GetLanguage("Maximum") + (":" + limit.MaxBet);
+            this.ui.minBetLabel.text = language.GetLanguage("Minimum") + (":" + limit.MinBet);
         };
         /**
          * 结算结果
          */
         BetPanelBaseUI.prototype.SettleResult = function (data, betData) {
+            var language = new LanguageUtils.Language();
             this.uiData.guessSuccess = false;
             //总赢数目
             var win = 0;
@@ -295,7 +314,7 @@ var ScenePanel;
                 }
             }
             if (!this.uiData.guessSuccess) {
-                this.ShowMsg("很遗憾，再接再厉");
+                this.ShowMsg(language.GetLanguage("gameFail"));
             }
         };
         /**
@@ -310,6 +329,7 @@ var ScenePanel;
                 Type: ClickType.BET
             };
             this.uiData.handler.runWith(params);
+            this.ClearFlyChip();
         };
         /**
          * 取消投注
@@ -320,6 +340,7 @@ var ScenePanel;
                 Type: ClickType.CANCEL
             };
             this.uiData.handler.runWith(params);
+            this.ClearFlyChip();
         };
         /**
          * 切换筹码
@@ -344,21 +365,6 @@ var ScenePanel;
                 };
                 this.uiData.handler.runWith(params);
             }
-        };
-        /**
-         * 禁用所有按钮
-         */
-        BetPanelBaseUI.prototype.DisabledAllBtn = function () {
-            this.ui.ConfirmBetBtn.disabled = true;
-            this.ui.CancleBetBtn.disabled = true;
-            this.SetBetBtn(true);
-        };
-        /**
-         * 禁用投注和取消按钮
-         */
-        BetPanelBaseUI.prototype.DisabledBetBtn = function () {
-            this.ui.ConfirmBetBtn.disabled = true;
-            this.ui.CancleBetBtn.disabled = true;
         };
         /**
          * 提示消息

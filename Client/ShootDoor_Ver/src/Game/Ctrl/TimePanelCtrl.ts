@@ -16,4 +16,10 @@ class TimePanelCtrl extends Laya.Sprite{
     public EndGameTime(): void {
         ScenePanel.GameUI.GetInstance().GetTimePanel().EndGameTime();
     }
+    /**
+     * 隐藏游戏时间
+     */
+    public HideGameTime():void{
+        ScenePanel.GameUI.GetInstance().GetTimePanel().HideGameTime();
+    }
 }

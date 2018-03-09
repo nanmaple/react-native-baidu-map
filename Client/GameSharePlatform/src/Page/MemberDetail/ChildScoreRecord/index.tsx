@@ -19,7 +19,7 @@ const childRecordStyle = require("./style.css");
 class MemberList extends React.Component<any, any> {
     private ScoreRecordCtrl: ScoreRecordCtrl = new ScoreRecordCtrl();
     private toast: any;
-    private languageManager: LanguageManager;
+    private languageManager: LanguageManager = new LanguageManager();
     constructor(props: any) {
         super(props);
         this.state = {
@@ -31,7 +31,7 @@ class MemberList extends React.Component<any, any> {
         }
     }
     componentDidMount() {
-        this.ShowToast("加载中...", ToastType.Loading);
+        this.ShowToast(this.languageManager.GetErrorMsg("Loading"), ToastType.Loading);
         let memberId = this.props.match.params.memberId;
         this.setState({
             showLoading: true,
@@ -137,7 +137,7 @@ class MemberList extends React.Component<any, any> {
                 <div className={childRecordStyle.time}>
                     {item.TransferTime}
                 </div>
-                <div className={item.Amount > 0 ? childRecordStyle.accountJia : childRecordStyle.accountJian}>
+                <div className={(item.Amount == 0 ? "ling" : item.Amount > 0 ? "zheng" : "fu") + " " + childRecordStyle.win}>
                     {Money.Format(item.Amount)}
                 </div>
                 <div className={childRecordStyle.remark}>
@@ -152,7 +152,7 @@ class MemberList extends React.Component<any, any> {
             return (
                 <div className="noData">
                     <CompToast ref={(c) => this.toast = c} />
-                    无数据
+                    {this.languageManager.GetErrorMsg("NoData")}
                 </div>
 
             )
@@ -160,7 +160,7 @@ class MemberList extends React.Component<any, any> {
         return (
             <div>
                 <CompToast ref={(c) => this.toast = c} />
-                <Toast icon="loading" show={this.state.showLoading}>加载中</Toast>
+                <Toast icon="loading" show={this.state.showLoading}>{this.languageManager.GetErrorMsg("Loading")}</Toast>
                 <PullLoad
                     isBlockContainer={true}
                     downEnough={40}
@@ -168,16 +168,16 @@ class MemberList extends React.Component<any, any> {
                     handleAction={this.handleAction}
                     noMore={isNoMore}
                     distanceBottom={1000}>
-                    <div className={childRecordStyle.row}>
+                    <div className={childRecordStyle.rowtitle}>
                         <div className={childRecordStyle.time}>
-                            转账时间
-                    </div>
+                            {this.languageManager.GetErrorMsg("TransferTime")}
+                        </div>
                         <div className={childRecordStyle.acount}>
-                            转账数额
-                    </div>
+                            {this.languageManager.GetErrorMsg("TransferAmount")}
+                        </div>
                         <div className={childRecordStyle.remark}>
-                            备注
-                    </div>
+                            {this.languageManager.GetErrorMsg("Remark")}
+                        </div>
                     </div>
 
                     {

@@ -6,18 +6,20 @@ import {
 
 import { BetPosType } from "../../Enum/BetPosType";
 import Money from '../../Utils/Money';
+import LanguageManager from '../../Language/LanguageManager';
 const styles = require("./style.css");
 const pokeColor0 = require("../../Image/spades.png"); //黑桃
 const pokeColor1 = require("../../Image/hearts.png");  //红心
 const pokeColor2 = require("../../Image/flower.png");  //梅花
 const pokeColor3 = require("../../Image/square.png");//方块
-enum numberToPoke{
-  "A" = 1,
-  "J" = 11,
-  "Q" = 12,
-  "K" = 13
+enum numberToPoke {
+    "A" = 1,
+    "J" = 11,
+    "Q" = 12,
+    "K" = 13
 }
 export default class Home extends React.PureComponent<any, any> {
+    private languageManager: LanguageManager = new LanguageManager();
     constructor(props: any) {
         super(props);
         this.state = {
@@ -36,10 +38,10 @@ export default class Home extends React.PureComponent<any, any> {
      */
     renderPoke = (number: number) => {
         //计算对应扑克数字
-        let pokeNumber:any = (number - 1) % 13 + 1;
-         if(pokeNumber==1 || 11<=pokeNumber){
+        let pokeNumber: any = (number - 1) % 13 + 1;
+        if (pokeNumber == 1 || 11 <= pokeNumber) {
             pokeNumber = numberToPoke[pokeNumber]
-         }
+        }
         //计算花色
         let pokeColor = Math.floor((number - 1) / 13);
         let img = "";
@@ -97,13 +99,13 @@ export default class Home extends React.PureComponent<any, any> {
         let gameResult = JSON.parse(GameData.pop().Data).Cards;
         return (
             <div className={styles.content}>
-                <h3>游戏详情</h3>
-                <div className={styles.time}>游戏时间：{BetTime}</div>
-                <div className={styles.time}>游戏名称：{GameName}</div>
-                <div className={styles.time}>游戏局号：{RoundId}</div>
-                <div className={styles.time}>投注分数：{Money.Format(BetAmount)}</div>
-                <div className={styles.time}>赔付分数：{Money.Format(payAmount)}</div>
-                <div className={styles.result}>游戏结果：
+                <h3>{this.languageManager.GetErrorMsg("GameDetail")}</h3>
+                <div className={styles.time}>{this.languageManager.GetErrorMsg("GameTime")}: {BetTime}</div>
+                <div className={styles.time}>{this.languageManager.GetErrorMsg("GameName")}: {GameName}</div>
+                <div className={styles.time}>{this.languageManager.GetErrorMsg("Round")}: {RoundId}</div>
+                <div className={styles.time}>{this.languageManager.GetErrorMsg("BetScore")}: {Money.Format(BetAmount)}</div>
+                <div className={styles.time}>{this.languageManager.GetErrorMsg("PayScore")}: {Money.Format(payAmount)}</div>
+                <div className={styles.result}>{this.languageManager.GetErrorMsg("GameResult")}:
                     <div>
                         {this.renderPoke(gameResult.FirstCard)}
                     </div>
@@ -117,9 +119,9 @@ export default class Home extends React.PureComponent<any, any> {
                 </div>
 
                 <div className={styles.rowItem}>
-                    <div className={styles.betPos}>投注位置</div>
-                    <div className={styles.odds}>赔率</div>
-                    <div className={styles.amount}>投注金额</div>
+                    <div className={styles.betPos}>{this.languageManager.GetErrorMsg("BetPos")}</div>
+                    <div className={styles.odds}>{this.languageManager.GetErrorMsg("Odds")}</div>
+                    <div className={styles.amount}>{this.languageManager.GetErrorMsg("PayMoney")}</div>
                 </div>
                 <div>
                     {

@@ -37,7 +37,7 @@ var ServiceManager;
          * @param token
          */
         SocketManager.prototype.SetNetwork = function (status) {
-            //启动连接
+            //设置网络状态
             this.socket.SetNetwork(status);
         };
         /**
@@ -52,7 +52,7 @@ var ServiceManager;
          * 关闭
          */
         SocketManager.prototype.Close = function () {
-            //启动连接
+            //关闭连接
             this.socket.Close();
         };
         /**
@@ -87,9 +87,9 @@ var ServiceManager;
         /**
          * 关闭链接
          */
-        SocketManager.prototype.OnClosed = function () {
+        SocketManager.prototype.OnClosed = function (message) {
             //广播上层-关闭连接
-            this.event(ServiceManager.SocketEvent.OnClose);
+            this.event(ServiceManager.SocketEvent.OnClose, message);
         };
         /**
          * 错误

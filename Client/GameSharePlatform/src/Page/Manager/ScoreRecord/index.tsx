@@ -12,17 +12,13 @@ import Money from '../../../Utils/Money';
 import CompToast, { ToastType } from '../../../Components/Toast';
 import LanguageManager from '../../../Language/LanguageManager';
 import { ErrorCode } from '../../../Enum/ErrorCode';
-import {TransactionType} from "../../../Enum/TransactionType";
+import { TransactionType } from "../../../Enum/TransactionType";
 const styles = require("./style.css");
-enum type {
-    Settle = "结算",
-    Bet = "投注",
-}
 
 export default class MemberList extends React.Component<any, any> {
     private ScoreRecordCtrl: ScoreRecordCtrl = new ScoreRecordCtrl();
     private toast: any;
-    private languageManager: LanguageManager;
+    private languageManager: LanguageManager = new LanguageManager();
     constructor(props: any) {
         super(props);
         this.state = {
@@ -134,12 +130,12 @@ export default class MemberList extends React.Component<any, any> {
             <div key={index} className={styles.row}>
                 <div className={styles.time}>{item.UpdateTime}</div>
                 {
-                    <div className={item.Changed > 0 ? styles.win : styles.lose}>
+                    <div className={(item.Changed == 0 ? "ling" : item.Changed > 0 ? "zheng" : "fu")+" "+styles.win}>
                         {Money.Format(item.Changed)}
                     </div>
                 }
-
-                <div className={styles.message}>{TransactionType[item.TransactionType]}</div>
+                <div className={styles.change}>{Money.Format(item.Balance)}</div>
+                <div className={styles.message}>{ this.languageManager.GetErrorMsg(item.TransactionType)}</div>
             </div >
         )
     }
@@ -150,7 +146,7 @@ export default class MemberList extends React.Component<any, any> {
         if (!memberList || memberList.length == 0) {
             return (
                 <div className="noData">
-                    无数据
+                    {this.languageManager.GetErrorMsg("NoData")}
                 </div>
 
             )
@@ -180,12 +176,13 @@ export default class MemberList extends React.Component<any, any> {
         return (
             <div className={styles.container}>
                 <CompToast ref={(c) => this.toast = c} />
-                <Toast icon="loading" show={this.state.showLoading}>加载中</Toast>
+                <Toast icon="loading" show={this.state.showLoading}>{this.languageManager.GetErrorMsg("Loading")}</Toast>
                 <div className={styles.listTitle}>
-                    <div className={styles.row}>
-                        <div className={styles.time}>时间</div>
-                        <div className={styles.change}>输赢</div>
-                        <div className={styles.message}>详情</div>
+                    <div className={styles.title}>
+                        <div className={styles.time}>{this.languageManager.GetErrorMsg("Time")}</div>
+                        <div className={styles.change}>{this.languageManager.GetErrorMsg("ScoreChanges")}</div>
+                        <div className={styles.change}>{this.languageManager.GetErrorMsg("Balance")}</div>
+                        <div className={styles.message}>{this.languageManager.GetErrorMsg("Detail")}</div>
                     </div>
                     {this.renderData()}
                 </div>

@@ -41,7 +41,7 @@ a {
     height: 40px;
     display: flex;
     border-bottom: 1px solid #ccc;
-    background:#fff;
+    background:#efeff4;
     border-top: 1px solid #ccc;
     padding:0 10px 0 10px;
 }
@@ -57,15 +57,28 @@ a {
     justify-content: flex-start;
     align-items: center;
 }
-
+:global(.zero) {
+    flex: 3;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color:#333;
+}
 :global(.win) {
     flex: 3;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    color:#30bf27;
+    color:#338ffe;
 }
 :global(.lose){
+    flex: 3;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color:#fd4d4d;
+}
+.win{
     flex: 3;
     display: flex;
     justify-content: flex-end;

@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":46,
-    "selecteID":48,
+    "selectedBox":3,
+    "selecteID":4,
     "props":{"width":750,"sceneColor":"#ffffff","height":1334},
     "nodeParent":-1,
     "label":"View",
@@ -39,9 +39,9 @@
                         {
                             "x":45,
                             "type":"Image",
-                            "props":{"y":10,"x":272,"skin":"ui/ruleTitle.png"},
+                            "props":{"y":10,"x":272,"var":"title","skin":"ui/ruleTitle.png"},
                             "nodeParent":3,
-                            "label":"Image",
+                            "label":"Image(title)",
                             "isDirectory":false,
                             "isAniNode":true,
                             "hasChild":false,
@@ -474,14 +474,13 @@
                                             "props":{"y":0,"x":0},
                                             "nodeParent":17,
                                             "label":"Box",
-                                            "isOpen":true,
+                                            "isOpen":false,
                                             "isDirectory":true,
                                             "isAniNode":true,
                                             "hasChild":true,
                                             "compId":46,
                                             "child":[
                                                 {
-                                                    "x":90,
                                                     "type":"Label",
                                                     "props":{"x":0,"wordWrap":true,"width":660,"valign":"middle","text":"游戏简介","styleSkin":"ui/prompt/label.png","overflow":"hidden","height":50,"fontSize":30,"font":"Arial","color":"#000000","bold":true,"align":"left"},
                                                     "nodeParent":46,
@@ -495,7 +494,6 @@
                                                         ]
                                                 },
                                                 {
-                                                    "x":90,
                                                     "type":"Label",
                                                     "props":{"y":50,"x":0,"wordWrap":true,"width":660,"valign":"middle","text":"       射龙门属于智力小游戏，玩家可以通过扑克牌出现的概率来选择下注位置，从而得到相应的分数作为奖励。","styleSkin":"ui/prompt/label.png","overflow":"hidden","leading":10,"height":75,"fontSize":25,"font":"Arial","color":"#000000","bold":false,"align":"left"},
                                                     "nodeParent":46,
@@ -509,7 +507,6 @@
                                                         ]
                                                 },
                                                 {
-                                                    "x":90,
                                                     "type":"Label",
                                                     "props":{"y":120,"x":0,"wordWrap":true,"width":660,"valign":"middle","text":"       每一局游戏开始时，系统从52张牌中随机抽取三张牌，第一张作为左门柱，第二张作为球，第三张作为右门柱。玩家猜球牌的位置，猜中位置得到相应赔率的分数奖励。","styleSkin":"ui/prompt/label.png","overflow":"hidden","leading":10,"height":110,"fontSize":25,"font":"Arial","color":"#000000","bold":false,"align":"left"},
                                                     "nodeParent":46,

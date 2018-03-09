@@ -16,25 +16,35 @@ var ScenePanel;
             var _this = _super.call(this) || this;
             _this.isLoginSuccess = false;
             _this.isLoadSuccess = false;
+            _this.eventDispatcher = new laya.events.EventDispatcher();
             _this.onGameLoadSuccess = onGameLoadSuccess;
+            document.addEventListener("screenMode", function () {
+                if (GameConfig.ScreenMode) {
+                    _this.gameLoadScenes = new ScenePanel.GameLoadScenes();
+                }
+                else {
+                    _this.gameLoadScenes = new ScenePanel.GameLoadScenes_Ver();
+                }
+                Laya.stage.addChild(_this.gameLoadScenes.GetUI());
+            });
             //从会员服务中获取用户信息
-            var memberServer = new ServiceManager.MemberManager(GameConfig.GameID);
+            _this.memberServer = new ServiceManager.MemberManager(GameConfig.GameID);
             //获取Socket Token
-            var authorizationInfo = memberServer.GetSocketInfo();
-            if (!authorizationInfo.SocketToken || !authorizationInfo.Token) {
+            var authorizationInfo = _this.memberServer.GetSocketInfo();
+            if (!authorizationInfo.Token) {
                 var parentId = Utils.Url.GetQuery("parentid");
                 var dto = new BaseDto.LoginDto();
                 dto.DeviceType = GameConfig.DeviceType;
                 dto.DeviceId = GameConfig.DeviceId;
                 var successHandler = Laya.Handler.create(_this, _this.LoginSuccess, null, false);
                 var errorHandler = Laya.Handler.create(_this, _this.LoginError, null, false);
-                memberServer.LoginByTourists(dto, authorizationInfo.Token, successHandler, errorHandler);
+                _this.memberServer.LoginByTourists(dto, authorizationInfo.Token, successHandler, errorHandler);
             }
             else {
-                _this.isLoginSuccess = true;
+                _this.LoginSuccess(authorizationInfo.Token);
             }
             var url = Laya.Browser.window.location.href;
-            memberServer.GetJsSignature(url, Laya.Handler.create(_this, _this.GetWeChatSuccess, null, false));
+            _this.memberServer.GetJsSignature(url, Laya.Handler.create(_this, _this.GetWeChatSuccess, null, false));
             //加载游戏开资源
             _this.onLoaded();
             return _this;
@@ -49,28 +59,40 @@ var ScenePanel;
         /**
          * 登录成功
          */
-        GameLoadCtrl.prototype.LoginSuccess = function () {
-            this.isLoginSuccess = true;
-            if (this.isLoadSuccess) {
-                this.onGameLoadSuccess.run();
-            }
+        GameLoadCtrl.prototype.LoginSuccess = function (token) {
+            var _this = this;
+            var successHandler = Laya.Handler.create(this, function () {
+                _this.isLoginSuccess = true;
+                if (_this.isLoadSuccess) {
+                    document.removeEventListener("screenMode", function () {
+                        console.log("screenMode");
+                    });
+                    _this.onGameLoadSuccess.run();
+                }
+            }, null, false);
+            var errorHandler = Laya.Handler.create(this, this.LoginError, null, false);
+            this.memberServer.GetSocketToken(token, successHandler, errorHandler);
         };
         /**
          * 登录失败
          */
         GameLoadCtrl.prototype.LoginError = function (error) {
+            //抛出错误提示
             this.gameLoadScenes.LoadError(error);
-            this.isLoginSuccess = true;
-            if (this.isLoadSuccess) {
-                this.onGameLoadSuccess.run();
-            }
+            this.isLoginSuccess = false;
+            console.log(error);
         };
         /**
          * 开始加载游戏资源
          */
         GameLoadCtrl.prototype.onLoaded = function () {
-            this.gameLoadScenes = new ScenePanel.GameLoadScenes();
-            Laya.stage.addChild(this.gameLoadScenes);
+            if (GameConfig.ScreenMode) {
+                this.gameLoadScenes = new ScenePanel.GameLoadScenes();
+            }
+            else {
+                this.gameLoadScenes = new ScenePanel.GameLoadScenes_Ver();
+            }
+            Laya.stage.addChild(this.gameLoadScenes.GetUI());
             //加载游戏资源内容
             var dataArr = ScenePanel.LoadResourcesConfig;
             Laya.loader.load(dataArr, Laya.Handler.create(this, this.onLoadResource), Laya.Handler.create(this, this.onProgress, null, false));

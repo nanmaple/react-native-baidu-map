@@ -29,7 +29,7 @@ class GameRecord extends React.Component<any, any> {
     private toast: any;
     private timePicker1: any;
     private timePicker2: any;
-    private languageManager: LanguageManager;
+    private languageManager: LanguageManager = new LanguageManager();
     constructor(props: any) {
         super(props);
         let dateNow: any = new Date();
@@ -50,7 +50,7 @@ class GameRecord extends React.Component<any, any> {
     }
     componentDidMount() {
         let nickName = null, remark = null;
-        this.ShowToast("加载中...", ToastType.Loading);
+        this.ShowToast(this.languageManager.GetErrorMsg("Loading"), ToastType.Loading);
         let memberId = this.props.match.params.memberId;
         if (memberId != null) {
             nickName = memberId.split("_")[1];
@@ -113,7 +113,7 @@ class GameRecord extends React.Component<any, any> {
      * 查询报表
     */
     private searchGameList = () => {
-        this.ShowToast("加载中...", ToastType.Loading);
+        this.ShowToast(this.languageManager.GetErrorMsg("Loading"), ToastType.Loading);
         //获取起始时间
         let { startDate, endDate } = this.state;
         if (startDate == "") {
@@ -170,7 +170,7 @@ class GameRecord extends React.Component<any, any> {
             }} key={index} className={""}>
                 <div className={styles.item}>
                     <div className={styles.name}>{rowItem.GameName}</div>
-                    <div className={total > 0 ? "win" : "lose"}>
+                    <div className={total==0?"zero":total > 0 ? "win" : "lose"}>
                         {Money.Format(total)}
                     </div>
                     <div className={styles.right}>
@@ -189,7 +189,7 @@ class GameRecord extends React.Component<any, any> {
         if (!memberList || memberList.length == 0) {
             return (
                 <div className="noData">
-                    无数据
+                    {this.languageManager.GetErrorMsg("NoData")}
                 </div>
 
             )
@@ -202,8 +202,8 @@ class GameRecord extends React.Component<any, any> {
                         })
                     }
                     <div className={styles.allTotal}>
-                        <div className={styles.totalName}>合计</div>
-                        <div className={gameResultTotal > 0 ? styles.allWin : styles.allLose}>
+                        <div className={styles.totalName}>{this.languageManager.GetErrorMsg("Total")}</div>
+                        <div className={gameResultTotal > 0 ? "zheng" : "fu"}>
                             {Money.Format(gameResultTotal)}
                         </div>
                     </div>
@@ -219,19 +219,19 @@ class GameRecord extends React.Component<any, any> {
             <div className={styles.container}>
                 <CompToast ref={(c: any) => this.toast = c} />
                 <div className={styles.listTitle}>
-                    <div className={styles.title}>游戏结果{nickName && nickName != "null" ? `---${nickName}` : null}{remark && remark != "null" ? `(${remark})` : null}</div>
+                    <div className={styles.title}>{this.languageManager.GetErrorMsg("GameREsult")}{nickName && nickName != "null" ? `---${nickName}` : null}{remark && remark != "null" ? `(${remark})` : null}</div>
                     <div className={styles.head}>
                         <div className={styles.timeContainer}>
                             <div className={styles.time} onClick={this.ShowStartPicker}>{this.state.startDate}</div>
                             <div className={styles.time} onClick={this.ShowEndPicker}>{this.state.endDate}</div>
                         </div>
-                        <div className={styles.search} onClick={() => { this.searchGameList() }}>查询</div>
+                        <div className={styles.search} onClick={() => { this.searchGameList() }}>{this.languageManager.GetErrorMsg("Inquire")}</div>
                         <TimePicker ref={(e: any) => { this.timePicker1 = e }} time={this.state.startDate} timeHanler={this.StartTimeHanler} />
                         <TimePicker ref={(e: any) => { this.timePicker2 = e }} time={this.state.endDate} timeHanler={this.EndTimeHanler} />
                     </div>
                     <div className={styles.headname}>
-                        <div className={styles.name}>游戏名称</div>
-                        <div className={styles.titlewin}>总输赢</div>
+                        <div className={styles.name}>{this.languageManager.GetErrorMsg("GameName")}</div>
+                        <div className={styles.titlewin}>{this.languageManager.GetErrorMsg("WinOrlose")}</div>
                     </div>
                     {this.renderData()}
                 </div>

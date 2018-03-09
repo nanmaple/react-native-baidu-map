@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":26,
-    "selecteID":28,
+    "selectedBox":8,
+    "selecteID":23,
     "props":{"width":750,"sceneColor":"#fffbfb","height":1334},
     "nodeParent":-1,
     "label":"View",
@@ -224,9 +224,9 @@
                                                 {
                                                     "x":90,
                                                     "type":"Label",
-                                                    "props":{"y":0,"x":8,"wordWrap":true,"width":163,"valign":"middle","text":"时间","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":60,"fontSize":36,"font":"Arial","color":"#000000","align":"center"},
+                                                    "props":{"y":0,"x":8,"wordWrap":true,"width":163,"var":"title_time","valign":"middle","text":"时间","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":60,"fontSize":36,"font":"Arial","color":"#000000","align":"center"},
                                                     "nodeParent":17,
-                                                    "label":"Label",
+                                                    "label":"Label(title_time)",
                                                     "isDirectory":false,
                                                     "isAniNode":true,
                                                     "hasChild":false,
@@ -237,9 +237,9 @@
                                                 {
                                                     "x":90,
                                                     "type":"Label",
-                                                    "props":{"y":0,"x":175,"wordWrap":true,"width":340,"valign":"middle","text":"局号","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":60,"fontSize":36,"font":"Arial","color":"#000000","align":"center"},
+                                                    "props":{"y":0,"x":175,"wordWrap":true,"width":340,"var":"title_round","valign":"middle","text":"局号","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":60,"fontSize":36,"font":"Arial","color":"#000000","align":"center"},
                                                     "nodeParent":17,
-                                                    "label":"Label",
+                                                    "label":"Label(title_round)",
                                                     "isDirectory":false,
                                                     "isAniNode":true,
                                                     "hasChild":false,
@@ -250,9 +250,9 @@
                                                 {
                                                     "x":90,
                                                     "type":"Label",
-                                                    "props":{"y":0,"x":510,"wordWrap":true,"width":150,"valign":"middle","text":"输赢","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":60,"fontSize":36,"font":"Arial","color":"#000000","align":"center"},
+                                                    "props":{"y":0,"x":485,"wordWrap":true,"width":200,"var":"title_result","valign":"middle","text":"输赢","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":60,"fontSize":36,"font":"Arial","color":"#000000","align":"center"},
                                                     "nodeParent":17,
-                                                    "label":"Label",
+                                                    "label":"Label(title_result)",
                                                     "isDirectory":false,
                                                     "isAniNode":true,
                                                     "hasChild":false,
@@ -277,7 +277,7 @@
                                         {
                                             "x":75,
                                             "type":"Label",
-                                            "props":{"y":355,"x":250,"wordWrap":true,"width":200,"var":"noBetData","valign":"middle","text":"暂无投注记录","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":60,"fontSize":30,"font":"Arial","color":"#000000","align":"center"},
+                                            "props":{"y":355,"x":200,"wordWrap":true,"width":300,"var":"noBetData","valign":"middle","text":"暂无投注记录","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":60,"fontSize":30,"font":"Arial","color":"#000000","align":"center"},
                                             "nodeParent":8,
                                             "label":"Label(noBetData)",
                                             "isDirectory":false,
@@ -291,7 +291,7 @@
                                         {
                                             "x":75,
                                             "type":"Label",
-                                            "props":{"y":355,"x":250,"wordWrap":true,"width":200,"var":"isLoading","valign":"middle","text":"加载中...","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":60,"fontSize":30,"font":"Arial","color":"#000000","align":"center"},
+                                            "props":{"y":355,"x":200,"wordWrap":true,"width":300,"var":"isLoading","valign":"middle","text":"加载中...","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":60,"fontSize":30,"font":"Arial","color":"#000000","align":"center"},
                                             "nodeParent":8,
                                             "label":"Label(isLoading)",
                                             "isDirectory":false,
@@ -498,7 +498,7 @@
                                                                 {
                                                                     "x":120,
                                                                     "type":"Box",
-                                                                    "props":{"width":300,"renderType":"render","height":100},
+                                                                    "props":{"width":350,"renderType":"render","height":100},
                                                                     "nodeParent":38,
                                                                     "label":"Box",
                                                                     "isOpen":true,
@@ -510,7 +510,7 @@
                                                                         {
                                                                             "x":135,
                                                                             "type":"Label",
-                                                                            "props":{"y":0,"x":0,"wordWrap":true,"width":100,"valign":"middle","text":"左撞柱","styleSkin":"ui/prompt/label.png","overflow":"hidden","name":"betPos","height":100,"fontSize":30,"font":"Arial","color":"#000000","align":"center"},
+                                                                            "props":{"y":0,"x":0,"wordWrap":true,"width":120,"valign":"middle","text":"左撞柱","styleSkin":"ui/prompt/label.png","overflow":"hidden","name":"betPos","height":100,"fontSize":30,"font":"Arial","color":"#000000","align":"right"},
                                                                             "nodeParent":39,
                                                                             "label":"Label(betPos)",
                                                                             "isOpen":false,
@@ -524,7 +524,7 @@
                                                                         {
                                                                             "x":135,
                                                                             "type":"Label",
-                                                                            "props":{"y":0,"x":100,"wordWrap":true,"width":100,"valign":"middle","text":"1.85","styleSkin":"ui/prompt/label.png","overflow":"hidden","name":"betOdds","height":100,"fontSize":30,"font":"Arial","color":"#000000","align":"center"},
+                                                                            "props":{"y":0,"x":140,"wordWrap":true,"width":100,"valign":"middle","text":"1.85","styleSkin":"ui/prompt/label.png","overflow":"hidden","name":"betOdds","height":100,"fontSize":30,"font":"Arial","color":"#000000","align":"center"},
                                                                             "nodeParent":39,
                                                                             "label":"Label(betOdds)",
                                                                             "isOpen":false,
@@ -538,7 +538,7 @@
                                                                         {
                                                                             "x":135,
                                                                             "type":"Label",
-                                                                            "props":{"y":0,"x":200,"wordWrap":true,"width":100,"valign":"middle","text":"5","styleSkin":"ui/prompt/label.png","overflow":"hidden","name":"betAmount","height":100,"fontSize":30,"font":"Arial","color":"#000000","align":"center"},
+                                                                            "props":{"y":0,"x":260,"wordWrap":true,"width":100,"valign":"middle","text":"5","styleSkin":"ui/prompt/label.png","overflow":"hidden","name":"betAmount","height":100,"fontSize":30,"font":"Arial","color":"#000000","align":"left"},
                                                                             "nodeParent":39,
                                                                             "label":"Label(betAmount)",
                                                                             "isOpen":false,
@@ -552,7 +552,7 @@
                                                                         {
                                                                             "x":135,
                                                                             "type":"Label",
-                                                                            "props":{"y":25,"x":110,"wordWrap":true,"width":1,"valign":"middle","styleSkin":"ui/prompt/label.png","rotation":15,"overflow":"hidden","name":"line","height":50,"fontSize":30,"font":"Arial","color":"#000000","bgColor":"#000000","align":"center"},
+                                                                            "props":{"y":25,"x":140,"wordWrap":true,"width":1,"valign":"middle","styleSkin":"ui/prompt/label.png","rotation":15,"overflow":"hidden","name":"line","height":50,"fontSize":30,"font":"Arial","color":"#000000","bgColor":"#000000","align":"center"},
                                                                             "nodeParent":39,
                                                                             "label":"Label(line)",
                                                                             "isOpen":false,
@@ -566,7 +566,7 @@
                                                                         {
                                                                             "x":135,
                                                                             "type":"Label",
-                                                                            "props":{"y":25,"x":210,"wordWrap":true,"width":1,"valign":"middle","styleSkin":"ui/prompt/label.png","rotation":15,"overflow":"hidden","name":"line","height":50,"fontSize":30,"font":"Arial","color":"#000000","bgColor":"#000000","align":"center"},
+                                                                            "props":{"y":25,"x":250,"wordWrap":true,"width":1,"valign":"middle","styleSkin":"ui/prompt/label.png","rotation":15,"overflow":"hidden","name":"line","height":50,"fontSize":30,"font":"Arial","color":"#000000","bgColor":"#000000","align":"center"},
                                                                             "nodeParent":39,
                                                                             "label":"Label(line)",
                                                                             "isOpen":false,
@@ -598,9 +598,9 @@
                                                 {
                                                     "x":90,
                                                     "type":"Label",
-                                                    "props":{"y":10,"x":40,"wordWrap":true,"width":236,"valign":"middle","text":"投注详情如下：","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":40,"fontSize":30,"font":"Arial","color":"#000000","align":"left"},
+                                                    "props":{"y":10,"x":40,"wordWrap":true,"width":236,"var":"betDetails","valign":"middle","text":"投注详情如下：","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":40,"fontSize":30,"font":"Arial","color":"#000000","align":"left"},
                                                     "nodeParent":45,
-                                                    "label":"Label",
+                                                    "label":"Label(betDetails)",
                                                     "isDirectory":false,
                                                     "isAniNode":true,
                                                     "hasChild":false,

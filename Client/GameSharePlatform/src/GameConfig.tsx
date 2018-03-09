@@ -20,7 +20,7 @@ export function GetWeChatShareDto(parentID: string, isAuthorize: boolean = true)
         Link: ""
     }
     if (isAuthorize) {
-        dto.Link = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.AppId}&redirect_uri=http%3A%2F%2F${this.Domain}%2Fgameshareplatform%2F%3fparentid%3d${parentID}&response_type=code&scope=snsapi_base&state=123#wechat_redirect`;
+        dto.Link = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.AppId}&redirect_uri=http%3A%2F%2F${this.Domain}%2Fgameshareplatform%2F%3fparentid%3d${parentID}&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`;
     } else {
         dto.Link = `http://${this.Domain}/gameshareplatform/?parentid=${parentID}`;
     }

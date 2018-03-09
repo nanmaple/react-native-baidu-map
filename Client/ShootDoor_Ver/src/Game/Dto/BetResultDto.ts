@@ -4,6 +4,10 @@ namespace Dto {
      */
     export class BetResultDto {
         /**
+         * 局号
+         */
+        public RoundID: string;
+        /**
          * 成功
          */
         public Success: boolean;

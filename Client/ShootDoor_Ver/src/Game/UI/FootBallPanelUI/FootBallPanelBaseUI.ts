@@ -56,6 +56,7 @@ namespace ScenePanel {
          * 射进
          */
         public ShootIn(): void {
+            let language: LanguageUtils.Language = new LanguageUtils.Language();
             if(this.isActive){
                 return;
             }
@@ -65,7 +66,7 @@ namespace ScenePanel {
                 this.ui.football.visible = true;
                 this.shootEndY = Laya.stage.height - this.goalBottom - 5;
                 this.shootEndX = Laya.stage.width / 2 + this.goalCenterX;
-                this.ui.shootInfo.text = "球进啦！";
+                this.ui.shootInfo.text = language.GetLanguage("ShootIn");
                 this.shootResSound = "sound/shootsuccess.mp3";
                 Laya.Tween.to(this.ui.football,{y:this.shootEndY,x:this.shootEndX},3000,Laya.Ease.backOut,Laya.Handler.create(this,this.ShootInfoShow));
             }
@@ -74,6 +75,7 @@ namespace ScenePanel {
          * 左边射偏
          */
         public ShootLeft(): void {
+            let language: LanguageUtils.Language = new LanguageUtils.Language();
             if(this.isActive){
                 return;
             }
@@ -83,7 +85,7 @@ namespace ScenePanel {
                 this.ui.football.visible = true;
                 this.shootEndY = Laya.stage.height - this.goalBottom - 5;
                 this.shootEndX = (Laya.stage.width - this.goalW) / 2 + this.goalCenterX - this.footballR / 2;
-                this.ui.shootInfo.text = "左边射偏啦！";
+                this.ui.shootInfo.text = language.GetLanguage("ShootLeft");
                 this.shootResSound = "sound/shootfail.wav";
                 Laya.Tween.to(this.ui.football,{y:this.shootEndY,x:this.shootEndX},3000,Laya.Ease.backOut,Laya.Handler.create(this,this.ShootInfoShow));
             }
@@ -92,6 +94,7 @@ namespace ScenePanel {
          * 右边射偏
          */
         public ShootRight():void{
+            let language: LanguageUtils.Language = new LanguageUtils.Language();
             if(this.isActive){
             }
             else{
@@ -100,7 +103,7 @@ namespace ScenePanel {
                 this.ui.football.visible = true;       
                 this.shootEndY = Laya.stage.height - this.goalBottom - 5;
                 this.shootEndX = (Laya.stage.width + this.goalW) / 2 + this.goalCenterX + this.footballR * 3 / 2;
-                this.ui.shootInfo.text = "右边射偏啦！";
+                this.ui.shootInfo.text = language.GetLanguage("ShootRight");
                 this.shootResSound = "sound/shootfail.wav";
                 Laya.Tween.to(this.ui.football,{y:this.shootEndY,x:this.shootEndX},3000,Laya.Ease.backOut,Laya.Handler.create(this,this.ShootInfoShow));
             }
@@ -110,6 +113,7 @@ namespace ScenePanel {
          * @param position 射到门柱位置
          */
         public ShootGoalPost(position:number):void{
+            let language: LanguageUtils.Language = new LanguageUtils.Language();
             if(this.isActive){
                 return;
             }
@@ -120,15 +124,15 @@ namespace ScenePanel {
                 this.ui.football.visible = true;
                 this.shootEndY = Laya.stage.height - this.goalBottom - this.goalH / 3;
                 if(position == 0){
-                    this.ui.shootInfo.text = "左边撞柱啦！";
+                    this.ui.shootInfo.text = language.GetLanguage("ShootLeftGoalPost");
                     this.shootEndX = (Laya.stage.width - this.goalW) / 2 + this.goalCenterX +this.footballR / 2;
                 }
                 if(position == 1){
-                    this.ui.shootInfo.text = "右边撞柱啦！";
+                    this.ui.shootInfo.text = language.GetLanguage("ShootRightGoalPost");
                     this.shootEndX = (Laya.stage.width + this.goalW) / 2 + this.goalCenterX + this.footballR / 2;
                 }
                 if(position == 2){
-                    this.ui.shootInfo.text = "撞柱啦！";
+                    this.ui.shootInfo.text = language.GetLanguage("ShootGoalPost");
                     this.shootEndX = (Laya.stage.width - this.goalW) / 2 + this.goalCenterX +this.footballR / 2;
                 }
                 this.shootResSound = "sound/hitdoor.mp3";
@@ -152,6 +156,11 @@ namespace ScenePanel {
             this.ui.football.stop();
             Laya.Tween.to(this.ui.shootInfo,{},2000,Laya.Ease.backOut,Laya.Handler.create(this,this.ShootReset));
         }
-    
+        /**
+         * 清除足球所有缓动
+         */
+        public ClearTween():void{
+            Laya.Tween.clearAll(this.ui.football);
+        }
     }
 }

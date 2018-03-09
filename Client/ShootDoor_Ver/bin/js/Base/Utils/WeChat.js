@@ -30,6 +30,10 @@ var Utils;
                 console.log("未引入weixin.js");
             }
         };
+        /**
+         * 微信端浏览器网络监测
+         * @param handler
+         */
         WeChat.prototype.GetNetworkType = function (handler) {
             if (this.wx) {
                 this.wx.getNetworkType({
@@ -46,6 +50,19 @@ var Utils;
             }
             else {
                 console.log("未引入weixin.js");
+            }
+        };
+        /**
+         * PC端浏览器网络监测
+         * @param handler
+         */
+        WeChat.prototype.GetPcNetworkType = function (handler) {
+            //网络连接
+            if (Laya.Browser.window.navigator.onLine == true) {
+                handler.runWith(true);
+            }
+            else {
+                handler.runWith(false);
             }
         };
         /**

@@ -1,10 +1,10 @@
 namespace ScenePanel {
     export const BetStatus: any = {
-        0: "等待开始",
-        1: "正在投注",
-        2: "停止投注",
-        3: "正在结算",
-        4: "已结算"
+        0: "WaitStart",
+        1: "Betting",
+        2: "EndBet",
+        3: "Settling",
+        4: "HaveSettled"
     }
     export abstract class RoundPanelBaseUI {
         protected ui: ui.RoundPanelUI | ui.RoundPanel_VerUI;
@@ -16,6 +16,7 @@ namespace ScenePanel {
          * @param isHor 是否横版
          */
         constructor(isHor?: boolean) {
+            let language: LanguageUtils.Language = new LanguageUtils.Language();
             if (isHor) {
                 this.ui = new ui.RoundPanelUI();
             } else {
@@ -23,6 +24,7 @@ namespace ScenePanel {
             }
             this.ui.zOrder = 2;
             this.ui.cacheAs = "bitmap";
+            this.ui.roundLabel.text = language.GetLanguage("Issue");
         }
 
         public GetUI(): ui.RoundPanelUI | ui.RoundPanel_VerUI {
@@ -41,27 +43,28 @@ namespace ScenePanel {
          * @param state 游戏状态
         */
         public SetGameState(state: number): void {
+            let language: LanguageUtils.Language = new LanguageUtils.Language();
             if (state == 2) {
                 this.isSettle = false;
             }
 
             if (state < 3) {
                 this.currentState = state;
-                this.ui.gameState.text = BetStatus[state];
+                this.ui.gameState.text = language.GetLanguage(BetStatus[state]);
             } else if (state == 3) {
                 this.currentState = state;
                 if (this.isSettle) {
                     Laya.timer.once(500, this, () => {
-                        this.ui.gameState.text = BetStatus[4];
+                        this.ui.gameState.text = language.GetLanguage(BetStatus[4]);
                     })
                 } else {
-                    this.ui.gameState.text = BetStatus[state];
+                    this.ui.gameState.text = language.GetLanguage(BetStatus[state]);
                 }
 
             } else if (state == 4) {
                 this.isSettle = true;
                 if (this.currentState == 3) {
-                    this.ui.gameState.text = BetStatus[state];
+                    this.ui.gameState.text = language.GetLanguage(BetStatus[state]);
                 }
             }
         }

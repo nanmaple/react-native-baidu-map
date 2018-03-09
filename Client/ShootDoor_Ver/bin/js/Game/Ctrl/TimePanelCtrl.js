@@ -26,5 +26,11 @@ var TimePanelCtrl = /** @class */ (function (_super) {
     TimePanelCtrl.prototype.EndGameTime = function () {
         ScenePanel.GameUI.GetInstance().GetTimePanel().EndGameTime();
     };
+    /**
+     * 隐藏游戏时间
+     */
+    TimePanelCtrl.prototype.HideGameTime = function () {
+        ScenePanel.GameUI.GetInstance().GetTimePanel().HideGameTime();
+    };
     return TimePanelCtrl;
 }(Laya.Sprite));

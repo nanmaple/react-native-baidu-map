@@ -5,6 +5,10 @@ namespace Dto {
          */
         public RoundID: string;
         /**
+         * 历史
+         */
+        public History: Array<HistoryRoundDto>;
+        /**
          * 投注时间
          */
         public BetTime :number;

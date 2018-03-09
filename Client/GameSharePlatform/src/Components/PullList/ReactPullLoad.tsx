@@ -2,6 +2,7 @@ import * as React from 'react'
 import { findDOMNode } from 'react-dom'
 import { STATS } from './constants'
 import * as PropTypes from 'prop-types';
+import LanguageManager from '../../Language/LanguageManager';
 
 const pullStyle = require("./ReactPullLoad.css");
 /**
@@ -31,13 +32,15 @@ function removeEvent(obj: any, type: any, fn: any) {
   } else
     obj.removeEventListener(type, fn, false);
 }
-enum HeadContent {
-  pulling = "下拉刷新",
-  "pulling enough" = "松开刷新",
-  refreshing = "正在刷新",
-  refreshed = "刷新完成"
-}
+
 export default class ReactPullLoad extends React.Component<any, any> {
+  private languageManager: LanguageManager = new LanguageManager();
+  private HeadContent: any = {
+    pulling: this.languageManager.GetErrorMsg("Pull"),
+    "pulling enough": this.languageManager.GetErrorMsg("Release"),
+    refreshing: this.languageManager.GetErrorMsg("Refreshing"),
+    refreshed: this.languageManager.GetErrorMsg("Completed")
+  }
   private startY: any;   //开始滑动是的y
   private startX: any;   //开始滑动时的x
   private defaultConfig: any; //默认配置
@@ -198,8 +201,8 @@ export default class ReactPullLoad extends React.Component<any, any> {
   }
 
   onTouchMove = (event: any) => {
-   
-    let scrollTop =  window.pageYOffset,
+
+    let scrollTop = window.pageYOffset,
       clientH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,//可视区域的高度
       scrollH = this.defaultConfig.container.scrollHeight, //获取总高度
       targetEvent = event.changedTouches[0],
@@ -247,7 +250,7 @@ export default class ReactPullLoad extends React.Component<any, any> {
     }
   }
   private renderHeader = (action: any) => {
-    return <div style={{ height: "30px", display: "flex", justifyContent: "center", alignItems: "center" }}>{HeadContent[action]}</div>
+    return <div style={{ height: "30px", display: "flex", justifyContent: "center", alignItems: "center" }}>{this.HeadContent[action]}</div>
   }
   private renderFooter = (noMore: boolean) => {
     return <div style={{ height: "30px", display: "flex", justifyContent: "center", alignItems: "center" }}>{noMore ? "没有更多数据" : "正在加载..."}</div>
@@ -280,7 +283,7 @@ export default class ReactPullLoad extends React.Component<any, any> {
         </div>
         {children}
         {
-          noMore ? <div style={{ height: "30px", display: "flex", justifyContent: "center", alignItems: "center" }}>没有更多数据</div> : null
+          noMore ? <div style={{ height: "30px", display: "flex", justifyContent: "center", alignItems: "center" }}>{this.languageManager.GetErrorMsg("NoMoreData")}</div> : null
         }
         {/* <div className="pull-load-footer">
 

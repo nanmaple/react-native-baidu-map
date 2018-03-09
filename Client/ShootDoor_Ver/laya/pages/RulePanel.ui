@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":51,
-    "selecteID":11,
+    "selectedBox":3,
+    "selecteID":4,
     "props":{"width":1334,"sceneColor":"#ffffff","height":750},
     "nodeParent":-1,
     "label":"View",
@@ -39,9 +39,9 @@
                         {
                             "x":45,
                             "type":"Image",
-                            "props":{"y":10,"x":426,"skin":"ui/ruleTitle.png"},
+                            "props":{"y":10,"x":426,"var":"title","skin":"ui/ruleTitle.png"},
                             "nodeParent":3,
-                            "label":"Image",
+                            "label":"Image(title)",
                             "isDirectory":false,
                             "isAniNode":true,
                             "hasChild":false,

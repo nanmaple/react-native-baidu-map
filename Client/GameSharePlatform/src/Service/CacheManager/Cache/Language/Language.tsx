@@ -9,9 +9,6 @@ export default class Language implements ILanguage {
         let key: string = this.GetLanguageKey();
         let storage: Storage = new Storage();
         this.language = storage.Get(key, this.cacheType);
-        if (this.language == null) {
-            this.language = 0;
-        }
     }
 
 

@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":30,
-    "selecteID":71,
+    "selecteID":72,
     "props":{"width":1334,"sceneColor":"#ffffff","height":750,"centerY":0,"centerX":0},
     "nodeParent":-1,
     "label":"View",
@@ -107,14 +107,13 @@
                                             "props":{"y":60,"x":0,"width":1000,"var":"_recordList","spaceY":0,"repeatY":5,"height":450},
                                             "nodeParent":30,
                                             "label":"List(_recordList)",
-                                            "isOpen":true,
+                                            "isOpen":false,
                                             "isDirectory":true,
                                             "isAniNode":true,
                                             "hasChild":true,
                                             "compId":8,
                                             "child":[
                                                 {
-                                                    "x":90,
                                                     "type":"Box",
                                                     "props":{"y":0,"x":0,"width":1000,"renderType":"render","name":"listBox","height":100},
                                                     "nodeParent":8,
@@ -126,7 +125,6 @@
                                                     "compId":7,
                                                     "child":[
                                                         {
-                                                            "x":105,
                                                             "type":"Label",
                                                             "props":{"y":20,"x":800,"wordWrap":true,"width":150,"valign":"middle","text":"100","styleSkin":"ui/prompt/label.png","overflow":"scroll","name":"total","height":60,"fontSize":30,"font":"Arial","color":"#000000","align":"center"},
                                                             "nodeParent":7,
@@ -140,7 +138,6 @@
                                                                 ]
                                                         },
                                                         {
-                                                            "x":105,
                                                             "type":"Label",
                                                             "props":{"y":30,"x":168,"wordWrap":true,"width":120,"valign":"middle","text":"14:36:25","styleSkin":"ui/prompt/label.png","overflow":"scroll","name":"betTime","height":40,"fontSize":30,"font":"Arial","color":"#000000","align":"left"},
                                                             "nodeParent":7,
@@ -153,7 +150,6 @@
                                                                 ]
                                                         },
                                                         {
-                                                            "x":105,
                                                             "type":"Label",
                                                             "props":{"y":30,"x":14,"wordWrap":true,"width":150,"valign":"middle","text":" 2018/1/12","styleSkin":"ui/prompt/label.png","overflow":"scroll","name":"betDate","height":40,"fontSize":30,"font":"Arial","color":"#000000","align":"left"},
                                                             "nodeParent":7,
@@ -166,7 +162,6 @@
                                                                 ]
                                                         },
                                                         {
-                                                            "x":105,
                                                             "type":"Label",
                                                             "props":{"y":10,"x":295,"wordWrap":true,"width":558,"valign":"middle","text":"31243214234234","styleSkin":"ui/prompt/label.png","overflow":"scroll","name":"roundId","height":80,"fontSize":28,"font":"Arial","color":"#000000","align":"center"},
                                                             "nodeParent":7,
@@ -179,7 +174,6 @@
                                                                 ]
                                                         },
                                                         {
-                                                            "x":105,
                                                             "type":"Image",
                                                             "props":{"y":100,"x":0,"width":1000,"skin":"ui/recordLine.png","height":1},
                                                             "nodeParent":7,
@@ -192,7 +186,6 @@
                                                                 ]
                                                         },
                                                         {
-                                                            "x":105,
                                                             "type":"Image",
                                                             "props":{"y":34,"x":950,"skin":"ui/go.png"},
                                                             "nodeParent":7,
@@ -215,17 +208,18 @@
                                             "props":{"y":0,"x":0},
                                             "nodeParent":30,
                                             "label":"Box",
-                                            "isOpen":false,
+                                            "isOpen":true,
                                             "isDirectory":true,
                                             "isAniNode":true,
                                             "hasChild":true,
                                             "compId":29,
                                             "child":[
                                                 {
+                                                    "x":90,
                                                     "type":"Label",
-                                                    "props":{"y":0,"x":21,"wordWrap":true,"width":222,"valign":"middle","text":"时间","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":60,"fontSize":36,"font":"Arial","color":"#000000","align":"center"},
+                                                    "props":{"y":0,"x":21,"wordWrap":true,"width":222,"var":"title_time","valign":"middle","text":"时间","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":60,"fontSize":36,"font":"Arial","color":"#000000","align":"center"},
                                                     "nodeParent":29,
-                                                    "label":"Label",
+                                                    "label":"Label(title_time)",
                                                     "isDirectory":false,
                                                     "isAniNode":true,
                                                     "hasChild":false,
@@ -234,10 +228,11 @@
                                                         ]
                                                 },
                                                 {
+                                                    "x":90,
                                                     "type":"Label",
-                                                    "props":{"y":0,"x":295,"wordWrap":true,"width":558,"valign":"middle","text":"局号","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":60,"fontSize":36,"font":"Arial","color":"#000000","align":"center"},
+                                                    "props":{"y":0,"x":380,"wordWrap":true,"width":386,"var":"title_round","valign":"middle","text":"局号","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":60,"fontSize":36,"font":"Arial","color":"#000000","align":"center"},
                                                     "nodeParent":29,
-                                                    "label":"Label",
+                                                    "label":"Label(title_round)",
                                                     "isDirectory":false,
                                                     "isAniNode":true,
                                                     "hasChild":false,
@@ -246,10 +241,11 @@
                                                         ]
                                                 },
                                                 {
+                                                    "x":90,
                                                     "type":"Label",
-                                                    "props":{"y":0,"x":800,"wordWrap":true,"width":150,"valign":"middle","text":"输赢","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":60,"fontSize":36,"font":"Arial","color":"#000000","align":"center"},
+                                                    "props":{"y":0,"x":775,"wordWrap":true,"width":200,"var":"title_result","valign":"middle","text":"输赢","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":60,"fontSize":36,"font":"Arial","color":"#000000","align":"center"},
                                                     "nodeParent":29,
-                                                    "label":"Label",
+                                                    "label":"Label(title_result)",
                                                     "isDirectory":false,
                                                     "isAniNode":true,
                                                     "hasChild":false,
@@ -258,6 +254,7 @@
                                                         ]
                                                 },
                                                 {
+                                                    "x":90,
                                                     "type":"Image",
                                                     "props":{"y":60,"x":0,"width":1000,"skin":"ui/recordLine.png","height":1},
                                                     "nodeParent":29,
@@ -273,7 +270,7 @@
                                         {
                                             "x":75,
                                             "type":"Label",
-                                            "props":{"y":225,"x":400,"wordWrap":true,"width":200,"var":"noBetData","valign":"middle","text":"暂无投注记录","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":60,"fontSize":30,"font":"Arial","color":"#000000","align":"center"},
+                                            "props":{"y":225,"x":350,"wordWrap":true,"width":300,"var":"noBetData","valign":"middle","text":"暂无投注记录","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":60,"fontSize":30,"font":"Arial","color":"#000000","align":"center"},
                                             "nodeParent":30,
                                             "label":"Label(noBetData)",
                                             "isDirectory":false,
@@ -287,7 +284,7 @@
                                         {
                                             "x":75,
                                             "type":"Label",
-                                            "props":{"y":225,"x":400,"wordWrap":true,"width":200,"var":"isLoading","valign":"middle","text":"加载中...","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":60,"fontSize":30,"font":"Arial","color":"#000000","align":"center"},
+                                            "props":{"y":225,"x":350,"wordWrap":true,"width":300,"var":"isLoading","valign":"middle","text":"加载中...","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":60,"fontSize":30,"font":"Arial","color":"#000000","align":"center"},
                                             "nodeParent":30,
                                             "label":"Label(isLoading)",
                                             "isDirectory":false,
@@ -434,14 +431,13 @@
                                             "props":{"y":220,"x":0,"width":1000,"var":"betDetailList","spaceY":0,"repeatY":3,"height":290},
                                             "nodeParent":32,
                                             "label":"List(betDetailList)",
-                                            "isOpen":true,
+                                            "isOpen":false,
                                             "isDirectory":true,
                                             "isAniNode":true,
                                             "hasChild":true,
                                             "compId":53,
                                             "child":[
                                                 {
-                                                    "x":90,
                                                     "type":"Box",
                                                     "props":{"width":1000,"renderType":"render","name":"listBox","height":100},
                                                     "nodeParent":53,
@@ -453,7 +449,6 @@
                                                     "compId":54,
                                                     "child":[
                                                         {
-                                                            "x":105,
                                                             "type":"Image",
                                                             "props":{"y":100,"x":0,"width":1000,"skin":"ui/recordLine.png","height":1},
                                                             "nodeParent":54,
@@ -466,7 +461,6 @@
                                                                 ]
                                                         },
                                                         {
-                                                            "x":105,
                                                             "type":"Label",
                                                             "props":{"y":0,"x":0,"wordWrap":true,"width":80,"valign":"middle","text":"1","styleSkin":"ui/prompt/label.png","overflow":"hidden","name":"betNum","height":100,"fontSize":30,"font":"Arial","color":"#000000","align":"center"},
                                                             "nodeParent":54,
@@ -480,7 +474,6 @@
                                                                 ]
                                                         },
                                                         {
-                                                            "x":105,
                                                             "type":"List",
                                                             "props":{"y":0,"x":80,"width":920,"var":"betTypeList","spaceX":0,"repeatX":5,"name":"betTypeList","height":100},
                                                             "nodeParent":54,
@@ -492,9 +485,8 @@
                                                             "compId":65,
                                                             "child":[
                                                                 {
-                                                                    "x":120,
                                                                     "type":"Box",
-                                                                    "props":{"width":300,"renderType":"render","height":100},
+                                                                    "props":{"width":350,"renderType":"render","height":100},
                                                                     "nodeParent":65,
                                                                     "label":"Box",
                                                                     "isOpen":true,
@@ -504,9 +496,8 @@
                                                                     "compId":63,
                                                                     "child":[
                                                                         {
-                                                                            "x":135,
                                                                             "type":"Label",
-                                                                            "props":{"y":0,"x":0,"wordWrap":true,"width":100,"valign":"middle","text":"左撞柱","styleSkin":"ui/prompt/label.png","overflow":"hidden","name":"betPos","height":100,"fontSize":30,"font":"Arial","color":"#000000","align":"center"},
+                                                                            "props":{"y":0,"x":0,"wordWrap":true,"width":120,"valign":"middle","text":"左撞柱","styleSkin":"ui/prompt/label.png","overflow":"hidden","name":"betPos","height":100,"fontSize":30,"font":"Arial","color":"#000000","align":"right"},
                                                                             "nodeParent":63,
                                                                             "label":"Label(betPos)",
                                                                             "isOpen":false,
@@ -518,9 +509,8 @@
                                                                                 ]
                                                                         },
                                                                         {
-                                                                            "x":135,
                                                                             "type":"Label",
-                                                                            "props":{"y":0,"x":100,"wordWrap":true,"width":100,"valign":"middle","text":"1.85","styleSkin":"ui/prompt/label.png","overflow":"hidden","name":"betOdds","height":100,"fontSize":30,"font":"Arial","color":"#000000","align":"center"},
+                                                                            "props":{"y":0,"x":140,"wordWrap":true,"width":100,"valign":"middle","text":"12.58","styleSkin":"ui/prompt/label.png","overflow":"hidden","name":"betOdds","height":100,"fontSize":30,"font":"Arial","color":"#000000","align":"center"},
                                                                             "nodeParent":63,
                                                                             "label":"Label(betOdds)",
                                                                             "isOpen":false,
@@ -532,9 +522,8 @@
                                                                                 ]
                                                                         },
                                                                         {
-                                                                            "x":135,
                                                                             "type":"Label",
-                                                                            "props":{"y":0,"x":200,"wordWrap":true,"width":100,"valign":"middle","text":"5","styleSkin":"ui/prompt/label.png","overflow":"hidden","name":"betAmount","height":100,"fontSize":30,"font":"Arial","color":"#000000","align":"center"},
+                                                                            "props":{"y":0,"x":260,"wordWrap":true,"width":100,"valign":"middle","text":"5","styleSkin":"ui/prompt/label.png","overflow":"hidden","name":"betAmount","height":100,"fontSize":30,"font":"Arial","color":"#000000","align":"left"},
                                                                             "nodeParent":63,
                                                                             "label":"Label(betAmount)",
                                                                             "isOpen":false,
@@ -546,9 +535,8 @@
                                                                                 ]
                                                                         },
                                                                         {
-                                                                            "x":135,
                                                                             "type":"Label",
-                                                                            "props":{"y":25,"x":110,"wordWrap":true,"width":1,"valign":"middle","styleSkin":"ui/prompt/label.png","rotation":15,"overflow":"hidden","name":"line","height":50,"fontSize":30,"font":"Arial","color":"#000000","bgColor":"#000000","align":"center"},
+                                                                            "props":{"y":25,"x":140,"wordWrap":true,"width":1,"valign":"middle","styleSkin":"ui/prompt/label.png","rotation":15,"overflow":"hidden","name":"line","height":50,"fontSize":30,"font":"Arial","color":"#000000","bgColor":"#000000","align":"center"},
                                                                             "nodeParent":63,
                                                                             "label":"Label(line)",
                                                                             "isOpen":false,
@@ -560,9 +548,8 @@
                                                                                 ]
                                                                         },
                                                                         {
-                                                                            "x":135,
                                                                             "type":"Label",
-                                                                            "props":{"y":25,"x":210,"wordWrap":true,"width":1,"valign":"middle","styleSkin":"ui/prompt/label.png","rotation":15,"overflow":"hidden","name":"line","height":50,"fontSize":30,"font":"Arial","color":"#000000","bgColor":"#000000","align":"center"},
+                                                                            "props":{"y":25,"x":250,"wordWrap":true,"width":1,"valign":"middle","styleSkin":"ui/prompt/label.png","rotation":15,"overflow":"hidden","name":"line","height":50,"fontSize":30,"font":"Arial","color":"#000000","bgColor":"#000000","align":"center"},
                                                                             "nodeParent":63,
                                                                             "label":"Label(line)",
                                                                             "isOpen":false,
@@ -594,9 +581,9 @@
                                                 {
                                                     "x":90,
                                                     "type":"Label",
-                                                    "props":{"y":10,"x":40,"wordWrap":true,"width":236,"valign":"middle","text":"投注详情如下：","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":40,"fontSize":30,"font":"Arial","color":"#000000","align":"left"},
+                                                    "props":{"y":10,"x":40,"wordWrap":true,"width":236,"var":"betDetails","valign":"middle","text":"投注详情如下：","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":40,"fontSize":30,"font":"Arial","color":"#000000","align":"left"},
                                                     "nodeParent":60,
-                                                    "label":"Label",
+                                                    "label":"Label(betDetails)",
                                                     "isDirectory":false,
                                                     "isAniNode":true,
                                                     "hasChild":false,

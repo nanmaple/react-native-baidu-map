@@ -119,6 +119,8 @@ var NoteRecordPanelCtrl = /** @class */ (function (_super) {
      * @param data
      */
     NoteRecordPanelCtrl.prototype.Error = function (data) {
+        var language = new LanguageUtils.Language();
+        this.gameUI.GetPromptPanel().ShowMsg(language.GetLanguage(BaseEnum.ErrorCode[data]));
     };
     /**
      * 上拉加载

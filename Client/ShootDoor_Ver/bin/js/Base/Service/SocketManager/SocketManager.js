@@ -37,7 +37,7 @@ var ServiceManager;
          * @param token
          */
         SocketManager.prototype.SetNetwork = function (status) {
-            //启动连接
+            //设置网络状态
             this.socket.SetNetwork(status);
         };
         /**
@@ -52,7 +52,7 @@ var ServiceManager;
          * 关闭
          */
         SocketManager.prototype.Close = function () {
-            //启动连接
+            //关闭连接
             this.socket.Close();
         };
         /**
@@ -87,9 +87,9 @@ var ServiceManager;
         /**
          * 关闭链接
          */
-        SocketManager.prototype.OnClosed = function () {
+        SocketManager.prototype.OnClosed = function (message) {
             //广播上层-关闭连接
-            this.event(ServiceManager.SocketEvent.OnClose);
+            this.event(ServiceManager.SocketEvent.OnClose, message);
         };
         /**
          * 错误
@@ -132,7 +132,6 @@ var ServiceManager;
                     this.event(ServiceManager.SocketEvent.OnError, messageDto.Data);
                     break;
                 case BaseEnum.MainCommand.MSG_KICKOUT:
-                    console.log("登出");
                     //登出，断开连接
                     this.socket.Close();
                     //广播上层-登出

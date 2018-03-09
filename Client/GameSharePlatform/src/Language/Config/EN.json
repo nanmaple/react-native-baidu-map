@@ -1,0 +1,132 @@
+ {
+    "0":"Demo Account",
+     "1":"Bet",
+     "2":"Settle",
+     "3":"Cancle",
+     "4":"Transfer",
+     "5":"Transfer ",
+     "6":"Roll Back Transfer",
+
+     "TimeOut": "Time out",
+     "SystemError": "System Error",
+     "Success": "Success",
+     "InvalidArgument": "Invalid Argument",
+
+     "MemberExist": "Member Exist",
+     "MemberNotExist": "Member Not Exist",
+     "MemberClosed": "Member Closed",
+
+
+     "NullToken": "Null Token",
+     "OverTime": "OverTime",
+     "TokenInvalid": "Token Invalid",
+     "TokenDecodeError": "Token Decode Error",
+     "SignatureError": "Signature Error",
+     "PlayloadError": "Playload Error",
+     "AccountInvalid": "Account Invalid",
+     "RefuseTourist": "Refuse Tourist",
+     "MemberIdInvalid": "Member Id Invalid",
+
+     "AccountExist": "Account Exist",
+     "EmailExist": "Email Exist",
+     "ErrorPassword": "Error Password",
+     "ParentCanNotBeSelf": "Parent Can Not Be Self",
+     "PhoneNumberExist": "PhoneNumber Exist",
+     "SameEmail": "Same Email",
+     "SamePassword": "Same Password",
+     "SamePhoneNumber": "Same PhoneNumber",
+     "WrongEmail": "Wrong Email",
+     "WrongPhoneNumber": "Wrong PhoneNumber",
+     "AgencyRelationshipNotExist": "Agency Relationship Not Exist",
+
+     "ModifyMemberScoreFailed": "Modify Member Score Failed",
+     "ModifyParentScoreFailed": "Modify Parent Score Failed",
+
+     "Loading": "Loading...",
+     "Wait": "Wait...",
+     "AmountError": "Amount Error",
+     "PasswordFormatError": "Password Format Error",
+     "NicknameFormatError": "Nickname Format Error",
+     "PhoneNumberFormatError": "PhoneNumber Format Error",
+     "RemarkNoNull": "Remark Not Null",
+     "RemarkNoChange": "Remark Not Change",
+     "ExceededQuota":"Exceeded Quota",
+
+    "NoData":"No Data",
+    "NoMoreData":"No More Data",
+      
+     "Agent": "Agent",
+     "Manager": "Manager",
+     "Login": "Login",
+     "Attention": "Attention",
+     "GameName": "Game Name",
+     "Recommended":"Recommended",
+     "Score":"Score",
+
+    "Member":"Member",
+     "GameRecord":"GameRecord",
+     "Report":"Report",
+     "ScoreRecord":"ScoreRecord",
+
+     "Time":"Time",
+     "WinOrlose":"WinOrlose",
+     "Me":"Me",
+     "Total":"Total",
+     "Inquire":"Inquire",
+
+     "ScoreChanges":"ScoreChanges",
+     "Balance":"Balance",
+     "Detail":"Detail",
+
+     "BasicInformation":"BasicInformation",
+     "GiveScore":"GiveScore",
+     "CheckAccount":"CheckAccount",
+
+    "Remark":"Remark",
+     "State":"State",
+     "Normal":"Normal",
+     "Close":"Close",
+     "SetasProxy":"SetasProxy",
+     "AlreadyAgent": "Already is Agent",
+     "SetOnlyOnce":"Set Only Once",
+     "AccountHasBeenSetup": "Account Has Been Setup",
+     "Account":"Account",
+     "PassWord":"PassWord",
+     "PhoneNumber":"PhoneNumber",
+     "MemberScore":"MemberScore",
+     "MyScore":"MyScore",
+     "No":"No",
+     "Sure":"Sure",
+     "Cancle":"Cancle",
+     "Warning":"Warning",
+     "TransferTime":"TransferTime",
+     "TransferAmount":"TransferAmount",
+     "Type":"Type",
+     "GameResult":"GameResult",
+     "Round":"GameRound",
+     "Bet":"Bet",
+     "Pay":"Pay",
+     "GameDetail":"GameDetail",
+     "GameTime":"Game Time",
+     "BetScore":"Bet Score",
+     "PayScore":"Pay Score",
+     "BetPos":"Bet Position",
+     "Odds":"Odds",
+     "PayMoney":"BettingAmount",
+
+
+
+
+
+
+
+    "Pull":"Pull Down to Refresh",
+    "Release":"Release to Refresh",
+    "Refreshing":"Refreshing",
+    "Completed":"Refresh Completed",
+    "InScore":"InScore",
+    "OutScore":"OutScore",
+
+    
+    "ShotDoor":"ShotDoor"
+ }

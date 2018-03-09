@@ -114,7 +114,8 @@ class NoteRecordPanelCtrl extends Laya.Sprite {
      * @param data 
      */
     private Error(data): void {
-
+        let language: LanguageUtils.Language = new LanguageUtils.Language();
+        this.gameUI.GetPromptPanel().ShowMsg(language.GetLanguage(BaseEnum.ErrorCode[data]));
     }
     /**
      * 上拉加载

@@ -38,6 +38,20 @@ namespace ScenePanel {
                 this.SetMouseHander(this.uiData.mouseHandler);
                 this.SetRenderHander(this.uiData.renderHandler);
             }
+            let language: LanguageUtils.Language = new LanguageUtils.Language();
+            this.ui.title_time.text = language.GetLanguage("Time");
+            this.ui.title_round.text = language.GetLanguage("Round");
+            this.ui.title_result.text = language.GetLanguage("WinLose");
+            this.ui.betDetails.text = language.GetLanguage("BetDetails");
+            this.ui.noBetData.text = language.GetLanguage("NoBetRecord");
+            this.ui.isLoading.text = language.GetLanguage("IsLoading");
+            let lang = Laya.Browser.window.navigator.language || Laya.Browser.window.navigator["userLanguage"];//常规浏览器语言和IE浏览器  
+            lang = lang.substr(0, 2);//截取lang前2位字符 
+            if(lang == 'zh'){
+                this.ui.title.skin = "ui/betrecord.png";
+            }else{
+                this.ui.title.skin = "ui/betrecord_EN.png";
+            }
         }
 
         /**
@@ -204,11 +218,12 @@ namespace ScenePanel {
          * @param total 投注收益
          */
         private BetResult(total: number): string {
+            let language: LanguageUtils.Language = new LanguageUtils.Language();
             if (total > 0) {
-                return "赢" + " + " + total;
+                return language.GetLanguage("Win") + " + " + total;
             }
             else {
-                return "输" + " - " + -total;
+                return language.GetLanguage("Lose") + " - " + -total;
             }
         }
         /**

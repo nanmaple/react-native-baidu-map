@@ -12,6 +12,8 @@ class GameCtrl extends BaseCtrl {
     private settleData: Dto.GameResultDto = null;
     private cacheData: Dto.CacheGameDto = null;
     private ChangeMoneyHander: Laya.Handler;
+    private roundID: string = null;  //当前局号
+    private currentStatus = 0;
     /**
      * 页面关闭回调
      * @param onClose 回调Handler
@@ -39,13 +41,12 @@ class GameCtrl extends BaseCtrl {
         // //创建游戏头部面板控制类实例
         this.HeadPanelCtrl = new HeadPanelCtrl();
         this.HeadPanelCtrl.SetInfo(this.memberInfo, this.parentID, this.authorizationInfo.IsTourists);
-
         //创建tipCtrl
         if (this.authorizationInfo.IsTourists) {
             let tipsCtrl: TipsPanelCtrl = new TipsPanelCtrl();
             tipsCtrl.Show();
         }
- 
+
     }
 
     private ReInit(): void {
@@ -81,7 +82,7 @@ class GameCtrl extends BaseCtrl {
      * @param data 
      */
     public OnConnectHandler(): void {
-        
+
     }
 
     /**
@@ -149,6 +150,9 @@ class GameCtrl extends BaseCtrl {
         console.log("初始化", data);
         ScenePanel.GameUI.GetInstance().GetLoadingPanel().HideConnect();
         this.cacheData = <Dto.CacheGameDto>data;
+        if (!this.roundID || this.roundID <= data.RoundID) {
+            this.roundID = data.RoundID;
+        }
         this.cacheData.BetTimeStamp = new Date().getTime();
         if (data && data.RoundID) {
             this.RoundPanelCtrl.SetGameRound(data.RoundID);
@@ -165,9 +169,13 @@ class GameCtrl extends BaseCtrl {
             this.TimePanelCtrl.StartGameTime(data.BetTime);
             this.RoundPanelCtrl.SetGameState(1);
         }
+        if (data.Cards == null) {
+            this.TimePanelCtrl.HideGameTime();
+        }
         //2.初始化投注界面
         if (data) {
             this.BetCtrl.GameInit(data, isReInit);
+            this.cacheData.RoundID = data.RoundID;
         }
         //3.显示当前牌面data.Cards
         if (data && data.Cards) {
@@ -190,7 +198,18 @@ class GameCtrl extends BaseCtrl {
      * @param data 游戏开始信息
      */
     public OnGameStart(data: Dto.StartGameDto): void {
-        console.log("开始", data);
+        ScenePanel.GameUI.GetInstance().ClearPokerFly();
+        this.CardPanelCtrl.ClearPokerFlip();
+        if (!this.roundID || this.roundID < data.RoundID) {
+            console.log("开始-不同局", data, this.roundID, data.RoundID, new Date().getTime());
+            this.roundID = data.RoundID;
+        } else if (this.roundID == data.RoundID) {
+            console.log("开始-同一局", data, this.roundID, data.RoundID, new Date().getTime());
+            this.roundID = data.RoundID;
+        } else {
+            console.log("开始 return ", data, this.roundID, data.RoundID, new Date().getTime());
+            return;
+        }
         if (data && data.RoundID) {
             this.cacheData.RoundID = data.RoundID;
             this.RoundPanelCtrl.SetGameRound(data.RoundID);
@@ -203,7 +222,10 @@ class GameCtrl extends BaseCtrl {
             this.cacheData.Odds = data.Odds;
             this.BetCtrl.GameStart(data.Odds);
         }
-
+        //4.显示历史记录data.History
+        if (data && data.History) {
+            this.HistoryPanelCtrl.SetHistoryData(data.History);
+        }
         //2.重置倒计时并显示时间
         if (data && data.BetTime) {
             this.cacheData.BetTime = data.BetTime;
@@ -220,14 +242,22 @@ class GameCtrl extends BaseCtrl {
         this.CardPanelCtrl.StartGame(data);
         this.isAnimateEnd = false;
         this.settleData = null;
-
     }
     /**
      * 游戏投注结果回调
      * @param data 游戏投注结果信息
      */
     public OnBetResult(data: Dto.BetResultDto): void {
-        console.log("投注结果", data);
+        if (!this.roundID || this.roundID < data.RoundID) {
+            console.log("投注结果", data, this.roundID, data.RoundID);
+            this.roundID = data.RoundID;
+        } else if (this.roundID == data.RoundID) {
+            console.log("投注结果-同一局", data, this.roundID, data.RoundID);
+            this.roundID = data.RoundID;
+        } else {
+            console.log("投注结果 return ", data, this.roundID, data.RoundID);
+            return;
+        }
         //投注结果返回
         this.BetCtrl.BetResult(data);
         if (!this.authorizationInfo.IsClose && data.Success) {
@@ -249,21 +279,30 @@ class GameCtrl extends BaseCtrl {
      * 游戏结束回调
      * @param data 游戏结束结果信息
      */
-    public OnGameResult(data: Dto.CardInfoDto): void {
-        console.log("结束", data);
+    public OnGameResult(data: Dto.EndGameDto): void {
+        if (!this.roundID || this.roundID < data.RoundID) {
+            console.log("结束", data, this.roundID, data.RoundID, new Date().getTime());
+            this.roundID = data.RoundID;
+        } else if (this.roundID == data.RoundID) {
+            console.log("结束-同一局", data, this.roundID, data.RoundID, new Date().getTime());
+            this.roundID = data.RoundID;
+        } else {
+            console.log("结束 return ", data, this.roundID, data.RoundID, new Date().getTime());
+            return;
+        }
         //缓存数据
+        // this.roundID = this.cacheData.RoundID;
         this.cacheData.Status = BaseEnum.GameStatus.END;
         let dto: Dto.HistoryRoundDto = new Dto.HistoryRoundDto();
         dto.FirstCard = data.FirstCard;
         dto.SecondCard = data.SecondCard;
         dto.ThirdCard = data.ThirdCard;
-        dto.RoundID = this.cacheData.RoundID;
+        dto.RoundID = data.RoundID;
         this.cacheData.History.push(dto);
         this.cacheData.History.splice(0, 1);
         this.cacheData.Cards.FirstCard = data.FirstCard;
         this.cacheData.Cards.SecondCard = data.SecondCard;
         this.cacheData.Cards.ThirdCard = data.ThirdCard;
-
         this.RoundPanelCtrl.SetGameState(2);
         Laya.timer.once(5000, this, () => {
             this.cacheData.Status = BaseEnum.GameStatus.SETTLE;
@@ -274,7 +313,7 @@ class GameCtrl extends BaseCtrl {
             this.isAnimateEnd = true;
             if (this.settleData) {
                 //显示输赢效果
-                this.BetCtrl.SettleResult(this.settleData);
+                this.BetCtrl.SettleResult(this.settleData,data.RoundID);
             }
         })
         //禁用面板按钮
@@ -300,7 +339,16 @@ class GameCtrl extends BaseCtrl {
      * @param data 游戏结算结果信息
      */
     public OnSettleResult(data: Dto.GameResultDto): void {
-        console.log("结算", data);
+        if (!this.roundID || this.roundID < data.RoundID) {
+            console.log("结算", data, this.roundID, data.RoundID);
+            this.roundID = data.RoundID;
+        } else if (this.roundID == data.RoundID) {
+            console.log("结算-同一局", data, this.roundID, data.RoundID);
+            this.roundID = data.RoundID;
+        } else {
+            console.log("结算 return ", data, this.roundID, data.RoundID);
+            return;
+        }
         this.cacheData.Status = BaseEnum.GameStatus.SETTLEED;
         this.cacheData.TotalBet = data.SettleResult;
         this.cacheData.Balance = data.Balance;
@@ -308,7 +356,7 @@ class GameCtrl extends BaseCtrl {
         this.RoundPanelCtrl.SetGameState(4);
         if (this.isAnimateEnd) {
             //显示输赢效果
-            this.BetCtrl.SettleResult(data);
+            this.BetCtrl.SettleResult(data,data.RoundID);
         } else {
             this.settleData = data;
         }

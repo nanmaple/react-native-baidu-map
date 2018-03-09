@@ -4,11 +4,14 @@ import Tabs from "../../Components/TabView/TabView";
 import BaseInformation from "./BaseInforMation";
 import CheckAccount from "./CheckAccount";
 import ScorerRecord from "./ChildScoreRecord";
-
+import LanguageManager from '../../Language/LanguageManager';
 const memDetailStyle = require("./style.css");
 class MemberDetail extends React.Component<any, any> {
+    private languageManager: LanguageManager = new LanguageManager();
     //tab 列表
-    private tabList: Array<string> = ["基本信息", "进取分记录", "查账"];
+    private tabList: Array<string> = [this.languageManager.GetErrorMsg("BasicInformation"), 
+    this.languageManager.GetErrorMsg("GiveScore"),
+    this.languageManager.GetErrorMsg("CheckAccount")];
     constructor(props: any) {
         super(props);
         this.state = {

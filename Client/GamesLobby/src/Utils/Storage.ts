@@ -141,7 +141,7 @@ namespace Utils {
          * @param key 键名
          * @param value 键值
          */
-        private SetLocalStorage(key: string, value: any, day: number = null) {
+        public SetLocalStorage(key: string, value: any, day: number = null) {
             let date: Date = new Date();
             let data: any = {
                 expires: date.getTime() + day * 24 * 3600 * 1000,
@@ -153,7 +153,7 @@ namespace Utils {
          * 读取LocalStorage
          * @param key 
          */
-        private GetLocalStorage(key: string) {
+        public GetLocalStorage(key: string) {
             let data: any = Laya.LocalStorage.getItem(key);
             try {
                 let dataObj: any = JSON.parse(data);

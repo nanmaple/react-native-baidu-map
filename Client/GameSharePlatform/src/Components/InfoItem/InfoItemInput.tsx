@@ -1,4 +1,5 @@
 import * as React from 'react';
+import LanguageManager from '../../Language/LanguageManager';
 
 const style = require("./style.css");
 const EditImg = require("../../Image/edit.png");
@@ -9,6 +10,7 @@ interface State {
     newValue: any
 }
 export default class InfoItemInput extends React.Component<any, State> {
+    private languageManager: LanguageManager = new LanguageManager();
     constructor(props: any, state: State) {
         super(props);
         this.state = {
@@ -47,7 +49,7 @@ export default class InfoItemInput extends React.Component<any, State> {
                 }}
             />)
         } else {
-            return (<span className={style.noEdit}>{!oldValue ? "暂无" : oldValue}</span>)
+            return (<span className={style.noEdit}>{!oldValue ? this.languageManager.GetErrorMsg("No") : oldValue}</span>)
         }
     }
 
@@ -61,8 +63,8 @@ export default class InfoItemInput extends React.Component<any, State> {
         }
         if (isEdit) {
             return (<div className="">
-                <span onClick={this.OnConfirm} className={style.butuon}>确认</span>
-                <span onClick={this.OnCancel} className={style.butuon}>取消</span>
+                <span onClick={this.OnConfirm} className={style.butuon}>{this.languageManager.GetErrorMsg("Sure")}</span>
+                <span onClick={this.OnCancel} className={style.butuon}>{this.languageManager.GetErrorMsg("Cancle")}</span>
             </div>)
         }
         else {

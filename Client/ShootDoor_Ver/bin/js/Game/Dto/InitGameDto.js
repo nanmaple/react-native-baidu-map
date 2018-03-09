@@ -47,6 +47,15 @@ var Dto;
     }());
     Dto.CardInfoDto = CardInfoDto;
     /**
+     * 游戏结束
+     */
+    var EndGameDto = /** @class */ (function () {
+        function EndGameDto() {
+        }
+        return EndGameDto;
+    }());
+    Dto.EndGameDto = EndGameDto;
+    /**
      * 初始化游戏Dto
      */
     var InitGameDto = /** @class */ (function () {

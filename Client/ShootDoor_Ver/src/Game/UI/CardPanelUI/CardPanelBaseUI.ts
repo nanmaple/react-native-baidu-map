@@ -55,6 +55,20 @@ namespace ScenePanel {
             this.pokerCards[index].StartFlipPoker(data);
         }
         /**
+         * 扑克牌翻转结束回调
+         */
+        public EndFlipPokerHander(endPokerHander:Laya.Handler): void{
+            this.pokerCards[2].EndFlipPokerHander(endPokerHander,2);
+        }
+        /**
+         * 清理扑克牌缓动
+         */
+        public ClearPokerTween():void{
+            for(let i:number = 0;i < this.pokerNum;i++){
+                this.pokerCards[i].ClearPoker();
+            }
+        }
+        /**
          * 隐藏扑克牌
          * @param index 
          */

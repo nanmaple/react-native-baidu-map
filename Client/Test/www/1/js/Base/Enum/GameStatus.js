@@ -15,8 +15,12 @@ var BaseEnum;
          */
         GameStatus[GameStatus["END"] = 2] = "END";
         /**
-         * 结算状态
+         * 正在结算状态
          */
         GameStatus[GameStatus["SETTLE"] = 3] = "SETTLE";
+        /**
+         * 已结算
+         */
+        GameStatus[GameStatus["SETTLEED"] = 4] = "SETTLEED";
     })(GameStatus = BaseEnum.GameStatus || (BaseEnum.GameStatus = {}));
 })(BaseEnum || (BaseEnum = {}));

@@ -4,7 +4,8 @@ class PokerEffect {
     public poker: Laya.Image;    //扑克
     private isActive: boolean;   //初始化显示状态
     private type: number;   //扑克类型
-
+    private endPokerHander:Laya.Handler;   //扑克牌结束翻转回调
+    private pokerIndex:number = 0;   //扑克牌下标
     private pokerBgUrl = "ui/poker/pkbg.png";//扑克背景地址
     constructor(poker: Laya.Image) {
         this.poker = poker;
@@ -77,12 +78,27 @@ class PokerEffect {
      */
     private EndFlipPoker(): void {
         this.poker.skin = this.GetPokerUrl(this.type);
-        Laya.Tween.to(this.poker, { scaleX: 1 }, 1000, Laya.Ease.circOut);
+        Laya.Tween.to(this.poker, { scaleX: 1 }, 1000, Laya.Ease.circOut,Laya.Handler.create(this,()=>{
+            this.pokerIndex == 2 ? this.endPokerHander.run():null;
+        }));
     }
     /**
      * 游戏结束
      */
     public HidePoker(): void {
         this.Reset();
+    }
+    /**
+     * 结束翻转回调
+     */
+    public EndFlipPokerHander(endPokerHander:Laya.Handler,index:number):void{
+        this.endPokerHander = endPokerHander;
+        this.pokerIndex = index;
+    }
+    /**
+     * 清理扑克牌动画
+     */
+    public ClearPoker():void{
+        Laya.Tween.clearAll(this.poker);
     }
 }

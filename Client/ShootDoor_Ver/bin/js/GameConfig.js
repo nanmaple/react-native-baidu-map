@@ -36,7 +36,7 @@ var GameConfig;
     function GetWeChatUrl(parentID, isAuthorize) {
         if (isAuthorize === void 0) { isAuthorize = true; }
         if (isAuthorize) {
-            return "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + this.AppId + "&redirect_uri=http%3A%2F%2F" + this.Domain + "%3fgameid%3d" + this.GameID + "%26parentid%3d" + parentID + "&response_type=code&scope=snsapi_base&state={state}#wechat_redirect";
+            return "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + this.AppId + "&redirect_uri=http%3A%2F%2F" + this.Domain + "%3fgameid%3d" + this.GameID + "%26parentid%3d" + parentID + "&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
         }
         else {
             return "http://" + this.Domain + "?gameid=" + this.GameID + "&parentid=" + parentID;
@@ -55,7 +55,7 @@ var GameConfig;
             Link: ""
         };
         if (isAuthorize) {
-            dto.Link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + this.AppId + "&redirect_uri=http%3A%2F%2F" + this.Domain + "%3fgameid%3d" + this.GameID + "%26parentid%3d" + parentID + "&response_type=code&scope=snsapi_base&state={state}#wechat_redirect";
+            dto.Link = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + this.AppId + "&redirect_uri=http%3A%2F%2F" + this.Domain + "%3fgameid%3d" + this.GameID + "%26parentid%3d" + parentID + "&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
         }
         else {
             dto.Link = "http://" + this.Domain + "?gameid=" + this.GameID + "&parentid=" + parentID;

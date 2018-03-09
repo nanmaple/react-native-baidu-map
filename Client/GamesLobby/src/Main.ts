@@ -78,6 +78,8 @@ class GameMain {
             this.accountUI.login.visible = true;
             this.accountUI.accountList.visible = false;
         }
+        let language: LanguageUtils.Language = new LanguageUtils.Language();
+        this.accountUI.login.text = language.GetLanguage("Login");
     }
     /**
      * 登录回调
@@ -129,13 +131,15 @@ class GameMain {
     }
 
     private renderHandler(cell: Laya.Box, index: number): void {
+        let language: LanguageUtils.Language = new LanguageUtils.Language();
         //如果索引不再可索引范围，则终止该函数
         if (index > this.list.length) return;
         //获取当前渲染条目的数据
         let data: BaseDto.MultiAccountDto = this.list[index] as BaseDto.MultiAccountDto;
         //根据子节点的名字listNumber，获取子节点对象。 
-        let agentBox: Laya.Box = cell.getChildByName("item").getChildByName("agentBox") as Laya.Box;
-        let agent: Laya.Label = agentBox.getChildByName("agent") as Laya.Label;
+        let agent: Laya.Label = cell.getChildByName("agent") as Laya.Label;
+        let agentLabel:Laya.Label = cell.getChildByName("label") as Laya.Label;
+        agentLabel.text = language.GetLanguage("Agent");
         if (!data.Account && data.Account.length == 0) {
             //label渲染列表文本（序号）
             agent.text = data.ParentNickname;

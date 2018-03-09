@@ -3,6 +3,7 @@ import {
     Link,
     Route,
 } from 'react-router-dom';
+import LanguageManager from '../../Language/LanguageManager';
 import { MemberRoute, GameRecordRoute, ReportRoute, ScoreRecordRoute, MemberDetailRoute } from '../../Route/Config';
 import Tabs from "../../Components/TabView/TabView";
 
@@ -22,8 +23,12 @@ enum tab {
 
 const styles = require("./style.css");
 export default class Manager extends React.Component<any, any> {
+    private languageManager: LanguageManager = new LanguageManager();
     //头部tab列表
-    private tabList: Array<string> = ["会员", "游戏记录", "报表", "分数记录"];
+    private tabList: Array<string> = [this.languageManager.GetErrorMsg("Member"),
+    this.languageManager.GetErrorMsg("GameRecord"),
+    this.languageManager.GetErrorMsg("Report"),
+    this.languageManager.GetErrorMsg("ScoreRecord")];
     constructor(props: any) {
         super(props);
         this.state = {

@@ -22,7 +22,7 @@ const rightImg = require("../../../Image/right.png");
 class GameRecord extends React.Component<any, any> {
     private ReportCtrl: ReportCtrl = new ReportCtrl();
     private toast: any;
-    private languageManager: LanguageManager;
+    private languageManager: LanguageManager = new LanguageManager();
     constructor(props: any) {
         super(props);
         this.state = {
@@ -139,7 +139,7 @@ class GameRecord extends React.Component<any, any> {
                 <div className={styles.item}>
                     <div className={styles.gameName}>{rowItem.GameName}</div>
                     <div className={styles.time}>{rowItem.BetTime}</div>
-                    <div className={total > 0 ? "win" : "lose"}>
+                    <div className={(total == 0 ? "ling" : total > 0 ? "zheng" : "fu") + " " + styles.win}>
                         {Money.Format(total)}
                     </div>
                     <div className={styles.right}>
@@ -157,7 +157,7 @@ class GameRecord extends React.Component<any, any> {
         if (!memberList || memberList.length == 0) {
             return (
                 <div className="noData">
-                    无数据
+                    {this.languageManager.GetErrorMsg("NoData")}
                 </div>
 
             )
@@ -186,12 +186,12 @@ class GameRecord extends React.Component<any, any> {
         return (
             <div className={styles.container}>
                 <CompToast ref={(c) => this.toast = c} />
-                <Toast icon="loading" show={this.state.showLoading}>加载中</Toast>
+                <Toast icon="loading" show={this.state.showLoading}>{this.languageManager.GetErrorMsg("Loading")}</Toast>
                 <div className={styles.listTitle}>
                     <div className={styles.head}>
-                        <div className={styles.gameName}>游戏名称</div>
-                        <div className={styles.time}>时间</div>
-                        <div className={styles.titleWin}>总输赢</div>
+                        <div className={styles.gameName}>{this.languageManager.GetErrorMsg("GameName")}</div>
+                        <div className={styles.time}>{this.languageManager.GetErrorMsg("Time")}</div>
+                        <div className={styles.titleWin}>{this.languageManager.GetErrorMsg("WinOrlose")}</div>
                     </div>
                     {this.renderData()}
                 </div>

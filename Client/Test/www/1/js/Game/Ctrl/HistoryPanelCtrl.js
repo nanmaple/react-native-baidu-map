@@ -10,10 +10,9 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var HistoryPanelCtrl = /** @class */ (function (_super) {
     __extends(HistoryPanelCtrl, _super);
-    function HistoryPanelCtrl(historyPanel) {
+    function HistoryPanelCtrl() {
         var _this = _super.call(this) || this;
         _this.index = 0; //记录条数
-        _this.historyPanel = historyPanel;
         return _this;
     }
     /**
@@ -29,11 +28,12 @@ var HistoryPanelCtrl = /** @class */ (function (_super) {
     HistoryPanelCtrl.prototype.SetHistoryData = function (history) {
         //添加list数据
         this.listArr = [];
+        this.roundIDArr = [];
         if (!history) {
-            this.historyPanel.listPanel.visible = false;
+            ScenePanel.GameUI.GetInstance().GetHistoryPanel().ShowList(false);
             return;
         }
-        this.historyPanel.listPanel.visible = true;
+        ScenePanel.GameUI.GetInstance().GetHistoryPanel().ShowList(true);
         this.index = history.length;
         for (var i = 0; i < this.index; i++) {
             var dto = {
@@ -42,13 +42,14 @@ var HistoryPanelCtrl = /** @class */ (function (_super) {
                 poker2: { skin: this.GetPokerUrl(history[i].ThirdCard) }
             };
             this.listArr.unshift(dto);
+            this.roundIDArr.push({ RoundID: history[i].RoundID });
         }
         //实现list滚动
-        // this.historyPanel._list.vScrollBarSkin = "";
+        // ScenePanel.GameUI.GetInstance().GetHistoryPanel()._list.vScrollBarSkin = "";
         //将this.arr数据赋值到列表数据源。
-        this.historyPanel._list.array = this.listArr;
+        ScenePanel.GameUI.GetInstance().GetHistoryPanel().SetListArray(this.listArr);
         //renderHandler:单元格渲染处理器(默认返回参数cell:Box,index:int)。
-        this.historyPanel._list.renderHandler = new Laya.Handler(this, this.onRender);
+        ScenePanel.GameUI.GetInstance().GetHistoryPanel().SetRenderHandler(new Laya.Handler(this, this.onRender));
     };
     /**
      *渲染List
@@ -76,15 +77,26 @@ var HistoryPanelCtrl = /** @class */ (function (_super) {
     HistoryPanelCtrl.prototype.AddHistoryList = function (data) {
         var _this = this;
         //滚动历史列表
-        this.historyPanel.ScrollHistoryList(Laya.Handler.create(this, function () {
-            //增加单元格数据源
-            var dto = {
-                poker0: { skin: _this.GetPokerUrl(data.FirstCard) },
-                poker1: { skin: _this.GetPokerUrl(data.SecondCard) },
-                poker2: { skin: _this.GetPokerUrl(data.ThirdCard) }
-            };
-            _this.listArr.unshift(dto);
-            _this.historyPanel._list.array = _this.listArr;
+        ScenePanel.GameUI.GetInstance().GetHistoryPanel().ScrollHistoryList(Laya.Handler.create(this, function () {
+            var pokerReData = false; //重复的牌数据
+            for (var i = 0; i < _this.index; i++) {
+                if (_this.roundIDArr[i].RoundID == data.RoundID) {
+                    pokerReData = true;
+                }
+            }
+            if (pokerReData) {
+                return;
+            }
+            else {
+                //增加单元格数据源
+                var dto = {
+                    poker0: { skin: _this.GetPokerUrl(data.Cards.FirstCard) },
+                    poker1: { skin: _this.GetPokerUrl(data.Cards.SecondCard) },
+                    poker2: { skin: _this.GetPokerUrl(data.Cards.ThirdCard) }
+                };
+                _this.listArr.unshift(dto);
+                ScenePanel.GameUI.GetInstance().GetHistoryPanel().SetListArray(_this.listArr);
+            }
         }));
     };
     return HistoryPanelCtrl;

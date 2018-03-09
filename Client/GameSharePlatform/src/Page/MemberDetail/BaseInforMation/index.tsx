@@ -19,7 +19,7 @@ const EditImg = require("../../../Image/edit.png");
 
 class BaseInformation extends React.Component<any, any> {
     private MemberCtrl: MemberCtrl = new MemberCtrl();
-    private languageManager: LanguageManager;
+    private languageManager: LanguageManager = new LanguageManager();
     private toast: any;
     constructor(props: any) {
         super(props);
@@ -38,7 +38,7 @@ class BaseInformation extends React.Component<any, any> {
         }
     }
     componentDidMount() {
-        this.ShowToast("加载中...", ToastType.Loading);
+        this.ShowToast(this.languageManager.GetErrorMsg("Loading"), ToastType.Loading);
         let memberId = this.props.match.params.memberId;
         this.setState({
             memberId
@@ -96,13 +96,13 @@ class BaseInformation extends React.Component<any, any> {
             Amount = Number(scoreValue);
         if (type === "in") {
             if (Amount > myScore) {
-                this.ShowToast("超出限额", ToastType.Error);
+                this.ShowToast(this.languageManager.GetErrorMsg("ExceededQuota"), ToastType.Error);
                 return;
             }
             this.MemberCtrl.TransferIn(MemberId, Amount, this.SetScoreHandle);
         } else {
             if (Amount > score) {
-                this.ShowToast("超出限额", ToastType.Error);
+                this.ShowToast(this.languageManager.GetErrorMsg("ExceededQuota"), ToastType.Error);
                 return;
             }
             this.MemberCtrl.TransferOut(MemberId, Amount, this.SetScoreHandle);
@@ -184,15 +184,15 @@ class BaseInformation extends React.Component<any, any> {
      */
     private agentPrompt = () => {
         this.props.showAlert({
-            title: "警告", content: "代理只能设置一次!!!", buttons: [
+            title: this.languageManager.GetErrorMsg("Warning"), content: this.languageManager.GetErrorMsg("SetOnlyOnce"), buttons: [
                 {
                     type: 'default',
-                    label: '取消',
+                    label: this.languageManager.GetErrorMsg("Cancle"),
                     onClick: this.props.hideAlert
                 },
                 {
                     type: 'primary',
-                    label: '确定',
+                    label: this.languageManager.GetErrorMsg("Sure"),
                     onClick: this.SetMemberAgent
                 }
             ],
@@ -255,13 +255,13 @@ class BaseInformation extends React.Component<any, any> {
             <div className={baseInforStyle.container}>
                 <CompToast ref={(c) => this.toast = c} />
                 <InfoItemLabel memberSocre={Money.Format(score)} myScore={Money.Format(myScore)} />
-                <InfoItemButton label={"分数"} memberSocre={Money.Format(score)} myScore={Money.Format(myScore)} handler={this.SetScore} />
-                <InfoItemInput label={"备注"} value={this.state.remark} handler={this.SetRemark}></InfoItemInput>
-                <InfoItemCheckBox label={"状态"} trueText={"正常"} falseText={"关闭"} memberClosed={this.state.memberClose} handler={this.SetMemberClosed} />
-                <InfoItemCheckBox label={"设为代理"} trueText={"已经设置为代理"} falseText={"注意只能设置一次"} agent={this.state.agent} memberClosed={!this.state.agent} handler={this.agentPrompt} />
-                <InfoItemInput label={"账号"} value={memberNickname} disable={true}></InfoItemInput>
-                <InfoItemInput label={"密码"} value={this.state.password} handler={this.SetPassWord}></InfoItemInput>
-                <InfoItemInput label={"手机号"} value={phoneNumber} disable={true}></InfoItemInput>
+                <InfoItemButton label={this.languageManager.GetErrorMsg("Score")} memberSocre={Money.Format(score)} myScore={Money.Format(myScore)} handler={this.SetScore} />
+                <InfoItemInput label={this.languageManager.GetErrorMsg("Remark")} value={this.state.remark} handler={this.SetRemark}></InfoItemInput>
+                <InfoItemCheckBox label={this.languageManager.GetErrorMsg("State")} trueText={this.languageManager.GetErrorMsg("Normal")} falseText={this.languageManager.GetErrorMsg("Close")} memberClosed={this.state.memberClose} handler={this.SetMemberClosed} />
+                <InfoItemCheckBox label={this.languageManager.GetErrorMsg("SetasProxy")} trueText={this.languageManager.GetErrorMsg("AlreadyAgent")} falseText={this.languageManager.GetErrorMsg("SetOnlyOnce")} agent={this.state.agent} memberClosed={!this.state.agent} handler={this.agentPrompt} />
+                <InfoItemInput label={this.languageManager.GetErrorMsg("Account")} value={memberNickname} disable={true}></InfoItemInput>
+                <InfoItemInput label={this.languageManager.GetErrorMsg("PassWord")} value={this.state.password} handler={this.SetPassWord}></InfoItemInput>
+                <InfoItemInput label={this.languageManager.GetErrorMsg("PhoneNumber")} value={phoneNumber} disable={true}></InfoItemInput>
 
             </div>
         );

@@ -10,8 +10,9 @@ var GameMain = /** @class */ (function () {
      * GameLoadCtrl界面功能完成回调
      */
     GameMain.prototype.onGameLoadSuccess = function () {
+        // Utils.BackgroundMusic.PlayMusic("sound/bkmusic.wav");
         this.GameCtrl = new GameCtrl(Laya.Handler.create(this, this.onGameLoadSuccess));
     };
     return GameMain;
 }());
-var gameMain = new GameMain();
+new GameMain();

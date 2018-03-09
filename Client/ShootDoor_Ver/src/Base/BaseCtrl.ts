@@ -26,7 +26,7 @@ abstract class BaseCtrl {
      */
     protected parentID: string;
 
-    private socketUrl:string;
+    private socketUrl: string;
     /**
      * 构造函数，传入游戏ID
      * @param gameID 
@@ -41,7 +41,7 @@ abstract class BaseCtrl {
         //获取会员信息
         this.memberInfo = memberServer.GetMemberInfo();
         //获取会员ID
-        let memberId: number = this.memberInfo != null ? this.memberInfo.MemberId : 1;
+        let memberId: number = this.memberInfo != null ? this.memberInfo.MemberId : 0;
         //生成socket 地址
         this.socketUrl = GameConfig.GetSocketUrl(memberId, GameConfig.SocketToken);
 
@@ -67,18 +67,18 @@ abstract class BaseCtrl {
         this.socket.Connect(this.socketUrl);
         console.log("连接：" + this.socketUrl);
         let wechat: Utils.WeChat = new Utils.WeChat();
-        let isWeChat:boolean = Laya.Browser.window.navigator.userAgent.indexOf('MicroMessenger') >= 0 ;  //判断是否微信浏览器
+        let isWeChat: boolean = Laya.Browser.window.navigator.userAgent.indexOf('MicroMessenger') >= 0;  //判断是否微信浏览器
         console.log("是否微信浏览器：" + isWeChat);
         Laya.timer.loop(2000, this, () => {
-            if(isWeChat){
+            if (isWeChat) {
                 wechat.GetNetworkType(Laya.Handler.create(this, this.GetNetworkSuccess, null, false));
-            }else{
+            } else {
                 wechat.GetPcNetworkType(Laya.Handler.create(this, this.GetNetworkSuccess, null, false));
             }
         });
 
         let successHandler: Laya.Handler = Laya.Handler.create(this, this.WeChatShareHandler, null, false);
-        
+
         let authorizeDto: BaseDto.WeChatShareDto = GameConfig.GetWeChatShareDto(memberId.toString(), false);
         //分享微信好友
         wechat.ShareAppMessage(authorizeDto.Title, authorizeDto.Desc, authorizeDto.ImgUrl, authorizeDto.Link, successHandler);
@@ -164,7 +164,8 @@ abstract class BaseCtrl {
     protected Send(data: any, msgID: string = Utils.Guid.Create()): void {
         this.socket.Send(data, msgID);
     }
-
+    private endData: any;
+    private settleCacheData: any;
     /**
      * 侦听游戏命令
      * @param data 
@@ -175,6 +176,14 @@ abstract class BaseCtrl {
                 this.OnGameInit(data.Data);
                 break;
             case BaseEnum.GameCommand.MSG_GAME_START:
+                // if (this.endData) {
+                //     this.OnGameResult(this.endData);
+                //     this.endData = null;
+                // }
+                // if (this.settleCacheData) {
+                //     this.OnSettleResult(this.settleCacheData);
+                //     this.settleCacheData = null;
+                // }
                 this.OnGameStart(data.Data);
                 break;
             case BaseEnum.GameCommand.MSG_GAME_BETRESULT:
@@ -184,9 +193,11 @@ abstract class BaseCtrl {
                 this.OnStopBet();
                 break;
             case BaseEnum.GameCommand.MSG_GAME_GAMERESULT:
+                // this.endData = data.Data;
                 this.OnGameResult(data.Data);
                 break;
             case BaseEnum.GameCommand.MSG_GAME_SETTLERESULT:
+                // this.settleCacheData = data.Data;
                 this.OnSettleResult(data.Data);
                 break;
             case BaseEnum.GameCommand.MSG_GAME_OTHER:

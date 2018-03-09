@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
     Link
 } from 'react-router-dom';
+import LanguageManager from '../../Language/LanguageManager';
 import UserCtrl from "../../Controller/UserCtrl";
 import { ResultEnum, LoginResultDto } from '../../Dto/LoginInfoDto';
 import { MultiAccountDto } from '../../Dto/AuthorizationDto';
@@ -12,6 +13,7 @@ const rightImg = require("../../Image/right.png");
 
 export default class Login extends React.Component<any, any> {
     private userCtrl: UserCtrl = new UserCtrl();
+    private languageManager: LanguageManager=new LanguageManager();
     constructor(props: any) {
         super(props);
         this.state = {
@@ -63,14 +65,14 @@ export default class Login extends React.Component<any, any> {
         return (<div onClick={() => { this.OnSelect(rowItem.MemberId) }} key={index} className={styles.rowItem} >
             <div className={styles.nickName}>
                 <div className={styles.number}>
-                    代理：
+                   {this.languageManager.GetErrorMsg("Agent")}：
                 </div>
                 <div className={styles.name}>
                     {rowItem.ParentNickname}
                 </div></div>
             <div className={styles.score}>
                 <div>
-                    {rowItem.Account ? `账号:${rowItem.Account}` : ""}
+                    {rowItem.Account ? `${this.languageManager.GetErrorMsg("Account")}:${rowItem.Account}` : ""}
                 </div>
                 <div>
                     <img src={rightImg} />
@@ -93,7 +95,7 @@ export default class Login extends React.Component<any, any> {
         } else {
             return (
                 <div className={styles.logining}>
-                    加载中...
+                    {this.languageManager.GetErrorMsg("Loading")}
                 </div>
             )
         }

@@ -1,7 +1,7 @@
 .header {
     composes: flexbox from '../../Style/flex.css';
     height: 44px;
-    border-bottom: 1px solid #eeeeee;
+    border-bottom: 1px solid #dcdcdc;
     background: #fff;
 }
 
@@ -31,7 +31,6 @@
     display: inline-block;
     height: 25px;
     line-height: 25px;
-    width: 55px;
     background: #1aad19;
     color: #ffffff;
     margin-right: 20px;
@@ -39,6 +38,7 @@
     text-align: center;
     font-size: 15px;
     border-radius: 4px;
+    padding: 0 10px;
 }
 
 .logo {
@@ -48,16 +48,18 @@
 }
 .rowItem{
     display: flex;
-    height:100px;
-    border-bottom: 1px solid #ccc;
+    height:50px;
+    border-bottom: 1px solid #dcdcdc;
+    border-top: 1px solid #dcdcdc;
     align-items: center;
     padding-left: 20px;
     background:#fff;
+    margin-top:10px;
 }
 .gameMsg{
     margin-left: 20px;
     font-size: 14px;
-    height:80px;
+    height:40px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -67,4 +69,11 @@
     font-size: 13px;
     position: absolute;
     right: 8px;
+}
+.start{
+    color:#808080
+}
+.imgRight{
+    position: absolute;
+    right: 10px;
 }

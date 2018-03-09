@@ -1,5 +1,6 @@
 
 import BaseCtrl from './BaseCtrl';
+import LanguageManager from '../Language/LanguageManager';
 
 import { UserInfoDto } from '../Dto/UserInfoDto';
 import { ErrorCode } from '../Enum/ErrorCode';
@@ -14,6 +15,7 @@ import { WeChatSignatureDto, WeChatShareDto } from '../Dto/WeChatShareDto';
 import WeChat from '../Utils/WeChat';
 
 export default class UserCtrl extends BaseCtrl {
+    private languageManager: LanguageManager=new LanguageManager();
     /**
      * 登录Dto信息
      */
@@ -126,7 +128,8 @@ export default class UserCtrl extends BaseCtrl {
                 handler(result);
             }
         } catch (error) {
-            alert(JSON.stringify(error));
+            let msg:string = this.languageManager.GetErrorMsg(JSON.stringify(error));
+            alert(msg);
         }
     }
 
@@ -152,7 +155,8 @@ export default class UserCtrl extends BaseCtrl {
                 this.LoginError(error, handler);
             });
         } catch (error) {
-            alert(JSON.stringify(error));
+            let msg:string = this.languageManager.GetErrorMsg(JSON.stringify(error));
+            alert(msg);
         }
     }
 
@@ -182,7 +186,8 @@ export default class UserCtrl extends BaseCtrl {
                 this.LoginError(error, handler);
             });
         } catch (error) {
-            alert(JSON.stringify(error));
+            let msg:string = this.languageManager.GetErrorMsg(JSON.stringify(error));
+            alert(msg);
         }
     }
 
@@ -198,7 +203,7 @@ export default class UserCtrl extends BaseCtrl {
             let dto: AuthorizationDto = new AuthorizationDto();
             dto.Code = code;
             //微信只有一个账号
-            dto.Token = (response as LoginSuccessDto).SessionToken;
+            dto.Token = (response as LoginSuccessDto).Token;
             dto.ParentID = parentId;
             dto.IsMulti = false;
             dto.IsTourists = isTourist;
@@ -215,7 +220,8 @@ export default class UserCtrl extends BaseCtrl {
                 handler(result);
             }
         } catch (error) {
-            alert(JSON.stringify(error));
+            let msg:string = this.languageManager.GetErrorMsg(JSON.stringify(error));
+            alert(msg);
         }
     }
 
@@ -246,7 +252,8 @@ export default class UserCtrl extends BaseCtrl {
                 handler(result);
             }
         } catch (error) {
-            alert(JSON.stringify(error));
+            let msg:string = this.languageManager.GetErrorMsg(JSON.stringify(error));
+            alert(msg);
         }
     }
 
@@ -257,7 +264,6 @@ export default class UserCtrl extends BaseCtrl {
     private LoginError(error: string, handler?: Function) {
         try {
             console.log("LoginError", error);
-            alert(error);
             let result: LoginResultDto = new LoginResultDto();
             result.Result = ResultEnum.ERROR;
             result.Data = error;
@@ -265,7 +271,8 @@ export default class UserCtrl extends BaseCtrl {
                 handler(result);
             }
         } catch (error) {
-            alert(JSON.stringify(error));
+            let msg:string = this.languageManager.GetErrorMsg(JSON.stringify(error));
+            alert(msg);
         }
     }
 
@@ -298,11 +305,13 @@ export default class UserCtrl extends BaseCtrl {
                 wechat.ShareQZone(dto.Title, dto.Desc, dto.ImgUrl, dto.Link, this.WeChatShareHandler);
             }, (error: any) => {
                 // console.log("获取微信配置信息失败", error);
-                alert(JSON.stringify(error));
+                let msg:string = this.languageManager.GetErrorMsg(error);
+                alert(msg);
             });
 
         } catch (error) {
-            alert(JSON.stringify(error));
+            let msg:string = this.languageManager.GetErrorMsg(JSON.stringify(error));
+            alert(msg);
         }
     }
 

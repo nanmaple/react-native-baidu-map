@@ -1,103 +1,217 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var ScenePanel;
 (function (ScenePanel) {
-    var GameScenes = /** @class */ (function (_super) {
-        __extends(GameScenes, _super);
-        function GameScenes() {
-            var _this = _super.call(this) || this;
-            _this.flyPoker = new Array();
-            //添加背景 
-            _this.zOrder = 1;
-            Laya.stage.addChild(_this);
-            //添加游戏局数
-            _this.roundPanel = new ScenePanel.RoundPanel();
-            _this.roundPanel.zOrder = 2;
-            Laya.stage.addChild(_this.roundPanel);
-            //添加牌面
-            _this.cardPanel = new ScenePanel.CardPanel();
-            _this.cardPanel.zOrder = 2;
-            Laya.stage.addChild(_this.cardPanel);
-            //添加足球
-            _this.footballPanel = new ScenePanel.FootBallPanel(_this.cardPanel);
-            _this.footballPanel.zOrder = 3;
-            Laya.stage.addChild(_this.footballPanel);
-            //添加时间面板
-            _this.timePanel = new ScenePanel.TimePanel();
-            _this.timePanel.zOrder = 4;
-            Laya.stage.addChild(_this.timePanel);
-            //添加投注面板
-            _this.betPanel = new ScenePanel.BetPanel();
-            _this.betPanel.zOrder = 5;
-            Laya.stage.addChild(_this.betPanel);
-            //添加历史面板
-            _this.historyPanel = new ScenePanel.HistoryPanel();
-            _this.historyPanel.zOrder = 6;
-            Laya.stage.addChild(_this.historyPanel);
-            //添加头部
-            _this.headPanel = new ScenePanel.HeadPanel();
-            _this.headPanel.zOrder = 7;
-            Laya.stage.addChild(_this.headPanel);
-            //添加提示面板
-            _this.promptPanel = new ScenePanel.PromptPanel();
-            _this.promptPanel.zOrder = 8;
-            Laya.stage.addChild(_this.promptPanel);
-            //添加投注记录面板
-            _this.noteReocrdPanel = new ScenePanel.NoteRecordPanel();
-            _this.noteReocrdPanel.zOrder = 8;
-            Laya.stage.addChild(_this.noteReocrdPanel);
-            //添加游戏规则面板
-            _this.rulePanel = new ScenePanel.RulePanel();
-            _this.rulePanel.zOrder = 8;
-            Laya.stage.addChild(_this.rulePanel);
-            //添加loading面板
-            _this.loadingPanel = new ScenePanel.LoadingPanel();
-            _this.loadingPanel.zOrder = 9;
-            Laya.stage.addChild(_this.loadingPanel);
-            _this.tipsPanel = new ScenePanel.TipsPanel();
-            _this.tipsPanel.zOrder = 10;
-            Laya.stage.addChild(_this.tipsPanel);
-            for (var i = 0; i < 3; i++) {
-                var newflyPoker = Laya.Pool.getItemByClass("flyPoker", Laya.Image);
-                newflyPoker.visible = false;
-                newflyPoker.zOrder = 7;
-                newflyPoker.anchorX = 0.5;
-                newflyPoker.anchorY = 0.5;
-                _this.flyPoker.push(newflyPoker);
-                Laya.stage.addChild(newflyPoker);
-            }
-            return _this;
-        }
-        GameScenes.prototype.FlyPoker = function (dto) {
+    var GameUI = /** @class */ (function () {
+        function GameUI() {
             var _this = this;
-            var flyPoker = this.cardPanel.GetFlyPoker();
-            var endFlyPoker = this.historyPanel.GetEndFlyPoker();
-            var i = 0;
-            for (var key in dto) {
-                if (dto.hasOwnProperty(key)) {
-                    this.flyPoker[i].skin = "ui/poker/" + dto[key] + ".png";
-                    this.flyPoker[i].visible = true;
-                    this.flyPoker[i].x = flyPoker[i].x;
-                    this.flyPoker[i].y = flyPoker[i].y;
-                    this.flyPoker[i].width = flyPoker[i].width;
-                    this.flyPoker[i].height = flyPoker[i].height;
-                    this.flyPoker[i].scale(1, 1);
-                    Laya.Tween.to(this.flyPoker[i], { x: endFlyPoker[i].x, y: endFlyPoker[i].y, width: endFlyPoker[i].width, height: endFlyPoker[i].height }, 2000, Laya.Ease.sineInOut, Laya.Handler.create(this, function (index) {
-                        _this.flyPoker[index].visible = false;
-                    }, [i]));
-                    i++;
-                }
+            this.isChange = false;
+            this.pokerChange = false;
+            this.pokerArr = new Array();
+            document.addEventListener("screenMode", function () {
+                _this.ChangeModeUI();
+            });
+            this.ChangeModeUI();
+        }
+        GameUI.GetInstance = function () {
+            if (!this.instance) {
+                this.instance = new GameUI();
+            }
+            return this.instance;
+        };
+        GameUI.prototype.ChangeModeHanler = function (handler) {
+            this.handler = handler;
+        };
+        GameUI.prototype.ChangeModeUI = function () {
+            if (GameConfig.ScreenMode == 0) {
+                this.VerUI();
+            }
+            else {
+                this.HorUI();
+            }
+            this.isChange = !this.isChange;
+            if (this.handler) {
+                this.handler.run();
             }
         };
-        return GameScenes;
-    }(ui.GameUI));
-    ScenePanel.GameScenes = GameScenes;
+        /**
+         * 切换竖屏
+         */
+        GameUI.prototype.HorUI = function () {
+            //添加背景 
+            this.bgPanel = new ScenePanel.GameBgHor();
+            //添加头部
+            this.headPanel = new ScenePanel.HeadPanelHor();
+            //添加局号
+            this.roundPanel = new ScenePanel.RoundPanelHor();
+            //添加头部
+            this.loadingPanel = new ScenePanel.LoadingPanelHor();
+            //添加扑克牌面板
+            this.cardPanel = new ScenePanel.CardPanelHor();
+            //添加历史记录
+            this.historyPanel = new ScenePanel.HistoryPanelHor();
+            //添加时钟
+            this.timePanel = new ScenePanel.TimePanelHor();
+            //添加投注面板
+            this.betPanel = new ScenePanel.BetPanelHor();
+            // //添加提示面板
+            // this.promptPanel = new PromptPanelHor();
+            // Laya.stage.addChild(this.promptPanel.GetUI());
+            // //添加投注记录面板
+            this.noteReocrdPanel = new ScenePanel.NoteRecordPanelHor();
+            //添加游戏规则面板
+            this.rulePanel = new ScenePanel.RulePanelHor();
+            //添加关注提示面板
+            this.tipsPanel = new ScenePanel.TipsPanelHor();
+            //添加足球面板
+            this.footballPanel = new ScenePanel.FootBallPanelHor(this.cardPanel.GetGoalWidth(), this.cardPanel.GetGoalHeight(), this.cardPanel.GetGoalCenterX(), this.cardPanel.GetGoalBottom());
+            Laya.stage.addChild(this.bgPanel.GetUI());
+            Laya.stage.addChild(this.headPanel.GetUI());
+            Laya.stage.addChild(this.roundPanel.GetUI());
+            Laya.stage.addChild(this.loadingPanel.GetUI());
+            Laya.stage.addChild(this.cardPanel.GetUI());
+            Laya.stage.addChild(this.historyPanel.GetUI());
+            Laya.stage.addChild(this.timePanel.GetUI());
+            Laya.stage.addChild(this.betPanel.GetUI());
+            Laya.stage.addChild(this.noteReocrdPanel.GetUI());
+            Laya.stage.addChild(this.rulePanel.GetUI());
+            Laya.stage.addChild(this.tipsPanel.GetUI());
+            Laya.stage.addChild(this.footballPanel.GetUI());
+            if (this.pokerFlyEffect) {
+                this.pokerFlyEffect.RecoveryPoker();
+            }
+            this.pokerFlyEffect = new PokerFlyEffect();
+        };
+        /**
+         * 切换横屏
+         */
+        GameUI.prototype.VerUI = function () {
+            //添加背景 
+            this.bgPanel = new ScenePanel.GameBgVer();
+            //添加头部
+            this.headPanel = new ScenePanel.HeadPanelVer();
+            //添加局号
+            this.roundPanel = new ScenePanel.RoundPanelVer();
+            //添加头部
+            this.loadingPanel = new ScenePanel.LoadingPanelVer();
+            //添加扑克牌面板
+            this.cardPanel = new ScenePanel.CardPanelVer();
+            //添加历史记录
+            this.historyPanel = new ScenePanel.HistoryPanelVer();
+            //添加时钟
+            this.timePanel = new ScenePanel.TimePanelVer();
+            //添加投注面板
+            this.betPanel = new ScenePanel.BetPanelVer();
+            // //添加提示面板
+            // this.promptPanel = new PromptPanelVer();
+            // Laya.stage.addChild(this.promptPanel.GetUI());
+            // //添加投注记录面板
+            this.noteReocrdPanel = new ScenePanel.NoteRecordPanelVer();
+            //添加游戏规则面板
+            this.rulePanel = new ScenePanel.RulePanelVer();
+            //添加关注提示面板
+            this.tipsPanel = new ScenePanel.TipsPanelVer();
+            //添加足球面板
+            this.footballPanel = new ScenePanel.FootBallPanelVer(this.cardPanel.GetGoalWidth(), this.cardPanel.GetGoalHeight(), this.cardPanel.GetGoalCenterX(), this.cardPanel.GetGoalBottom());
+            Laya.stage.addChild(this.bgPanel.GetUI());
+            Laya.stage.addChild(this.headPanel.GetUI());
+            Laya.stage.addChild(this.roundPanel.GetUI());
+            Laya.stage.addChild(this.loadingPanel.GetUI());
+            Laya.stage.addChild(this.cardPanel.GetUI());
+            Laya.stage.addChild(this.historyPanel.GetUI());
+            Laya.stage.addChild(this.timePanel.GetUI());
+            Laya.stage.addChild(this.betPanel.GetUI());
+            Laya.stage.addChild(this.noteReocrdPanel.GetUI());
+            Laya.stage.addChild(this.rulePanel.GetUI());
+            Laya.stage.addChild(this.tipsPanel.GetUI());
+            Laya.stage.addChild(this.footballPanel.GetUI());
+            if (this.pokerFlyEffect) {
+                this.pokerFlyEffect.RecoveryPoker();
+            }
+            this.pokerFlyEffect = new PokerFlyEffect();
+        };
+        /**
+         * 获取头部面板
+         */
+        GameUI.prototype.GetHeadPanel = function () {
+            return this.headPanel;
+        };
+        /**
+         * 获取加载提示面板
+         */
+        GameUI.prototype.GetLoadingPanel = function () {
+            return this.loadingPanel;
+        };
+        /**
+         * 获取扑克牌面板
+         */
+        GameUI.prototype.GetCardPanel = function () {
+            return this.cardPanel;
+        };
+        /**
+         * 获取局号面板
+         */
+        GameUI.prototype.GetRoundPanel = function () {
+            return this.roundPanel;
+        };
+        /**
+         * 获取历史记录面板
+         */
+        GameUI.prototype.GetHistoryPanel = function () {
+            return this.historyPanel;
+        };
+        /**
+         * 获取时间面板
+         */
+        GameUI.prototype.GetTimePanel = function () {
+            return this.timePanel;
+        };
+        /**
+         * 获取投注面板
+         */
+        GameUI.prototype.GetBetPanel = function () {
+            return this.betPanel;
+        };
+        // /**
+        //  * 获取提示面板
+        //  */
+        // public GetPromptPanel(): PromptPanelHor | PromptPanelVer {
+        //     return this.promptPanel;
+        // }
+        /**
+         * 获取投注记录面板
+         */
+        GameUI.prototype.GetNoteRecordPanel = function () {
+            return this.noteReocrdPanel;
+        };
+        /**
+         * 获取关注提示面板
+         */
+        GameUI.prototype.GetTipsPanel = function () {
+            return this.tipsPanel;
+        };
+        /**
+         * 获取游戏规则面板
+         */
+        GameUI.prototype.GetRulePanel = function () {
+            return this.rulePanel;
+        };
+        /**
+         * 获取足球面板
+         */
+        GameUI.prototype.GetFootBallPanel = function () {
+            return this.footballPanel;
+        };
+        GameUI.prototype.PokerFly = function (dto) {
+            var isChange = false;
+            if (this.pokerChange != this.isChange) {
+                isChange = true;
+            }
+            this.pokerArr = this.cardPanel.GetFlyPoker(isChange);
+            this.pokerFlyEffect.FlyPoker(dto, this.cardPanel.GetFlyPoker(isChange), this.historyPanel.GetEndFlyPoker(isChange));
+        };
+        GameUI.prototype.ClearPokerFly = function () {
+            this.pokerFlyEffect.ClearFlyPoker();
+        };
+        return GameUI;
+    }());
+    ScenePanel.GameUI = GameUI;
 })(ScenePanel || (ScenePanel = {}));

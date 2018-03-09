@@ -37,7 +37,7 @@ namespace GameConfig {
     export const AppId = IsDebug ? "wxbb5416518880be41" : "wxa1db7b9e146cd997";
     export function GetWeChatUrl(parentID: string, isAuthorize: boolean = true) {
         if (isAuthorize) {
-            return `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.AppId}&redirect_uri=http%3A%2F%2F${this.Domain}%3fgameid%3d${this.GameID}%26parentid%3d${parentID}&response_type=code&scope=snsapi_base&state={state}#wechat_redirect`;
+            return `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.AppId}&redirect_uri=http%3A%2F%2F${this.Domain}%3fgameid%3d${this.GameID}%26parentid%3d${parentID}&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`;
         } else {
             return `http://${this.Domain}?gameid=${this.GameID}&parentid=${parentID}`;
         }
@@ -54,7 +54,7 @@ namespace GameConfig {
             Link: ""
         }
         if (isAuthorize) {
-            dto.Link = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.AppId}&redirect_uri=http%3A%2F%2F${this.Domain}%3fgameid%3d${this.GameID}%26parentid%3d${parentID}&response_type=code&scope=snsapi_base&state={state}#wechat_redirect`;
+            dto.Link = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.AppId}&redirect_uri=http%3A%2F%2F${this.Domain}%3fgameid%3d${this.GameID}%26parentid%3d${parentID}&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`;
         } else {
             dto.Link = `http://${this.Domain}?gameid=${this.GameID}&parentid=${parentID}`;
         }

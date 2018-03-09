@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":2,
-    "selecteID":3,
+    "selecteID":5,
     "props":{"y":0,"x":0,"width":1334,"height":750},
     "nodeParent":-1,
     "label":"View",
@@ -27,7 +27,7 @@
                 {
                     "x":30,
                     "type":"Label",
-                    "props":{"y":18,"x":28,"width":103,"var":"roundLabel","text":"期号:","height":43,"fontSize":30,"color":"#000000"},
+                    "props":{"y":16,"x":15,"width":100,"var":"roundLabel","text":"期号:","overflow":"hidden","height":30,"fontSize":30,"color":"#000000","align":"center"},
                     "nodeParent":2,
                     "label":"Label(roundLabel)",
                     "isDirectory":false,
@@ -40,7 +40,7 @@
                 {
                     "x":30,
                     "type":"Label",
-                    "props":{"y":18,"x":544,"width":168,"var":"gameState","text":"等待开始","height":40,"fontSize":30,"color":"#000000","align":"right"},
+                    "props":{"y":16,"x":561,"width":168,"var":"gameState","text":"等待开始","overflow":"hidden","height":30,"fontSize":30,"color":"#000000","align":"center"},
                     "nodeParent":2,
                     "label":"Label(gameState)",
                     "isDirectory":false,
@@ -53,7 +53,7 @@
                 {
                     "x":30,
                     "type":"Label",
-                    "props":{"y":20,"x":106,"width":448,"var":"gameRound","height":26,"fontSize":26,"color":"#010101"},
+                    "props":{"y":18,"x":115,"width":439,"var":"gameRound","valign":"middle","height":25,"fontSize":26,"color":"#010101"},
                     "nodeParent":2,
                     "label":"Label(gameRound)",
                     "isDirectory":false,

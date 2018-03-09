@@ -28,6 +28,7 @@ namespace ScenePanel {
         protected chipsSelectSkin = "ui/chip_s.png";
         protected flyChip: Laya.Button;                              //缓动对象
         protected baseX: number = 18;
+        protected flyChipArray: Array<Laya.Button> = new Array<Laya.Button>();
         /**
          * 构造函数
          * @param isHor 是否横版
@@ -42,8 +43,7 @@ namespace ScenePanel {
             this.uiData = BetPanelUIData.GetInstance();
 
             this.ResetBetBtnLabel();
-            this.ui.ConfirmBetBtn.disabled = true;
-            this.ui.CancleBetBtn.disabled = true;
+            this.DisabledBetBtn(true);
         }
 
         /**
@@ -119,19 +119,40 @@ namespace ScenePanel {
         //还原btn样式,清空label
         public ResetBetBtnLabel(): void {
             //启用投注和撤销按钮
-            this.ui.ConfirmBetBtn.disabled = true;
-            this.ui.CancleBetBtn.disabled = true;
-
+            this.DisabledBetBtn(true);
             //还原数值            
             for (let i = 0, len = this.betBtnArr.length; i < len; i++) {
                 this.betMoneyLabelArr[i].label = "0";
                 this.betMoneyLabelArr[i].visible = false;
-
             }
         }
 
+        public ClearFlyChip(): void {
+            let length: number = this.flyChipArray.length;
+            for (var index = length - 1; index >= 0; index--) {
+                Laya.Tween.clearTween(this.flyChipArray[index]);
+                (<Laya.Button>this.flyChipArray[index]).removeSelf();
+                Laya.Pool.recover("flyChip", this.flyChipArray[index]);
+                this.flyChipArray.splice(index, 1);
+            }
+        }
+
+        /**
+         * 禁用所有按钮
+         */
+        public DisabledAllBtn(): void {
+            this.DisabledBetBtn(true);
+            this.DisabledBetPanel(true);
+        }
+        /**
+         * 禁用投注和取消按钮
+         */
+        public DisabledBetBtn(disabled: boolean = true): void {
+            this.ui.ConfirmBetBtn.disabled = disabled;
+            this.ui.CancleBetBtn.disabled = disabled;
+        }
         //修改全部投注按钮状态（启用禁用）
-        public SetBetBtn(disabled: boolean): void {
+        public DisabledBetPanel(disabled: boolean): void {
             for (let i = 0, len = this.betBtnArr.length; i < len; i++) {
                 this.betBtnArr[i].disabled = disabled;
             }
@@ -162,8 +183,7 @@ namespace ScenePanel {
           */
         private Bet(i: number): void {
             //启用确认投注按钮
-            this.ui.ConfirmBetBtn.disabled = false;
-            this.ui.CancleBetBtn.disabled = false;
+            this.DisabledBetBtn(false);
             let params: ClickResultDto = {
                 Type: ClickType.ODDS,
                 Data: i + 1
@@ -239,27 +259,28 @@ namespace ScenePanel {
         /**
          * 游戏初始化
          */
-        public GameInit(BetResultMsg: any, unSureBetMsg: any, limit: Dto.LimitDto): void {
-            //设置额度
-            this.SetLimit(limit);
-            //设置总投注金额
-            this.SetBetPos(BetResultMsg, unSureBetMsg);
-            //重置按钮皮肤
-            this.RestSkin();
+        public GameInit(BetResultMsg: any, unSureBetMsg: any, canBet: boolean): void {
+            if (canBet) {
+                //禁用按钮
+                this.DisabledBetPanel(false);
+                this.SetBetting(true);
+                //设置总投注金额
+                this.SetBetPos(BetResultMsg, unSureBetMsg);
+            } else {
+                this.SetBetting(false);
+                //设置总投注金额
+                this.SetBetPos(BetResultMsg);
+                //禁用按钮
+                this.DisabledAllBtn();
+            }
         }
 
         /**
          * 游戏结果
          */
-        public GameResult(BetResultMsg: any, unSureBetMsg: any, limit?: Dto.LimitDto): void {
-            //设置最大限额
-            if (limit) {
-                this.SetLimit(limit);
-            }
+        public GameResult(BetResultMsg: any): void {
             //设置总投注金额
             this.SetBetPos(BetResultMsg);
-            //重置按钮皮肤
-            this.RestSkin();
             //禁用按钮
             this.DisabledAllBtn();
         }
@@ -269,27 +290,21 @@ namespace ScenePanel {
          * @param maxBet 
          * @param minBet 
          */
-        private SetLimit(limit: Dto.LimitDto): void {
+        public SetLimit(limit: Dto.LimitDto): void {
+            let language: LanguageUtils.Language = new LanguageUtils.Language();
             //设置最大限额
             this.maxBet = limit.MaxBet;
             //设置最小限额
             this.minBet = limit.MinBet;
-            this.ui.maxBetLabel.text = `最大:${limit.MaxBet}`;
-            this.ui.minBetLabel.text = `最小:${limit.MinBet}`;
-        }
-
-        /**
-         * 重置按钮皮肤
-         */
-        private RestSkin(): void {
-            for (var index = 0; index < 12; index++) {
-            }
+            this.ui.maxBetLabel.text = language.GetLanguage("Maximum")+`:${limit.MaxBet}`;
+            this.ui.minBetLabel.text = language.GetLanguage("Minimum")+`:${limit.MinBet}`;
         }
 
         /**
          * 结算结果
          */
         public SettleResult(data: Dto.GameResultDto, betData: any): void {
+            let language: LanguageUtils.Language = new LanguageUtils.Language();
             this.uiData.guessSuccess = false;
             //总赢数目
             let win: number = 0;
@@ -324,7 +339,7 @@ namespace ScenePanel {
                 }
             }
             if (!this.uiData.guessSuccess) {
-                this.ShowMsg("很遗憾，再接再厉");
+                this.ShowMsg(language.GetLanguage("gameFail"));
             }
 
         }
@@ -342,6 +357,7 @@ namespace ScenePanel {
                 Type: ClickType.BET
             }
             this.uiData.handler.runWith(params);
+            this.ClearFlyChip();
         }
 
         /**
@@ -353,6 +369,7 @@ namespace ScenePanel {
                 Type: ClickType.CANCEL
             }
             this.uiData.handler.runWith(params);
+            this.ClearFlyChip();
         }
 
         /**
@@ -380,23 +397,6 @@ namespace ScenePanel {
                 this.uiData.handler.runWith(params);
             }
         }
-        /**
-         * 禁用所有按钮
-         */
-        public DisabledAllBtn(): void {
-            this.ui.ConfirmBetBtn.disabled = true;
-            this.ui.CancleBetBtn.disabled = true;
-            this.SetBetBtn(true);
-        }
-
-
-        /**
-         * 禁用投注和取消按钮
-         */
-        public DisabledBetBtn(): void {
-            this.ui.ConfirmBetBtn.disabled = true;
-            this.ui.CancleBetBtn.disabled = true;
-        }
 
         /**
          * 提示消息
@@ -408,7 +408,7 @@ namespace ScenePanel {
             Laya.timer.once(1500, this, () => { this.ui.MsgPanel.visible = false; });
         }
 
-        
+
 
         /**
          * 筹码动画回调
@@ -425,9 +425,6 @@ namespace ScenePanel {
                 //显示当前筹码
                 curBetPosChip.visible = true;
             }
-
         }
-
-
     }
 }

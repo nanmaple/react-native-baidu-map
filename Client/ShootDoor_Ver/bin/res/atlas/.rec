@@ -7,9 +7,11 @@ R F57C2ED7 kickball.mp3
 R 408861D9 shootfail.wav
 R 9FED3CE6 shootsuccess.mp3
 D ui
-P 4952F22F attention.png
+P 33339F7E attention.png
+P 3A418CAB attention_EN.png
 P 77B3A78D back.png
 P 021FD09C betrecord.png
+P 7BCA921A betrecord_EN.png
 R 79D320FE bg.png
 R 577CD16E bg_alert.png
 R 5F047BC3 bg_bet.png
@@ -36,12 +38,15 @@ P EB631500 gr.png
 P 4E35846D loading.png
 R 3947C27C mask.png
 P C55710AE ok.png
+P 6151CF6C ok_EN.png
 R 8167FC33 recordLine.png
 P ACAACF72 rule.png
 P 6A6F42C3 ruleTitle.png
+P D2D709FC ruleTitle_EN.png
 R EC3ADF62 tip.png
 P DF53CC40 tipclose.png
 P 194513E0 title.png
+P 763C1733 title_EN.png
 P 6E701098 userImg.png
 D ui/poker
 P 314E6F59 1.png

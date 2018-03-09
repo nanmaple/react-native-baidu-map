@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":2,
-    "selecteID":3,
+    "selectedBox":3,
+    "selecteID":6,
     "props":{"width":750,"sceneColor":"#ffffff","height":1334},
     "nodeParent":-1,
     "label":"View",
@@ -39,7 +39,7 @@
                         {
                             "x":45,
                             "type":"Label",
-                            "props":{"y":106,"x":50,"wordWrap":true,"width":484,"var":"promptTxt","valign":"top","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":120,"fontSize":32,"font":"Arial","color":"#000000","align":"left"},
+                            "props":{"y":101,"x":50,"wordWrap":true,"width":484,"var":"promptTxt","valign":"top","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":130,"fontSize":32,"font":"Arial","color":"#000000","align":"left"},
                             "nodeParent":3,
                             "label":"Label(promptTxt)",
                             "isDirectory":false,
@@ -51,37 +51,23 @@
                         },
                         {
                             "x":45,
-                            "type":"Box",
-                            "props":{"y":240,"x":244,"var":"sureBox"},
+                            "type":"Image",
+                            "props":{"y":240,"x":244,"width":94,"var":"sureBtn","skin":"ui/ok.png","height":54},
                             "nodeParent":3,
-                            "label":"Box(sureBox)",
-                            "isOpen":true,
-                            "isDirectory":true,
+                            "label":"Image(sureBtn)",
+                            "isDirectory":false,
                             "isAniNode":true,
-                            "hasChild":true,
-                            "compId":5,
+                            "hasChild":false,
+                            "compId":6,
                             "child":[
-                                {
-                                    "x":60,
-                                    "type":"Image",
-                                    "props":{"y":0,"x":0,"width":94,"skin":"ui/ok.png","name":"sureBtn","height":54},
-                                    "nodeParent":5,
-                                    "label":"Image(sureBtn)",
-                                    "isDirectory":false,
-                                    "isAniNode":true,
-                                    "hasChild":false,
-                                    "compId":6,
-                                    "child":[
-                                        ]
-                                }],
-                            "$LOCKED":true
+                                ]
                         },
                         {
                             "x":45,
                             "type":"Image",
-                            "props":{"y":27,"x":232,"width":120,"skin":"ui/title.png","height":36},
+                            "props":{"y":20,"x":214,"var":"title","skin":"ui/title.png"},
                             "nodeParent":3,
-                            "label":"Image",
+                            "label":"Image(title)",
                             "isDirectory":false,
                             "isAniNode":true,
                             "hasChild":false,

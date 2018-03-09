@@ -21,3 +21,12 @@ body {
     font-size: 15px;
     border-radius: 4px;
 }
+:global(.fu){
+    color:#fd4d4d;
+}
+:global(.zheng){
+    color:#338ffe;
+}
+:global(.ling){
+    color:#333
+}

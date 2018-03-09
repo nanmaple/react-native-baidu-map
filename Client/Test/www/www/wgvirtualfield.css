@@ -1,0 +1,1161 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.vliveins div {
+    box-sizing: border-box;
+}
+
+.statpanel>.header {
+    height: 30px;
+    border-bottom: 1px solid #848484;
+    box-sizing: border-box;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.vliveins .homebgcolor {
+    background-color: #fd3030;
+}
+
+.vliveins .awaybgcolor {
+    background-color: blue;
+}
+
+.vliveins .homecolor {}
+
+.vliveins .awaycolor {}
+
+.vliveins {
+    background-image: url(./image/bg.png);
+    display: block;
+    box-sizing: border-box;
+    width: 745px;
+    height: 350px;
+    margin: auto;
+    text-align: center;
+    z-index: 10;
+    background-size: 100% 100%;
+}
+
+.vliveins .meters {
+    display: block;
+    margin: auto;
+    width: 450px;
+    height: 50px;
+    position: relative;
+    margin-bottom: -30px;
+    top: 10px;
+}
+
+.vliveins .meters div i {
+    width: 14px;
+    height: 15px;
+    display: inline-block;
+    position: absolute;
+    vertical-align: top;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.vliveins .meters div i.redcard {
+    background-image: url(./image/rcard.png);
+    background-size: 11px 15px;
+}
+
+.vliveins .meters div i.yellowcard {
+    background-image: url(./image/ycard.png);
+    background-size: 11px 15px;
+}
+
+.vliveins .meters div i.goal {
+    background-image: url(./image/goalcard.png);
+    background-size: 14px 14px;
+    margin-left: -2px;
+}
+
+.vliveins .meters div i.exchange {
+    background-image: url(./image/excard.png);
+    background-size: 12px 16px;
+}
+
+.vliveins .meters .meter {
+    background-image: url(./image/timebar.png);
+    width: 450px;
+    height: 20px;
+    margin-top: -3px;
+}
+
+.vliveins .meters .homemeter {
+    width: 450px;
+    height: 15px;
+}
+
+.vliveins .meters .awaymeter {
+    width: 450px;
+    height: 15px;
+    margin-top: -3px;
+}
+
+.vliveins>.field {
+    display: block;
+    width: 745px;
+    height: 177px;
+    position: relative;
+    background-repeat: no-repeat;
+    margin: auto;
+    top: 50px;
+    background-position: 1px 0;
+    z-index: 11;
+}
+
+.vliveins>.field>.fieldmark {
+    display: none;
+}
+
+.vliveins>.field.gateview {}
+
+.vliveins>.attackfield {
+    display: block;
+    width: 745px;
+    height: 177px;
+    position: relative;
+    margin: auto;
+    top: -127px;
+    background-repeat: no-repeat;
+    background-position: 80px 8px;
+    z-index: 12;
+}
+
+.vliveins>.attackfield>.attackshadow,
+.vliveins>.attackfield>.attackmsg,
+.vliveins>.attackfield>.attackmsgtxt {
+    display: none;
+}
+
+.vliveins>.attackfield.showattack>.attackshadow,
+.vliveins>.attackfield.showattack>.attackmsg,
+.vliveins>.attackfield.showattack>.attackmsgtxt {
+    display: block;
+}
+
+.vliveins>.attackfield>.attackmsg {
+    width: 200px;
+    height: 30px;
+    background-color: rgba(255, 165, 0, 0.8);
+}
+
+.vliveins>.attackfield.home>.attackmsg {
+    left: 55px;
+    position: relative;
+    transform-origin: left bottom;
+    top: -15px;
+    transform: skewX(-37deg);
+}
+
+.vliveins>.attackfield.away>.attackmsg {
+    left: 490px;
+    position: absolute;
+    transform-origin: right bottom;
+    top: 112px;
+    transform: skewX(37deg);
+}
+
+.vliveins>.attackfield.showattack>.attackmsgtxt {
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 20px;
+    line-height: 30px;
+    color: white;
+    height: 30px;
+}
+
+.vliveins>.attackfield.showattack.home>.attackmsgtxt {
+    left: 75px;
+    width: 180px;
+    top: -45px;
+}
+
+.vliveins>.attackfield.showattack.away>.attackmsgtxt {
+    top: 112px;
+    width: 185px;
+    left: 485px;
+}
+
+.vliveins>.attackfield.home>.attackshadow {
+    height: 127px;
+    top: 15px;
+    position: relative;
+    left: 55px;
+    transform: skewX(-36deg);
+    transform-origin: left bottom;
+    background: linear-gradient(220deg, transparent 40px, #0000004d 20px);
+    transition: width 0.3s;
+    max-width: 520px;
+}
+
+.vliveins>.attackfield.away>.attackshadow {
+    height: 127px;
+    top: 15px;
+    position: absolute;
+    right: 55px;
+    transform: skewX(36deg);
+    transform-origin: left bottom;
+    background: linear-gradient(-210deg, #0000 40px, #0000004d 20px);
+    transition: width 0.3s;
+    max-width: 520px;
+}
+
+.vliveins>.ballpos {
+    display: block;
+    width: 745px;
+    height: 177px;
+    position: relative;
+    top: -304px;
+    margin: auto;
+    z-index: 13;
+}
+
+.vliveins>.ballpos.showsoccer>.soccer {
+    display: block;
+}
+
+.vliveins>.ballpos>.soccer {
+    width: 18px;
+    height: 11px;
+    position: absolute;
+    transition: all 0.5s linear 0s;
+    z-index: 13;
+    box-sizing: border-box;
+    display: none;
+}
+
+.vliveins>.ballpos>.soccer.noanima {
+    transition: none;
+}
+
+.vliveins>.ballpos>.soccer>.soccershadow {
+    background-image: url(./image/shadow.png);
+    background-repeat: no-repeat;
+    margin-left: -7.5px;
+    width: 18px;
+    height: 11px;
+    -webkit-animation: scaling 1s ease-in-out infinite;
+    margin-top: -5px;
+}
+
+.vliveins>.ballpos>.soccer>.soccerimg {
+    display: block;
+    width: 36px;
+    height: 55px;
+    position: absolute;
+    margin: auto;
+    background-repeat: no-repeat;
+    z-index: 13;
+    top: -56px;
+    left: -17px;
+    -webkit-animation: jumping 1s ease-in-out infinite;
+    background-image: url(./image/soccer.png);
+}
+
+.vliveins>.ballpos.homegoal>.outball,
+.vliveins>.ballpos.awaygoal>.outball {
+    display: block;
+    background-image: url(./image/goals.png);
+    width: 51px;
+    height: 51px;
+    position: relative;
+    left: 347px;
+    top: 52px;
+}
+
+.vliveins>.ballpos.homegoal>.outball {
+    display: block;
+    animation: homegoal 1s linear infinite;
+}
+
+.vliveins>.ballpos.awaygoal>.outball {
+    display: block;
+    animation: awaygoal 1s linear infinite;
+}
+
+.vliveins>.ballpos>.leftgate,
+.vliveins>.ballpos>.rightgate {
+    background-image: url(./image/sgate.png);
+    width: 38px;
+    height: 45px;
+}
+
+.vliveins>.ballpos>.leftgate {
+    position: absolute;
+    left: 70px;
+    top: 45px;
+}
+
+.vliveins>.ballpos>.rightgate {
+    left: 636px;
+    position: absolute;
+    top: 45px;
+    transform: scale(-1, 1);
+}
+
+.vliveins>.ballpos.awaygoal>.leftgate,
+.vliveins>.ballpos.homegoal>.rightgate {
+    background-image: url(./image/bgate.png);
+    width: 166px;
+    height: 233px;
+}
+
+.vliveins>.ballpos.awaygoal>.leftgate {
+    top: -100px;
+    left: 56px;
+}
+
+.vliveins>.ballpos.homegoal>.rightgate {
+    top: -99px;
+    left: 524px;
+}
+
+.vliveins>.info {
+    display: block;
+    width: 745px;
+    height: 177px;
+    position: relative;
+    margin: auto;
+    top: -481px;
+    z-index: 15;
+}
+
+.vliveins>.info.showinfo>.infopanel {
+    display: block;
+    width: 200px;
+    height: 127px;
+    visibility: visible;
+}
+
+.vliveins>.info>.infopanel {
+    position: relative;
+    margin: auto;
+    /* border: 1px solid .565656; */
+    top: 15px;
+    border-radius: 10px;
+    /* overflow: hidden; */
+    /* transition: height 0.3s linear; */
+    height: 0;
+    box-sizing: border-box;
+    text-align: left;
+    width: 200px;
+    visibility: hidden;
+}
+
+.vliveins>.info>.infopanel>.icon {
+    display: block;
+    margin: auto;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    position: relative;
+    height: 70px;
+    width: 70px;
+}
+
+.vliveins>.info>.infopanel>.botpanel {
+    display: block;
+    margin: auto;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    position: relative;
+    background-image: url(./image/info.png);
+    width: 200px;
+    height: 50px;
+    margin-top: 8px;
+}
+
+.vliveins>.info>.infopanel>.icon .extminute,
+.vliveins>.info>.infopanel>.icon .injredcross {
+    display: none;
+}
+
+.vliveins>.info>.infopanel>.icon.exten .extminute {
+    display: inline-block;
+    width: 81px;
+    height: 70px;
+    line-height: 75px;
+    font-size: 50px;
+    text-align: center;
+    color: #f5637d;
+    letter-spacing: 7px;
+    text-indent: 8px;
+}
+
+.vliveins>.info>.infopanel>.icon.injury .injredcross {
+    background-image: url(./image/redcross.png);
+    display: block;
+    width: 31px;
+    height: 32px;
+    top: 25px;
+    position: relative;
+    left: 20px;
+    animation: fadein 1.5s linear infinite;
+    background-repeat: no-repeat;
+}
+
+/*info box icon*/
+
+.vliveins>.info>.infopanel>.icon.redcard {
+    background-image: url(./image/redcard.png);
+    background-position: 19px 0px;
+    transform-origin: bottom;
+    animation: showout 0.5s linear 1;
+}
+
+.vliveins>.info>.infopanel>.icon.yellowcard {
+    background-image: url(./image/yellowcard.png);
+    background-position: 19px 0px;
+    animation: showout 0.5s linear 1;
+}
+
+.vliveins>.info>.infopanel>.icon.yellowcard2 {
+    /*background-image: url(/content/virtualfield/image/yellowcard2_hand.png);*/
+}
+
+.vliveins>.info>.infopanel>.icon.safe {}
+
+.vliveins>.info>.infopanel>.icon.danger {}
+
+.vliveins>.info>.infopanel>.icon.kickoff {}
+
+.vliveins>.info>.infopanel>.icon.offtgt {
+    /*background-image: url(/content/virtualfield/image/redsoccer.png);*/
+    background-size: 35px 35px;
+}
+
+.vliveins>.info>.infopanel>.icon.ontgt {
+    /*background-image: url(/content/virtualfield/image/ontarget.png);*/
+    background-size: 32.5px 39.5px;
+    background-position: 2px 0;
+}
+
+.vliveins>.info>.infopanel>.icon.goal {
+    background-image: url(./image/goal.png);
+    background-size: 126px 41px;
+    background-position: 0 28px;
+    width: 126px;
+    animation: drop 1s linear 1;
+}
+
+.vliveins>.info>.infopanel>.icon.hurt {}
+
+.vliveins>.info>.infopanel>.icon.exchange {
+    background-image: url(./image/exchange.png);
+    background-size: 62px 70px;
+    background-position: 0px 0px;
+    animation: rotating 0.5s linear 1;
+    width: 62px;
+}
+
+.vliveins>.info>.infopanel>.icon.injury {
+    background-image: url(./image/box.png);
+    background-size: 73px 68px;
+    background-position: 0px 0px;
+}
+
+.vliveins>.info>.infopanel>.icon.exten {
+    background-image: url(./image/linedark.png);
+    background-size: 81px 61px;
+    background-position: 0 9px;
+    width: 81px;
+    animation: drop linear 0.5s;
+}
+
+.vliveins>.info>.infopanel>.icon.offside {
+    background-image: url(./image/offside.png);
+    background-size: 51px 70px;
+    background-position: 14px 0px;
+    width: 81px;
+    animation: showout linear 0.5s;
+    transform-origin: bottom;
+}
+
+.vliveins>.info>.infopanel>.icon.noicon {
+    background-image: none;
+    width: 0;
+    /* height: 0; */
+}
+
+.vliveins>.info>.infopanel .text {
+    display: inline-block;
+    height: 50px;
+    width: 150px;
+    vertical-align: top;
+    position: relative;
+    margin: auto;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.vliveins>.info>.infopanel .time {
+    display: inline-block;
+    height: 50px;
+    width: 45px;
+    vertical-align: bottom;
+    position: relative;
+    margin: auto;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 22px;
+    line-height: 48px;
+    text-align: center;
+    color: white;
+}
+
+.vliveins>.info>.infopanel.noicon .text {
+    width: 175px;
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.vliveins>.info>.infopanel .title {
+    text-align: left;
+    padding-left: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    min-height: 15px;
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.vliveins>.info>.infopanel .content {
+    text-align: left;
+    padding-left: 10px;
+    font-size: 16px;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgb(129, 129, 129);
+}
+
+.vliveins>.info>.infopanel.noicon .title {
+    text-align: center;
+    padding-left: 0;
+    text-indent: 0;
+    padding-top: 10px;
+}
+
+.vliveins>.info>.infopanel.noicon .content {}
+
+.vliveins>.freekick {
+    display: block;
+    width: 745px;
+    height: 177px;
+    position: relative;
+    margin: auto;
+    top: -658px;
+    z-index: 14;
+}
+
+.vliveins>.freekick.showfreekick>.freekickline {
+    display: block;
+}
+
+.vliveins>.freekick>.freekickline {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: none;
+}
+
+.vliveins>.stat {
+    display: block;
+    width: 745px;
+    height: 177px;
+    position: relative;
+    margin: auto;
+    top: -846px;
+    z-index: 15;
+    padding-top: 12px;
+}
+
+.vliveins>.stat.showstat>.statpanel {
+    display: block;
+    height: 175px;
+}
+
+.vliveins>.stat>.statpanel {
+    height: 0;
+    width: 387px;
+    display: block;
+    margin: auto;
+    background-color: white;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px black;
+    overflow: hidden;
+    transition: height 0.5s linear;
+    position: relative;
+}
+
+.vliveins>.stat>.statpanel>.header {}
+
+.vliveins>.stat>.statpanel>.header .league,
+.vliveins>.stat>.statpanel>.header .time {
+    line-height: 30px;
+}
+
+.vliveins>.stat>.statpanel>.header .league {
+    display: inline-block;
+    width: 195px;
+    text-align: left;
+    text-indent: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: top;
+}
+
+.vliveins>.stat>.statpanel>.header .time {
+    display: inline-block;
+    width: 175px;
+    text-align: right;
+    padding-right: 10px;
+    vertical-align: top;
+}
+
+.vliveins>.stat>.statpanel>.teams {
+    display: block;
+    height: 70px;
+    text-align: left;
+    width: 100%;
+}
+
+.vliveins>.stat>.statpanel>.teams .homearea,
+.vliveins>.stat>.statpanel>.teams .vsarea,
+.vliveins>.stat>.statpanel>.teams .awayarea {
+    display: inline-block;
+    height: 100%;
+    vertical-align: top;
+    text-align: center;
+    margin: auto;
+    overflow: hidden;
+}
+
+.vliveins>.stat>.statpanel>.teams .homearea,
+.vliveins>.stat>.statpanel>.teams .awayarea {
+    width: 143px;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.vliveins>.stat>.statpanel>.teams .homearea {}
+
+.vliveins>.stat>.statpanel>.teams .vsarea {
+    width: 80px;
+}
+
+.vliveins>.stat>.statpanel>.teams .vsarea .vs {
+    font-size: 24px;
+    padding-top: 2px;
+    font-weight: 800;
+}
+
+.vliveins>.stat>.statpanel>.teams .vsarea .livetime {
+    padding-top: 5px;
+}
+
+.vliveins>.stat>.statpanel>.teams .awayarea {}
+
+.vliveins>.stat>.statpanel>.teams .teamicon {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #eee;
+    margin: 4px auto 0 auto;
+    /* background-color: #ccc; */
+    background-repeat: no-repeat;
+    background-position: 5px 8px;
+    border-radius: 20px;
+}
+
+.vliveins>.stat>.statpanel>.teams .homearea .teamicon {}
+
+.vliveins>.stat>.statpanel>.teams .awayarea .teamicon {}
+
+.vliveins>.stat>.statpanel>.teams .teamname {
+    font-size: 18px;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.vliveins>.stat>.statpanel>.techstat {
+    display: block;
+    height: 60px;
+    text-align: left;
+    width: 100%;
+}
+
+.vliveins>.stat>.statpanel>.techstat>.techstat_table {
+    display: block;
+    width: 100%;
+}
+
+.vliveins>.stat>.statpanel>.techstat>.techstat_table thead {
+    background-color: #bebebe;
+    background-color: rgba(190, 190, 190, 0.6);
+}
+
+.vliveins>.stat>.statpanel>.techstat>.techstat_table td,
+.vliveins>.stat>.statpanel>.techstat>.techstat_table th,
+.vliveins>.stat>.statpanel>.techstat>.techstat_table tr,
+.vliveins>.stat>.statpanel>.techstat>.techstat_table {
+    border: none;
+    border-collapse: collapse;
+}
+
+.vliveins>.stat>.statpanel>.techstat>.techstat_table .name {
+    width: 170px;
+    text-indent: 5px;
+}
+
+.vliveins>.stat>.statpanel>.techstat>.techstat_table .name i {
+    display: inline-block;
+    width: 24px;
+    height: 16px;
+    vertical-align: middle;
+    background-size: 20px 16px;
+    background-repeat: no-repeat;
+    margin-right: 5px;
+    /* background-color: #ccc; */
+    background-position: 2px 0px;
+}
+
+.vliveins>.stat>.statpanel>.techstat>.techstat_table .homerow .name i {}
+
+.vliveins>.stat>.statpanel>.techstat>.techstat_table .awayrow .name i {}
+
+.vliveins>.stat>.statpanel>.techstat>.techstat_table .techdata {
+    text-align: center;
+}
+
+.vliveins>.stat>.statpanel>.techstat>.techstat_table .techdatatitle {
+    width: 41px;
+    text-align: center;
+    height: 20px;
+}
+
+/*techstat icon*/
+
+.techdatatitle i {
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-position: 6px 4px;
+}
+
+.techdatatitle.pent i {
+    background-position-y: 3px;
+}
+
+.vliveins .kickoff {
+    display: none;
+    position: relative;
+    top: -1076px;
+    margin: auto;
+    width: 450px;
+    height: 150px;
+    z-index: 20;
+}
+
+.vliveins .kickoff .icon {
+    background-image: url(./image/ring.png);
+    background-size: 91px 55px;
+    width: 110px;
+    height: 60px;
+    margin: auto;
+    background-position: 15px 5px;
+    background-repeat: no-repeat;
+    animation: drop 0.5s linear 1;
+}
+
+.vliveins .kickoff .banner {
+    background-image: url(./image/kickoff.png);
+    background-size: 394px 121px;
+    width: 450px;
+    height: 112px;
+    background-position: 32px -14px;
+    background-repeat: no-repeat;
+    margin-top: -17px;
+    font-size: 24px;
+    color: white;
+    line-height: 90px;
+    text-shadow: 1px 1px 0px black;
+    animation: spread 0.7s linear 1;
+    overflow: hidden;
+    background-origin: content-box;
+}
+
+.vliveins>.scoreboard {
+    display: block;
+    width: 745px;
+    height: 79px;
+    position: relative;
+    margin: auto;
+    z-index: 11;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    top: -854px;
+    background-position: -2px 0px;
+}
+
+.vliveins>.scoreboard>.teamnames {
+    height: 30px;
+    position: relative;
+    top: 33px;
+    width: 455px;
+    margin: auto;
+}
+
+.vliveins>.scoreboard>.teamnames>.homename,
+.vliveins>.scoreboard>.teamnames>.awayname {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: white;
+    font-size: 24px;
+    line-height: 22px;
+    height: 30px;
+}
+
+.vliveins>.scoreboard>.teamnames>.homename {
+    display: inline-block;
+    width: 160px;
+    position: absolute;
+    left: 2px;
+    /* text-indent: 10px; */
+}
+
+.vliveins>.scoreboard>.teamnames>.awayname {
+    display: inline-block;
+    width: 160px;
+    position: absolute;
+    right: 2px;
+    /* padding-right: 10px; */
+}
+
+.vliveins>.scoreboard>.teamnames i {
+    /*background-image: url(/content/virtualfield/image/stredcard.png);*/
+    display: inline-block;
+    width: 10px;
+    height: 12px;
+    background-size: 8px 12px;
+    background-repeat: no-repeat;
+}
+
+.vliveins>.scoreboard>.teamnames>.homecard,
+.vliveins>.scoreboard>.teamnames>.awaycard {
+    display: inline-block;
+    height: 20px;
+    min-width: 60px;
+    position: relative;
+}
+
+.vliveins>.scoreboard>.teamnames>.homecard {
+    left: -65px;
+    text-align: right;
+}
+
+.vliveins>.scoreboard>.teamnames>.awaycard {
+    left: 69px;
+    text-align: left;
+}
+
+.vliveins>.scoreboard>.livetime {
+    display: block;
+    width: 50px;
+    position: relative;
+    margin: auto;
+    margin-top: -30px;
+    color: black;
+    font-size: 14px;
+    /* padding-left: 2px; */
+    font-weight: bold;
+}
+
+.vliveins>.scoreboard>.livetime>.minutes,
+.vliveins>.scoreboard>.livetime>.semo,
+.vliveins>.scoreboard>.livetime>.seconds {
+    display: inline-block;
+}
+
+.vliveins>.scoreboard>.livetime>.minutes {
+    width: 15px;
+}
+
+.vliveins>.scoreboard>.livetime>.semo {
+    text-align: center;
+}
+
+.vliveins>.scoreboard>.livetime>.seconds {
+    width: 15px;
+}
+
+.vliveins>.scoreboard>.teamscore {
+    display: block;
+    width: 100px;
+    position: relative;
+    margin: auto;
+    margin-top: 8px;
+    color: white;
+    font-size: 14px;
+    overflow: hidden;
+    height: 40px;
+}
+
+.vliveins>.scoreboard>.teamscore>.homescore,
+.vliveins>.scoreboard>.teamscore>.awayscore {
+    width: 47px;
+    display: inline-block;
+    font-size: 30px;
+    color: white;
+    height: 40px;
+    margin-top: 1px;
+    margin-left: 0px;
+    vertical-align: top;
+    line-height: 36px;
+}
+
+.vliveins>.scoreboard>.teamscore>.homescore {
+    padding-right: 4px;
+}
+
+.vliveins>.scoreboard>.teamscore>.vsscore {
+    display: inline-block;
+    width: 20px;
+    height: 29px;
+    vertical-align: top;
+    line-height: 30px;
+    font-weight: bold;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+.vliveins>.scoreboard>.teamscore>.awayscore {
+    padding-left: 5px;
+}
+
+.vliveins .flipover {
+    transform-origin: top center;
+    transform: rotateX(360deg);
+    animation: flipover 0.7s ease-in-out 1;
+}
+
+.vliveins .moving {
+    -webkit-animation: moving 0.5s 1;
+}
+
+/*animation*/
+
+@keyframes left2right {
+    0% {
+        background-position-x: 80px;
+    }
+    100% {
+        background-position-x: 100px;
+    }
+}
+
+@keyframes homegoal {
+    0% {
+        transform: translateX(0) translateY(0) scale(1);
+    }
+    40% {
+        transform: translateX(112px) translateY(-50px) scale(0.75);
+    }
+    50% {
+        transform: translateX(124.5px) translateY(-50px) scale(0.75);
+    }
+    60% {
+        transform: translateX(145px) translateY(-50px) scale(0.75);
+    }
+    100% {
+        transform: translateX(249px) translateY(-30px) scale(0.5);
+    }
+}
+
+@keyframes awaygoal {
+    0% {
+        transform: translateX(0) translateY(0) scale(1);
+    }
+    20% {
+        transform: translateX(-56px) translateY(-30px) scale(1);
+    }
+    40% {
+        transform: translateX(-112px) translateY(-50px) scale(0.8);
+    }
+    50% {
+        transform: translateX(-124.5px) translateY(-50px) scale(0.75);
+    }
+    60% {
+        transform: translateX(-145px) translateY(-50px) scale(0.7);
+    }
+    100% {
+        transform: translateX(-249px) translateY(-30px) scale(0.5);
+    }
+}
+
+@keyframes drop {
+    0% {
+        transform: translateY(-130px);
+    }
+    50% {
+        transform: translateY(0px);
+    }
+    75% {
+        transform: translateY(-40px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes spread {
+    0% {
+        transform: rotateY(90deg);
+    }
+    100% {
+        transform: rotateY(0);
+    }
+}
+
+@keyframes right2left {
+    0% {
+        background-position-x: 80px;
+    }
+    100% {
+        background-position-x: 100px;
+    }
+}
+
+@keyframes jumping {
+    0% {
+        transform: translateX(0) translateY(0);
+    }
+    50% {
+        transform: translateX(0) translateY(-10px);
+    }
+    100% {
+        transform: translateX(0) translateY(0);
+    }
+}
+
+@keyframes scaling {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes moving {
+    0% {
+        transform: scale(1);
+    }
+    20% {
+        transform: scale(0.6);
+    }
+    95% {
+        transform: scale(0.6);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes breath {
+    0% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.3;
+    }
+}
+
+@keyframes showout {
+    0% {
+        transform: rotateX(-80deg);
+    }
+    30% {
+        transform: rotateX(-80deg);
+    }
+    100% {
+        transform: rotateX(0);
+    }
+}
+
+@keyframes fadein {
+    0% {
+        background-position-y: 35px;
+    }
+    50% {
+        background-position-y: 0px;
+    }
+    100% {
+        background-position-y: 0px;
+    }
+}
+
+@keyframes rotating {
+    0% {
+        transform: rotate(0deg);
+    }
+    20% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes zoom {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0.5);
+    }
+}
+
+@keyframes flipover {
+    0% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/*DATAURI */
+
+/*soccer png*/
+
+.scoreboardimg,
+.vliveins>.scoreboard {
+    background-image: url(./image/score.png);
+}
+
+.fieldimg,
+.vliveins>.field {
+    background-image: url(./image/field.png);
+}

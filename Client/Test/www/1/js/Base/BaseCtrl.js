@@ -10,7 +10,7 @@ var BaseCtrl = /** @class */ (function () {
     function BaseCtrl(gameID) {
         var _this = this;
         this.gameID = gameID;
-        this.parentID = Utils.Url.GetQuery("parentID");
+        this.parentID = Utils.Url.GetQuery("parentid");
         //从会员服务中获取用户信息
         var memberServer = new ServiceManager.MemberManager(this.gameID);
         //获取Socket Token
@@ -20,7 +20,7 @@ var BaseCtrl = /** @class */ (function () {
         //获取会员ID
         var memberId = this.memberInfo != null ? this.memberInfo.MemberId : 0;
         //生成socket 地址
-        var socketUrl = GameConfig.GetSocketUrl(memberId, this.authorizationInfo.SocketToken);
+        this.socketUrl = GameConfig.GetSocketUrl(memberId, GameConfig.SocketToken);
         //创建socket
         this.socket = new ServiceManager.SocketManager();
         //连接事件侦听
@@ -40,18 +40,26 @@ var BaseCtrl = /** @class */ (function () {
         //系统推送
         this.socket.on(ServiceManager.SocketEvent.OnSystemPush, this, this.OnSystemPushHandler);
         //启动连接
-        this.socket.Connect(socketUrl);
+        this.socket.Connect(this.socketUrl);
+        console.log("连接：" + this.socketUrl);
         var wechat = new Utils.WeChat();
+        var isWeChat = Laya.Browser.window.navigator.userAgent.indexOf('MicroMessenger') >= 0; //判断是否微信浏览器
+        console.log("是否微信浏览器：" + isWeChat);
         Laya.timer.loop(2000, this, function () {
-            wechat.GetNetworkType(Laya.Handler.create(_this, _this.GetNetworkSuccess, null, false));
+            if (isWeChat) {
+                wechat.GetNetworkType(Laya.Handler.create(_this, _this.GetNetworkSuccess, null, false));
+            }
+            else {
+                wechat.GetPcNetworkType(Laya.Handler.create(_this, _this.GetNetworkSuccess, null, false));
+            }
         });
         var successHandler = Laya.Handler.create(this, this.WeChatShareHandler, null, false);
-        var authorizeDto = GameConfig.GetWeChatShareDto(this.parentID, true);
+        var authorizeDto = GameConfig.GetWeChatShareDto(memberId.toString(), false);
         //分享微信好友
         wechat.ShareAppMessage(authorizeDto.Title, authorizeDto.Desc, authorizeDto.ImgUrl, authorizeDto.Link, successHandler);
         //分享QQ
         wechat.ShareQQ(authorizeDto.Title, authorizeDto.Desc, authorizeDto.ImgUrl, authorizeDto.Link, successHandler);
-        var dto = GameConfig.GetWeChatShareDto(this.parentID, false);
+        var dto = GameConfig.GetWeChatShareDto(memberId.toString(), false);
         //分享朋友圈
         wechat.ShareTimeline(dto.Title, dto.ImgUrl, dto.Link, successHandler);
         //分享qq空间
@@ -89,6 +97,14 @@ var BaseCtrl = /** @class */ (function () {
                 this.OnGameInit(data.Data);
                 break;
             case BaseEnum.GameCommand.MSG_GAME_START:
+                // if (this.endData) {
+                //     this.OnGameResult(this.endData);
+                //     this.endData = null;
+                // }
+                // if (this.settleCacheData) {
+                //     this.OnSettleResult(this.settleCacheData);
+                //     this.settleCacheData = null;
+                // }
                 this.OnGameStart(data.Data);
                 break;
             case BaseEnum.GameCommand.MSG_GAME_BETRESULT:
@@ -98,9 +114,11 @@ var BaseCtrl = /** @class */ (function () {
                 this.OnStopBet();
                 break;
             case BaseEnum.GameCommand.MSG_GAME_GAMERESULT:
+                // this.endData = data.Data;
                 this.OnGameResult(data.Data);
                 break;
             case BaseEnum.GameCommand.MSG_GAME_SETTLERESULT:
+                // this.settleCacheData = data.Data;
                 this.OnSettleResult(data.Data);
                 break;
             case BaseEnum.GameCommand.MSG_GAME_OTHER:

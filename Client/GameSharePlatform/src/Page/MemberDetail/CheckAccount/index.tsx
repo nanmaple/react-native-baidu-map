@@ -11,7 +11,7 @@ import 'react-weui/build/packages/react-weui.css';
 import CompToast, { ToastType } from '../../../Components/Toast';
 import LanguageManager from '../../../Language/LanguageManager';
 import { ErrorCode } from '../../../Enum/ErrorCode';
-import {TransactionType} from "../../../Enum/TransactionType";
+import { TransactionType } from "../../../Enum/TransactionType";
 import Money from "../../../Utils/Money"
 
 import ScoreRecordCtrl from '../../../Controller/CheckAccountCtrl';
@@ -21,7 +21,7 @@ const scoreRecordStyle = require("./style.css");
 class CheckAccount extends React.Component<any, any> {
     private ScoreRecordCtrl: ScoreRecordCtrl = new ScoreRecordCtrl();
     private toast: any;
-    private languageManager: LanguageManager;
+    private languageManager: LanguageManager = new LanguageManager();
     constructor(props: any) {
         super(props);
         this.state = {
@@ -34,7 +34,7 @@ class CheckAccount extends React.Component<any, any> {
         }
     }
     componentDidMount() {
-        this.ShowToast("加载中...", ToastType.Loading);
+        this.ShowToast(this.languageManager.GetErrorMsg("Loading"), ToastType.Loading);
         //获取会员ID
         let memberId = this.props.match.params.memberId;
         this.setState({
@@ -70,7 +70,7 @@ class CheckAccount extends React.Component<any, any> {
         if (error) {
             this.setState({
                 action: STATS.reset,
-             })
+            })
             //提示错误信息
             this.ShowToast(error, ToastType.Error);
             return;
@@ -140,8 +140,9 @@ class CheckAccount extends React.Component<any, any> {
         return (
             <div key={index} className={scoreRecordStyle.row}>
                 <div className={scoreRecordStyle.time}>{item.UpdateTime}</div>
-                <div className={item.Changed>0?scoreRecordStyle.changeIn:scoreRecordStyle.changeOut}>{Money.Format(item.Changed)}</div>
-                <div className={scoreRecordStyle.message}>{TransactionType[item.TransactionType]}</div>
+                <div className={(item.Changed==0?"ling":item.Changed > 0 ? "zheng" : "fu") +" "+scoreRecordStyle.win}>{Money.Format(item.Changed)}</div>
+                <div className={scoreRecordStyle.change}>{Money.Format(item.Balance)}</div>
+                <div className={scoreRecordStyle.message}>{this.languageManager.GetErrorMsg(item.TransactionType)}</div>
             </div>
         )
     }
@@ -151,7 +152,7 @@ class CheckAccount extends React.Component<any, any> {
             return (
                 <div className="noData">
                     <CompToast ref={(c) => this.toast = c} />
-                    无数据
+                   {this.languageManager.GetErrorMsg("NoData")}
                 </div>
 
             )
@@ -159,7 +160,7 @@ class CheckAccount extends React.Component<any, any> {
         return (
             <div>
                 <CompToast ref={(c) => this.toast = c} />
-                <Toast icon="loading" show={this.state.showLoading}>加载中</Toast>
+                <Toast icon="loading" show={this.state.showLoading}>{this.languageManager.GetErrorMsg("Loading")}</Toast>
                 <PullLoad
                     isBlockContainer={true}
                     downEnough={40}
@@ -177,16 +178,17 @@ class CheckAccount extends React.Component<any, any> {
             </div>
         );
     }
-    
+
     render() {
         return (
             <div className={scoreRecordStyle.container}>
                 <CompToast ref={(c) => this.toast = c} />
-                <Toast icon="loading" show={this.state.showLoading}>加载中</Toast>
+                <Toast icon="loading" show={this.state.showLoading}>{this.languageManager.GetErrorMsg("Loading")}</Toast>
                 <div className={scoreRecordStyle.rowTitle}>
-                    <div className={scoreRecordStyle.time}>时间</div>
-                    <div className={scoreRecordStyle.change}>数目变化</div>
-                    <div className={scoreRecordStyle.message}>类型</div>
+                    <div className={scoreRecordStyle.time}>{this.languageManager.GetErrorMsg("Time")}</div>
+                    <div className={scoreRecordStyle.change}>{this.languageManager.GetErrorMsg("ScoreChanges")}</div>
+                    <div className={scoreRecordStyle.change}>{this.languageManager.GetErrorMsg("Balance")}</div>
+                    <div className={scoreRecordStyle.message}>{this.languageManager.GetErrorMsg("Type")}</div>
                 </div>
                 {
                     this.renderData()

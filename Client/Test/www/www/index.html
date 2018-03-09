@@ -1,0 +1,183 @@
+<html>
+
+<head>
+    <title>Live</title>
+	<meta charset="UTF-8">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/> 
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="wgvirtualfield.css" rel="stylesheet" />
+
+    <script src="jquery-1.8.2.min.js" charset="utf-8"></script>
+   
+    <script src="wgvirtualLive.js" charset="utf-8"></script>
+	
+</head>
+
+<body style="background: #415162;padding-top:44px;">
+    <div class="anim_area" id="area">
+        <div class="meters">
+            <div class="homemeter">
+
+            </div>
+            <div class="meter">
+
+            </div>
+            <div class="awaymeter">
+
+            </div>
+        </div>
+        <div class="field">
+            <div class="fieldmark"></div>
+        </div>
+        <div class="attackfield">
+            <div class="attackshadow"></div>
+            <div class="attackmsg"></div>
+            <div class="attackmsgtxt">主队进攻</div>
+        </div>
+
+        <div class="ballpos">
+            <div class="soccer">
+                <div class="soccerimg"></div>
+                <div class="soccershadow"></div>
+            </div>
+            <div class="leftgate"></div>
+            <div class="rightgate"></div>
+            <div class="outball"></div>
+        </div>
+        <div class="info">
+            <div class="infopanel">
+                <div class="icon">
+                    <div class="extminute">15</div>
+                    <div class="injredcross"></div>
+                </div>
+                <div class="botpanel">
+                    <div class="text">
+                        <div class="title"></div>
+                        <div class="content"></div>
+                    </div>
+                    <div class="time">
+                        36'
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="freekick">
+            <div class="freekickline">
+
+            </div>
+        </div>
+        <div class="stat">
+            <div class="statpanel">
+                <div class="header">
+                    <div class="league"></div>
+                    <div class="time"></div>
+                </div>
+                <div class="teams">
+                    <div class="homearea">
+                        <div class="teamicon homebgcolor"></div>
+                        <div class="teamname homecolor homename"></div>
+                    </div>
+                    <div class="vsarea">
+                        <div class="livetime"></div>
+                        <div class="vs">VS</div>
+                    </div>
+                    <div class="awayarea">
+                        <div class="teamicon awaybgcolor"></div>
+                        <div class="teamname awaycolor awayname"></div>
+                    </div>
+                </div>
+                <div class="techstat">
+                    <table class="techstat_table">
+                        <thead>
+                            <tr class="headrow">
+                                <th class=" name"></th>
+                                <th class="techdatatitle yellowcard">
+                                    <i></i>
+                                </th>
+                                <th class="techdatatitle redcard">
+                                    <i></i>
+                                </th>
+                                <th class="techdatatitle corner">
+                                    <i></i>
+                                </th>
+                                <th class="techdatatitle pent">
+                                    <i></i>
+                                </th>
+                                <th class="techdatatitle goal">
+                                    <i></i>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="homerow homearea">
+                                <td class="name">
+                                    <i class="steamicon homebgcolor"></i>
+                                    <span class="homename homecolor">主队</span>
+                                </td>
+                                <td class="techdata yellowcard"></td>
+                                <td class="techdata redcard"></td>
+                                <td class="techdata corner"></td>
+                                <td class="techdata pent"></td>
+                                <td class="techdata score"></td>
+                            </tr>
+                            <tr class="awayrow awayarea">
+                                <td class="name">
+                                    <i class="steamicon awaybgcolor"></i>
+                                    <span class="awayname awaycolor">客队</span>
+                                </td>
+                                <td class="techdata yellowcard"></td>
+                                <td class="techdata redcard"></td>
+                                <td class="techdata corner"></td>
+                                <td class="techdata pent"></td>
+                                <td class="techdata score"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="scoreboard">
+            <div class="teamnames">
+                <div class="homename homecolor">主队</div>
+                <div class="awayname awaycolor">客队</div>
+            </div>
+            <div class="livetime">
+                <div class="minutes"></div>
+                <div class="semo">:</div>
+                <div class="seconds"></div>
+            </div>
+            <div class="teamscore">
+                <div class="homescore"></div>
+                <div class="awayscore"></div>
+            </div>
+        </div>
+        <div class="kickoff">
+            <div class="icon"></div>
+            <div class="banner">
+                AC米兰 开球
+            </div>
+        </div>
+    </div>
+    <div class="testarea" style="position: absolute;top: 0;">
+        <button onclick=" demo() ">开始演示</button>
+        <button onclick=" stopDemo() ">停止演示</button>
+
+        <button onclick=" Card(true, true) ">红卡</button>
+        <button onclick=" Card() ">黄卡</button>
+        <button onclick=" Substitution(false) ">换人</button>
+        <button onclick=" HideInfo() ">关闭消息</button>
+        <button onclick=" Attack('away',0.2,0.7) ">进攻</button>
+        <button onclick=" OutLineBall(0.2, 0, 0.5, 0.5, true) ">边线球</button>
+        <button onclick=" OutLineBall(0,1,0.5,0.5,true) ">角球</button>
+        <button onclick=" BallPos(0.5, 0.5, '球在这儿', 'xxx', false, true) ">场内球</button>
+        <button onclick=" KickOff(true)">开场</button>
+        <button onclick=" Offside(true) ">越位</button>
+        <button onclick=" Injury(false) ">伤员</button>
+        <button onclick=" InjTime(5) ">伤停补时</button>
+        <button onclick=" Goal(true) ">进球</button>
+
+    </div>
+    <script src="index.js" charset="utf-8"></script>
+</body>
+
+</html>

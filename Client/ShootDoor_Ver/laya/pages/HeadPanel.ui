@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":25,
-    "selecteID":2,
+    "selectedBox":2,
+    "selecteID":23,
     "props":{"y":0,"width":1334,"sceneColor":"#ffffff","height":100},
     "nodeParent":-1,
     "label":"View",
@@ -127,7 +127,7 @@
                         {
                             "x":45,
                             "type":"Image",
-                            "props":{"y":4,"x":130,"width":124,"visible":false,"var":"attention","skin":"ui/attention.png","height":72},
+                            "props":{"y":4,"x":130,"visible":false,"var":"attention","skin":"ui/attention.png"},
                             "nodeParent":2,
                             "label":"Image(attention)",
                             "isDirectory":false,

@@ -8,14 +8,14 @@ var Utils;
          * 播放背景音乐
          * @param url
          */
-        BackgroundMusic.PlayMisic = function (url) {
+        BackgroundMusic.PlayMusic = function (url) {
             Laya.SoundManager.playMusic(url); //默认循环播放
         };
         ;
         /**
          * 停止播放背景音乐
          */
-        BackgroundMusic.StopMisic = function () {
+        BackgroundMusic.StopMusic = function () {
             Laya.SoundManager.stopMusic();
         };
         ;

@@ -10,17 +10,18 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var HeadPanelCtrl = /** @class */ (function (_super) {
     __extends(HeadPanelCtrl, _super);
-    function HeadPanelCtrl(headPanel, noteRecordPanel, rulePanel, memberInfo, parentID, isTourists) {
+    function HeadPanelCtrl() {
         var _this = _super.call(this) || this;
-        _this.headPanel = headPanel;
-        //创建头部面板UI实例
-        var grHandler = Laya.Handler.create(_this, _this.OnClickGR, null, false);
-        var ruleHandler = Laya.Handler.create(_this, _this.OnClickRule, null, false);
-        _this.headPanel.SetInfo(memberInfo, parentID, grHandler, ruleHandler, isTourists);
-        _this.noteRecordPanelCtrl = new NoteRecordPanelCtrl(noteRecordPanel);
-        _this.rulePanel = rulePanel;
+        _this.gameUI = ScenePanel.GameUI.GetInstance();
+        _this.noteRecordPanelCtrl = new NoteRecordPanelCtrl();
         return _this;
     }
+    HeadPanelCtrl.prototype.SetInfo = function (memberInfo, parentID, isTourists) {
+        //创建头部面板UI实例
+        var grHandler = Laya.Handler.create(this, this.OnClickGR, null, false);
+        var ruleHandler = Laya.Handler.create(this, this.OnClickRule, null, false);
+        this.gameUI.GetHeadPanel().SetInfo(memberInfo, parentID, grHandler, ruleHandler, isTourists);
+    };
     /**
      * 点击个人投注记录
      */
@@ -31,14 +32,14 @@ var HeadPanelCtrl = /** @class */ (function (_super) {
      * 点击规则
      */
     HeadPanelCtrl.prototype.OnClickRule = function () {
-        this.rulePanel.ShowRule();
+        this.gameUI.GetRulePanel().ShowRule();
     };
     /**
      * 改变金额
      * @param money
      */
     HeadPanelCtrl.prototype.ChangeMoney = function (money) {
-        this.headPanel.ChangeMoney(money);
+        this.gameUI.GetHeadPanel().ChangeMoney(money);
     };
     return HeadPanelCtrl;
 }(Laya.Sprite));

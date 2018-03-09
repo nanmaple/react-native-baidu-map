@@ -18,7 +18,7 @@ var BaseCtrl = /** @class */ (function () {
         //获取会员信息
         this.memberInfo = memberServer.GetMemberInfo();
         //获取会员ID
-        var memberId = this.memberInfo != null ? this.memberInfo.MemberId : 1;
+        var memberId = this.memberInfo != null ? this.memberInfo.MemberId : 0;
         //生成socket 地址
         this.socketUrl = GameConfig.GetSocketUrl(memberId, GameConfig.SocketToken);
         //创建socket
@@ -43,8 +43,15 @@ var BaseCtrl = /** @class */ (function () {
         this.socket.Connect(this.socketUrl);
         console.log("连接：" + this.socketUrl);
         var wechat = new Utils.WeChat();
+        var isWeChat = Laya.Browser.window.navigator.userAgent.indexOf('MicroMessenger') >= 0; //判断是否微信浏览器
+        console.log("是否微信浏览器：" + isWeChat);
         Laya.timer.loop(2000, this, function () {
-            wechat.GetNetworkType(Laya.Handler.create(_this, _this.GetNetworkSuccess, null, false));
+            if (isWeChat) {
+                wechat.GetNetworkType(Laya.Handler.create(_this, _this.GetNetworkSuccess, null, false));
+            }
+            else {
+                wechat.GetPcNetworkType(Laya.Handler.create(_this, _this.GetNetworkSuccess, null, false));
+            }
         });
         var successHandler = Laya.Handler.create(this, this.WeChatShareHandler, null, false);
         var authorizeDto = GameConfig.GetWeChatShareDto(memberId.toString(), false);
@@ -57,9 +64,6 @@ var BaseCtrl = /** @class */ (function () {
         wechat.ShareTimeline(dto.Title, dto.ImgUrl, dto.Link, successHandler);
         //分享qq空间
         wechat.ShareQZone(dto.Title, dto.Desc, dto.ImgUrl, dto.Link, successHandler);
-        Laya.timer.loop(2000, this, function () {
-            // console.log("time-1");
-        });
     }
     /**
      * 网络状态
@@ -93,6 +97,14 @@ var BaseCtrl = /** @class */ (function () {
                 this.OnGameInit(data.Data);
                 break;
             case BaseEnum.GameCommand.MSG_GAME_START:
+                // if (this.endData) {
+                //     this.OnGameResult(this.endData);
+                //     this.endData = null;
+                // }
+                // if (this.settleCacheData) {
+                //     this.OnSettleResult(this.settleCacheData);
+                //     this.settleCacheData = null;
+                // }
                 this.OnGameStart(data.Data);
                 break;
             case BaseEnum.GameCommand.MSG_GAME_BETRESULT:
@@ -102,9 +114,11 @@ var BaseCtrl = /** @class */ (function () {
                 this.OnStopBet();
                 break;
             case BaseEnum.GameCommand.MSG_GAME_GAMERESULT:
+                // this.endData = data.Data;
                 this.OnGameResult(data.Data);
                 break;
             case BaseEnum.GameCommand.MSG_GAME_SETTLERESULT:
+                // this.settleCacheData = data.Data;
                 this.OnSettleResult(data.Data);
                 break;
             case BaseEnum.GameCommand.MSG_GAME_OTHER:

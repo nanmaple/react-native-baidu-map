@@ -20,7 +20,7 @@ namespace ScenePanel {
         private pokerFlyEffect: PokerFlyEffect;
         private isChange: boolean = false;
         private pokerChange: boolean = false;
-
+        private pokerArr:Array<any> = new Array<any>();
         constructor() {
             document.addEventListener("screenMode", () => {
                 this.ChangeModeUI();
@@ -73,8 +73,7 @@ namespace ScenePanel {
             //添加投注面板
             this.betPanel = new BetPanelHor();
             // //添加提示面板
-            // this.promptPanel = new PromptPanelHor();
-            // Laya.stage.addChild(this.promptPanel.GetUI());
+            this.promptPanel = new PromptPanelHor();
             // //添加投注记录面板
             this.noteReocrdPanel = new NoteRecordPanelHor();
             //添加游戏规则面板
@@ -96,6 +95,7 @@ namespace ScenePanel {
             Laya.stage.addChild(this.rulePanel.GetUI());
             Laya.stage.addChild(this.tipsPanel.GetUI());
             Laya.stage.addChild(this.footballPanel.GetUI());
+            Laya.stage.addChild(this.promptPanel.GetUI());
 
             if (this.pokerFlyEffect) {
                 this.pokerFlyEffect.RecoveryPoker();
@@ -126,8 +126,7 @@ namespace ScenePanel {
             //添加投注面板
             this.betPanel = new BetPanelVer();
             // //添加提示面板
-            // this.promptPanel = new PromptPanelVer();
-            // Laya.stage.addChild(this.promptPanel.GetUI());
+            this.promptPanel = new PromptPanelVer();
             // //添加投注记录面板
             this.noteReocrdPanel = new NoteRecordPanelVer();
             //添加游戏规则面板
@@ -151,6 +150,7 @@ namespace ScenePanel {
             Laya.stage.addChild(this.rulePanel.GetUI());
             Laya.stage.addChild(this.tipsPanel.GetUI());
             Laya.stage.addChild(this.footballPanel.GetUI());
+            Laya.stage.addChild(this.promptPanel.GetUI());
             if (this.pokerFlyEffect) {
                 this.pokerFlyEffect.RecoveryPoker();
             }
@@ -199,12 +199,12 @@ namespace ScenePanel {
         public GetBetPanel(): BetPanelHor | BetPanelVer {
             return this.betPanel;
         }
-        // /**
-        //  * 获取提示面板
-        //  */
-        // public GetPromptPanel(): PromptPanelHor | PromptPanelVer {
-        //     return this.promptPanel;
-        // }
+        /**
+         * 获取提示面板
+         */
+        public GetPromptPanel(): PromptPanelHor | PromptPanelVer {
+            return this.promptPanel;
+        }
         /**
          * 获取投注记录面板
          */
@@ -235,7 +235,11 @@ namespace ScenePanel {
             if (this.pokerChange != this.isChange) {
                 isChange = true;
             }
+            this.pokerArr = this.cardPanel.GetFlyPoker(isChange);
             this.pokerFlyEffect.FlyPoker(dto, this.cardPanel.GetFlyPoker(isChange), this.historyPanel.GetEndFlyPoker(isChange));
+        }
+        public ClearPokerFly():void{
+            this.pokerFlyEffect.ClearFlyPoker();
         }
     }
 }

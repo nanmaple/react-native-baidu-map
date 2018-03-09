@@ -1,12 +1,11 @@
 var TipsPanelCtrl = /** @class */ (function () {
-    function TipsPanelCtrl(statePanel) {
-        this.statedPanel = statePanel;
+    function TipsPanelCtrl() {
     }
     /**
      * 显示
      */
     TipsPanelCtrl.prototype.Show = function () {
-        this.statedPanel.ShowTip();
+        ScenePanel.GameUI.GetInstance().GetTipsPanel().ShowTip();
     };
     return TipsPanelCtrl;
 }());

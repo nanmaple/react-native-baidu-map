@@ -35,11 +35,19 @@ namespace ScenePanel {
             this.ui.visible = true;
             this.timeEffect.StartGameTime(time);
         }
-
+        /**
+         * 游戏时间结束
+         */
         public EndGameTime(): void {
             this.timeEffect.EndGameTime();
             this.ui.visible = false;
             Utils.BackgroundMusic.PlaySounds("sound/csz1.wav");
+        }
+        /**
+         * 隐藏游戏时间
+         */
+        public HideGameTime():void{
+            this.ui.visible = false;
         }
     }
 }

@@ -20,11 +20,12 @@ import UserCtrl from "../../Controller/UserCtrl";
 import Money from '../../Utils/Money';
 const logoImg = require("../../Image/logo.png");
 const style = require("./style.css");
+const rightImg = require("../../Image/right.png");
 
 export default class Home extends React.Component<any, any> {
     private userCtrl: UserCtrl = new UserCtrl();
     private toast: any;
-    private languageManager: LanguageManager;
+    private languageManager: LanguageManager = new LanguageManager();
     constructor(props: any) {
         super(props);
         this.state = {
@@ -44,9 +45,6 @@ export default class Home extends React.Component<any, any> {
      * @param  type 信息类型
     */
     private ShowToast = (errorKey: string, type: ToastType = ToastType.Success): void => {
-        if (!this.languageManager) {
-            this.languageManager = new LanguageManager();
-        }
         let msg: string = this.languageManager.GetErrorMsg(errorKey);
         this.toast.Show(msg, type);
     }
@@ -85,31 +83,34 @@ export default class Home extends React.Component<any, any> {
     public renderButton = (): any => {
         let { isTourists } = this.state;
         if (isTourists) {
-            return (<div onClick={this.Attention} className={style.button}>关注</div>)
+            return (<div onClick={this.Attention} className={style.button}>{this.languageManager.GetErrorMsg("Attention")}</div>)
         } else if (!this.state.isLogin) {
-            return (<div onClick={this.Attention} className={style.button}>登录</div>)
+            return (<div onClick={this.Attention} className={style.button}>{this.languageManager.GetErrorMsg("Login")}</div>)
         } else if (this.state.isClose) {
             return null;
-        }else if(this.state.isLogin){
-           return (<Link to={MemberRoute} className={style.button}>管理</Link>)
+        } else if (this.state.isLogin) {
+            return (<Link to={MemberRoute} className={style.button}>{this.languageManager.GetErrorMsg("Manager")}</Link>)
         }
     }
     private renderGameList = (item: any, index: number) => {
         return (
             <div key={index} className={style.rowItem} onClick={() => { this.GameLogin(item.id) }}>
                 <div className={style.img}>
-                    <img src={item.imgUrl} />
+                    <img style={{ width: 36, height: 36 }} src={item.imgUrl} />
                 </div>
                 <div className={style.gameMsg}>
-                    <div className={style.name}>{item.name}<span>点击进入游戏 ></span></div>
-                    <div className={style.start}>推荐指数:{item.star}</div>
+                    <div className={style.name}>{this.languageManager.GetErrorMsg("GameName")}:{item.name}</div>
+                    <div className={style.start}>{this.languageManager.GetErrorMsg("Recommended")}:{item.star}</div>
+                </div>
+                <div className={style.imgRight}>
+                    <img style={{ width: 16, height: 16 }} src={rightImg} />
                 </div>
             </div>
         )
     }
     render() {
         let { gameList } = this.state;
-        gameList = [{ imgUrl: logoImg, name: " 射龙门", star: "五颗星", id: 1 }];
+        gameList = [{ imgUrl: logoImg, name: this.languageManager.GetErrorMsg("ShotDoor"), star: "五颗星", id: 1 }];
         let socre: string = this.state.memberInfo ? Money.Format(this.state.memberInfo.Score) : "0";
         return (
             <div className="home">
@@ -119,7 +120,7 @@ export default class Home extends React.Component<any, any> {
                         <img src={logoImg} alt="" className={style.logo} />
                         {
                             this.state.isLogin ? (
-                                <label htmlFor="">{"分数：" + socre }</label>
+                                <label htmlFor="">{this.languageManager.GetErrorMsg("Score")}:{socre}</label>
                             ) : null
                         }
                     </div>
