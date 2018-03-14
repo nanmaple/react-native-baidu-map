@@ -13,7 +13,14 @@ var ScenePanel;
     var PromptPanelVer = /** @class */ (function (_super) {
         __extends(PromptPanelVer, _super);
         function PromptPanelVer() {
-            return _super.call(this, false) || this;
+            var _this = _super.call(this, false) || this;
+            if (GameConfig.RatioType) {
+                _this.ui.prompt.scale(GameConfig.LengthShort, 1);
+            }
+            else {
+                _this.ui.prompt.scale(1, GameConfig.ShortLength);
+            }
+            return _this;
         }
         return PromptPanelVer;
     }(ScenePanel.PromptPanelBaseUI));

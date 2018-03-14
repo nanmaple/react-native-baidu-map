@@ -32,27 +32,27 @@ var LanguageUtils;
         /**
          * 赔率错误
          */
-        ODDS_ERROR: "Odds Error",
+        ODDS_ERROR: "Odds error",
         /**
          * 金额错误
          */
-        AMOUNT_ERROR: "Amount Error",
+        AMOUNT_ERROR: "Amount error",
         /**
          * 余额不足
          */
-        BALANCE_SMALL: "Not Sufficient Funds",
+        BALANCE_SMALL: "Not sufficient funds",
         /**
          * 投注位置错误
          */
-        BETPOS_ERROR: "Injection Position Error",
+        BETPOS_ERROR: "Injection position error",
         /**
          * 不在投注状态
          */
-        NOTBET_STATUS: "Not In The State Of Betting",
+        NOTBET_STATUS: "Not in the state of betting",
         /**
          * 超过投注限额
          */
-        OVER_LIMIT: "Exceed The Quota",
+        OVER_LIMIT: "Exceed the quota",
         //局号面板投注状态信息（BetStatus）
         /**
          * 期号
@@ -61,7 +61,7 @@ var LanguageUtils;
         /**
          * 等待开始
          */
-        WaitStart: "Waiting",
+        WaitStart: "Waiting Start",
         /**
          * 正在投注
          */
@@ -77,7 +77,7 @@ var LanguageUtils;
         /**
          * 已结算
          */
-        HaveSettled: "Settled",
+        HaveSettled: "Having Settled",
         //游戏结果进球提示
         /**
          * 球进啦
@@ -131,7 +131,7 @@ var LanguageUtils;
         /**
          * 暂无投注记录
          */
-        NoBetRecord: "No BetRecord",
+        NoBetRecord: "No Bet Record",
         /**
          * 加载中
          */
@@ -139,126 +139,128 @@ var LanguageUtils;
         /// <summary>
         /// 系统错误
         /// </summary>
-        SystemError: "System Error",
+        SystemError: "系统错误",
         /// <summary>
         /// 操作成功
         /// </summary>
-        Success: "Success",
+        Success: "操作成功",
         /// <summary>
         /// 参数无效
         /// </summary>
-        InvalidArgument: "Invalid Argument",
+        InvalidArgument: "参数无效",
         // 登录错误码
         /// <summary>
         /// 会员已存在(注册新账号时)
         /// </summary>
-        MemberExist: "Member Exist",
+        MemberExist: "会员已存在",
         /// <summary>
         /// 会员不存在
         /// </summary>
-        MemberNotExist: "Member Not Exist",
+        MemberNotExist: "会员不存在",
         /// <summary>
         /// 会员被冻结
         /// </summary>
-        MemberClosed: "Member Closed",
+        MemberClosed: "会员被冻结",
         //Token错误
         /// <summary>
         /// Token为空
         /// </summary>
-        NullToken: "Null Token",
+        NullToken: "Token为空",
         /// <summary>
         /// 服务器时间差错误
         /// </summary>
-        OverTime: "Over Time",
+        OverTime: "服务器时间差错误",
         /// <summary>
         /// token失效
         /// </summary>
-        TokenInvalid: "Token Invalid",
+        TokenInvalid: "token失效",
         /// <summary>
         /// Token解密失败
         /// </summary>
-        TokenDecodeError: "Token Decode Error",
+        TokenDecodeError: "Token解密失败",
         /// <summary>
         /// Signature签名错误
         /// </summary>
-        SignatureError: "Signature Error",
+        SignatureError: "Signature签名错误",
         /// <summary>
         /// Playload参数错误
         /// </summary>
-        PlayloadError: "Playload Error",
+        PlayloadError: "Playload参数错误",
         /// <summary>
         /// 帐号无效
         /// </summary>
-        AccountInvalid: "Account Invalid",
+        AccountInvalid: "帐号无效",
         /// <summary>
         /// 拒绝游客
         /// </summary>
-        RefuseTourist: "Refuse Tourist",
+        RefuseTourist: "拒绝游客",
         /// <summary>
         /// 解析的payload会员ID无效
         /// </summary>
-        MemberIdInvalid: "MemberId Invalid",
+        MemberIdInvalid: "解析的payload会员ID无效",
         // 会员信息操作
         /// <summary>
         /// 账号已存在
         /// </summary>
-        AccountExist: "Account Exist",
+        AccountExist: "账号已存在",
         /// <summary>
         /// 已设置过账号(只能设置一次)
         /// </summary>
-        AccountHasBeenSetup: "Account Has BeenSetup",
+        AccountHasBeenSetup: "已设置过账号",
         /// <summary>
         /// 已是代理
         /// </summary>
-        AlreadyAgent: "Already Agent",
+        AlreadyAgent: "已是代理",
         /// <summary>
         /// 邮箱已存在
         /// </summary>
-        EmailExist: "Email Exist",
+        EmailExist: "邮箱已存在",
         /// <summary>
         /// 密码错误(重置密码功能)
         /// </summary>
-        ErrorPassword: "Error Password",
+        ErrorPassword: "密码错误",
         /// <summary>
         /// 父级不能是自己
         /// </summary>
-        ParentCanNotBeSelf: "Parent Can Not BeSelf",
+        ParentCanNotBeSelf: "父级不能是自己",
         /// <summary>
         /// 手机号已存在(设置手机号)
         /// </summary>
-        PhoneNumberExist: "PhoneNumber Exist",
+        PhoneNumberExist: "手机号已存在",
         /// <summary>
         /// 邮箱与之前的相同(重置邮箱时)
         /// </summary>
-        SameEmail: "Same Email",
+        SameEmail: "邮箱与之前的相同",
         /// <summary>
         /// 密码与之前设置的相同(重置密码时)
         /// </summary>
-        SamePassword: "Same Password",
+        SamePassword: "密码与之前设置的相同",
         /// <summary>
         /// 手机号与之前设置的相同(重新设置手机号时)
         /// </summary>
-        SamePhoneNumber: "Same PhoneNumber",
+        SamePhoneNumber: "手机号与之前设置的相同",
         /// <summary>
         /// 邮箱格式错误
         /// </summary>
-        WrongEmail: "Wrong Email",
+        WrongEmail: "邮箱格式错误",
         /// <summary>
         /// 手机号格式错误
         /// </summary>
-        WrongPhoneNumber: "Wrong PhoneNumber",
+        WrongPhoneNumber: "手机号格式错误",
         /// <summary>
         /// 父子级关系不存在
         /// </summary>
-        AgencyRelationshipNotExist: "Agency Relationship Not Exist",
+        AgencyRelationshipNotExist: "父子级关系不存在",
         // 进取分错误
         /// <summary>
         /// 修改会员分数失败
         /// </summary>
-        ModifyMemberScoreFailed: "Modify Member Score Failed",
+        ModifyMemberScoreFailed: "修改会员分数失败",
         /// <summary>
         /// 修改会员的父级会员分数失败
         /// </summary>
-        ModifyParentScoreFailed: "Modify Parent Score Failed",
+        ModifyParentScoreFailed: "修改会员的父级会员分数失败",
+        Login: "Loading...",
+        Agent: "Agent",
     };
 })(LanguageUtils || (LanguageUtils = {}));

@@ -1,264 +1,266 @@
 var LanguageUtils;
 (function (LanguageUtils) {
-    LanguageUtils.EN = {
-        in: "IN",
-        out: "OUT",
-        hit: "HIT",
-        red: "Red",
-        black: "Black",
-        big: "Big",
-        small: "Small",
-        odd: "Odd",
-        even: "Even",
-        lout: "L Out",
-        rout: "R Out",
-        lhit: "L Hit",
-        rhit: "R Hit",
-        leftOut: "L Out",
-        rightOut: "R Out",
-        leftHit: "L Hit",
-        rightHit: "R Hit",
+    LanguageUtils.CH = {
+        in: "射进",
+        out: "射偏",
+        hit: "撞柱",
+        red: "红",
+        black: "黑",
+        big: "大",
+        small: "小",
+        odd: "单",
+        even: "双",
+        lout: "左",
+        rout: "右",
+        lhit: "左",
+        rhit: "右",
+        leftOut: "左偏",
+        rightOut: "右偏",
+        leftHit: "左撞柱",
+        rightHit: "右撞柱",
         //投注信息提示
-        betSuccess: "Bet Success",
-        betFail: "Bet Fail",
-        gameSuccess: "Guess Success",
-        gameFail: "Guess Fail",
-        Maximum: "Max",
-        Minimum: "Min",
+        betSuccess: "投注成功",
+        betFail: "投注失败",
+        gameSuccess: "有猜中哦",
+        gameFail: "很遗憾，再接再厉",
+        Maximum: "最大",
+        Minimum: "最小",
         /**
          * 成功
          */
-        SUCCESS: "Success",
+        SUCCESS: "成功",
         /**
          * 赔率错误
          */
-        ODDS_ERROR: "Odds Error",
+        ODDS_ERROR: "赔率错误",
         /**
          * 金额错误
          */
-        AMOUNT_ERROR: "Amount Error",
+        AMOUNT_ERROR: "金额错误",
         /**
          * 余额不足
          */
-        BALANCE_SMALL: "Not Sufficient Funds",
+        BALANCE_SMALL: "余额不足",
         /**
          * 投注位置错误
          */
-        BETPOS_ERROR: "Injection Position Error",
+        BETPOS_ERROR: "投注位置错误",
         /**
          * 不在投注状态
          */
-        NOTBET_STATUS: "Not In The State Of Betting",
+        NOTBET_STATUS: "不在投注状态",
         /**
          * 超过投注限额
          */
-        OVER_LIMIT: "Exceed The Quota",
+        OVER_LIMIT: "超过投注限额",
         //局号面板投注状态信息（BetStatus）
         /**
          * 期号
          */
-        Issue: "Issue:",
+        Issue: "期号:",
         /**
          * 等待开始
          */
-        WaitStart: "Waiting",
+        WaitStart: "等待开始",
         /**
          * 正在投注
          */
-        Betting: "Betting",
+        Betting: "正在投注",
         /**
          * 停止投注
          */
-        EndBet: "End Bet",
+        EndBet: "停止投注",
         /**
          * 正在结算
          */
-        Settling: "Settling",
+        Settling: "正在结算",
         /**
          * 已结算
          */
-        HaveSettled: "Settled",
+        HaveSettled: "已结算",
         //游戏结果进球提示
         /**
          * 球进啦
          */
-        ShootIn: "Shoot In",
+        ShootIn: "球进啦",
         /**
          * 左边射偏啦
          */
-        ShootLeft: "Shoot Left",
+        ShootLeft: "左边射偏啦",
         /**
          * 右边射偏啦
          */
-        ShootRight: "Shoot Right",
+        ShootRight: "右边射偏啦",
         /**
          * 撞柱啦
          */
-        ShootGoalPost: "Shoot GoalPost",
+        ShootGoalPost: "撞柱啦",
         /**
          * 左边撞柱啦
          */
-        ShootLeftGoalPost: "Shoot Left GoalPost",
+        ShootLeftGoalPost: "左边撞柱啦",
         /**
          * 右边撞柱啦
          */
-        ShootRightGoalPost: "Shoot Right GoalPost",
+        ShootRightGoalPost: "右边撞柱啦",
         //游戏记录面板显示
         /**
          * 时间
          */
-        Time: "Time",
+        Time: "时间",
         /**
          * 局号
          */
-        Round: "Round",
+        Round: "局号",
         /**
          * 输赢
          */
-        WinLose: "Win Lose",
+        WinLose: "输赢",
         /**
          * 赢
          */
-        Win: "Win",
+        Win: "赢",
         /**
          * 输
          */
-        Lose: "Lose",
+        Lose: "输",
         /**
          * 投注详情如下
          */
-        BetDetails: "Bet Details：",
+        BetDetails: "投注详情如下：",
         /**
          * 暂无投注记录
          */
-        NoBetRecord: "No BetRecord",
+        NoBetRecord: "暂无投注记录",
         /**
          * 加载中
          */
-        IsLoading: "IsLoading...",
+        IsLoading: "加载中...",
         /// <summary>
         /// 系统错误
         /// </summary>
-        SystemError: "System Error",
+        SystemError: "系统错误",
         /// <summary>
         /// 操作成功
         /// </summary>
-        Success: "Success",
+        Success: "操作成功",
         /// <summary>
         /// 参数无效
         /// </summary>
-        InvalidArgument: "Invalid Argument",
+        InvalidArgument: "参数无效",
         // 登录错误码
         /// <summary>
         /// 会员已存在(注册新账号时)
         /// </summary>
-        MemberExist: "Member Exist",
+        MemberExist: "会员已存在",
         /// <summary>
         /// 会员不存在
         /// </summary>
-        MemberNotExist: "Member Not Exist",
+        MemberNotExist: "会员不存在",
         /// <summary>
         /// 会员被冻结
         /// </summary>
-        MemberClosed: "Member Closed",
+        MemberClosed: "会员被冻结",
         //Token错误
         /// <summary>
         /// Token为空
         /// </summary>
-        NullToken: "Null Token",
+        NullToken: "Token为空",
         /// <summary>
         /// 服务器时间差错误
         /// </summary>
-        OverTime: "Over Time",
+        OverTime: "服务器时间差错误",
         /// <summary>
         /// token失效
         /// </summary>
-        TokenInvalid: "Token Invalid",
+        TokenInvalid: "token失效",
         /// <summary>
         /// Token解密失败
         /// </summary>
-        TokenDecodeError: "Token Decode Error",
+        TokenDecodeError: "Token解密失败",
         /// <summary>
         /// Signature签名错误
         /// </summary>
-        SignatureError: "Signature Error",
+        SignatureError: "Signature签名错误",
         /// <summary>
         /// Playload参数错误
         /// </summary>
-        PlayloadError: "Playload Error",
+        PlayloadError: "Playload参数错误",
         /// <summary>
         /// 帐号无效
         /// </summary>
-        AccountInvalid: "Account Invalid",
+        AccountInvalid: "帐号无效",
         /// <summary>
         /// 拒绝游客
         /// </summary>
-        RefuseTourist: "Refuse Tourist",
+        RefuseTourist: "拒绝游客",
         /// <summary>
         /// 解析的payload会员ID无效
         /// </summary>
-        MemberIdInvalid: "MemberId Invalid",
+        MemberIdInvalid: "解析的payload会员ID无效",
         // 会员信息操作
         /// <summary>
         /// 账号已存在
         /// </summary>
-        AccountExist: "Account Exist",
+        AccountExist: "账号已存在",
         /// <summary>
         /// 已设置过账号(只能设置一次)
         /// </summary>
-        AccountHasBeenSetup: "Account Has BeenSetup",
+        AccountHasBeenSetup: "已设置过账号",
         /// <summary>
         /// 已是代理
         /// </summary>
-        AlreadyAgent: "Already Agent",
+        AlreadyAgent: "已是代理",
         /// <summary>
         /// 邮箱已存在
         /// </summary>
-        EmailExist: "Email Exist",
+        EmailExist: "邮箱已存在",
         /// <summary>
         /// 密码错误(重置密码功能)
         /// </summary>
-        ErrorPassword: "Error Password",
+        ErrorPassword: "密码错误",
         /// <summary>
         /// 父级不能是自己
         /// </summary>
-        ParentCanNotBeSelf: "Parent Can Not BeSelf",
+        ParentCanNotBeSelf: "父级不能是自己",
         /// <summary>
         /// 手机号已存在(设置手机号)
         /// </summary>
-        PhoneNumberExist: "PhoneNumber Exist",
+        PhoneNumberExist: "手机号已存在",
         /// <summary>
         /// 邮箱与之前的相同(重置邮箱时)
         /// </summary>
-        SameEmail: "Same Email",
+        SameEmail: "邮箱与之前的相同",
         /// <summary>
         /// 密码与之前设置的相同(重置密码时)
         /// </summary>
-        SamePassword: "Same Password",
+        SamePassword: "密码与之前设置的相同",
         /// <summary>
         /// 手机号与之前设置的相同(重新设置手机号时)
         /// </summary>
-        SamePhoneNumber: "Same PhoneNumber",
+        SamePhoneNumber: "手机号与之前设置的相同",
         /// <summary>
         /// 邮箱格式错误
         /// </summary>
-        WrongEmail: "Wrong Email",
+        WrongEmail: "邮箱格式错误",
         /// <summary>
         /// 手机号格式错误
         /// </summary>
-        WrongPhoneNumber: "Wrong PhoneNumber",
+        WrongPhoneNumber: "手机号格式错误",
         /// <summary>
         /// 父子级关系不存在
         /// </summary>
-        AgencyRelationshipNotExist: "Agency Relationship Not Exist",
+        AgencyRelationshipNotExist: "父子级关系不存在",
         // 进取分错误
         /// <summary>
         /// 修改会员分数失败
         /// </summary>
-        ModifyMemberScoreFailed: "Modify Member Score Failed",
+        ModifyMemberScoreFailed: "修改会员分数失败",
         /// <summary>
         /// 修改会员的父级会员分数失败
         /// </summary>
-        ModifyParentScoreFailed: "Modify Parent Score Failed",
+        ModifyParentScoreFailed: "修改会员的父级会员分数失败",
+        Login: "登录中...",
+        Agent: "代理",
     };
 })(LanguageUtils || (LanguageUtils = {}));

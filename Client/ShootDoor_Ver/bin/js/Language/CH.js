@@ -18,7 +18,7 @@ var LanguageUtils;
         rightOut: "右偏",
         leftHit: "左撞柱",
         rightHit: "右撞柱",
-        //投注信息
+        //投注信息提示
         betSuccess: "投注成功",
         betFail: "投注失败",
         gameSuccess: "有猜中哦",
@@ -53,11 +53,11 @@ var LanguageUtils;
          * 超过投注限额
          */
         OVER_LIMIT: "超过投注限额",
-        //投注状态信息（BetStatus）
+        //局号面板投注状态信息（BetStatus）
         /**
          * 期号
          */
-        Issue: "期号",
+        Issue: "期号:",
         /**
          * 等待开始
          */
@@ -78,6 +78,64 @@ var LanguageUtils;
          * 已结算
          */
         HaveSettled: "已结算",
+        //游戏结果进球提示
+        /**
+         * 球进啦
+         */
+        ShootIn: "球进啦",
+        /**
+         * 左边射偏啦
+         */
+        ShootLeft: "左边射偏啦",
+        /**
+         * 右边射偏啦
+         */
+        ShootRight: "右边射偏啦",
+        /**
+         * 撞柱啦
+         */
+        ShootGoalPost: "撞柱啦",
+        /**
+         * 左边撞柱啦
+         */
+        ShootLeftGoalPost: "左边撞柱啦",
+        /**
+         * 右边撞柱啦
+         */
+        ShootRightGoalPost: "右边撞柱啦",
+        //游戏记录面板显示
+        /**
+         * 时间
+         */
+        Time: "时间",
+        /**
+         * 局号
+         */
+        Round: "局号",
+        /**
+         * 输赢
+         */
+        WinLose: "输赢",
+        /**
+         * 赢
+         */
+        Win: "赢",
+        /**
+         * 输
+         */
+        Lose: "输",
+        /**
+         * 投注详情如下
+         */
+        BetDetails: "投注详情如下：",
+        /**
+         * 暂无投注记录
+         */
+        NoBetRecord: "暂无投注记录",
+        /**
+         * 加载中
+         */
+        IsLoading: "加载中...",
         /// <summary>
         /// 系统错误
         /// </summary>

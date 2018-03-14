@@ -42,7 +42,7 @@ namespace LanguageUtils {
          * @param gameID 
          */
         private GetLanguageKey(gameID: number = 0): string {
-            return `EGame-${gameID}-Language-Key`;
+            return `Language-Cache-Key`;
         }
     }
 }

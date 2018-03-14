@@ -22,10 +22,6 @@ namespace Dto{
          */
         public PayAmount:number;
         /**
-         * 投注收益
-         */
-        public Total:number;
-        /**
          * 投注Id
          */
         public Id:number;

@@ -18,10 +18,4 @@ var LanguageUtils;
      * 默认语言
      */
     LanguageUtils.DefaultLanguage = defaultLanguage;
-    /**
-     * 游戏ID独立语言
-     * 如果游戏ID为0，则通用游戏语言
-     * 如果游戏ID>0,则为独有语言
-     */
-    LanguageUtils.GameID = GameConfig.GameID;
 })(LanguageUtils || (LanguageUtils = {}));

@@ -1,10 +1,11 @@
-/// <reference path="../Base/Utils/Storage.ts"/>
+/// <reference path="../Utils/Storage.ts"/>
 /// <reference path="./Config.ts"/>
 var LanguageUtils;
 (function (LanguageUtils) {
-    var Language = /** @class */ (function () {
+    var Language = (function () {
         function Language() {
             this.CurrentLangue = null;
+            this.cacheType = GameConfig.CacheType !== undefined ? GameConfig.CacheType : Utils.StorageType.LOCALSTORAGE;
         }
         /**
          * 设置语言
@@ -15,7 +16,7 @@ var LanguageUtils;
             if (gameID === void 0) { gameID = 0; }
             var storage = new Utils.Storage();
             var key = this.GetLanguageKey(gameID);
-            storage.SetLocalStorage(key, lang);
+            storage.Set(key, lang, this.cacheType);
             this.CurrentLangue = lang;
             return true;
         };
@@ -28,8 +29,8 @@ var LanguageUtils;
             if (gameID === void 0) { gameID = 0; }
             if (this.CurrentLangue === null) {
                 var storage = new Utils.Storage();
-                var key_1 = this.GetLanguageKey(LanguageUtils.GameID);
-                var lang = storage.GetLocalStorage(key_1);
+                var key_1 = this.GetLanguageKey(gameID);
+                var lang = storage.Get(key_1, this.cacheType);
                 if (!lang) {
                     this.CurrentLangue = LanguageUtils.DefaultLanguage;
                 }
@@ -45,7 +46,7 @@ var LanguageUtils;
          */
         Language.prototype.GetLanguageKey = function (gameID) {
             if (gameID === void 0) { gameID = 0; }
-            return "Language-Cache-Key";
+            return "EGame-" + gameID + "-Language-Key";
         };
         return Language;
     }());

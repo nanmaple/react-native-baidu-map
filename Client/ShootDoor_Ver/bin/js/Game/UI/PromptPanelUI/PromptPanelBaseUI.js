@@ -19,12 +19,22 @@ var ScenePanel;
             this.ui.visible = this.uiData.isShow;
             this.ui.promptTxt.text = this.uiData.txt;
             //确认、取消按钮绑定点击事件
-            this.ui.sureBox.getChildByName("sureBtn").on(Laya.Event.CLICK, this, this.OnClickConfirm);
+            this.ui.sureBtn.on(Laya.Event.CLICK, this, this.OnClickConfirm);
             if (GameConfig.RatioType) {
                 this.ui.prompt.scale(GameConfig.LengthShort, 1);
             }
             else {
                 this.ui.prompt.scale(1, GameConfig.ShortLength);
+            }
+            var lang = Laya.Browser.window.navigator.language || Laya.Browser.window.navigator["userLanguage"]; //常规浏览器语言和IE浏览器  
+            lang = lang.substr(0, 2); //截取lang前2位字符 
+            if (lang == 'zh') {
+                this.ui.title.skin = "ui/title.png";
+                this.ui.sureBtn.skin = "ui/ok.png";
+            }
+            else {
+                this.ui.title.skin = "ui/title_EN.png";
+                this.ui.sureBtn.skin = "ui/ok_EN.png";
             }
         }
         /**

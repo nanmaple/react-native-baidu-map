@@ -65,10 +65,8 @@ abstract class BaseCtrl {
         this.socket.on(ServiceManager.SocketEvent.OnSystemPush, this, this.OnSystemPushHandler);
         //启动连接
         this.socket.Connect(this.socketUrl);
-        console.log("连接：" + this.socketUrl);
         let wechat: Utils.WeChat = new Utils.WeChat();
         let isWeChat: boolean = Laya.Browser.window.navigator.userAgent.indexOf('MicroMessenger') >= 0;  //判断是否微信浏览器
-        console.log("是否微信浏览器：" + isWeChat);
         Laya.timer.loop(2000, this, () => {
             if (isWeChat) {
                 wechat.GetNetworkType(Laya.Handler.create(this, this.GetNetworkSuccess, null, false));
@@ -176,14 +174,6 @@ abstract class BaseCtrl {
                 this.OnGameInit(data.Data);
                 break;
             case BaseEnum.GameCommand.MSG_GAME_START:
-                // if (this.endData) {
-                //     this.OnGameResult(this.endData);
-                //     this.endData = null;
-                // }
-                // if (this.settleCacheData) {
-                //     this.OnSettleResult(this.settleCacheData);
-                //     this.settleCacheData = null;
-                // }
                 this.OnGameStart(data.Data);
                 break;
             case BaseEnum.GameCommand.MSG_GAME_BETRESULT:
@@ -193,11 +183,9 @@ abstract class BaseCtrl {
                 this.OnStopBet();
                 break;
             case BaseEnum.GameCommand.MSG_GAME_GAMERESULT:
-                // this.endData = data.Data;
                 this.OnGameResult(data.Data);
                 break;
             case BaseEnum.GameCommand.MSG_GAME_SETTLERESULT:
-                // this.settleCacheData = data.Data;
                 this.OnSettleResult(data.Data);
                 break;
             case BaseEnum.GameCommand.MSG_GAME_OTHER:

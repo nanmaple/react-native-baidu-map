@@ -22,12 +22,10 @@ var CardPanelCtrl = /** @class */ (function (_super) {
      */
     CardPanelCtrl.prototype.InitGame = function (data) {
         if (data.Cards == null || data.BetTime == 0) {
-            console.log("游戏初始化隐藏牌", new Date().getTime());
             this.HidePoker();
         }
         else {
             this.dataCards = [data.Cards.FirstCard, data.Cards.SecondCard, data.Cards.ThirdCard];
-            console.log("游戏初始化隐藏-显示牌", new Date().getTime());
             for (var i = 0; i < this.pokerNum; i++) {
                 this.gameUI.GetCardPanel().HidePoker(i);
                 this.gameUI.GetCardPanel().InitPoker(this.dataCards[i], i);
@@ -48,7 +46,6 @@ var CardPanelCtrl = /** @class */ (function (_super) {
      */
     CardPanelCtrl.prototype.StartGame = function (data) {
         this.dataCards = [data.FirstCard, data.SecondCard, null];
-        console.log("游戏开始隐藏-显示牌", new Date().getTime());
         for (var i = 0; i < this.pokerNum; i++) {
             this.gameUI.GetCardPanel().HidePoker(i);
             this.gameUI.GetCardPanel().ShowPoker(this.dataCards[i], i);
@@ -76,7 +73,6 @@ var CardPanelCtrl = /** @class */ (function (_super) {
         this.gameUI.GetCardPanel().StartFlipPoker(data.ThirdCard, 2);
         //扑克牌翻转结束回调
         this.gameUI.GetCardPanel().EndFlipPokerHander(Laya.Handler.create(this, function () {
-            console.log("游戏结束隐藏牌", new Date().getTime());
             for (var i = 0; i < _this.pokerNum; i++) {
                 _this.gameUI.GetCardPanel().HidePoker(i);
             }
