@@ -183,13 +183,14 @@ namespace ScenePanel {
           */
         private Bet(i: number): void {
             //启用确认投注按钮
-            this.DisabledBetBtn(false);
+            if(this.oddsLabelArr[i].text != "---"){
+                this.DisabledBetBtn(false);
+            }
             let params: ClickResultDto = {
                 Type: ClickType.ODDS,
                 Data: i + 1
             }
-            this.uiData.handler.runWith(params);
-            Utils.BackgroundMusic.PlaySounds("sound/bet.wav");
+            this.uiData.handler.runWith(params);  
         }
 
         /**
@@ -403,13 +404,14 @@ namespace ScenePanel {
          * @param txt 提示的信息
          */
         public ShowMsg(txt: string): void {
+            Laya.timer.clear(this,this.HideMsg);
             this.ui.MsgPanel.changeText(txt);
             this.ui.MsgPanel.visible = true;
-            Laya.timer.once(1500, this, () => { this.ui.MsgPanel.visible = false; });
+            Laya.timer.once(2000, this, this.HideMsg);
         }
-
-
-
+        public HideMsg():void{
+            this.ui.MsgPanel.visible = false;
+        }
         /**
          * 筹码动画回调
          * @param i i 筹码位置编号

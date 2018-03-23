@@ -142,7 +142,7 @@ class CheckAccount extends React.Component<any, any> {
                 <div className={scoreRecordStyle.time}>{item.UpdateTime}</div>
                 <div className={(item.Changed==0?"ling":item.Changed > 0 ? "zheng" : "fu") +" "+scoreRecordStyle.win}>{Money.Format(item.Changed)}</div>
                 <div className={scoreRecordStyle.change}>{Money.Format(item.Balance)}</div>
-                <div className={scoreRecordStyle.message}>{this.languageManager.GetErrorMsg(item.TransactionType)}</div>
+                <div className={scoreRecordStyle.message}>{this.languageManager.GetErrorMsg(`TransactionType${item.TransactionType}`)}</div>
             </div>
         )
     }

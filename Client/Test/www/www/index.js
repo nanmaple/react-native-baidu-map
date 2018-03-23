@@ -46,4 +46,11 @@ $(function () {
         "-o-transform": scale,
         "transform": scale,
     })
+	
+	setTimeout(function(){
+		demo();
+		setTimeout(function(){
+			stopDemo();
+		},10000);
+	},2000);
 })

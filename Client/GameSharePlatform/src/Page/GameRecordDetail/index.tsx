@@ -79,7 +79,7 @@ export default class Home extends React.PureComponent<any, any> {
                 item.map((items: any, indexs: number) => {
                     return (
                         <div key={indexs} className={styles.rowItem}>
-                            <div className={styles.betPos}>{BetPosType[items.BetPos]}</div>
+                            <div className={styles.betPos}>{this.languageManager.GetErrorMsg(`BetPosType${items.BetPos}`)}</div>
                             <div className={styles.odds}>{items.Odds}</div>
                             <div className={styles.amount}>{items.Amount}</div>
                         </div>

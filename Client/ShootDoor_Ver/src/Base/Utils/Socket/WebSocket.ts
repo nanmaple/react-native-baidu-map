@@ -60,7 +60,6 @@ namespace Utils.Socket {
         private onOpen(msg: any): void {
             Laya.timer.clear(this, this.Connect);
             this.OnConnect.run();
-            console.log("连接成功");
         }
 
         /**
@@ -68,7 +67,6 @@ namespace Utils.Socket {
          * @param msg 
          */
         private onClose(msg: any): void {
-            console.log("断开连接" + this.isReConnect)
             this.OnClosed.runWith(msg);
             if (this.isReConnect) {
                 Laya.timer.clear(this, this.Connect);
@@ -81,7 +79,6 @@ namespace Utils.Socket {
          * @param msg 
          */
         private onError(error: any): void {
-            console.log("连接出错")
             this.OnError.runWith(error);
         }
         /**

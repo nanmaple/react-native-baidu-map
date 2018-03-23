@@ -45,9 +45,8 @@ namespace ScenePanel {
             this.ui.betDetails.text = language.GetLanguage("BetDetails");
             this.ui.noBetData.text = language.GetLanguage("NoBetRecord");
             this.ui.isLoading.text = language.GetLanguage("IsLoading");
-            let lang = Laya.Browser.window.navigator.language || Laya.Browser.window.navigator["userLanguage"];//常规浏览器语言和IE浏览器  
-            lang = lang.substr(0, 2);//截取lang前2位字符 
-            if(lang == 'zh'){
+            let lang:number = language.GetLanguageType();
+            if(lang == LanguageUtils.LanguageType.CH){
                 this.ui.title.skin = "ui/betrecord.png";
             }else{
                 this.ui.title.skin = "ui/betrecord_EN.png";

@@ -90,7 +90,6 @@ namespace Utils {
                     });
                 })
             } else {
-                console.log("未引入weixin.js");
                 handler.runWith(-1);
             }
         }
@@ -122,7 +121,6 @@ namespace Utils {
                     });
                 })
             } else {
-                console.log("未引入weixin.js");
                 handler.runWith(-1);
             }
         }
@@ -154,7 +152,6 @@ namespace Utils {
                     });
                 })
             } else {
-                console.log("未引入weixin.js");
                 handler.runWith(-1);
             }
         }
@@ -186,7 +183,6 @@ namespace Utils {
                     });
                 })
             } else {
-                console.log("未引入weixin.js");
                 handler.runWith(-1);
             }
         }

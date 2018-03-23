@@ -71,14 +71,17 @@ var GameMain = (function () {
         if (this.status === 1) {
             this.accountUI.login.visible = false;
             this.accountUI.accountList.visible = true;
+            this.accountUI.title.visible = true;
             this.MultiAccount(this.list);
         }
         else {
             this.accountUI.login.visible = true;
-            this.accountUI.accountList.visible = false;
+            this.accountUI.accountList.visible = true;
+            this.accountUI.title.visible = true;
         }
         var language = new LanguageUtils.Language();
         this.accountUI.login.text = language.GetLanguage("Login");
+        this.accountUI.title.text = language.GetLanguage("AgentTitle");
     };
     /**
      * 登录回调
@@ -126,12 +129,14 @@ var GameMain = (function () {
             this.accountUI.accountList.vScrollBarSkin = "";
             this.accountUI.login.visible = false;
             this.accountUI.accountList.visible = true;
+            this.accountUI.title.visible = true;
             this.accountUI.accountList.renderHandler = new Laya.Handler(this, this.renderHandler);
             this.accountUI.accountList.mouseHandler = new Laya.Handler(this, this.onSelect);
         }
     };
     GameMain.prototype.renderHandler = function (cell, index) {
         var language = new LanguageUtils.Language();
+        var lang = language.GetLanguageType();
         //如果索引不再可索引范围，则终止该函数
         if (index > this.list.length)
             return;
@@ -140,6 +145,14 @@ var GameMain = (function () {
         //根据子节点的名字listNumber，获取子节点对象。 
         var agent = cell.getChildByName("agent");
         var agentLabel = cell.getChildByName("label");
+        if (lang == LanguageUtils.LanguageType.CH) {
+            agentLabel.width = 100;
+            agent.x = 120;
+        }
+        else {
+            agentLabel.width = 200;
+            agent.x = 220;
+        }
         agentLabel.text = language.GetLanguage("Agent");
         if (!data.Account && data.Account.length == 0) {
             //label渲染列表文本（序号）
@@ -158,6 +171,7 @@ var GameMain = (function () {
         if (e.type == Laya.Event.CLICK) {
             this.accountUI.login.visible = true;
             this.accountUI.accountList.visible = false;
+            this.accountUI.title.visible = false;
             this.dto.MemberID = this.list[index].MemberId;
             this.memberServer.LoginByID(this.dto, Laya.Handler.create(this, this.LoginCallback));
         }

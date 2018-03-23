@@ -14,10 +14,10 @@ export default class InfoItemLabel extends React.PureComponent<any, any> {
      * @param MemberSocre 会员分数
      * @param MyScore 我的分数
      */
-    public renderLabel = (MemberSocre: number, MyScore: number) => {
+    public renderLabel = (MemberSocre: number, MyScore: number, nickName: any) => {
         return (
             <div className={style.rowItem}>
-                <div className={style.memSoc}>{this.languageManager.GetErrorMsg("MemberScore")}:{MemberSocre}</div>
+                <div className={style.memSoc}>{nickName}:{MemberSocre}</div>
                 <div className={style.mySoc}>{this.languageManager.GetErrorMsg("MyScore")}:{MyScore}</div>
             </div>
         )
@@ -25,11 +25,11 @@ export default class InfoItemLabel extends React.PureComponent<any, any> {
     }
 
     render() {
-        let { memberSocre, myScore } = this.props;
+        let { memberSocre, myScore, nickName } = this.props;
         return (
             <div>
                 {
-                    this.renderLabel(memberSocre, myScore)
+                    this.renderLabel(memberSocre, myScore, nickName)
                 }
 
 

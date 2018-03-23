@@ -33,11 +33,11 @@ export default class Home extends React.Component<any, any> {
             isClose: this.userCtrl.IsClose(),
             memberInfo: this.userCtrl.GetMemberInfoByLocal(),
             isTourists: this.userCtrl.GetAuthorizationDtoByLocal().IsTourists,
-            gmeList: []
+            gmeList: [],
+            value: CacheManager.GetCache(CacheType.Language).language
         }
     }
-    componentDidMount() {
-        //请求会员信息
+    componentWillMount() {
     }
     /**
      * 提示信息
@@ -108,8 +108,16 @@ export default class Home extends React.Component<any, any> {
             </div>
         )
     }
+
+    private handleChange = (event:any) => {
+        this.languageManager.SetLanguage(event.target.value);
+        this.setState({
+            value: event.target.value
+        });
+    }
     render() {
-        let { gameList } = this.state;
+        document.title= this.languageManager.GetErrorMsg("Plat");
+        let { gameList ,value} = this.state;
         gameList = [{ imgUrl: logoImg, name: this.languageManager.GetErrorMsg("ShotDoor"), star: "五颗星", id: 1 }];
         let socre: string = this.state.memberInfo ? Money.Format(this.state.memberInfo.Score) : "0";
         return (
@@ -128,6 +136,12 @@ export default class Home extends React.Component<any, any> {
                         {
                             this.renderButton()
                         }
+                    </div>
+                    <div>
+                        <select className={style.select} value={this.state.value} onChange={this.handleChange}>
+                            <option value="CH">中文</option>
+                            <option value="EN">English</option>
+                        </select>
                     </div>
                 </div>
                 <div className={style.gameList}>

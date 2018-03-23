@@ -17,7 +17,10 @@ namespace BaseEnum {
         /// 参数无效
         /// </summary>
         InvalidArgument = 2,
-
+        /// <summary>
+        /// IP受限
+        /// </summary>
+        IPLimited = 3,
         // 登录错误码
         /// <summary>
         /// 会员已存在(注册新账号时)

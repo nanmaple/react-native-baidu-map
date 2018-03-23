@@ -7,10 +7,17 @@ namespace ScenePanel {
          * @param isHor 是否横版
          */
         constructor(isHor?: boolean) {
+            let language: LanguageUtils.Language = new LanguageUtils.Language();
+            var htmlD: Laya.HTMLDivElement = new Laya.HTMLDivElement();
+            htmlD.innerHTML = language.GetLanguage("GameRule");
+            htmlD.style.lineHeight = 40;
+            htmlD.style.height = 2000;
             if (isHor) {
                 this.ui = new ui.RulePanelUI();
+                htmlD.style.width = 940;
             } else {
                 this.ui = new ui.RulePanel_VerUI();
+                htmlD.style.width = 660;
             }
             //将提示UI类缓存为静态图像
             this.ui.zOrder = 8;
@@ -18,11 +25,11 @@ namespace ScenePanel {
             this.ui.cacheAs = "bitmap";
             this.uiData = RulePanelUIData.GetInstance();
             this.ui.visible = this.uiData.isShow;
-            this.ui.txt.vScrollBarSkin = "";
+            this.ui.rule.vScrollBarSkin = "";
             this.ui.close.on(Laya.Event.CLICK, this, this.CloseRule);
-            let lang = Laya.Browser.window.navigator.language || Laya.Browser.window.navigator["userLanguage"];//常规浏览器语言和IE浏览器  
-            lang = lang.substr(0, 2);//截取lang前2位字符 
-            if(lang == 'zh'){
+            this.ui.rule.addChild(htmlD);
+            let lang:number = language.GetLanguageType();
+            if(lang == LanguageUtils.LanguageType.CH){
                 this.ui.title.skin = "ui/ruleTitle.png";
             }else{
                 this.ui.title.skin = "ui/ruleTitle_EN.png";

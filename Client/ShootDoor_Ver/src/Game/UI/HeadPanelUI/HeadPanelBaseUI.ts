@@ -17,9 +17,9 @@ namespace ScenePanel {
             this.ui.cacheAs = "bitmap";
             this.uiData = HeadPanelUIData.GetInstance();
             this.SetInfo(this.uiData.memberInfo, this.uiData.parentID, this.uiData.grHandler, this.uiData.ruleHandler, this.uiData.isTourists);
-            let lang = Laya.Browser.window.navigator.language || Laya.Browser.window.navigator["userLanguage"];//常规浏览器语言和IE浏览器  
-            lang = lang.substr(0, 2);//截取lang前2位字符 
-            if(lang == 'zh'){
+            let language: LanguageUtils.Language = new LanguageUtils.Language();
+            let lang:number = language.GetLanguageType();
+            if(lang == LanguageUtils.LanguageType.CH){
                 this.ui.attention.skin = "ui/attention.png";
             }else{
                 this.ui.attention.skin = "ui/attention_EN.png";

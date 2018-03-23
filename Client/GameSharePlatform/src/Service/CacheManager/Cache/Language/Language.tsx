@@ -16,7 +16,7 @@ export default class Language implements ILanguage {
      * 获取用户缓存的key
      */
     private GetLanguageKey(): string {
-        return `language-cache-key`;
+        return `Language-Cache-Key`;
     }
     /**
      * 获取语言

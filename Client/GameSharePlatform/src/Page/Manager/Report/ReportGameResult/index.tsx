@@ -219,7 +219,7 @@ class GameRecord extends React.Component<any, any> {
             <div className={styles.container}>
                 <CompToast ref={(c: any) => this.toast = c} />
                 <div className={styles.listTitle}>
-                    <div className={styles.title}>{this.languageManager.GetErrorMsg("GameREsult")}{nickName && nickName != "null" ? `---${nickName}` : null}{remark && remark != "null" ? `(${remark})` : null}</div>
+                    <div className={styles.title}>{this.languageManager.GetErrorMsg("GameResult")}{nickName && nickName != "null" ? `---${nickName}` : null}{remark && remark != "null" ? `(${remark})` : null}</div>
                     <div className={styles.head}>
                         <div className={styles.timeContainer}>
                             <div className={styles.time} onClick={this.ShowStartPicker}>{this.state.startDate}</div>

@@ -15,7 +15,6 @@ class GameMain {
      * GameLoadCtrl界面功能完成回调
      */
     private onGameLoadSuccess() {
-        // Utils.BackgroundMusic.PlayMusic("sound/bkmusic.wav");
         this.GameCtrl = new GameCtrl(Laya.Handler.create(this, this.onGameLoadSuccess));
     }
 

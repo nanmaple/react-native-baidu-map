@@ -102,6 +102,7 @@ namespace ScenePanel {
          * @param value 缓动后投注数量
          */
         public ChipsFly(i: number, value: number): void {
+            Utils.BackgroundMusic.PlaySounds("sound/bet.wav");
             let curBetPosChip = this.betBtnArr[i].getChildAt(2) as Laya.Button;
             //从对象池获取移动对象
             let flyChip = Laya.Pool.getItemByClass("flyChip", Laya.Button);

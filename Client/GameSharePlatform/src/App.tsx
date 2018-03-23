@@ -4,11 +4,15 @@ import "./Style/reset.css";
 import "./Style/base.css";
 import 'weui';
 import 'react-weui/build/packages/react-weui.css';
+import LanguageManager from './Language/LanguageManager';
 export default class App extends React.Component<{}, {}> {
+    private languageManager: LanguageManager = new LanguageManager();
     constructor(props: any) {
         super(props);
     }
-
+    componentWillMount(){
+        document.title= this.languageManager.GetErrorMsg("Plat");
+    }
     /**
      * 分享回调
      * @param status 分享结果类型 1.分享成功 0.取消分享 -1.分享失败

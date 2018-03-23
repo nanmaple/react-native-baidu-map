@@ -135,7 +135,7 @@ export default class MemberList extends React.Component<any, any> {
                     </div>
                 }
                 <div className={styles.change}>{Money.Format(item.Balance)}</div>
-                <div className={styles.message}>{ this.languageManager.GetErrorMsg(item.TransactionType)}</div>
+                <div className={styles.message}>{ this.languageManager.GetErrorMsg(`TransactionType${item.TransactionType}`)}</div>
             </div >
         )
     }

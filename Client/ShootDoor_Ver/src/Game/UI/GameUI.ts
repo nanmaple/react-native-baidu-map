@@ -229,7 +229,10 @@ namespace ScenePanel {
         public GetFootBallPanel(): FootBallPanelHor | FootBallPanelVer {
             return this.footballPanel;
         }
-
+        /**
+         * 扑克牌飞行动画
+         * @param dto 
+         */
         public PokerFly(dto: Dto.CardInfoDto): void {
             let isChange: boolean = false;
             if (this.pokerChange != this.isChange) {
@@ -238,6 +241,9 @@ namespace ScenePanel {
             this.pokerArr = this.cardPanel.GetFlyPoker(isChange);
             this.pokerFlyEffect.FlyPoker(dto, this.cardPanel.GetFlyPoker(isChange), this.historyPanel.GetEndFlyPoker(isChange));
         }
+        /**
+         * 清除扑克牌飞行动画
+         */
         public ClearPokerFly():void{
             this.pokerFlyEffect.ClearFlyPoker();
         }

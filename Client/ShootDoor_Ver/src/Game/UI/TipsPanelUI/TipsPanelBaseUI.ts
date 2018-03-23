@@ -7,6 +7,11 @@ namespace ScenePanel {
          * @param isHor 是否横版
          */
         constructor(isHor?: boolean) {
+            let language: LanguageUtils.Language = new LanguageUtils.Language();
+            var htmlD: Laya.HTMLDivElement = new Laya.HTMLDivElement();
+            htmlD.innerHTML = language.GetLanguage("GameTips");
+            htmlD.style.width = 360;
+            htmlD.style.height = 250;
             if (isHor) {
                 this.ui = new ui.TipsPanelUI();
             } else {
@@ -18,6 +23,8 @@ namespace ScenePanel {
             this.ui.closeBtn.on(Laya.Event.CLICK, this, this.CloseTip);
             this.uiData = TipsPanelUIData.GetInstance();
             this.ui.visible = this.uiData.isShow;
+            this.ui.tips.vScrollBarSkin = "";
+            this.ui.tips.addChild(htmlD);
         }
 
         /**

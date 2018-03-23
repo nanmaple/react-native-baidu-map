@@ -76,7 +76,7 @@ class BaseInformation extends React.Component<any, any> {
             remark: data.Remark,
             myScore: data.MyScore,
             score: data.Score,
-            memberNickname: data.MemberNickname,
+            memberNickname: data.Nickname,
             headImageUrl: data.HeadImageUrl,
             phoneNumber: data.PhoneNumber,
             agent: data.Agent,
@@ -254,7 +254,7 @@ class BaseInformation extends React.Component<any, any> {
         return (
             <div className={baseInforStyle.container}>
                 <CompToast ref={(c) => this.toast = c} />
-                <InfoItemLabel memberSocre={Money.Format(score)} myScore={Money.Format(myScore)} />
+                <InfoItemLabel nickName={memberNickname} memberSocre={Money.Format(score)} myScore={Money.Format(myScore)} />
                 <InfoItemButton label={this.languageManager.GetErrorMsg("Score")} memberSocre={Money.Format(score)} myScore={Money.Format(myScore)} handler={this.SetScore} />
                 <InfoItemInput label={this.languageManager.GetErrorMsg("Remark")} value={this.state.remark} handler={this.SetRemark}></InfoItemInput>
                 <InfoItemCheckBox label={this.languageManager.GetErrorMsg("State")} trueText={this.languageManager.GetErrorMsg("Normal")} falseText={this.languageManager.GetErrorMsg("Close")} memberClosed={this.state.memberClose} handler={this.SetMemberClosed} />

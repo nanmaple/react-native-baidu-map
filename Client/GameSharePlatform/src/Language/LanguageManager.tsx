@@ -13,11 +13,11 @@ export default class LanguageManager implements ILanguageManager {
      * 改变语言对应解析
      * @param language 语言
      */
-    private ChangeLanguage(language: LanguageType): void {
+    private ChangeLanguage(language: any): void {
         switch (language) {
-            case LanguageType.CH:
+            case LanguageType[0]:
                 this.langMsg = LangMsg.CH; break;
-            case LanguageType.EN:
+            case LanguageType[1]:
                 this.langMsg = LangMsg.EN; break;
             default:
                 this.langMsg = LangMsg.CH; break;

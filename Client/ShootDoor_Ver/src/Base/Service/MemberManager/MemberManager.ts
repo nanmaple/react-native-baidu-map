@@ -69,7 +69,9 @@ namespace ServiceManager {
             http.Post(Net.ApiConfig.LoginByTourists, obj, header, (response: any) => {
                 if (response.Result == BaseEnum.ErrorCode.Success) {
                     this.LoginSuccess(response.Data, successHandler);
-                } else {
+                }else if(response.Result == BaseEnum.ErrorCode.IPLimited){
+                    Laya.Browser.window.location.href = "";
+                }else {
                     errorhandler.runWith(response.Result);
                 }
             }, (error: any) => {
@@ -92,6 +94,8 @@ namespace ServiceManager {
                 if (response.Result == BaseEnum.ErrorCode.Success) {
                     GameConfig.SocketToken = response.Data;
                     successHandler.run();
+                }else if(response.Result == BaseEnum.ErrorCode.IPLimited){
+                    Laya.Browser.window.location.href = "";
                 } else {
                     errorhandler.runWith(response.Result);
                 }

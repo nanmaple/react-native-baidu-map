@@ -9,14 +9,14 @@ namespace LanguageUtils {
         small: "Small",
         odd: "Odd",
         even: "Even",
-        lout: "L Out",
-        rout: "R Out",
-        lhit: "L Hit",
-        rhit: "R Hit",
-        leftOut: "L Out",
-        rightOut: "R Out",
-        leftHit: "L Hit",
-        rightHit: "R Hit",
+        lout: "Left",
+        rout: "Right",
+        lhit: "Left",
+        rhit: "Right",
+        leftOut: "LeftOut",
+        rightOut: "RightOut",
+        leftHit: "LeftHit",
+        rightHit: "RightHit",
         //投注信息提示
         betSuccess: "Bet Success",
         betFail: "Bet Fail",
@@ -150,7 +150,10 @@ namespace LanguageUtils {
         /// 参数无效
         /// </summary>
         InvalidArgument: "Invalid Argument",
-
+        /// <summary>
+        /// IP受限
+        /// </summary>
+        IPLimited: "IP Limited",
         // 登录错误码
         /// <summary>
         /// 会员已存在(注册新账号时)
@@ -268,5 +271,56 @@ namespace LanguageUtils {
         /// 修改会员的父级会员分数失败
         /// </summary>
         ModifyParentScoreFailed: "Modify Parent Score Failed",
+
+        //游戏关注提示内容
+        GameTips:"<p style='fontSize:35'>Since you haven't logged in yet, now it's a play mode, to experience more fun games, click on the top left</p>"+
+        "<p style='fontSize:35;color:red'>&nbsp;'attention'&nbsp;</p>"+
+        "<p style='fontSize:35'>button to log in.</p>",
+                  
+        //游戏规则内容
+        GameRule:"<p style='fontSize:30;font-weight:bold'>Game Introduction</p>"+"<br/>"+
+        "<p style='fontSize:25'>Shooting Longmen is a small game of intelligence, players can choose the probability of playing cards to choose the position of the bet, so as to get the corresponding score as a reward.</p>"+"<br/>"+
+        "<p style='fontSize:25'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;At the beginning of each game, the system randomly selected three cards from 52 cards, the first as the left door post, the second as the ball, and the third as the right door. Guess the ball game player card position, position corresponding odds guess scores.</p>"+"<br/>"+
+        "<p style='fontSize:30;font-weight:bold'>Rule Description</p>"+"<br/>"+
+        "<p style='fontSize:25'>1.The game is 30 seconds.</p>"+"<br/>"+
+        "<p style='fontSize:25'>2.The number of poker points, 'A' is 1, 'J' is 11, 'Q' is 12, 'K' is 13, and the others are counted as the number of poker face numbers.</p>"+"<br/>"+
+        "<p style='fontSize:25'>3.The size, the single double, the red and black are the fixed odds of 1.97. The other playing method generates the odds dynamically according to the probability, which contains the principal.</p>"+"<br/>"+
+        "<p style='fontSize:25'>4.Players choose their own bets to make a bet.</p>"+"<br/>"+
+        "<p style='fontSize:25'>5.When the size of a single pair is 7 on second cards, the result is the sum of all the amount of the sum of the size of the single and double position.</p>"+"<br/>"+
+        "<p style='fontSize:30;font-weight:bold'>Win or lose Description</p>"+"<br/>"+
+        "<p style='fontSize:28;font-weight:bold'>Shoot In</p>"+"<br/>"+
+        "<p style='fontSize:25'>The number of balls is between the left door post and the right door post points (no left and right door columns, regardless of the order) to win, and other losses, such as:</p>"+"<br/>"+
+        "<p style='fontSize:25'>The left door column is 3 points, the right door column is 6, the number of points is 4, 5 wins, the other is lost.</p>"+"<br/>"+
+        "<p style='fontSize:25'>The left door column is 6 points, the right door column is 3, the number of points is 4, 5 wins, the other is lost.</p>"+"<br/>"+
+        "<p style='fontSize:28;font-weight:bold'>Shoot Out</p>"+"<br/>"+
+        "<p style='fontSize:25'>The number of balls is won by the number of points in the left and right door columns (no left and right door columns, regardless of the order), and other losses, such as:</p>"+"<br/>"+
+        "<p style='fontSize:25'>The left door column is 3 points, the right door column is 6, the number of points is 1 (A), 2, 7, 8, 9, 10, 11 (J), 12 (Q), and 13 (K) wins, the other is lost.</p>"+"<br/>"+
+        "<p style='fontSize:25'>The left door column is 6 points, the right door column is 3, the number of points is 1 (A), 2, 7, 8, 9, 10, 11 (J), 12 (Q), and 13 (K) wins, the other is lost.</p>"+"<br/>"+
+        "<p style='fontSize:28;font-weight:bold'>Shoot Left Out</p>"+"<br/>"+
+        "<p style='fontSize:25'>On the rule of shooting deviation, the number of points of the ball is won by the number of points in the left door (and the order of size), and the other is lost, such as:</p>"+"<br/>"+
+        "<p style='fontSize:25'>The left door column is 3 points, the right door column is 6, the number of points is 1 (A), 2 wins, the other is lost.</p>"+"<br/>"+
+        "<p style='fontSize:25'>The left door column is 6 points, the right door column is 3, the number of points is 7, 8, 9, 10, 11 (J), 12 (Q), 13 (K) wins, the other is lost.</p>"+"<br/>"+
+        "<p style='fontSize:28;font-weight:bold'>Shoot Right Out</p>"+"<br/>"+
+        "<p style='fontSize:25'>On the rule of shooting deviation, the number of points of the ball is won by the number of points in the right door (and the order of size), and the other is lost, such as:</p>"+"<br/>"+
+        "<p style='fontSize:25'>The left door column is 3 points, the right door column is 6, the number of points is 7, 8, 9, 10, 11 (J), 12 (Q), 13 (K) wins, the other is lost.</p>"+"<br/>"+
+        "<p style='fontSize:25'>The left door column is 6 points, the right door column is 3, the number of points is 1 (A), 2 wins, the other is lost.</p>"+"<br/>"+
+        "<p style='fontSize:28;font-weight:bold'>Shoot GoalPost</p>"+"<br/>"+
+        "<p style='fontSize:25'>The number of points is equal to the number of left door posts or the number of right door posts (regardless of the order) to win, and the other is lost, such as:</p>"+"<br/>"+
+        "<p style='fontSize:25'>The left door column is 3 points, the right door column is 6, the number of points is 3, 6 wins, the other is lost.</p>"+"<br/>"+
+        "<p style='fontSize:25'>The left door column is 6 points, the right door column is 3, the number of points is 3, 6 wins, the other is lost.</p>"+"<br/>"+
+        "<p style='fontSize:28;font-weight:bold'>Shoot Left GoalPost</p>"+"<br/>"+
+        "<p style='fontSize:25'>On the rules of the hit column, the number of points of the ball is won by the number of points is equal to the number of points in the left door, and the other is lost, such as:</p>"+"<br/>"+
+        "<p style='fontSize:25'>The left door column is 3 points, the right door column is 6, the ball point number is 3 wins, the other is lost.</p>"+"<br/>"+
+        "<p style='fontSize:25'>The left door column is 6 points, the right door column is 3, the ball point number is 6 wins, the other is lost.</p>"+"<br/>"+
+        "<p style='fontSize:28;font-weight:bold'>Shoot Right GoalPost</p>"+"<br/>"+
+        "<p style='fontSize:25'>On the rules of the hit column, the number of points of the ball is won by the number of points is equal to the number of points in the right door, and the other is lost, such as:</p>"+"<br/>"+
+        "<p style='fontSize:25'>The left door column is 3 points, the right door column is 6, the ball point number is 6 wins, the other is lost.</p>"+"<br/>"+
+        "<p style='fontSize:25'>The left door column is 6 points, the right door column is 3, the ball point number is 3 wins, the other is lost.</p>"+"<br/>"+
+        "<p style='fontSize:28;font-weight:bold'>Size</p>"+"<br/>"+
+        "<p style='fontSize:25'>The number of points of the ball is 1 (A), 2, 3, 4, 5, 6 small win, the number of points of the ball is 8、9、10、11（J）、12（Q）、13（K）big win, 7 is draw and (the amount of money refunded).</p>"+"<br/>"+
+        "<p style='fontSize:28;font-weight:bold'>Single and double</p>"+"<br/>"+
+        "<p style='fontSize:25'>The number of points of the ball is 1 (A), 3, 5, 9, 11 (J), 13 (K) single win, the number of points of the ball is 2、4、6、8、10、12（Q）double win, 7 is draw and (the amount of money refunded).</p>"+"<br/>"+
+        "<p style='fontSize:28;font-weight:bold'>Red and Black</p>"+"<br/>"+
+        "<p style='fontSize:25'>The color of the ball is red heart、block red win, the color of the ball is black heart、plum black win.</p>"
     }
 }

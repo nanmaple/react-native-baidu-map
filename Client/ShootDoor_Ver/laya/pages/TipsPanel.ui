@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":3,
-    "selecteID":11,
+    "selecteID":13,
     "props":{"x":0,"width":1334,"visible":true,"sceneColor":"#000000","renderType":"mask","height":750},
     "nodeParent":-1,
     "label":"View",
@@ -51,30 +51,17 @@
                         },
                         {
                             "x":45,
-                            "type":"Label",
-                            "props":{"y":200,"x":278,"wordWrap":true,"width":352,"var":"tipTxt","valign":"top","text":"由于您还没有登录，现在是试玩模式，想要体验更多游戏乐趣，请点击左上方          按钮，即可登录。","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":188,"fontSize":35,"font":"SimHei","color":"#000000","bold":false,"align":"left"},
+                            "type":"Panel",
+                            "props":{"y":195,"x":275,"width":360,"var":"tips","height":195},
                             "nodeParent":3,
-                            "label":"Label(tipTxt)",
+                            "label":"Panel(tips)",
                             "isOpen":true,
-                            "isDirectory":true,
+                            "isDirectory":false,
                             "isAniNode":true,
-                            "hasChild":true,
-                            "compId":11,
+                            "hasChild":false,
+                            "compId":13,
                             "child":[
-                                {
-                                    "x":60,
-                                    "type":"Label",
-                                    "props":{"y":105,"wordWrap":true,"width":140,"valign":"top","text":"‘关注’","styleSkin":"ui/prompt/label.png","right":70,"overflow":"scroll","height":40,"fontSize":35,"font":"SimHei","color":"#f90c08","bold":false,"align":"left"},
-                                    "nodeParent":11,
-                                    "label":"Label",
-                                    "isOpen":true,
-                                    "isDirectory":false,
-                                    "isAniNode":true,
-                                    "hasChild":false,
-                                    "compId":12,
-                                    "child":[
-                                        ]
-                                }]
+                                ]
                         }]
                 }]
         }],

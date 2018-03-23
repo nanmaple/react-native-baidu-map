@@ -91,7 +91,6 @@ class GameCtrl extends BaseCtrl {
      */
     public OnCloseHandler(message: string): void {
         ScenePanel.GameUI.GetInstance().GetLoadingPanel().ShowConnect();
-        console.log(message)
     }
 
     /**
@@ -99,7 +98,7 @@ class GameCtrl extends BaseCtrl {
      * @param data 
      */
     public OnErrorHandler(message: string): void {
-        console.log(message)
+
     }
 
     /**
@@ -107,7 +106,7 @@ class GameCtrl extends BaseCtrl {
      * @param data 
      */
     public OnWillReconnectHandler(): void {
-        console.log("将要重连")
+
     }
 
     /**
@@ -147,7 +146,6 @@ class GameCtrl extends BaseCtrl {
      * @param data 游戏初始化信息
      */
     public OnGameInit(data: Dto.InitGameDto, isReInit: boolean = false): void {
-        console.log("初始化", data);
         ScenePanel.GameUI.GetInstance().GetLoadingPanel().HideConnect();
         this.cacheData = <Dto.CacheGameDto>data;
         if (!this.roundID || this.roundID <= data.RoundID) {
@@ -173,7 +171,7 @@ class GameCtrl extends BaseCtrl {
             this.TimePanelCtrl.HideGameTime();
         }
         //2.初始化投注界面
-        if (data) {
+        if (data && data.BetTime > 0) {
             this.BetCtrl.GameInit(data, isReInit);
             this.cacheData.RoundID = data.RoundID;
         }
@@ -201,13 +199,10 @@ class GameCtrl extends BaseCtrl {
         ScenePanel.GameUI.GetInstance().ClearPokerFly();
         this.CardPanelCtrl.ClearPokerFlip();
         if (!this.roundID || this.roundID < data.RoundID) {
-            console.log("开始-不同局", data, this.roundID, data.RoundID, new Date().getTime());
             this.roundID = data.RoundID;
         } else if (this.roundID == data.RoundID) {
-            console.log("开始-同一局", data, this.roundID, data.RoundID, new Date().getTime());
             this.roundID = data.RoundID;
         } else {
-            console.log("开始 return ", data, this.roundID, data.RoundID, new Date().getTime());
             return;
         }
         if (data && data.RoundID) {
@@ -249,13 +244,10 @@ class GameCtrl extends BaseCtrl {
      */
     public OnBetResult(data: Dto.BetResultDto): void {
         if (!this.roundID || this.roundID < data.RoundID) {
-            console.log("投注结果", data, this.roundID, data.RoundID);
             this.roundID = data.RoundID;
         } else if (this.roundID == data.RoundID) {
-            console.log("投注结果-同一局", data, this.roundID, data.RoundID);
             this.roundID = data.RoundID;
         } else {
-            console.log("投注结果 return ", data, this.roundID, data.RoundID);
             return;
         }
         //投注结果返回
@@ -281,13 +273,10 @@ class GameCtrl extends BaseCtrl {
      */
     public OnGameResult(data: Dto.EndGameDto): void {
         if (!this.roundID || this.roundID < data.RoundID) {
-            console.log("结束", data, this.roundID, data.RoundID, new Date().getTime());
             this.roundID = data.RoundID;
         } else if (this.roundID == data.RoundID) {
-            console.log("结束-同一局", data, this.roundID, data.RoundID, new Date().getTime());
             this.roundID = data.RoundID;
         } else {
-            console.log("结束 return ", data, this.roundID, data.RoundID, new Date().getTime());
             return;
         }
         //缓存数据
@@ -340,13 +329,10 @@ class GameCtrl extends BaseCtrl {
      */
     public OnSettleResult(data: Dto.GameResultDto): void {
         if (!this.roundID || this.roundID < data.RoundID) {
-            console.log("结算", data, this.roundID, data.RoundID);
             this.roundID = data.RoundID;
         } else if (this.roundID == data.RoundID) {
-            console.log("结算-同一局", data, this.roundID, data.RoundID);
             this.roundID = data.RoundID;
         } else {
-            console.log("结算 return ", data, this.roundID, data.RoundID);
             return;
         }
         this.cacheData.Status = BaseEnum.GameStatus.SETTLEED;

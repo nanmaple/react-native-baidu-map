@@ -29,14 +29,39 @@ namespace LanguageUtils {
                 let lang: LanguageType = storage.Get(key,this.cacheType) as LanguageType;
                 if (!lang) {
                     this.CurrentLangue = DefaultLanguage;
-                } else {
+                }else if(typeof(lang) != "number"){
+                    if(lang == LanguageType[0]){
+                        this.CurrentLangue = LanguageType.CH;
+                    }else{
+                        this.CurrentLangue = LanguageType.EN;
+                    }
+                }else{
                     this.CurrentLangue = lang;
                 }
             }
-
             return LanguageUtils[LanguageType[this.CurrentLangue]][key];
         }
-
+        /**
+         * 获取游戏语言类型
+         */
+        public GetLanguageType(gameID: number = 0):number{
+            let CurrentLangue:number;
+            let storage: Utils.Storage = new Utils.Storage();
+            let key: string = this.GetLanguageKey(gameID);
+            let lang: LanguageType = storage.GetLocalStorage(key) as LanguageType;
+            if (!lang) {
+                CurrentLangue = DefaultLanguage;
+            }else if(typeof(lang) != "number"){
+                if(lang == LanguageType[0]){
+                    CurrentLangue = LanguageType.CH;
+                }else{
+                    CurrentLangue = LanguageType.EN;
+                }
+            }else{
+                CurrentLangue = lang;
+            }
+            return CurrentLangue;
+        }
         /**
          * 获取游戏语言key，传入gameID,
          * @param gameID 

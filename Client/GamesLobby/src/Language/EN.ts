@@ -270,7 +270,7 @@ namespace LanguageUtils {
         ModifyParentScoreFailed: "修改会员的父级会员分数失败",
 
         Login: "Loading...",
-
-        Agent: "Agent:",
+        Agent: "Recommender:",
+        AgentTitle:"Choose your Recommender",
     }
 }

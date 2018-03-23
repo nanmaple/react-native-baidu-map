@@ -261,6 +261,7 @@ var LanguageUtils;
         /// </summary>
         ModifyParentScoreFailed: "修改会员的父级会员分数失败",
         Login: "登录中...",
-        Agent: "代理",
+        Agent: "推荐人:",
+        AgentTitle: "请选择推荐人",
     };
 })(LanguageUtils || (LanguageUtils = {}));

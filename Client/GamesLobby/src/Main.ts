@@ -73,13 +73,16 @@ class GameMain {
         if (this.status === 1) {
             this.accountUI.login.visible = false;
             this.accountUI.accountList.visible = true;
+            this.accountUI.title.visible = true;
             this.MultiAccount(this.list);
         } else {
             this.accountUI.login.visible = true;
             this.accountUI.accountList.visible = false;
+            this.accountUI.title.visible = false;
         }
         let language: LanguageUtils.Language = new LanguageUtils.Language();
         this.accountUI.login.text = language.GetLanguage("Login");
+        this.accountUI.title.text = language.GetLanguage("AgentTitle");
     }
     /**
      * 登录回调
@@ -125,6 +128,7 @@ class GameMain {
             this.accountUI.accountList.vScrollBarSkin = "";
             this.accountUI.login.visible = false;
             this.accountUI.accountList.visible = true;
+            this.accountUI.title.visible = true;
             this.accountUI.accountList.renderHandler = new Laya.Handler(this, this.renderHandler);
             this.accountUI.accountList.mouseHandler = new Laya.Handler(this, this.onSelect);
         }
@@ -132,6 +136,7 @@ class GameMain {
 
     private renderHandler(cell: Laya.Box, index: number): void {
         let language: LanguageUtils.Language = new LanguageUtils.Language();
+        let lang:number = language.GetLanguageType();
         //如果索引不再可索引范围，则终止该函数
         if (index > this.list.length) return;
         //获取当前渲染条目的数据
@@ -139,6 +144,13 @@ class GameMain {
         //根据子节点的名字listNumber，获取子节点对象。 
         let agent: Laya.Label = cell.getChildByName("agent") as Laya.Label;
         let agentLabel:Laya.Label = cell.getChildByName("label") as Laya.Label;
+        if(lang == LanguageUtils.LanguageType.CH){
+            agentLabel.width = 100;
+            agent.x = 120;
+        }else{
+            agentLabel.width = 200;
+            agent.x = 220;
+        }
         agentLabel.text = language.GetLanguage("Agent");
         if (!data.Account && data.Account.length == 0) {
             //label渲染列表文本（序号）
@@ -158,6 +170,7 @@ class GameMain {
         if (e.type == Laya.Event.CLICK) {
             this.accountUI.login.visible = true;
             this.accountUI.accountList.visible = false;
+            this.accountUI.title.visible = false;
             this.dto.MemberID = this.list[index].MemberId;
             this.memberServer.LoginByID(this.dto, Laya.Handler.create(this, this.LoginCallback));
         }
