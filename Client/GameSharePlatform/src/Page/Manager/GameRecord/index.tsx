@@ -153,11 +153,11 @@ class GameRecord extends React.Component<any, any> {
      * 渲染数据
      */
     public renderData = () => {
-        let { memberList, isNoMore, action } = this.state;
+        let { memberList, isNoMore, action,init } = this.state;
         if (!memberList || memberList.length == 0) {
             return (
                 <div className="noData">
-                    {this.languageManager.GetErrorMsg("NoData")}
+                    {!init&&this.languageManager.GetErrorMsg("NoData")}
                 </div>
 
             )

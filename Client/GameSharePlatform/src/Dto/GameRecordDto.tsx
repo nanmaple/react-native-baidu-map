@@ -9,9 +9,21 @@ export class ListParamsDto {
      */
     public PageSize: number = 20;
     /**
-     * 交易类型
+     * 最后一条编号
      */
     public LastId: number;
+    /**
+     * 开始日期
+    */
+    public StartDate: string;
+    /**
+     * 结束日期
+    */
+    public EndDate: string;
+    /**
+     * 会员Id
+    */
+    public MemberId: any;
 
 }
 
@@ -48,5 +60,5 @@ export class ScoreRecordDto {
     public Total: number;
 
     public GameData: string;
-    public Id:number;
+    public Id: number;
 }

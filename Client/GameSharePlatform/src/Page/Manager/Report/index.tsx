@@ -13,6 +13,8 @@ import LanguageManager from '../../../Language/LanguageManager';
 import { ErrorCode } from '../../../Enum/ErrorCode';
 import Money from '../../../Utils/Money';
 
+import { JString } from "../../../Utils/TransferJson";
+
 const styles = require("./style.css");
 const rightImg = require("../../../Image/right.png");
 
@@ -22,10 +24,11 @@ export default class Report extends React.Component<any, any> {
     private languageManager: LanguageManager = new LanguageManager();
     private timePicker1: any;
     private timePicker2: any;
+    private type: boolean;    //true=完整报表  false=报表
     constructor(props: any) {
         super(props);
         let dateNow: any = new Date();
-        let startDate: string = Time.GetNextMonth(dateNow, -1);
+        let startDate: string = Time.GetNextMonth(dateNow, 7);
         let endDate: string = Time.GetNextMonth(dateNow, 0);
         this.state = {
             startDate: startDate,
@@ -37,8 +40,11 @@ export default class Report extends React.Component<any, any> {
             curTotalName: this.languageManager.GetErrorMsg("Me"),  //汇总行对应昵称
             curRemark: null,          //汇总行备注
             myTotal: null,
-            nameList: [this.languageManager.GetErrorMsg("Me")]         //汇总行昵称数组
+            nameList: [this.languageManager.GetErrorMsg("Me")],         //汇总行昵称数组
+            ownBet: 0,
+            ownPay: 0,
         }
+        this.type = this.props.location.pathname.split("/")[3] == "allreport";
         this.ShowStartPicker = this.ShowStartPicker.bind(this);
     }
 
@@ -97,6 +103,8 @@ export default class Report extends React.Component<any, any> {
     private calculateTotal = (data: any): void => {
         let total = 0, { OwnTotalBet, OwnTotalPay, ChildReportList } = data, totalBet = OwnTotalBet, totalPay = OwnTotalPay;
         this.setState({
+            ownBet: OwnTotalBet,
+            ownPay: OwnTotalPay,
             myTotal: Number((totalPay - totalBet).toFixed(2))
         })
         for (let i = 0, len = ChildReportList.length; i < len; i++) {
@@ -207,9 +215,15 @@ export default class Report extends React.Component<any, any> {
         return (
             <div key={index} className={styles.item} onClick={() => { this.goToChild(rowItem) }}>
                 <div className={styles.name}>{rowItem.Nickname}{rowItem.Remark ? `(${rowItem.Remark})` : null}</div>
+                {
+                    this.type && (<div className={styles.bet}>{Money.Format(rowItem.TotalBet)}</div>)
+                }
+                {
+                    this.type && (<div className={rowItem.TotalPay == 0 ? styles.ozero : rowItem.TotalPay > 0 ? styles.win : styles.lose}>{Money.Format(rowItem.TotalPay)}</div>)
+                }
 
                 <div className={styles.score}>
-                    <div className={total==0?styles.ozero:total > 0 ? styles.win : styles.lose}>
+                    <div className={total == 0 ? styles.rozero : total > 0 ? styles.rwin : styles.rlose}>
                         {Money.Format(total)}
                     </div>
                     <div>
@@ -219,48 +233,160 @@ export default class Report extends React.Component<any, any> {
             </div>
         )
     }
+    /**
+     * 日期搜索
+     */
+    renderSearch = () => {
+        return (<div className={styles.headdate}>
+            <div className={styles.timeContainer}>
+                <div className={styles.time} onClick={this.ShowStartPicker}>{this.state.startDate}</div>
+                <div className={styles.time} onClick={this.ShowEndPicker}>{this.state.endDate}</div>
+            </div>
+            <div className={styles.search} onClick={() => { this.searchReport() }}>{this.languageManager.GetErrorMsg("Inquire")}</div>
+        </div>)
+    }
+    /**
+     * 当前父级行
+     */
+    renderHeader = (allReportList: any, routerParam: any, curTotalName: any, myTotal: any) => {
+        let { ownBet, ownPay } = this.state;
+        return (allReportList.length > 0 ? (
+            <Link to={{
+                pathname: `${GetDetailRoute("/report/gameResult/", routerParam)}`,
+            }} className={styles.head}>
+                <div className={styles.type}>{allReportList.length > 1 ? curTotalName : this.languageManager.GetErrorMsg("Me")}</div>
+                {
+                    allReportList.length > 1 ? (<div onClick={(e) => { e.stopPropagation(); e.preventDefault(); this.back() }} className={styles.back}>Back</div>) : null
+                }
+                {
+                    this.type && allReportList.length <= 1 && (<div className={styles.bet}>{Money.Format(ownBet)}</div>)
+                }
+                {
+                    this.type && allReportList.length <= 1 && (<div className={ownPay == 0 ? styles.ozero : ownPay > 0 ? styles.win : styles.lose}>{Money.Format(ownPay)}</div>)
+                }
+                <div className={styles.score}>
+                    <div className={myTotal == 0 ? styles.zero : myTotal > 0 ? styles.totalWin : styles.total}>
+                        {myTotal != null ? Money.Format(myTotal) : "---"}
+                    </div>
+                    <div>
+                        <img src={rightImg} />
+                    </div>
+                </div>
+            </Link>
+        ) : null)
+    }
+    renderTitle = () => {
+        return (<div className={styles.rowTitle}>
+            <div className={styles.name}>昵称</div>
+            <div className={styles.bet}>投注</div>
+            <div className={styles.pay}>赔付</div>
+            <div className={styles.result}>输赢</div>
+        </div>)
+    }
 
+    renderTable = (ChildReportList: any) => {
+        return (<div>
+            {
+                ChildReportList && ChildReportList.length > 0 ? <table className={styles.table}>
+                    <tbody>
+                        {
+
+                            ChildReportList.map((rowItem: any, index: any) => {
+                                let total = rowItem.TotalPay - rowItem.TotalBet;
+                                return (<tr key={index} className={styles.tr} onClick={() => { this.goToChild(rowItem) }}>
+                                    <td className={styles.td+" "+styles.marginL}>{rowItem.Nickname}{rowItem.Remark ? `(${rowItem.Remark})` : null}</td>
+                                    <td className={styles.td}>{Money.Format(rowItem.TotalBet)}</td>
+                                    <td className={rowItem.ts == 0 ? styles.ozero : rowItem.TotalPay > 0 ? styles.win : styles.lose}>{Money.Format(rowItem.TotalPay)}</td>
+                                    <td className={styles.td + " " + styles.marginR}>
+                                        <span className={total == 0 ? styles.rozero : total > 0 ? styles.rwin : styles.rlose}>
+                                            {Money.Format(total)}
+                                        </span>
+                                        <span>
+                                            <img style={{ width: 20, height: 20 }} src={rightImg} />
+                                        </span>
+                                    </td>
+                                </tr>)
+                            })
+                        }
+                    </tbody>
+                </table> : null
+            }
+        </div>)
+    }
+    renderTr = (rowItem: any, index: any) => {
+        let total = rowItem.TotalPay - rowItem.TotalBet;
+        return (
+            <tr key={index} className={styles.item} onClick={() => { this.goToChild(rowItem) }}>
+                <td className={styles.name}>{rowItem.Nickname}{rowItem.Remark ? `(${rowItem.Remark})` : null}</td>
+                <td className={styles.name}>{rowItem.Nickname}{rowItem.Remark ? `(${rowItem.Remark})` : null}</td>
+                <td className={styles.name}>{rowItem.Nickname}{rowItem.Remark ? `(${rowItem.Remark})` : null}</td>
+                <td className={styles.name}>{rowItem.Nickname}{rowItem.Remark ? `(${rowItem.Remark})` : null}</td>
+            </tr>
+
+            // <tr key={index} className={styles.item} onClick={() => { this.goToChild(rowItem) }}>
+            //     <td className={styles.name}>{rowItem.Nickname}{rowItem.Remark ? `(${rowItem.Remark})` : null}</td>
+            //     {
+            //         this.type && (<td className={styles.bet}>{Money.Format(rowItem.TotalBet)}</td>)
+            //     }
+            //     {
+            //         this.type && (<td className={rowItem.TotalPay == 0 ? styles.ozero : rowItem.TotalPay > 0 ? styles.win : styles.lose}>{Money.Format(rowItem.TotalPay)}</td>)
+            //     }
+
+            //     <td className={styles.score}>
+            //         <div className={total == 0 ? styles.rozero : total > 0 ? styles.rwin : styles.rlose}>
+            //             {Money.Format(total)}
+            //         </div>
+            //         <div>
+            //             <img src={rightImg} />
+            //         </div>
+            //     </td>
+            // </tr>
+
+        )
+    }
     render() {
-        let { curReportList, allReportList, curTotal, curTotalName, curRemark, myTotal } = this.state;
+        let { memberId, curReportList, allReportList, curTotal, curTotalName, curRemark, myTotal, startDate, endDate } = this.state;
         let { ChildReportList, Total } = curReportList;
+        let routerParam = JString.EncodeJson({
+            memberId: memberId,
+            nickName: curTotalName,
+            remark: curRemark,
+            startDate,
+            endDate
+        })
         return (
             <div>
                 <CompToast ref={(c) => this.toast = c} />
-                <div className={styles.headdate}>
-                    <div className={styles.timeContainer}>
-                        <div className={styles.time} onClick={this.ShowStartPicker}>{this.state.startDate}</div>
-                        <div className={styles.time} onClick={this.ShowEndPicker}>{this.state.endDate}</div>
-                    </div>
-                    <div className={styles.search} onClick={() => { this.searchReport() }}>{this.languageManager.GetErrorMsg("Inquire")}</div>
-                </div>
-
                 {
-                    allReportList.length > 0 ? (
-                        <Link to={{
-                            pathname: `${GetDetailRoute("/report/gameResult/", allReportList.length > 1 ? `${this.state.memberId}_${curTotalName}_${curRemark}` : this.state.memberId)}`,
-                        }} className={styles.head}>
-                            <div className={styles.type}>{allReportList.length > 1 ? curTotalName : this.languageManager.GetErrorMsg("Me")}</div>
-                            {
-                                allReportList.length > 1 ? (<div onClick={(e) => { e.stopPropagation(); e.preventDefault(); this.back() }} className={styles.back}>Back</div>) : null
-                            }
-
-                            <div className={myTotal==0?styles.zero:myTotal > 0 ? styles.totalWin : styles.total}>{myTotal != null ? Money.Format(myTotal) : "---"}</div>
-                            <div className={styles.rightImg}>
-                                <img src={rightImg} />
-                            </div>
-                        </Link>
-                    ) : null
+                    this.renderSearch()
+                }
+                {
+                    this.type && this.renderTitle()
+                }
+                {
+                    this.renderHeader(allReportList, routerParam, curTotalName, myTotal)
                 }
 
                 <div>
                     {
+                        this.renderTable(ChildReportList)
+                    }
+                    {
+                        <div className={styles.allTotal}>
+                            <div className={styles.totalName}>{this.languageManager.GetErrorMsg("Total")}</div>
+                            <div className={curTotal == 0 ? styles.allZero : curTotal > 0 ? styles.allWin : styles.allLose}>
+                                {Money.Format(curTotal)}
+                            </div>
+                        </div>
+                    }
+                    {/* {
                         ChildReportList && ChildReportList.length > 0 ? (<div>
                             {ChildReportList.map((item: any, index: number) => {
                                 return this.renderReportItem(item, index);
                             })}
                             <div className={styles.allTotal}>
                                 <div className={styles.totalName}>{this.languageManager.GetErrorMsg("Total")}</div>
-                                <div className={curTotal==0?styles.allZero:curTotal > 0 ? styles.allWin : styles.allLose}>
+                                <div className={curTotal == 0 ? styles.allZero : curTotal > 0 ? styles.allWin : styles.allLose}>
                                     {Money.Format(curTotal)}
                                 </div>
                             </div>
@@ -268,7 +394,7 @@ export default class Report extends React.Component<any, any> {
                         </div>) : (<div>
                             <div className={styles.allTotal}>
                                 <div className={styles.totalName}>{this.languageManager.GetErrorMsg("Total")}</div>
-                                <div className={curTotal==0?styles.allZero:curTotal > 0 ? styles.allWin : styles.allLose}>
+                                <div className={curTotal == 0 ? styles.allZero : curTotal > 0 ? styles.allWin : styles.allLose}>
                                     {Money.Format(curTotal)}
                                 </div>
                             </div>
@@ -276,7 +402,7 @@ export default class Report extends React.Component<any, any> {
 
                         </div>)
 
-                    }
+                    } */}
                 </div>
                 <TimePicker ref={(e: any) => { this.timePicker1 = e }} time={this.state.startDate} timeHanler={this.StartTimeHanler} />
                 <TimePicker ref={(e: any) => { this.timePicker2 = e }} time={this.state.endDate} timeHanler={this.EndTimeHanler} />

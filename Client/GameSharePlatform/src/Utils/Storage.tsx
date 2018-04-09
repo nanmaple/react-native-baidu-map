@@ -144,7 +144,7 @@ export class Storage {
     private SetLocalStorage(key: string, value: any, day: number = null) {
         let date: Date = new Date();
         let data: any = {
-            expires: date.getTime() + day * 24 * 3600 * 1000,
+            expires: day ? date.getTime() + day * 24 * 3600 * 1000 : day,
             value: value
         }
         localStorage.setItem(key, JSON.stringify(data));

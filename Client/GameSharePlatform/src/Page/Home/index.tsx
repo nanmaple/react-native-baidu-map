@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
     Link,
-    Prompt
+    Prompt,
 } from 'react-router-dom';
 
 import { AuthorizationDto } from '../../Dto/AuthorizationDto';
@@ -18,9 +18,13 @@ import * as GameConfig from '../../GameConfig';
 import { MemberRoute } from '../../Route/Config';
 import UserCtrl from "../../Controller/UserCtrl";
 import Money from '../../Utils/Money';
+
+import { GameList } from "../../GameList";
+import { url } from 'inspector';
 const logoImg = require("../../Image/logo.png");
 const style = require("./style.css");
 const rightImg = require("../../Image/right.png");
+const starImg = require("../../Image/star.png");
 
 export default class Home extends React.Component<any, any> {
     private userCtrl: UserCtrl = new UserCtrl();
@@ -28,16 +32,33 @@ export default class Home extends React.Component<any, any> {
     private languageManager: LanguageManager = new LanguageManager();
     constructor(props: any) {
         super(props);
+        let memberInfo = this.userCtrl.GetMemberInfoByLocal();
         this.state = {
             isLogin: this.userCtrl.IsLogin(),
             isClose: this.userCtrl.IsClose(),
-            memberInfo: this.userCtrl.GetMemberInfoByLocal(),
+            memberInfo: memberInfo,
+            score: memberInfo && memberInfo.Score,
             isTourists: this.userCtrl.GetAuthorizationDtoByLocal().IsTourists,
             gmeList: [],
             value: CacheManager.GetCache(CacheType.Language).language
         }
     }
-    componentWillMount() {
+    componentDidMount() {
+        this.userCtrl.GetMemberScore(this.Handler);
+
+    }
+    /**
+     * 获取会员信息handler回调
+     */
+    public Handler = (data: any): void => {
+        if (data) {
+            this.setState({
+                score: data.Score
+            })
+        }
+
+
+
     }
     /**
      * 提示信息
@@ -92,40 +113,84 @@ export default class Home extends React.Component<any, any> {
             return (<Link to={MemberRoute} className={style.button}>{this.languageManager.GetErrorMsg("Manager")}</Link>)
         }
     }
+    /**
+     * 渲染游戏列表
+     */
     private renderGameList = (item: any, index: number) => {
         return (
-            <div key={index} className={style.rowItem} onClick={() => { this.GameLogin(item.id) }}>
-                <div className={style.img}>
-                    <img style={{ width: 36, height: 36 }} src={item.imgUrl} />
-                </div>
-                <div className={style.gameMsg}>
-                    <div className={style.name}>{this.languageManager.GetErrorMsg("GameName")}:{item.name}</div>
-                    <div className={style.start}>{this.languageManager.GetErrorMsg("Recommended")}:{item.star}</div>
-                </div>
-                <div className={style.imgRight}>
-                    <img style={{ width: 16, height: 16 }} src={rightImg} />
-                </div>
+            <div key={index}>
+                {
+                    item.complete ? (
+                        <div key={index} className={style.rowItem} onClick={() => { this.GameLogin(item.id) }}>
+                            <div className={style.img}>
+                                <img style={{ width: 60, height: 60 }} src={item.imgUrl} />
+                            </div>
+                            <div className={style.gameMsg}>
+                                <div className={style.name}>{this.languageManager.GetErrorMsg(item.name)}</div>
+                                <div className={style.start}>{this.renderStar(item.star)}</div>
+                            </div>
+                            <div className={style.imgRight}>
+                                {
+                                    item.complete ? (<img style={{ width: 16, height: 16 }} src={rightImg} />) : <span style={{ color: "red" }}>{this.languageManager.GetErrorMsg("Waiting")}</span>
+                                }
+
+                            </div>
+                        </div>
+                    ) : (
+                            <div key={index} className={style.rowItem}>
+                                <div className={style.img}>
+                                    <img style={{ width: 60, height: 60 }} src={item.imgUrl} />
+                                </div>
+                                <div className={style.gameMsg}>
+                                    <div className={style.name}>{this.languageManager.GetErrorMsg(item.name)}</div>
+                                    <div className={style.start}>{this.renderStar(item.star)}</div>
+                                </div>
+                                <div className={style.imgRight}>
+                                    {
+                                        item.complete ? (<img style={{ width: 16, height: 16 }} src={rightImg} />) : <span style={{ color: "red" }}>{this.languageManager.GetErrorMsg("Waiting")}</span>
+                                    }
+
+                                </div>
+                            </div>
+                        )
+                }
             </div>
+
+
         )
     }
-
-    private handleChange = (event:any) => {
-        this.languageManager.SetLanguage(event.target.value);
+    /**
+     * 切换语言
+     */
+    private handleChange = (event: any) => {
+        this.languageManager.SetLanguage(Number(event.target.value));
         this.setState({
             value: event.target.value
         });
     }
+    /**
+     * 渲染星星
+     * @param level 几星
+     */
+    renderStar = (level: number) => {
+        let arr = [];
+        for (let i = 0; i < level; i++) {
+            arr.push(level)
+        }
+        return arr.map((item, index) => {
+            return (<img key={index} style={{ width: 16, height: 16 }} src={starImg} />)
+        })
+    }
     render() {
-        document.title= this.languageManager.GetErrorMsg("Plat");
-        let { gameList ,value} = this.state;
-        gameList = [{ imgUrl: logoImg, name: this.languageManager.GetErrorMsg("ShotDoor"), star: "五颗星", id: 1 }];
-        let socre: string = this.state.memberInfo ? Money.Format(this.state.memberInfo.Score) : "0";
+        document.title = this.languageManager.GetErrorMsg("Plat");
+        let socre: string = this.state.score ? this.state.score : "0",
+            headImg = this.state.memberInfo && this.state.memberInfo.HeadImageUrl ? this.state.memberInfo.HeadImageUrl : logoImg
         return (
             <div className="home">
                 <CompToast ref={(c) => this.toast = c} />
                 <div className={style.header}>
                     <div className={style.info} >
-                        <img src={logoImg} alt="" className={style.logo} />
+                        <img src={headImg} alt="" className={style.logo} />
                         {
                             this.state.isLogin ? (
                                 <label htmlFor="">{this.languageManager.GetErrorMsg("Score")}:{socre}</label>
@@ -139,14 +204,14 @@ export default class Home extends React.Component<any, any> {
                     </div>
                     <div>
                         <select className={style.select} value={this.state.value} onChange={this.handleChange}>
-                            <option value="CH">中文</option>
-                            <option value="EN">English</option>
+                            <option value="0">中文</option>
+                            <option value="1">English</option>
                         </select>
                     </div>
                 </div>
                 <div className={style.gameList}>
                     {
-                        gameList.map((item: any, index: number) => {
+                        GameList.map((item: any, index: number) => {
                             return this.renderGameList(item, index);
                         })
                     }

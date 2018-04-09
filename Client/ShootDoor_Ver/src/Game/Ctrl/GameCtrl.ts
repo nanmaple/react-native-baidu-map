@@ -171,7 +171,7 @@ class GameCtrl extends BaseCtrl {
             this.TimePanelCtrl.HideGameTime();
         }
         //2.初始化投注界面
-        if (data && data.BetTime > 0) {
+        if (data) {
             this.BetCtrl.GameInit(data, isReInit);
             this.cacheData.RoundID = data.RoundID;
         }

@@ -1,5 +1,8 @@
 import * as React from 'react';
+import { withRouter } from "react-router-dom";
 import ScoreRecordCtrl from '../../../Controller/ScoreRecordCtrl';
+
+import CheckAccountCtrl from '../../../Controller/CheckAccountCtrl';
 
 import PullLoad, { STATS } from "../../../Components/PullList/index";
 const pullStyle = require("../../../Components/PullList/ReactPullLoad.css");
@@ -15,8 +18,9 @@ import { ErrorCode } from '../../../Enum/ErrorCode';
 import { TransactionType } from "../../../Enum/TransactionType";
 const styles = require("./style.css");
 
-export default class MemberList extends React.Component<any, any> {
+class MemberList extends React.Component<any, any> {
     private ScoreRecordCtrl: ScoreRecordCtrl = new ScoreRecordCtrl();
+    private CheckAccountCtrl: CheckAccountCtrl = new CheckAccountCtrl();
     private toast: any;
     private languageManager: LanguageManager = new LanguageManager();
     constructor(props: any) {
@@ -27,13 +31,33 @@ export default class MemberList extends React.Component<any, any> {
             isNoMore: false,
             init: true,
             showLoading: false,
+            memberId: '',
         }
     }
     componentDidMount() {
+        let memberId = this.props.match.params.memberId;
         this.setState({
-            showLoading: true
+            showLoading: true,
+            memberId
         })
-        this.ScoreRecordCtrl.GetScoreRecord(true, this.Handler);
+        if (memberId) {
+            this.CheckAccountCtrl.GetScoreRecord(memberId, true, this.Handler);
+        } else {
+            this.ScoreRecordCtrl.GetScoreRecord(true, this.Handler);
+        }
+
+    }
+    /**
+     * 选择请求地址
+     * @param bool 是否刷新
+     */
+    selectUrl = (bool: boolean) => {
+        let { memberId } = this.state;
+        if (memberId) {
+            this.CheckAccountCtrl.GetScoreRecord(memberId, bool, this.Handler);
+        } else {
+            this.ScoreRecordCtrl.GetScoreRecord(bool, this.Handler);
+        }
     }
     /**
     * 提示信息
@@ -105,10 +129,11 @@ export default class MemberList extends React.Component<any, any> {
         }
 
         if (action === STATS.refreshing) {//刷新
-            this.ScoreRecordCtrl.GetScoreRecord(true, this.Handler);
+            this.selectUrl(true);
+            // this.ScoreRecordCtrl.GetScoreRecord(true, this.Handler);
         } else if (action === STATS.loading && !this.state.isNoMore) {//加载更多
-
-            this.ScoreRecordCtrl.GetScoreRecord(false, this.Handler);
+            this.selectUrl(false);
+            // this.ScoreRecordCtrl.GetScoreRecord(false, this.Handler);
         } else if (action === STATS.loading && this.state.isNoMore) {//没有更多数据
             this.setState({
                 action: STATS.reset
@@ -126,27 +151,38 @@ export default class MemberList extends React.Component<any, any> {
      * 渲染单行分数记录
      */
     public renderRowItem = (item: any, index: any): any => {
+        let day = item.UpdateTime.split(" ")[0], time = item.UpdateTime.split(" ")[1];
+        let remarks = JSON.parse(item.Remark),
+            data = (remarks.Data.replace(/\/"/, "'")),
+            name = data.Nickname,
+            remark = data.Remark ? `(${data.Remark})` : null;
         return (
             <div key={index} className={styles.row}>
-                <div className={styles.time}>{item.UpdateTime}</div>
+                <div className={styles.timeContent}>
+                    <div> {day}</div>
+                    <div>{time}</div>
+                </div>
                 {
-                    <div className={(item.Changed == 0 ? "ling" : item.Changed > 0 ? "zheng" : "fu")+" "+styles.win}>
+                    <div className={(item.Changed == 0 ? "ling" : item.Changed > 0 ? "zheng" : "fu") + " " + styles.win}>
                         {Money.Format(item.Changed)}
                     </div>
                 }
                 <div className={styles.change}>{Money.Format(item.Balance)}</div>
-                <div className={styles.message}>{ this.languageManager.GetErrorMsg(`TransactionType${item.TransactionType}`)}</div>
+                <div className={styles.message}>
+                    <div>{this.languageManager.GetErrorMsg(`TransactionType${item.TransactionType}`)}</div>
+                    <div>{name}{remark}</div>
+                </div>
             </div >
         )
     }
 
 
     public renderData = () => {
-        let { memberList, isNoMore, action } = this.state;
+        let { memberList, isNoMore, action, init } = this.state;
         if (!memberList || memberList.length == 0) {
             return (
                 <div className="noData">
-                    {this.languageManager.GetErrorMsg("NoData")}
+                    {!init && this.languageManager.GetErrorMsg("NoData")}
                 </div>
 
             )
@@ -179,7 +215,7 @@ export default class MemberList extends React.Component<any, any> {
                 <Toast icon="loading" show={this.state.showLoading}>{this.languageManager.GetErrorMsg("Loading")}</Toast>
                 <div className={styles.listTitle}>
                     <div className={styles.title}>
-                        <div className={styles.time}>{this.languageManager.GetErrorMsg("Time")}</div>
+                        <div className={styles.timeContent}>{this.languageManager.GetErrorMsg("Time")}</div>
                         <div className={styles.change}>{this.languageManager.GetErrorMsg("ScoreChanges")}</div>
                         <div className={styles.change}>{this.languageManager.GetErrorMsg("Balance")}</div>
                         <div className={styles.message}>{this.languageManager.GetErrorMsg("Detail")}</div>
@@ -191,3 +227,4 @@ export default class MemberList extends React.Component<any, any> {
         );
     }
 }
+export default withRouter(MemberList)

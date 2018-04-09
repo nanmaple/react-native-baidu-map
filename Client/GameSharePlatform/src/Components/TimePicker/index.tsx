@@ -106,11 +106,9 @@ export default class TimePicker extends React.Component<any, any> {
     }
 
     public onGroupChange = (selected: any) => {
-        console.log(selected);
     }
 
     public OnActions = (selected: any) => {
-        console.log(selected);
     }
 
     render() {

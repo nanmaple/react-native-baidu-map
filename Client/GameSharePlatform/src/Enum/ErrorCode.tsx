@@ -1,5 +1,5 @@
 export enum ErrorCode {
-     // 共有错误码
+    // 共有错误码
     /// <summary>
     /// 请求超时
     /// </summary>
@@ -16,6 +16,10 @@ export enum ErrorCode {
     /// 参数无效
     /// </summary>
     InvalidArgument = 2,
+    /// <summary>
+    /// IP限制
+    /// </summary>
+    IPLimit = 3,
 
     // 登录错误码
     /// <summary>
@@ -137,15 +141,24 @@ export enum ErrorCode {
     /// 修改会员的父级会员分数失败
     /// </summary>
     ModifyParentScoreFailed = 3002,
-    
+
     /**
      * 分数错误
      */
     AmountError = 10000,
+
+    /**
+     * 其他地方登录
+     */
+    OtherLogin = 2010,
     /**
      * 密码格式错误
      */
     PasswordFormatError,
+    /**
+     * 格式错误
+    */
+    AccountFormatError,
     /**
      * 昵称格式错误
      */

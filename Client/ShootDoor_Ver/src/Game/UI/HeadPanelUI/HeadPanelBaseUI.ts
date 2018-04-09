@@ -18,10 +18,10 @@ namespace ScenePanel {
             this.uiData = HeadPanelUIData.GetInstance();
             this.SetInfo(this.uiData.memberInfo, this.uiData.parentID, this.uiData.grHandler, this.uiData.ruleHandler, this.uiData.isTourists);
             let language: LanguageUtils.Language = new LanguageUtils.Language();
-            let lang:number = language.GetLanguageType();
-            if(lang == LanguageUtils.LanguageType.CH){
+            let lang: number = language.GetLanguageType();
+            if (lang == LanguageUtils.LanguageType.CH) {
                 this.ui.attention.skin = "ui/attention.png";
-            }else{
+            } else {
                 this.ui.attention.skin = "ui/attention_EN.png";
             }
         }
@@ -50,7 +50,7 @@ namespace ScenePanel {
                 this.ui.info.visible = true;   //显示头像
                 this.ui.attention.visible = false;
                 //隐藏关注按钮
-                this.ui.headPic.skin = memberInfo.HeadImageUrl;
+                this.ui.headPic.skin = memberInfo.HeadImageUrl.replace("http","https");
                 this.ui.nickname.text = memberInfo.Nickname ? memberInfo.Nickname : memberInfo.Account;
                 this.ui.score.text = Utils.Money.Format(memberInfo.Score);
             } else {
@@ -64,7 +64,6 @@ namespace ScenePanel {
                     this.ui.score.text = Utils.Money.Format(0);
                 }
             }
-
             this.moneyEffect = new NumberGradualChangeEffect(this.ui.score);
             this.ui.btnRule.on(Laya.Event.CLICK, this, this.onRuleHandler);
             this.ui.btnGR.on(Laya.Event.CLICK, this, this.onGRHandler);

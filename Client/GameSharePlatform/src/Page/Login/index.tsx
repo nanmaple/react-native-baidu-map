@@ -18,7 +18,8 @@ export default class Login extends React.Component<any, any> {
         super(props);
         this.state = {
             isShowLogin: true,
-            accountList: []
+            accountList: [],
+            forgin:true,
         };
     }
 
@@ -46,8 +47,9 @@ export default class Login extends React.Component<any, any> {
      * 重定向
      */
     private Redirect = (): void => {
+        let {forgin} = this.state;
         this.setState({ isShowLogin: false });
-        this.props.loginComplete();
+        this.props.loginComplete(forgin);
     }
 
     /**
@@ -85,6 +87,7 @@ export default class Login extends React.Component<any, any> {
         if (this.state.accountList && this.state.accountList.length > 0) {
             return (
                 <div className={styles.listContent}>
+                   <div className={styles.title}>{this.languageManager.GetErrorMsg("AgentTitle")}</div>
                     {
                         this.state.accountList.map((item: MultiAccountDto, index: number) => {
                             return this.renderAccountItem(item, index);

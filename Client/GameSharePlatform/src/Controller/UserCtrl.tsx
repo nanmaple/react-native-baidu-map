@@ -7,7 +7,7 @@ import { ErrorCode } from '../Enum/ErrorCode';
 import * as ApiConfig from './Config';
 import Verification from '../Utils/Verification';
 import { GetQuery } from '../Utils/Url';
-import { LoginDto, LoginResultDto, LoginMultiAccountDto, LoginSuccessDto, ResultEnum, LoginByCodeDto, LoginByIdDto, LoginParamsDto } from '../Dto/LoginInfoDto';
+import { LoginByAccountDto, LoginDto, LoginResultDto, LoginMultiAccountDto, LoginSuccessDto, ResultEnum, LoginByCodeDto, LoginByIdDto, LoginParamsDto } from '../Dto/LoginInfoDto';
 import { AuthorizationDto } from '../Dto/AuthorizationDto';
 import CacheManager, { CacheType, UserInfo, Authorization } from '../Service/CacheManager/CacheManager';
 import { DeviceId, DeviceType, GetWeChatShareDto } from '../GameConfig';
@@ -15,7 +15,7 @@ import { WeChatSignatureDto, WeChatShareDto } from '../Dto/WeChatShareDto';
 import WeChat from '../Utils/WeChat';
 
 export default class UserCtrl extends BaseCtrl {
-    private languageManager: LanguageManager=new LanguageManager();
+    private languageManager: LanguageManager = new LanguageManager();
     /**
      * 登录Dto信息
      */
@@ -61,6 +61,31 @@ export default class UserCtrl extends BaseCtrl {
             }
             this.LoginByTourist(code, token, parentId, handler);
         }
+    }
+
+    /**
+    * 账号密码登录
+    * @param account 账号
+    * @param passWord 密码
+    * @param handler 回调
+    */
+    public LoginByAccount(account: string, passWord: string, handler: Function) {
+        //通过Code登录
+        let loginByAccountDto: LoginByAccountDto = new LoginByAccountDto();
+        loginByAccountDto.Account = account;
+        loginByAccountDto.Password = passWord;
+        //调用单例api的Post方法，
+        this.webApi.Post(ApiConfig.LoginByAccount, loginByAccountDto).then((data: any) => {
+            console.log("Login成功回调");
+            if (!(data as LoginMultiAccountDto).Accounts) {
+                this.LoginSuccess(data, account, passWord, false, handler);
+            } else {
+                this.LoginMultiSuccess(data, account, passWord, false, handler);
+            }
+        }, (error: any) => {
+            console.log("Login失败回调");
+            this.LoginError(error, handler);
+        });
     }
 
     /**
@@ -128,7 +153,7 @@ export default class UserCtrl extends BaseCtrl {
                 handler(result);
             }
         } catch (error) {
-            let msg:string = this.languageManager.GetErrorMsg(JSON.stringify(error));
+            let msg: string = this.languageManager.GetErrorMsg(JSON.stringify(error));
             alert(msg);
         }
     }
@@ -155,7 +180,7 @@ export default class UserCtrl extends BaseCtrl {
                 this.LoginError(error, handler);
             });
         } catch (error) {
-            let msg:string = this.languageManager.GetErrorMsg(JSON.stringify(error));
+            let msg: string = this.languageManager.GetErrorMsg(JSON.stringify(error));
             alert(msg);
         }
     }
@@ -186,7 +211,7 @@ export default class UserCtrl extends BaseCtrl {
                 this.LoginError(error, handler);
             });
         } catch (error) {
-            let msg:string = this.languageManager.GetErrorMsg(JSON.stringify(error));
+            let msg: string = this.languageManager.GetErrorMsg(JSON.stringify(error));
             alert(msg);
         }
     }
@@ -198,7 +223,6 @@ export default class UserCtrl extends BaseCtrl {
      */
     private LoginSuccess(response: LoginSuccessDto, code: string, parentId: string, isTourist: boolean, handler: Function) {
         try {
-            console.log("LoginSuccess", response, code, parentId);
             //返回结果是登录成功
             let dto: AuthorizationDto = new AuthorizationDto();
             dto.Code = code;
@@ -220,7 +244,7 @@ export default class UserCtrl extends BaseCtrl {
                 handler(result);
             }
         } catch (error) {
-            let msg:string = this.languageManager.GetErrorMsg(JSON.stringify(error));
+            let msg: string = this.languageManager.GetErrorMsg(JSON.stringify(error));
             alert(msg);
         }
     }
@@ -252,7 +276,7 @@ export default class UserCtrl extends BaseCtrl {
                 handler(result);
             }
         } catch (error) {
-            let msg:string = this.languageManager.GetErrorMsg(JSON.stringify(error));
+            let msg: string = this.languageManager.GetErrorMsg(JSON.stringify(error));
             alert(msg);
         }
     }
@@ -271,7 +295,7 @@ export default class UserCtrl extends BaseCtrl {
                 handler(result);
             }
         } catch (error) {
-            let msg:string = this.languageManager.GetErrorMsg(JSON.stringify(error));
+            let msg: string = this.languageManager.GetErrorMsg(JSON.stringify(error));
             alert(msg);
         }
     }
@@ -289,7 +313,7 @@ export default class UserCtrl extends BaseCtrl {
             }
             //请求调Net的api，
             this.webApi.Post(ApiConfig.GetJsSignature, obj).then((response: any) => {
-                // console.log("GetWeChatParams成功回调");
+                console.log("GetWeChatParams成功回调");
                 wechat.Init(response);
                 let authorizeDto: WeChatShareDto = GetWeChatShareDto(memberId.toString(), false);
                 //分享微信好友
@@ -304,13 +328,12 @@ export default class UserCtrl extends BaseCtrl {
                 //分享qq空间
                 wechat.ShareQZone(dto.Title, dto.Desc, dto.ImgUrl, dto.Link, this.WeChatShareHandler);
             }, (error: any) => {
-                // console.log("获取微信配置信息失败", error);
-                let msg:string = this.languageManager.GetErrorMsg(error);
-                alert(msg);
+                console.log("获取微信配置信息失败", error);
+                let msg: string = this.languageManager.GetErrorMsg(error);
             });
 
         } catch (error) {
-            let msg:string = this.languageManager.GetErrorMsg(JSON.stringify(error));
+            let msg: string = this.languageManager.GetErrorMsg(JSON.stringify(error));
             alert(msg);
         }
     }
@@ -337,6 +360,27 @@ export default class UserCtrl extends BaseCtrl {
                 let cacheMemberInfo: UserInfo = CacheManager.GetCache(CacheType.UserInfo);
                 cacheMemberInfo.SetUserInfo(response);
                 this.GetJsSignature(response.MemberId);
+                handler(response);
+            }, (error: any) => {
+                console.log("GetMemberInfo失败回调");
+                this.LoginError(error.toString(), handler);
+            });
+
+        } catch (error) {
+            alert(JSON.stringify(error));
+        }
+    };
+    /**
+    * 获取会员分数
+    */
+    public GetMemberScore(handler: Function): void {
+        try {
+            //请求调Net的api，
+            this.webApi.Post(ApiConfig.GetMemberInfo, null).then((response: any) => {
+                console.log("GetMemberInfo成功回调");
+                //写入缓存中
+                let cacheMemberInfo: UserInfo = CacheManager.GetCache(CacheType.UserInfo);
+                cacheMemberInfo.SetUserInfo(response);
                 handler(response);
             }, (error: any) => {
                 console.log("GetMemberInfo失败回调");

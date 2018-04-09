@@ -22,7 +22,7 @@ export default class InfoItem extends React.Component<any, any> {
     public renderCheckBox = (label: any, trueText: any, falseText: any, memberClosed: boolean, agent: boolean) => {
         return (
             <div className={style.state}>
-                <div className={style.memSoc}>{label}:{memberClosed ? falseText : trueText}</div>
+                <div className={style.memSoc}>{label}:&nbsp;{memberClosed ? falseText : trueText}</div>
                 {
                     agent ? null : (<div onClick={() => this.props.handler()} className={style.mySoc}><Switch checked={memberClosed ? false : true} onChange={() => { }} /></div>)
                 }

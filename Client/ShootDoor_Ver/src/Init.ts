@@ -21,7 +21,7 @@ class InitState {
         Config.isAntialias = true;
 
         this.ScreenMonitor();
-
+        // Laya.Stat.show(0, 0);
         /***********调试相关**********/
         //调用DebugPanel调试面板
         // Laya.DebugPanel.init();

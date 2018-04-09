@@ -4,6 +4,10 @@ import { WebApiBaseUrl, BetWebApiBaseUrl } from '../GameConfig';
  */
 export const Login = `${WebApiBaseUrl}/Member/Login`;
 /**
+ * 账号登录
+ */
+export const LoginByAccount = `${WebApiBaseUrl}/Member/AccountLogin`;
+/**
  * 登录检测
  */
 export const LoginCheck = `${WebApiBaseUrl}/Member/LoginByToken`;
@@ -37,9 +41,9 @@ export const GetScoreLogsApi = `${WebApiBaseUrl}/Member/GetScoreLogs`;
  */
 export const GetMemberInfoApi = `${WebApiBaseUrl}/Member/GetMemberInfo`;
 /**
- * 设置游戏账号
+ * 游戏平台获取自己基本信息
  */
-export const SetAccountApi = `${WebApiBaseUrl}/Member/SetAccount`;
+export const GetOwnInfoApi = `${WebApiBaseUrl}/Member/GetOwnInfo`;
 /**
  * 修改当前登录会员的昵称
  */
@@ -69,6 +73,10 @@ export const TransferOutApi = `${WebApiBaseUrl}/Member/TransferOut`;
  * 设置子会员密码
  */
 export const SetChildPasswordApi = `${WebApiBaseUrl}/Member/SetChildPassword`;
+/**
+ * 设置自己密码
+ */
+export const SetPasswordApi = `${WebApiBaseUrl}/Member/ResetPassword`;
 
 /**
  * 查询转账记录
@@ -82,6 +90,11 @@ export const ResetPhoneNumberApi = `${WebApiBaseUrl}/Member/ResetPhoneNumber`;
  * 设置代理
  */
 export const SetSetAgentApi = `${WebApiBaseUrl}/Member/SetAgent`;
+
+/**
+ * 设置账号
+ */
+export const SetAccountApi = `${WebApiBaseUrl}/Member/SetAccount`;
 
 
 
@@ -99,3 +112,9 @@ export const GetReportApi = `${BetWebApiBaseUrl}/Bet/GetReport`;
  * 获取自己以及子级的游戏输赢
  */
 export const GetGameReportApi = `${BetWebApiBaseUrl}/Bet/GetGameReport`;
+
+/**
+ * 根据时间获取投注记录
+ */
+export const GetBetRecordByTimeApi = `${BetWebApiBaseUrl}/Bet/GetBetRecordByTime`;
+

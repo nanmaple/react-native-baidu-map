@@ -19,6 +19,8 @@ import { ReportGameRecordRoute, GetDetailRoute } from '../../../../Route/Config'
 import { Link } from 'react-router-dom';
 
 import PullLoad, { STATS } from "../../../../Components/PullList/index";
+
+import { JString } from "../../../../Utils/TransferJson";
 const pullStyle = require("../../../../Components/PullList/ReactPullLoad.css");
 
 const styles = require("./style.css");
@@ -30,11 +32,15 @@ class GameRecord extends React.Component<any, any> {
     private timePicker1: any;
     private timePicker2: any;
     private languageManager: LanguageManager = new LanguageManager();
+    private param: any;
     constructor(props: any) {
         super(props);
+        this.param = JString.DecodeJson(this.props.match.params.memberId);//this.props.match.params.memberId.split("_");
+        // date = param.split("_")[3];
         let dateNow: any = new Date();
-        let startDate: string = Time.GetNextMonth(dateNow, -1);
-        let endDate: string = Time.GetNextMonth(dateNow, 0);
+        let startDate: string = this.param.startDate ? this.param.startDate : Time.GetNextMonth(dateNow, 7);
+        let endDate: string = this.param.endDate ? this.param.endDate : Time.GetNextMonth(dateNow, 0);
+        let { nickName, remark, memberId } = this.param;
         this.state = {
             startDate: startDate,
             endDate: endDate,
@@ -42,28 +48,15 @@ class GameRecord extends React.Component<any, any> {
             action: STATS.init,
             isNoMore: false,
             init: true,
-            memberId: null,
-            nickName: null,          //昵称
-            remark: null,            //备注
+            memberId: memberId,
+            nickName: nickName,          //昵称
+            remark: remark,            //备注
             gameResultTotal: null,
         }
     }
     componentDidMount() {
-        let nickName = null, remark = null;
-        this.ShowToast(this.languageManager.GetErrorMsg("Loading"), ToastType.Loading);
-        let memberId = this.props.match.params.memberId;
-        if (memberId != null) {
-            nickName = memberId.split("_")[1];
-            remark = memberId.split("_")[2];
-        }
-        let memberID = memberId.split("_")[0],
-            { startDate, endDate } = this.state;
-        this.setState({
-            memberId: memberID,
-            nickName,
-            remark
-        })
-        this.ReportCtrl.GetGameReport(startDate, endDate, true, this.Handler, memberID);
+        let { startDate, endDate, memberId } = this.state;
+        this.ReportCtrl.GetGameReport(startDate, endDate, true, this.Handler, memberId);
     }
     /**
      * 计算汇总金额
@@ -148,6 +141,9 @@ class GameRecord extends React.Component<any, any> {
             this.ShowToast(error, ToastType.Error);
             return;
         }
+        this.setState({
+            init: false
+        })
         //初始化设置action为reset
         this.calculateTotal(data);
         //刷新
@@ -163,14 +159,21 @@ class GameRecord extends React.Component<any, any> {
      */
     renderReportItem = (rowItem: any, index: number): any => {
         let total = rowItem.TotalPay - rowItem.TotalBet;
-        let { nickName, remark } = this.state;
+        let { nickName, remark, startDate, endDate, memberId } = this.state;
+        let routerParam = JString.EncodeJson({
+            startDate,
+            endDate,
+            gameId: rowItem.GameID,
+            memberId
+        });
         return (
+            // `${rowItem.GameID}_${nickName}_${remark}_${startDate.replace(/\//g, "*")}_${endDate.replace(/\//g, "*")}`
             <Link to={{
-                pathname: `${GetDetailRoute("/report/gameRecord/", `${rowItem.GameID}_${nickName}_${remark}`)}`
+                pathname: `${GetDetailRoute("/report/gameRecord/", routerParam)}`
             }} key={index} className={""}>
                 <div className={styles.item}>
                     <div className={styles.name}>{rowItem.GameName}</div>
-                    <div className={total==0?"zero":total > 0 ? "win" : "lose"}>
+                    <div className={total == 0 ? "zero" : total > 0 ? "win" : "lose"}>
                         {Money.Format(total)}
                     </div>
                     <div className={styles.right}>
@@ -184,12 +187,12 @@ class GameRecord extends React.Component<any, any> {
      * 渲染数据
      */
     public renderData = () => {
-        let { gameResultTotal } = this.state;
+        let { gameResultTotal, init } = this.state;
         let { memberList, isNoMore, action } = this.state;
         if (!memberList || memberList.length == 0) {
             return (
                 <div className="noData">
-                    {this.languageManager.GetErrorMsg("NoData")}
+                    {!init && this.languageManager.GetErrorMsg("NoData")}
                 </div>
 
             )
@@ -203,7 +206,7 @@ class GameRecord extends React.Component<any, any> {
                     }
                     <div className={styles.allTotal}>
                         <div className={styles.totalName}>{this.languageManager.GetErrorMsg("Total")}</div>
-                        <div className={gameResultTotal > 0 ? "zheng" : "fu"}>
+                        <div className={gameResultTotal > 0 ? styles.zheng : styles.fu}>
                             {Money.Format(gameResultTotal)}
                         </div>
                     </div>
@@ -215,11 +218,12 @@ class GameRecord extends React.Component<any, any> {
 
     render() {
         let { nickName, remark } = this.state;
+        nickName = nickName == "我" ? null : `——${nickName}`
         return (
             <div className={styles.container}>
                 <CompToast ref={(c: any) => this.toast = c} />
                 <div className={styles.listTitle}>
-                    <div className={styles.title}>{this.languageManager.GetErrorMsg("GameResult")}{nickName && nickName != "null" ? `---${nickName}` : null}{remark && remark != "null" ? `(${remark})` : null}</div>
+                    <div className={styles.title}>{this.languageManager.GetErrorMsg("GameResult")}{nickName}{remark}</div>
                     <div className={styles.head}>
                         <div className={styles.timeContainer}>
                             <div className={styles.time} onClick={this.ShowStartPicker}>{this.state.startDate}</div>

@@ -29,10 +29,12 @@ export class Time {
      *
      * @date 格式为yyyy-mm-dd的日期，如：2014-01-25
      */
-    static GetNextMonth(date: Date, month: number) {
+    static GetNextMonth(date: Date, day: number) {
         //date.setMonth(date.getMonth() + month);
+        let dat = date.getTime() - day * 24 * 60 * 60 * 1000;
+        date = new Date(dat)
         let y: number = date.getFullYear();
-        let m: number = date.getMonth() + 1 + month;
+        let m: number = date.getMonth() + 1;
         let d: number = date.getDate();
         let formatwdate = y + '/' + m + '/' + d;
         return formatwdate;

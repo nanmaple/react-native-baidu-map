@@ -1,4 +1,5 @@
 {
+    "x":0,
     "type":"View",
     "selectedBox":1,
     "props":{"sceneWidth":600,"sceneHeight":400,"sceneColor":"#000000"},
@@ -18,18 +19,6 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":2,
-            "child":[
-                ]
-        },
-        {
-            "type":"GraphicNode",
-            "props":{},
-            "nodeParent":1,
-            "label":"GraphicNode",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":3,
             "child":[
                 ]
         },
@@ -190,12 +179,6 @@
                     }
                 },
                 {
-                    "target":3,
-                    "keyframes":{
-
-                    }
-                },
-                {
                     "target":4,
                     "keyframes":{
 
@@ -210,12 +193,6 @@
             "nodes":[
                 {
                     "target":2,
-                    "keyframes":{
-
-                    }
-                },
-                {
-                    "target":3,
                     "keyframes":{
 
                     }

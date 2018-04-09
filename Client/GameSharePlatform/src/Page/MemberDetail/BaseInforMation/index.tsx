@@ -9,8 +9,8 @@ import { HocAlert } from "../../../Components/Alert/HOCAlert";
 import MemberCtrl from "../../../Controller/MemberCtrl";
 import MemberInfoDto from "../../../Dto/MemberInfoDto";
 import { TransferScoreDto } from "../../../Dto/MemberInfoDto";
-
-import { InfoItemInput, InfoItemButton, InfoItemCheckBox, InfoItemLabel } from '../../../Components/InfoItem';
+import Verification from "../../../Utils/Verification";
+import { InfoItemInput, InfoItemButton, InfoItemCheckBox, InfoItemLabel, InfoItemAmount } from '../../../Components/InfoItem';
 import LanguageManager from '../../../Language/LanguageManager';
 import { ErrorCode } from '../../../Enum/ErrorCode';
 import Money from "../../../Utils/Money";
@@ -21,6 +21,7 @@ class BaseInformation extends React.Component<any, any> {
     private MemberCtrl: MemberCtrl = new MemberCtrl();
     private languageManager: LanguageManager = new LanguageManager();
     private toast: any;
+    private setScore: any;
     constructor(props: any) {
         super(props);
         this.state = {
@@ -117,7 +118,8 @@ class BaseInformation extends React.Component<any, any> {
             this.ShowToast(error, ToastType.Error);
         } else {
             this.ShowToast(ErrorCode[ErrorCode.Success], ToastType.Success);
-            this.setState({ myScore: data.MyScore, score: data.Score })
+            this.setState({ myScore: data.MyScore, score: data.Score });
+            this.setScore.clearInput();
         }
     }
 
@@ -223,6 +225,44 @@ class BaseInformation extends React.Component<any, any> {
     }
 
     /**
+     * 设置账号
+     * @param password 密码
+    */
+    private SetAmount = (account: string) => {
+        if (!Verification.Password(account)) {
+            this.ShowToast(ErrorCode[ErrorCode.AccountFormatError], ToastType.Error);
+            this.setState({
+                account: ""
+            })
+            return;
+        }
+        //this.ShowToast(ErrorCode[ErrorCode.Wait], ToastType.Wait);
+        let MemberId = this.state.memberId,
+            Account = account;
+
+        this.MemberCtrl.SetAccount(MemberId, Account, this.SetAmountHandle);
+    }
+
+    /**
+     * 设置账号回调
+     */
+    private SetAmountHandle = (state: any, data: any[], error?: any) => {
+        this.toast.Hide();
+        if (error) {
+            this.setState({
+                account: ""
+            })
+            this.ShowToast(error, ToastType.Error);
+        } else {
+            this.ShowToast(ErrorCode[ErrorCode.Success], ToastType.Success);
+            this.setState({
+                account: data[1]
+            })
+        }
+
+    }
+
+    /**
      * 设置密码
      * @param password 密码
      */
@@ -255,11 +295,12 @@ class BaseInformation extends React.Component<any, any> {
             <div className={baseInforStyle.container}>
                 <CompToast ref={(c) => this.toast = c} />
                 <InfoItemLabel nickName={memberNickname} memberSocre={Money.Format(score)} myScore={Money.Format(myScore)} />
-                <InfoItemButton label={this.languageManager.GetErrorMsg("Score")} memberSocre={Money.Format(score)} myScore={Money.Format(myScore)} handler={this.SetScore} />
+                <InfoItemButton ref={(c) => this.setScore = c} label={this.languageManager.GetErrorMsg("Score")} memberSocre={Money.Format(score)} myScore={Money.Format(myScore)} handler={this.SetScore} />
                 <InfoItemInput label={this.languageManager.GetErrorMsg("Remark")} value={this.state.remark} handler={this.SetRemark}></InfoItemInput>
                 <InfoItemCheckBox label={this.languageManager.GetErrorMsg("State")} trueText={this.languageManager.GetErrorMsg("Normal")} falseText={this.languageManager.GetErrorMsg("Close")} memberClosed={this.state.memberClose} handler={this.SetMemberClosed} />
                 <InfoItemCheckBox label={this.languageManager.GetErrorMsg("SetasProxy")} trueText={this.languageManager.GetErrorMsg("AlreadyAgent")} falseText={this.languageManager.GetErrorMsg("SetOnlyOnce")} agent={this.state.agent} memberClosed={!this.state.agent} handler={this.agentPrompt} />
-                <InfoItemInput label={this.languageManager.GetErrorMsg("Account")} value={memberNickname} disable={true}></InfoItemInput>
+                {/* <InfoItemInput label={this.languageManager.GetErrorMsg("Account")} value={memberNickname} disable={true}></InfoItemInput> */}
+                <InfoItemAmount label={this.languageManager.GetErrorMsg("Account")} value={account} handler={this.SetAmount}></InfoItemAmount>
                 <InfoItemInput label={this.languageManager.GetErrorMsg("PassWord")} value={this.state.password} handler={this.SetPassWord}></InfoItemInput>
                 <InfoItemInput label={this.languageManager.GetErrorMsg("PhoneNumber")} value={phoneNumber} disable={true}></InfoItemInput>
 

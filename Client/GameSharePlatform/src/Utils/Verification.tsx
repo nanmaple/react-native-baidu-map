@@ -4,7 +4,7 @@ export default class Verification {
      * @param password 密码
      */
     public static Password(password: string) {
-        let patt: RegExp = new RegExp(/^[0-9a-zA-Z_]{6,20}$/);
+        let patt: RegExp = new RegExp(/^[0-9a-zA-Z_]{4,20}$/);
         return patt.test(password);
     }
     /**

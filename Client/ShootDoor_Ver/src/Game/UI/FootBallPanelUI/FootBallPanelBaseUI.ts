@@ -50,7 +50,6 @@ namespace ScenePanel {
             this.ui.shootInfo.text = null;
             this.isActive = false;
             this.shootResSound = "";
-            this.ui.football.play(0,false,"shootOutPost");
         }
         /**
          * 射进
@@ -64,6 +63,7 @@ namespace ScenePanel {
                 Utils.BackgroundMusic.PlaySounds(this.shootSound);
                 this.isActive = true;
                 this.ui.football.visible = true;
+                this.ui.football.play(0,false,"shootOutPost");
                 this.shootEndY = Laya.stage.height - this.goalBottom - 5;
                 this.shootEndX = Laya.stage.width / 2 + this.goalCenterX;
                 this.ui.shootInfo.text = language.GetLanguage("ShootIn");
@@ -83,6 +83,7 @@ namespace ScenePanel {
                 Utils.BackgroundMusic.PlaySounds(this.shootSound);
                 this.isActive = true;
                 this.ui.football.visible = true;
+                this.ui.football.play(0,false,"shootOutPost");
                 this.shootEndY = Laya.stage.height - this.goalBottom - 5;
                 this.shootEndX = (Laya.stage.width - this.goalW) / 2 + this.goalCenterX - this.footballR / 2;
                 this.ui.shootInfo.text = language.GetLanguage("ShootLeft");
@@ -101,6 +102,7 @@ namespace ScenePanel {
                 Utils.BackgroundMusic.PlaySounds(this.shootSound);
                 this.isActive = true;
                 this.ui.football.visible = true;       
+                this.ui.football.play(0,false,"shootOutPost");
                 this.shootEndY = Laya.stage.height - this.goalBottom - 5;
                 this.shootEndX = (Laya.stage.width + this.goalW) / 2 + this.goalCenterX + this.footballR * 3 / 2;
                 this.ui.shootInfo.text = language.GetLanguage("ShootRight");

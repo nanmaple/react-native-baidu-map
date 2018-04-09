@@ -49,7 +49,7 @@ export default class InfoItemInput extends React.Component<any, State> {
                 }}
             />)
         } else {
-            return (<span className={style.noEdit}>{!oldValue ? this.languageManager.GetErrorMsg("No") : oldValue}</span>)
+            return (<span>&nbsp;{!oldValue ? this.languageManager.GetErrorMsg("No") : oldValue}</span>)
         }
     }
 
@@ -96,7 +96,11 @@ export default class InfoItemInput extends React.Component<any, State> {
      * 启动编辑模式
      */
     public OnClick = () => {
-        this.setState({ isEdit: true , newValue: ""});
+        this.setState({
+            isEdit:true
+        })
+       // this.props.handler();
+    
     }
 
     /**

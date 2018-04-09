@@ -15,6 +15,7 @@ import { GetDetailRoute } from '../../../../Route/Config';
 import { Link } from 'react-router-dom';
 
 import PullLoad, { STATS } from "../../../../Components/PullList/index";
+import { JString } from '../../../../Utils/TransferJson';
 const pullStyle = require("../../../../Components/PullList/ReactPullLoad.css");
 
 const styles = require("./style.css");
@@ -23,7 +24,11 @@ const rightImg = require("../../../../Image/right.png");
 class ReportGameRecord extends React.Component<any, any> {
     private ReportCtrl: GameRecordCtrl = new GameRecordCtrl();
     private toast: any;
+    private memberId: any;
     private languageManager: LanguageManager = new LanguageManager();
+    private startDate: string;
+    private endDate: string;
+    private gameId: any;
     constructor(props: any) {
         super(props);
         this.state = {
@@ -32,16 +37,20 @@ class ReportGameRecord extends React.Component<any, any> {
             isNoMore: false,
             init: true,
             showLoading: false,
-            gameId: null
+            gameId: null,
+            memberId: 0,
         }
+        let param = JString.DecodeJson(this.props.match.params.gameId);
+        this.memberId = param.memberId == "null" ? 0 : param.memberId;
+        this.startDate = param.startDate;
+        this.endDate = param.endDate;
+        this.gameId = param.gameId;
     }
     componentDidMount() {
-        let gameId = this.props.match.params.gameId.split("_")[0];
         this.setState({
             showLoading: true,
-            gameId
         })
-        this.ReportCtrl.GetScoreRecord(true, this.Handler, gameId);
+        this.ReportCtrl.GetScoreRecordByTime(true, this.Handler, this.startDate, this.endDate, this.memberId, this.gameId);
     }
 
     /**
@@ -57,10 +66,10 @@ class ReportGameRecord extends React.Component<any, any> {
         }
 
         if (action === STATS.refreshing) {//刷新
-            this.ReportCtrl.GetScoreRecord(true, this.Handler, this.state.gameId);
+            this.ReportCtrl.GetScoreRecordByTime(true, this.Handler, this.startDate, this.endDate, this.memberId, this.gameId);
         } else if (action === STATS.loading && !this.state.isNoMore) {//加载更多
 
-            this.ReportCtrl.GetScoreRecord(false, this.Handler, this.state.gameId);
+            this.ReportCtrl.GetScoreRecordByTime(false, this.Handler, this.startDate, this.endDate, this.memberId, this.gameId);
         } else if (action === STATS.loading && this.state.isNoMore) {//没有更多数据
             this.setState({
                 action: STATS.reset
@@ -96,9 +105,9 @@ class ReportGameRecord extends React.Component<any, any> {
             showLoading: false
         })
         if (error) {
-             this.setState({
+            this.setState({
                 action: STATS.reset,
-             })
+            })
             //提示错误信息
             this.ShowToast(error, ToastType.Error);
             return;
@@ -155,11 +164,11 @@ class ReportGameRecord extends React.Component<any, any> {
      * 渲染数据
      */
     public renderData = () => {
-        let { memberList, isNoMore, action } = this.state;
+        let { memberList, isNoMore, action, init } = this.state;
         if (!memberList || memberList.length == 0) {
             return (
                 <div className="noData">
-                    {this.languageManager.GetErrorMsg("NoData")}
+                    {!init && this.languageManager.GetErrorMsg("NoData")}
                 </div>
 
             )

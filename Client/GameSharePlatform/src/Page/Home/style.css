@@ -3,6 +3,12 @@
     height: 44px;
     border-bottom: 1px solid #dcdcdc;
     background: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    z-index: 999;
 }
 
 .header>div {
@@ -33,7 +39,7 @@
     line-height: 25px;
     background: #1aad19;
     color: #ffffff;
-    margin-right: 20px;
+    margin-right: 12px;
     margin-top: 10px;
     text-align: center;
     font-size: 15px;
@@ -48,18 +54,18 @@
 }
 .rowItem{
     display: flex;
-    height:50px;
+    height:80px;
     border-bottom: 1px solid #dcdcdc;
     border-top: 1px solid #dcdcdc;
     align-items: center;
-    padding-left: 20px;
+    padding-left: 12px;
     background:#fff;
     margin-top:10px;
 }
 .gameMsg{
     margin-left: 20px;
     font-size: 14px;
-    height:40px;
+    height:60px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -75,11 +81,14 @@
 }
 .imgRight{
     position: absolute;
-    right: 10px;
+    right: 12px;
 }
 
 select{
     position: absolute;
     top: 13px;
     right: 102px;
+}
+.gameList{
+    margin-top: 54px;
 }

@@ -32,7 +32,7 @@ export default class Language implements ILanguage {
         this.language = language;
         let storage: Storage = new Storage();
         let key: string = this.GetLanguageKey();
-        storage.Set(key, language, this.cacheType);
+        storage.Set(key, language, this.cacheType,null);
         return true;
     }
 

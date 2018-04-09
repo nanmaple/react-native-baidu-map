@@ -7,6 +7,7 @@ export default class LanguageManager implements ILanguageManager {
     constructor() {
         let language: LanguageType = this.GetLanguage();
         this.ChangeLanguage(language);
+        this.SetLanguage(language);
     }
 
     /**
@@ -15,9 +16,9 @@ export default class LanguageManager implements ILanguageManager {
      */
     private ChangeLanguage(language: any): void {
         switch (language) {
-            case LanguageType[0]:
+            case LanguageType.CH:
                 this.langMsg = LangMsg.CH; break;
-            case LanguageType[1]:
+            case LanguageType.EN:
                 this.langMsg = LangMsg.EN; break;
             default:
                 this.langMsg = LangMsg.CH; break;
@@ -38,6 +39,8 @@ export default class LanguageManager implements ILanguageManager {
             } else {
                 language = LanguageType.EN;
             }
+        } else if (typeof (language) != "number") {
+            language = Number(LanguageType[language]);
         }
         return language;
     }

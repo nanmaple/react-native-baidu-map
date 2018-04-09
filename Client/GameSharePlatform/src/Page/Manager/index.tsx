@@ -2,33 +2,28 @@ import * as React from 'react';
 import {
     Link,
     Route,
+    HashRouter as Router
 } from 'react-router-dom';
 import LanguageManager from '../../Language/LanguageManager';
-import { MemberRoute, GameRecordRoute, ReportRoute, ScoreRecordRoute, MemberDetailRoute } from '../../Route/Config';
+import { MemberRoute, MeRoute, GameRecordRoute, ReportRoute, ScoreRecordRoute, MemberDetailRoute } from '../../Route/Config';
 import Tabs from "../../Components/TabView/TabView";
 
 import MemberList from "./Member";
-import GameRecord from "./GameRecord";
-import Report from "./Report/index";
-import ScoreRecord from "./ScoreRecord"
-import MemberDetail from "../MemberDetail"
+import Me from "./Me";
+// import GameRecord from "./GameRecord";
+// import Report from "./Report/index";
+// import ScoreRecord from "./ScoreRecord";
+// import MemberDetail from "../MemberDetail"
 enum tab {
     "/manager/member" = 0,
-    "/manager/gamerecord",
-    "/manager/report",
-    "/manager/scoreRecord"
-
-
+    "/manager/me"
 }
 
 const styles = require("./style.css");
 export default class Manager extends React.Component<any, any> {
     private languageManager: LanguageManager = new LanguageManager();
     //头部tab列表
-    private tabList: Array<string> = [this.languageManager.GetErrorMsg("Member"),
-    this.languageManager.GetErrorMsg("GameRecord"),
-    this.languageManager.GetErrorMsg("Report"),
-    this.languageManager.GetErrorMsg("ScoreRecord")];
+    private tabList: Array<string> = [this.languageManager.GetErrorMsg("Member"), this.languageManager.GetErrorMsg("Me")];
     constructor(props: any) {
         super(props);
         this.state = {
@@ -51,13 +46,7 @@ export default class Manager extends React.Component<any, any> {
                 this.props.history.replace(MemberRoute);
                 break;
             case 1:
-                this.props.history.replace(GameRecordRoute);
-                break;
-            case 2:
-                this.props.history.replace(ReportRoute);
-                break;
-            case 3:
-                this.props.history.replace(ScoreRecordRoute);
+                this.props.history.replace(MeRoute);
                 break;
             default:
                 this.props.history.replace(MemberRoute);
@@ -72,9 +61,7 @@ export default class Manager extends React.Component<any, any> {
                     <Tabs tabList={this.tabList} tabClick={this.tabClick} selectedIndex={this.state.selectedIndex} />
                 </div>
                 <Route exact path={MemberRoute} component={MemberList} />
-                <Route exact path={GameRecordRoute} component={GameRecord} />
-                <Route exact path={ReportRoute} component={Report} />
-                <Route exact path={ScoreRecordRoute} component={ScoreRecord} />
+                <Route path={MeRoute} component={Me} />
             </div>
         );
     }

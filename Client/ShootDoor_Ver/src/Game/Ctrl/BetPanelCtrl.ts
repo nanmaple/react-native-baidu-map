@@ -50,12 +50,11 @@ class BetPanelCtrl {
      * 游戏初始化
      * @param data 初始化数据
      */
-    public GameInit(data: Dto.InitGameDto, isReInit: boolean = false): void {
+    public GameInit(data: Dto.InitGameDto, isReInit: boolean = false): void { 
         if (!isReInit) {
             //清除当前未投注成功的注单信息
             this.currentBetPosMsg = new Array<Dto.BetDto>();
         }
-        // if(data.RoundID)
         //重置按钮的赔率
         this.SetOdds(data.Odds);
         //设置限额

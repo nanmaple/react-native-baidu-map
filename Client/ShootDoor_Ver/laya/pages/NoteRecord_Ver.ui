@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":39,
-    "selecteID":40,
+    "selectedBox":30,
+    "selecteID":33,
     "props":{"width":750,"sceneColor":"#fffbfb","height":1334},
     "nodeParent":-1,
     "label":"View",
@@ -394,7 +394,7 @@
                                                         {
                                                             "x":105,
                                                             "type":"Image",
-                                                            "props":{"width":60,"var":"poker1","skin":"ui/poker/1.png","height":80},
+                                                            "props":{"width":60,"var":"poker1","skin":"ui/poker/pkbg.png","height":80},
                                                             "nodeParent":30,
                                                             "label":"Image(poker1)",
                                                             "isDirectory":false,
@@ -407,7 +407,7 @@
                                                         {
                                                             "x":105,
                                                             "type":"Image",
-                                                            "props":{"y":0,"x":75,"width":60,"var":"poker3","skin":"ui/poker/1.png","height":80},
+                                                            "props":{"y":0,"x":75,"width":60,"var":"poker3","skin":"ui/poker/pkbg.png","height":80},
                                                             "nodeParent":30,
                                                             "label":"Image(poker3)",
                                                             "isDirectory":false,
@@ -420,7 +420,7 @@
                                                         {
                                                             "x":105,
                                                             "type":"Image",
-                                                            "props":{"y":-1,"x":150,"width":60,"var":"poker2","skin":"ui/poker/1.png","height":80},
+                                                            "props":{"y":-1,"x":150,"width":60,"var":"poker2","skin":"ui/poker/pkbg.png","height":80},
                                                             "nodeParent":30,
                                                             "label":"Image(poker2)",
                                                             "isDirectory":false,

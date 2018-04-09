@@ -17,8 +17,8 @@ export default class InfoItemLabel extends React.PureComponent<any, any> {
     public renderLabel = (MemberSocre: number, MyScore: number, nickName: any) => {
         return (
             <div className={style.rowItem}>
-                <div className={style.memSoc}>{nickName}:{MemberSocre}</div>
-                <div className={style.mySoc}>{this.languageManager.GetErrorMsg("MyScore")}:{MyScore}</div>
+                <div className={style.memSoc}>{nickName}:&nbsp;{MemberSocre}</div>
+                <div className={style.mySoc}>{this.languageManager.GetErrorMsg("MyScore")}:&nbsp;{MyScore}</div>
             </div>
         )
 

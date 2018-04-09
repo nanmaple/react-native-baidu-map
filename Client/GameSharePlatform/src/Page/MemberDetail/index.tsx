@@ -2,7 +2,7 @@ import * as React from 'react';
 import { withRouter } from "react-router-dom";
 import Tabs from "../../Components/TabView/TabView";
 import BaseInformation from "./BaseInforMation";
-import CheckAccount from "./CheckAccount";
+import CheckAccount from "../Manager/ScoreRecord";
 import ScorerRecord from "./ChildScoreRecord";
 import LanguageManager from '../../Language/LanguageManager';
 const memDetailStyle = require("./style.css");

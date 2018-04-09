@@ -148,10 +148,13 @@ namespace ScenePanel {
          * @param data 
          */
         private GetBetResultPokerData(data: any) {
+            // console.log(data);
             let pokerData: any = JSON.parse(data.Data);
-            this.ui.poker1.skin = this.GetPokerUrl(pokerData.Cards.FirstCard);
-            this.ui.poker2.skin = this.GetPokerUrl(pokerData.Cards.SecondCard);
-            this.ui.poker3.skin = this.GetPokerUrl(pokerData.Cards.ThirdCard);
+            if(pokerData.Cards){
+                this.ui.poker1.skin = this.GetPokerUrl(pokerData.Cards.FirstCard);
+                this.ui.poker2.skin = this.GetPokerUrl(pokerData.Cards.SecondCard);
+                this.ui.poker3.skin = this.GetPokerUrl(pokerData.Cards.ThirdCard);
+            }
         }
         /**
          * 获取投注详情数据
@@ -289,8 +292,6 @@ namespace ScenePanel {
          * 设置列表滚动距离
          */
         public SetListScrollValue(): void {
-            // let len:number = Math.round(this.uiData.listScrollValue / 100);
-            // this.ui._recordList.scrollTo(len);
             this.ui._recordList.scrollBar.value = this.uiData.listScrollValue;
         }
         /**

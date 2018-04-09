@@ -10,6 +10,19 @@ export class LoginParamsDto {
      */
     public DeviceType: string = "MOBILE";
 }
+/**
+ * 通过账号登录
+ */
+export class LoginByAccountDto extends LoginParamsDto {
+    /**
+     * 账号
+     */
+    public Account: string;
+    /**
+     * 密码
+     */
+    public Password: string;
+}
 
 /**
  * 通过Code登录
@@ -49,7 +62,7 @@ export class LoginDto extends LoginParamsDto {
     /**
      * 父级(推荐人)会员编号
      */
-    public ParentID: string ="1";
+    public ParentID: string = "1";
     /**
      * 游戏ID
      */

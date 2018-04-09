@@ -409,6 +409,9 @@ namespace ScenePanel {
             this.ui.MsgPanel.visible = true;
             Laya.timer.once(2000, this, this.HideMsg);
         }
+        /**
+         * 隐藏提示信息
+         */
         public HideMsg():void{
             this.ui.MsgPanel.visible = false;
         }

@@ -1,3 +1,6 @@
+/**
+ * 与scoreRecord页面一样   暂未使用
+ */
 import * as React from 'react';
 import { withRouter } from "react-router-dom";
 
@@ -147,12 +150,12 @@ class CheckAccount extends React.Component<any, any> {
         )
     }
     public renderData = () => {
-        let { memberList, isNoMore, action } = this.state;
+        let { memberList, isNoMore, action,init } = this.state;
         if (!memberList || memberList.length == 0) {
             return (
                 <div className="noData">
                     <CompToast ref={(c) => this.toast = c} />
-                   {this.languageManager.GetErrorMsg("NoData")}
+                   {!init&&this.languageManager.GetErrorMsg("NoData")}
                 </div>
 
             )

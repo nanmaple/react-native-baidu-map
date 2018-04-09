@@ -34,7 +34,8 @@ export default class MemberInfoDto {
     /**
      * 是否是代理
      */
-    Agent: boolean;
+    public Agent: boolean;
+    public Nickname: string;
 }
 
 export class TransferScoreDto {

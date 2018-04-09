@@ -30,3 +30,7 @@ body {
 :global(.ling){
     color:#333
 }
+
+:global(.textPos){
+    justify-content: center
+}

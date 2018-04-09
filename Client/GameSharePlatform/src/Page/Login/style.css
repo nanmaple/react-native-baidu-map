@@ -58,3 +58,53 @@
     background: #fff;
     z-index: 999;
 }
+.title{
+    height:40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: green;
+    font-weight: bold;
+}
+
+
+/****/
+
+.container{
+    display: flex;
+    width:100%;
+    height:100%;
+    background:#eee;
+    align-items: center;
+    justify-content: center;
+    
+}
+.form{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.inputRow{
+    width: 80%;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.input{
+    width:60%;
+}
+.loginBtn{
+    width: 36%;
+    height: 36px;
+    background: #fd4d4d;
+    border-radius: 10px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}

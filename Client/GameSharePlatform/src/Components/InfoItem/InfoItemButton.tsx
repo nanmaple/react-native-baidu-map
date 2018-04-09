@@ -34,7 +34,11 @@ export default class InfoItemButton extends React.Component<any, State> {
             scoreValue: value
         });
     }
-
+    clearInput = () => {
+        this.setState({
+            scoreValue:""
+        })
+    }
     /**
      * 渲染行 左侧为label 右侧为button
      * @param label 标签名
@@ -43,7 +47,7 @@ export default class InfoItemButton extends React.Component<any, State> {
         return (
             <div className={style.rowItem}>
                 <label className={style.inputScore}>
-                    {label}:<input type="number" value={this.state.scoreValue} onChange={this.scoreChange} />
+                    {label}:&nbsp;<input type="number" value={this.state.scoreValue} onChange={this.scoreChange} />
                 </label>
                 <div className={style.changeScore}>
                     <div className={style.addScore} onClick={() => this.props.handler("in", scoreValue)}>{this.languageManager.GetErrorMsg("InScore")}</div>

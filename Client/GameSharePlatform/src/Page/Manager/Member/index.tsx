@@ -40,9 +40,7 @@ export default class MemberList extends React.Component<any, any> {
     }
 
     componentDidMount() {
-        this.setState({
-            showLoading: true
-        })
+        this.ShowToast(this.languageManager.GetErrorMsg("Loading"), ToastType.Loading);
         //网络请求加载数据
         this.memberCtrl.GetChildScoreList(true, this.Handler);
     }
@@ -67,9 +65,7 @@ export default class MemberList extends React.Component<any, any> {
      * @param error 错误
      */
     public Handler = (data: Array<ChildScoreDto>, params: Array<any>, error?: string): void => {
-        this.setState({
-            showLoading: false
-        });
+        this.toast.Hide();
         if (error) {
             this.setState({
                 action: STATS.reset,
@@ -85,7 +81,7 @@ export default class MemberList extends React.Component<any, any> {
                 memberList: data,
                 action: STATS.reset,
                 isNoMore: isNoMore,
-                firstRequest: false
+                initRequest: false
             });
         } else {
             if (isRefresh) {
@@ -150,7 +146,7 @@ export default class MemberList extends React.Component<any, any> {
                         {rowItem.Nickname}{rowItem.Remark ? "(" + rowItem.Remark + ")" : ""}
                     </div></div>
                 <div className={styles.score}>
-                    <div className={rowItem.Score==0?null:(rowItem.Score > 0 ? "zheng" : "fu")}>
+                    <div className={rowItem.Score == 0 ? null : (rowItem.Score > 0 ? "zheng" : "fu")}>
                         {Money.Format(rowItem.Score)}
                     </div>
                     <div>
@@ -162,12 +158,12 @@ export default class MemberList extends React.Component<any, any> {
     }
 
     render() {
-        let { memberList, isNoMore, action } = this.state;
+        let { memberList, isNoMore, action, initRequest } = this.state;
         if (!memberList || memberList.length == 0) {
             return (
                 <div className="noData">
                     <CompToast ref={(c) => this.toast = c} />
-                    {this.languageManager.GetErrorMsg("NoData")}
+                    {!initRequest && this.languageManager.GetErrorMsg("NoData")}
                 </div>
 
             )

@@ -3,7 +3,7 @@
     height: 44px;
 	display: flex;
 	background: #fff;
-	border-bottom: 1px solid #eee;
+	border-bottom: 1px solid #ccc;
 }
 .tab_title{
 	flex:1;

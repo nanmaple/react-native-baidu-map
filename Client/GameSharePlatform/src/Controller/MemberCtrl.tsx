@@ -1,4 +1,4 @@
-import { SetSetAgentApi,GetChildScoreListApi, GetMemberInfoApi, UpdateCloseStatusApi, SetRemarkApi, TransferInApi, TransferOutApi, SetChildPasswordApi, GetTransferLogApi } from './Config';
+import { SetAccountApi, GetOwnInfoApi, SetPasswordApi, SetSetAgentApi, GetChildScoreListApi, GetMemberInfoApi, UpdateCloseStatusApi, SetRemarkApi, TransferInApi, TransferOutApi, SetChildPasswordApi, GetTransferLogApi } from './Config';
 
 import { ListParamsDto, ListParamsCtrlDto, TransferLogDto, TransferLogCtrlDto } from '../Dto/ChildListParamsDto';
 import MemberInfoDto from '../Dto/MemberInfoDto';
@@ -114,6 +114,22 @@ export default class MemberCtrl extends BaseCtrl {
     }
 
     /**
+ * 获取自己信息
+ * @param memberId 会员ID
+ * @param handler 回调
+ */
+    public GetOwnInfo(handler: Function): void {
+
+        this.webApi.Post(GetOwnInfoApi, null).then((data: MemberInfoDto) => {
+            if (data) {
+                handler(data);
+            }
+        }, (error: string) => {
+            handler(null, error);
+        })
+    }
+
+    /**
      * 设置备注
      * @param memberId 会员id
      * @param remark 备注
@@ -149,19 +165,19 @@ export default class MemberCtrl extends BaseCtrl {
         })
     }
 
-        /**
-     * 设置代理
-     * @param memberId 会员id
-     * @param handler 回调
-     */
+    /**
+ * 设置代理
+ * @param memberId 会员id
+ * @param handler 回调
+ */
     public SetAgent(memberId: number, handler: Function): void {
         let dto: any = {
             MemberId: memberId,
         }
         this.webApi.Post(SetSetAgentApi, dto).then((data: any) => {
-            handler(null, [memberId,true]);
+            handler(null, [memberId, true]);
         }, (error: string) => {
-            handler(null, [memberId,false], error);
+            handler(null, [memberId, false], error);
         })
     }
 
@@ -197,7 +213,7 @@ export default class MemberCtrl extends BaseCtrl {
     public TransferOut(memberId: number, amount: number, handler: Function): void {
         //出分值必须大于0
         if (typeof amount !== "number" || amount <= 0) {
-            handler(null, [memberId, amount],ErrorCode[ErrorCode.AmountError]);
+            handler(null, [memberId, amount], ErrorCode[ErrorCode.AmountError]);
             return;
         }
         let dto: any = {
@@ -210,6 +226,25 @@ export default class MemberCtrl extends BaseCtrl {
             handler(null, [memberId, amount], error);
         })
     }
+    /**
+     * 设置子会员账号
+     * @param memberId 会员id
+     * @param accound 账号
+     * @param handler 回调
+     */
+    public SetAccount(memberId: number, account: string, handler: Function): void {
+        //todo 校验6-20位，汉字加数字
+        let dto: any = {
+            MemberId: memberId,
+            Account: account
+        }
+        this.webApi.Post(SetAccountApi, dto).then((data: any) => {
+            handler(null, [memberId, account]);
+        }, (error: string) => {
+            handler(null, [memberId, account], error);
+        })
+    }
+
 
     /**
      * 设置子会员密码
@@ -231,6 +266,24 @@ export default class MemberCtrl extends BaseCtrl {
             handler(null, [memberId, password]);
         }, (error: string) => {
             handler(null, [memberId, password], error);
+        })
+    }
+    /**
+      * 设置自己密码
+      * @param oldPassword 旧密码
+      * @param newPassword 新密码
+      * @param handler 回调
+    */
+    public SetPassword(oldPassword: number, newPassword: string, handler: Function): void {
+
+        let dto: any = {
+            OldPassword: oldPassword,
+            NewPassword: newPassword
+        }
+        this.webApi.Post(SetPasswordApi, dto).then((data: any) => {
+            handler(null, [oldPassword, newPassword]);
+        }, (error: string) => {
+            handler(null, [oldPassword, newPassword], error);
         })
     }
 }

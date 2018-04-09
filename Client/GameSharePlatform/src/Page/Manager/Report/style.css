@@ -49,19 +49,52 @@
     margin-right: 20px;
 }
 .type{
-    flex:3;
+    width:25%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
 }
 .win{
+    width:25%;
     color: #338ffe;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 .lose{
+    width:25%;
     color:#fd4d4d;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 .ozero{
-    color:#333
+    width:25%;
+    color:#333;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.rwin{
+    width:25%;
+    color: #338ffe;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+}
+.rlose{
+    width:25%;
+    color:#fd4d4d;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+}
+.rozero{
+    width:25%;
+    color:#333;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
 }
 .allTotal{
     display: flex;
@@ -70,27 +103,31 @@
     background: #ddd;
     border-bottom: 1px solid #ddd;
     padding: 0 10px 0 10px;
+    text-align: center;
 }
 .zero{
-    flex:1;
     display: flex;
+    width:25%;
     justify-content: flex-end;
     align-items: center;
     color:#333;
+    text-align: center;
 }
 .totalWin{
-    flex:1;
     display: flex;
+    flex:1;
     justify-content: flex-end;
     align-items: center;
     color:#338ffe;
+    text-align: center;
 }
 .total{
-    flex:1;
     display: flex;
+    flex:1;
     justify-content: flex-end;
     align-items: center;
     color:#fd4d4d;
+    text-align: center;
 }
 .back{
     flex:1;
@@ -107,8 +144,17 @@
     align-items: center;
     padding:0 10px 0 10px;
 }
+.rowTitle{
+    display: flex;
+    height:40px;
+    background:#fff;
+    border-bottom: 1px solid #ddd;
+    align-items: center;
+    padding:0 10px 0 10px;
+    background: #efeff4;
+}
 .name{
-    flex:1;
+    width:25%;
 }
 .score{
     flex:1;
@@ -158,4 +204,49 @@
     justify-content: flex-end;
     margin-right: 20px;
     color:#fd4d4d
+}
+
+.bet{
+    width:25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.pay{
+    width:25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.result{
+    flex:1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 20px;
+}
+
+.table{
+    width:100%;
+    border-collapse: collapse;
+}
+.tr{
+    height:40px;
+    border-bottom: 1px solid #ccc;
+    background: #fff;
+}
+.td{
+    width: 25%;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+}
+
+.marginR{
+    text-align: right;
+    padding-right: 10px;
+}
+.marginL{
+    text-align: left;
+    padding-left: 10px;
 }
