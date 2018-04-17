@@ -220,7 +220,7 @@ namespace Utils {
                     if (dataObj.expires > timestamp) {
                         return dataObj.value;
                     } else {
-                        this.RemoveLocalStorage(key);
+                        this.RemoveSessionStorage(key);
                         return null;
                     }
                 } else {

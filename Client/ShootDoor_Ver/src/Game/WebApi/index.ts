@@ -42,5 +42,20 @@ namespace Net {
                         errorhandler.runWith(error.toString());
                   });
             }
+            /**
+             * 获取appid
+             */
+            public GetAppID(successHandler: Laya.Handler, errorhandler?: Laya.Handler){
+                  this.http.Get(Net.ApiConfig.GetAppIDApi,{},this.header,(response: any)=>{
+                        if (response.Result == BaseEnum.ErrorCode.Success) { 
+                              GameConfig.GetAppID(response.Data);
+                              successHandler.run();
+                        } else {
+                              errorhandler.runWith(response.Result);
+                        }
+                  },(error: any)=>{
+                        errorhandler.runWith(error.toString());
+                  })
+            }
       }
 }

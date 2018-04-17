@@ -22,18 +22,16 @@ namespace ScenePanel {
             //获取Socket Token
             let authorizationInfo = this.memberServer.GetSocketInfo();
             if (!authorizationInfo.Token) {
-                let parentId: string = Utils.Url.GetQuery("parentid");
-                let dto: BaseDto.LoginDto = new BaseDto.LoginDto();
-                dto.DeviceType = GameConfig.DeviceType;
-                dto.DeviceId = GameConfig.DeviceId;
-                let successHandler = Laya.Handler.create(this, this.LoginSuccess, null, false);
-                let errorHandler = Laya.Handler.create(this, this.LoginError, null, false);
-                this.memberServer.LoginByTourists(dto, authorizationInfo.Token, successHandler, errorHandler);
+                let parentID = Utils.Url.GetQuery("parentid");
+                Laya.Browser.window.location.replace(`http://${GameConfig.Domain}?gameid=${GameConfig.GameID}&parentid=${parentID}`);
             } else {
                 this.LoginSuccess(authorizationInfo.Token);
+                Net.WebApi.GetInstance().GetAppID(Laya.Handler.create(this,()=>{
+                    let url: string = Laya.Browser.window.location.href;
+                    this.memberServer.GetJsSignature(url, Laya.Handler.create(this, this.GetWeChatSuccess, null, false));
+                },null,false))
             }
-            let url: string = Laya.Browser.window.location.href;
-            this.memberServer.GetJsSignature(url, Laya.Handler.create(this, this.GetWeChatSuccess, null, false));
+            
             //加载游戏开资源
             this.onLoaded();
         }
@@ -44,6 +42,7 @@ namespace ScenePanel {
         private GetWeChatSuccess(dto: BaseDto.WeChatSignatureDto): void {
             let wechat: Utils.WeChat = new Utils.WeChat();
             wechat.Init(dto);
+            console.log(dto);
         }
 
 
@@ -71,7 +70,6 @@ namespace ScenePanel {
             //抛出错误提示
             this.gameLoadScenes.LoadError(error);
             this.isLoginSuccess = false;
-            console.log(error);
         }
 
         /**

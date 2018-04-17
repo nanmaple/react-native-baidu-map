@@ -74,7 +74,7 @@ export default class Home extends React.Component<any, any> {
      * @param id  游戏ID
      * @param url 游戏地址
      */
-    private GameLogin = (id: number) => {
+    private GameLogin = (id: any) => {
         let isLogin = this.userCtrl.GameLogin(id);
         if (isLogin) {
             window.location.href = GetRedirectUrl(id)
@@ -95,6 +95,7 @@ export default class Home extends React.Component<any, any> {
             parentID = "1";
         }
         let link = GameConfig.GetWeChatShareDto(parentID, true).Link;
+        console.log(link);
         window.location.replace(link);
 
     }

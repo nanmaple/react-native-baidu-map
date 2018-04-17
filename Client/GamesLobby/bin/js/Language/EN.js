@@ -263,5 +263,7 @@ var LanguageUtils;
         Login: "Loading...",
         Agent: "Recommender:",
         AgentTitle: "Choose your Recommender",
+        LoginError: "Login Error",
+        NoLogin: "No Login"
     };
 })(LanguageUtils || (LanguageUtils = {}));

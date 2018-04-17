@@ -78,7 +78,7 @@ namespace MemberManager {
             dto.Code = code;
             dto.ParentID = parentID;
             if (!(<BaseDto.LoginMultiAccountDto>response).Accounts) {
-                //token信息
+                //用户token信息
                 dto.Token = (<BaseDto.LoginSuccessDto>response).Token;
                 //是否有多个账号
                 dto.IsMulti = false;
@@ -131,7 +131,7 @@ namespace MemberManager {
             let result: BaseDto.LoginResultDto = new BaseDto.LoginResultDto();
             result.Result = BaseDto.ResultEnum.ERROR;
             result.Data = error;
-
+            
             if (error == Enum.ErrorCode.TokenInvalid) {
                 //清空缓存信息
                 CacheData.Authorization.instance.ClearAuthorization(this.gameID);

@@ -6,6 +6,7 @@ import 'weui';
 import 'react-weui/build/packages/react-weui.css';
 import LanguageManager from './Language/LanguageManager';
 import Promotion from "./Page/Promotion";
+import { GetAppIDApi } from './Controller/Config';
 export default class App extends React.Component<any, any> {
     private languageManager: LanguageManager = new LanguageManager();
     constructor(props: any) {
@@ -15,7 +16,6 @@ export default class App extends React.Component<any, any> {
         document.title = this.languageManager.GetErrorMsg("Plat");
     }
     componentDidMount() {
-
     }
     /**
      * 分享回调

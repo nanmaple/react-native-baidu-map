@@ -41,10 +41,11 @@ namespace Net {
                         if (response.Result == Enum.ErrorCode.Success) {
                               successHandler.runWith(response.Data);
                         } else {
+                              console.log("Login失败回调",response);
                               errorhandler.runWith(response.Result);
                         }
                   }, (error: any) => {
-                        console.log("Login失败回调");
+                        console.log("Login失败回调",error);
                         errorhandler.runWith(error.toString());
                   });
             };
@@ -66,10 +67,11 @@ namespace Net {
                         if (response.Result == Enum.ErrorCode.Success) {
                               successHandler.runWith(response.Data);
                         } else {
+                              console.log("LoginByTourists失败回调",response);
                               errorhandler.runWith(response.Result);
                         }
                   }, (error: any) => {
-                        console.log("LoginByTourists失败回调");
+                        console.log("LoginByTourists失败回调",error);
                         errorhandler.runWith(error.toString());
                   });
             };
@@ -91,10 +93,11 @@ namespace Net {
                         if (response.Result == Enum.ErrorCode.Success) {
                               successHandler.runWith(response.Data);
                         } else {
+                              console.log("LoginCheck失败回调",response);
                               errorhandler.runWith(response.Result);
                         }
                   }, (error: any) => {
-                        console.log("LoginCheck失败回调");
+                        console.log("LoginCheck失败回调",error);
                         errorhandler.runWith(error.toString());
                   });
             };
@@ -116,14 +119,15 @@ namespace Net {
                   }
                   //请求调Net的api，
                   this.http.Post(Net.ApiConfig.LoginById, params, header, (response: any) => {
-                        console.log("LoginCheck成功回调");
+                        console.log("LoginByID成功回调");
                         if (response.Result == Enum.ErrorCode.Success) {
                               successHandler.runWith(response.Data);
                         } else {
+                              console.log("LoginByID失败回调",response);
                               errorhandler.runWith(response.Result);
                         }
                   }, (error: any) => {
-                        console.log("LoginCheck失败回调");
+                        console.log("LoginByID失败回调",error);
                         errorhandler.runWith(error.toString());
                   });
             };
@@ -141,10 +145,11 @@ namespace Net {
                         if (response.Result == Enum.ErrorCode.Success) {
                               successHandler.runWith(response.Data);
                         } else {
+                              console.log("GetMemberInfo失败回调",response);
                               errorhandler.runWith(response.Result);
                         }
                   }, (error: any) => {
-                        console.log("GetMemberInfo失败回调");
+                        console.log("GetMemberInfo失败回调",error);
                         errorhandler.runWith(error.toString());
                   });
             }

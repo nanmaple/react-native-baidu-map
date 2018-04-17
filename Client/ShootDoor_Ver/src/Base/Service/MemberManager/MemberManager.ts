@@ -97,10 +97,16 @@ namespace ServiceManager {
                 }else if(response.Result == BaseEnum.ErrorCode.IPLimited){
                     Laya.Browser.window.location.href = "";
                 } else {
+                    console.log("获取游戏SocketToken失败",response);
                     errorhandler.runWith(response.Result);
                 }
             }, (error: any) => {
-                errorhandler.runWith(error.toString());
+                if(error){
+                    console.log("获取游戏SocketToken失败",error);
+                    errorhandler.runWith(error.toString());
+                }else{
+                    errorhandler.run();
+                }
             });
         }
 

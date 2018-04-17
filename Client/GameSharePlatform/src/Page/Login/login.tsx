@@ -26,7 +26,8 @@ export default class Login extends React.Component<any, any> {
             account: "",
             passWord: "",
             login: false,
-            showLoading: false
+            showLoading: false,
+            limite: false
         }
     }
 
@@ -53,6 +54,7 @@ export default class Login extends React.Component<any, any> {
         })
     }
     login = () => {
+        this.userCtrl.GetAppID();
         let { account, passWord } = this.state;
         if (!Verification.Password(account) || !Verification.Password(passWord)) {
             this.ShowToast(this.languageManager.GetErrorMsg("Illegal"), ToastType.Error);
@@ -68,7 +70,12 @@ export default class Login extends React.Component<any, any> {
             this.setState({
                 login: true
             });
-            this.userCtrl.GetMemberInfo(()=>{});
+            this.userCtrl.GetMemberInfo(() => { });
+            return;
+        } else if (response.Result == 3) {
+            this.setState({
+                limite: true
+            });
             return;
         }
         this.toast.Hide();
@@ -76,13 +83,13 @@ export default class Login extends React.Component<any, any> {
         return;
     }
     render() {
-        let { account, passWord, login } = this.state;
+        let { account, passWord, login, limite } = this.state;
         return (
             <div className={styles.container}>
                 <CompToast ref={(c) => this.toast = c} />
                 <Toast icon="loading" show={this.state.showLoading}>{this.languageManager.GetErrorMsg("Loading")}</Toast>
                 {
-                    login ? <Redirect to="/" /> : <div className={styles.form}>
+                    limite ? <Redirect to="/limite" /> : login ? <Redirect to="/" /> : <div className={styles.form}>
                         <div className={styles.inputRow}>
                             账号:<input className={styles.input} type="text" value={account} onChange={this.handleAChange} />
                         </div>

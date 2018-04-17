@@ -89,6 +89,7 @@ class GameMain {
      * @param data 
      */
     private LoginCallback(data: BaseDto.LoginResultDto): void {
+        let language: LanguageUtils.Language = new LanguageUtils.Language();
         if (data.Result == BaseDto.ResultEnum.LOGIN) {
             //登录成功，获取会员信息
             this.memberServer.GetMemberInfo(this.dto.GameID, Laya.Handler.create(this, this.Redirect));
@@ -97,7 +98,7 @@ class GameMain {
             this.status = 1;
             this.MultiAccount(data.Data);
         } else if (data.Result == BaseDto.ResultEnum.ERROR) {
-            this.Redirect();
+            alert(language.GetLanguage("LoginError"));
         } else if (data.Result == BaseDto.ResultEnum.NO) {
             this.Redirect();
         }

@@ -17,7 +17,7 @@ import ScoreRecord from '../Page/Manager/ScoreRecord';
 import ReportGameResutl from '../Page/Manager/Report/ReportGameResult';
 import ReportGameRecord from '../Page/Manager/Report/ReportGameRecord';
 import Promotion from '../Page/Promotion';
-import { LoginRoute, HomeRoute, MeRoute, ManagerRoute, MemberDetailRoute, GameRecordDetailRoute, ReportGameResutlRoute, ReportGameRecordRoute, PromotionRoute } from './Config';
+import { LoginRoute, HomeRoute, MeRoute, ManagerRoute, MemberDetailRoute, GameRecordDetailRoute, ReportGameResutlRoute, ReportGameRecordRoute, LimiteRoute } from './Config';
 import UserCtrl from '../Controller/UserCtrl';
 
 class RoutePage extends React.Component<any, any> {
@@ -49,6 +49,7 @@ class RoutePage extends React.Component<any, any> {
                 {
                     this.state.isLoginComplete ?
                         <div style={{ height: "100%" }} >
+                            <Route exact path={LimiteRoute} component={Promotion} />
                             <Route exact path={LoginRoute} component={LoginTest} />
                             <Route exact path={HomeRoute} component={Home} />
                             <Route path={ManagerRoute} component={Manager} />
@@ -56,7 +57,7 @@ class RoutePage extends React.Component<any, any> {
                             <Route path={GameRecordDetailRoute} component={GameRecordDetail} />
                             <Route path={ReportGameResutlRoute} component={ReportGameResutl} />
                             <Route path={ReportGameRecordRoute} component={ReportGameRecord} />
-                            <Route path={PromotionRoute} component={Promotion} />
+
 
                         </div>
                         : (<Login loginComplete={this.LoginComplete} />)

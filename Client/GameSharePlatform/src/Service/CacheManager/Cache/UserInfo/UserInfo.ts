@@ -11,7 +11,7 @@ export default class UserInfo implements IUserInfo {
     /**
      * 获取用户缓存的key
      */
-    private GetUserInfoKey(gameId?: number): string {
+    private GetUserInfoKey(gameId?: any): string {
         if (gameId) {
             return `UserInfo-${gameId}-CacheKey`;
         }
@@ -35,7 +35,7 @@ export default class UserInfo implements IUserInfo {
      * 设置授权信息
      * @param dto 
      */
-    public SetUserInfo(dto: UserInfoDto, gameId?: number): boolean {
+    public SetUserInfo(dto: UserInfoDto, gameId?: any): boolean {
         if (!this.memberInfo) {
             this.memberInfo = new UserInfoDto();
         }

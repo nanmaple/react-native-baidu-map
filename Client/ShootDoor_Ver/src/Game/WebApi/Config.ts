@@ -16,4 +16,8 @@ namespace Net.ApiConfig {
      * 获取微信js签名信息
      */
     export const GetJsSignature = GameConfig.WebApiBaseUrl + "/WeChat/GetJsSignature";
+    /**
+     * 获取APPID
+     */
+    export const GetAppIDApi = GameConfig.WebApiBaseUrl + "/WeChat/GetAppID";   
 }

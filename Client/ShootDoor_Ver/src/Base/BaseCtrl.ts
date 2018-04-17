@@ -74,10 +74,10 @@ abstract class BaseCtrl {
                 wechat.GetPcNetworkType(Laya.Handler.create(this, this.GetNetworkSuccess, null, false));
             }
         });
-
         let successHandler: Laya.Handler = Laya.Handler.create(this, this.WeChatShareHandler, null, false);
 
         let authorizeDto: BaseDto.WeChatShareDto = GameConfig.GetWeChatShareDto(memberId.toString(), false);
+
         //分享微信好友
         wechat.ShareAppMessage(authorizeDto.Title, authorizeDto.Desc, authorizeDto.ImgUrl, authorizeDto.Link, successHandler);
         //分享QQ

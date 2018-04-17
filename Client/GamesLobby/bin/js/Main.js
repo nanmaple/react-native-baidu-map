@@ -76,8 +76,8 @@ var GameMain = (function () {
         }
         else {
             this.accountUI.login.visible = true;
-            this.accountUI.accountList.visible = true;
-            this.accountUI.title.visible = true;
+            this.accountUI.accountList.visible = false;
+            this.accountUI.title.visible = false;
         }
         var language = new LanguageUtils.Language();
         this.accountUI.login.text = language.GetLanguage("Login");
@@ -88,6 +88,7 @@ var GameMain = (function () {
      * @param data
      */
     GameMain.prototype.LoginCallback = function (data) {
+        var language = new LanguageUtils.Language();
         if (data.Result == BaseDto.ResultEnum.LOGIN) {
             //登录成功，获取会员信息
             this.memberServer.GetMemberInfo(this.dto.GameID, Laya.Handler.create(this, this.Redirect));
@@ -98,7 +99,7 @@ var GameMain = (function () {
             this.MultiAccount(data.Data);
         }
         else if (data.Result == BaseDto.ResultEnum.ERROR) {
-            this.Redirect();
+            alert(language.GetLanguage("LoginError"));
         }
         else if (data.Result == BaseDto.ResultEnum.NO) {
             this.Redirect();
@@ -112,7 +113,7 @@ var GameMain = (function () {
             this.accountUI.login.visible = false;
         }
         if (this.dto.GameID) {
-            // Laya.Browser.window.location.replace(GameConfig.GetRedirectUrl(this.dto.GameID));
+            Laya.Browser.window.location.replace(GameConfig.GetRedirectUrl(this.dto.GameID));
         }
         else {
             alert("游戏不存在");

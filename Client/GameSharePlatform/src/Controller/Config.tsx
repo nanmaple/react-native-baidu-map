@@ -118,3 +118,8 @@ export const GetGameReportApi = `${BetWebApiBaseUrl}/Bet/GetGameReport`;
  */
 export const GetBetRecordByTimeApi = `${BetWebApiBaseUrl}/Bet/GetBetRecordByTime`;
 
+/**
+ * 获取AppID
+ */
+export const GetAppIDApi = `${WebApiBaseUrl}/WeChat/GetAppID`;
+

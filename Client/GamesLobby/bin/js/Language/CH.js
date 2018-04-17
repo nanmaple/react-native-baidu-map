@@ -263,5 +263,7 @@ var LanguageUtils;
         Login: "登录中...",
         Agent: "推荐人:",
         AgentTitle: "请选择推荐人",
+        LoginError: "游戏登录错误",
+        NoLogin: "游戏未登录"
     };
 })(LanguageUtils || (LanguageUtils = {}));

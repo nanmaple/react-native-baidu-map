@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {
-    Link
+    Link,
+    Redirect
 } from 'react-router-dom';
 import LanguageManager from '../../Language/LanguageManager';
 import UserCtrl from "../../Controller/UserCtrl";
@@ -13,21 +14,31 @@ const rightImg = require("../../Image/right.png");
 
 export default class Login extends React.Component<any, any> {
     private userCtrl: UserCtrl = new UserCtrl();
-    private languageManager: LanguageManager=new LanguageManager();
+    private languageManager: LanguageManager = new LanguageManager();
     constructor(props: any) {
         super(props);
         this.state = {
             isShowLogin: true,
             accountList: [],
-            forgin:true,
+            forgin: true,
+            limite: false
         };
     }
 
     componentWillMount() {
+        this.userCtrl.GetAppID();
         this.userCtrl.Login(this.LoginCallback);
     }
 
     private LoginCallback = (response: LoginResultDto): void => {
+        if (response.Result == 3) {
+            this.setState({
+                limite: true
+
+            });
+            this.props.loginComplete();
+            return;
+        }
         if (response.Result == ResultEnum.LOGIN) {
             //登录成功，获取会员信息
             this.userCtrl.GetMemberInfo(this.Redirect);
@@ -47,7 +58,7 @@ export default class Login extends React.Component<any, any> {
      * 重定向
      */
     private Redirect = (): void => {
-        let {forgin} = this.state;
+        let { forgin } = this.state;
         this.setState({ isShowLogin: false });
         this.props.loginComplete(forgin);
     }
@@ -67,7 +78,7 @@ export default class Login extends React.Component<any, any> {
         return (<div onClick={() => { this.OnSelect(rowItem.MemberId) }} key={index} className={styles.rowItem} >
             <div className={styles.nickName}>
                 <div className={styles.number}>
-                   {this.languageManager.GetErrorMsg("Agent")}：
+                    {this.languageManager.GetErrorMsg("Agent")}：
                 </div>
                 <div className={styles.name}>
                     {rowItem.ParentNickname}
@@ -87,7 +98,7 @@ export default class Login extends React.Component<any, any> {
         if (this.state.accountList && this.state.accountList.length > 0) {
             return (
                 <div className={styles.listContent}>
-                   <div className={styles.title}>{this.languageManager.GetErrorMsg("AgentTitle")}</div>
+                    <div className={styles.title}>{this.languageManager.GetErrorMsg("AgentTitle")}</div>
                     {
                         this.state.accountList.map((item: MultiAccountDto, index: number) => {
                             return this.renderAccountItem(item, index);
@@ -105,6 +116,10 @@ export default class Login extends React.Component<any, any> {
     }
 
     render() {
+        let { limite } = this.state;
+        if (limite) {
+            return <Redirect to="/limite" />;
+        }
         if (!this.state.isShowLogin) {
             return null;
         }

@@ -544,7 +544,7 @@ export default class UserCtrl extends BaseCtrl {
      * 游戏登录
      * @param gameId 游戏id
      */
-    public GameLogin(gameId: number): boolean {
+    public GameLogin(gameId: any): boolean {
         if (this.loginStatus) {
             //从缓存中获取Code，包括Code，Token,GameToken
             let cacheAuthorization: Authorization = CacheManager.GetCache(CacheType.Authorization);
@@ -557,5 +557,14 @@ export default class UserCtrl extends BaseCtrl {
             return true;
         }
         return false;
+    }
+
+    public GetAppID() {
+        this.webApi.Get(ApiConfig.GetAppIDApi, null).then((res: any) => {
+            console.log(res);
+            localStorage.setItem("AppId", res);
+        }, (err: any) => {
+            console.log(err)
+        });
     }
 }

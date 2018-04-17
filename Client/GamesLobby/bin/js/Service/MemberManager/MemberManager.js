@@ -74,7 +74,7 @@ var MemberManager;
             dto.Code = code;
             dto.ParentID = parentID;
             if (!response.Accounts) {
-                //token信息
+                //用户token信息
                 dto.Token = response.Token;
                 //是否有多个账号
                 dto.IsMulti = false;

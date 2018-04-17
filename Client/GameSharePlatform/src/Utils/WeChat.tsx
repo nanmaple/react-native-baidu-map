@@ -1,4 +1,5 @@
 import * as GameConfig from '../GameConfig';
+import { GetAppIDApi } from "../Controller/Config"
 import { WeChatSignatureDto } from '../Dto/WeChatShareDto';
 export default class WeChat {
     private AppId: string;
@@ -13,11 +14,11 @@ export default class WeChat {
      * @param dto 
      */
     public Init(dto: WeChatSignatureDto): void {
-        this.AppId = GameConfig.AppId;
+        this.AppId = localStorage.getItem("AppId");
         if (this.wx) {
             this.wx.config({
                 debug: false,
-                appId: GameConfig.AppId,
+                appId: this.AppId,
                 timestamp: dto.Timestamp,
                 nonceStr: dto.NonceStr,
                 signature: dto.Signature,

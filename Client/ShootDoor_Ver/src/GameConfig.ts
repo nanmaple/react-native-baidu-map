@@ -1,7 +1,7 @@
 namespace GameConfig {
     export const GameID: number = 1;
     export const IsDebug: boolean = false;
-
+    
     export const DeviceType: string = "MOBILE";
     export const DeviceId: string = "123456";
     export const CacheType: number = 0; //0 localstorage , 1 cookie ,2 session
@@ -9,7 +9,7 @@ namespace GameConfig {
     export const Domain: string = IsDebug ? "www.zyyft.cn" : "eg.s1.natapp.cc";
     export const WebApiBaseUrl: string = IsDebug ? "http://192.168.0.143:8200" : `http://${Domain}/api`;
     export const BetWebApiBaseUrl: string = IsDebug ? "http://192.168.0.143:8201" : `http://${Domain}/report`;
-    
+
     export const DesignLength: number = 1334;
     export const DesignShort: number = 750;
     export let LengthRatio: number = 1;
@@ -33,8 +33,13 @@ namespace GameConfig {
         }
         return `ws://s1.natapp.cc:9111?GameId=${this.GameID}&MemberId=${memberId}&Device=${this.DeviceType}&DeviceId=${this.DeviceId}&Token=${token}`;
     }
+    //获取APPID
+    export function GetAppID(id: any) {
+        GameConfig.AppId = id;
+    } 
+
     //微信相关
-    export const AppId = IsDebug ? "wxbb5416518880be41" : "wxa1db7b9e146cd997";
+    export let AppId:any = null;
     export function GetWeChatUrl(parentID: string, isAuthorize: boolean = true) {
         if (isAuthorize) {
             return `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.AppId}&redirect_uri=http%3A%2F%2F${this.Domain}%3fgameid%3d${this.GameID}%26parentid%3d${parentID}&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`;
@@ -42,7 +47,7 @@ namespace GameConfig {
             return `http://${this.Domain}?gameid=${this.GameID}&parentid=${parentID}`;
         }
     }
-
+    
     export const WeChatTitle = "";
     export const WeChatDesc = "";
     export const WeChatImgUrl = "";
