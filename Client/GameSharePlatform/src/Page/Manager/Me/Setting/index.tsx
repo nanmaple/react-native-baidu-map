@@ -35,7 +35,8 @@ class BaseInformation extends React.Component<any, any> {
             oldPassword: "",
             newPassword: "",
             showModal: false,
-            curPassword: ""
+            curPassword: "",
+            memberNickname:"",
         }
     }
     componentDidMount() {
@@ -196,17 +197,17 @@ class BaseInformation extends React.Component<any, any> {
         return (<div className={baseInforStyle.modal}>
             <div className={baseInforStyle.content}>
                 <div className={baseInforStyle.inputRow}>
-                    &nbsp;&nbsp;旧密码: &nbsp;<input className={baseInforStyle.input} type="password" value={oldPassword} onChange={this.handleAChange} />
+                    &nbsp;&nbsp;{this.languageManager.GetErrorMsg("OldPwd")}: &nbsp;<input className={baseInforStyle.input} type="password" value={oldPassword} onChange={this.handleAChange} />
                 </div>
                 <div className={baseInforStyle.inputRow}>
-                    &nbsp;&nbsp;新密码: &nbsp;<input className={baseInforStyle.input} type="password" value={newPassword} onChange={this.handlePChange} />
+                    &nbsp;&nbsp;{this.languageManager.GetErrorMsg("NewPwd")}: &nbsp;<input className={baseInforStyle.input} type="password" value={newPassword} onChange={this.handlePChange} />
                 </div>
                 <div className={baseInforStyle.inputRow}>
-                    确认密码: &nbsp;<input className={baseInforStyle.input} type="password" value={curPassword} onChange={this.handleCurhange} />
+                    {this.languageManager.GetErrorMsg("ConfirmPwd")}: &nbsp;<input className={baseInforStyle.input} type="password" value={curPassword} onChange={this.handleCurhange} />
                 </div>
                 <div className={baseInforStyle.btn}>
-                    <div onClick={this.Cancle} className={baseInforStyle.loginBtn}>取消</div>
-                    <div onClick={this.SetPassWord} className={baseInforStyle.loginBtn}>提交</div>
+                    <div onClick={this.Cancle} className={baseInforStyle.loginBtn}>{this.languageManager.GetErrorMsg("Cancle")}</div>
+                    <div onClick={this.SetPassWord} className={baseInforStyle.loginBtn}>{this.languageManager.GetErrorMsg("Sure")}</div>
                 </div>
             </div>
 

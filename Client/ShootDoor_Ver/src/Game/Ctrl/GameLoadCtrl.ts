@@ -17,34 +17,40 @@ namespace ScenePanel {
                 }
                 Laya.stage.addChild(this.gameLoadScenes.GetUI());
             })
-            //从会员服务中获取用户信息
             this.memberServer = new ServiceManager.MemberManager(GameConfig.GameID);
+
             //获取Socket Token
-            let authorizationInfo = this.memberServer.GetSocketInfo();
+            let loginService = new Laya.Browser.window.LoginService(Utils.Http, Utils.Storage);
+            let authorizationInfo = loginService.GetAuthorizationDtoByLocal(); 
+            console.log("authorizationInfo",authorizationInfo);
             if (!authorizationInfo.Token) {
-                let parentID = Utils.Url.GetQuery("parentid");
-                Laya.Browser.window.location.replace(`http://${GameConfig.Domain}?gameid=${GameConfig.GameID}&parentid=${parentID}`);
+                this.GoGameLobby();
             } else {
                 this.LoginSuccess(authorizationInfo.Token);
-                Net.WebApi.GetInstance().GetAppID(Laya.Handler.create(this,()=>{
-                    let url: string = Laya.Browser.window.location.href;
-                    this.memberServer.GetJsSignature(url, Laya.Handler.create(this, this.GetWeChatSuccess, null, false));
-                },null,false))
+                let parentID:string = Utils.Url.GetQuery("parentid");
+                //获取会员信息
+                loginService.GetMemberInfo(true);
+                //微信js签名配置
+                let wechat = new Laya.Browser.window.Wechat(Utils.Http,this.WeChatShareSuccess,GameConfig.GetWeChatShareDto(parentID,false));
+                wechat.GetJsSignature();
             }
             
             //加载游戏开资源
             this.onLoaded();
         }
-
         /**
-         * 获取微信配置信息成功
+         * 分享成功回调
          */
-        private GetWeChatSuccess(dto: BaseDto.WeChatSignatureDto): void {
-            let wechat: Utils.WeChat = new Utils.WeChat();
-            wechat.Init(dto);
-            console.log(dto);
-        }
+        private WeChatShareSuccess():void{
 
+        }
+        /**
+         * 跳转至游戏大厅
+         */
+        private GoGameLobby(): void{
+            let parentID = Utils.Url.GetQuery("parentid");
+            Laya.Browser.window.location.replace(`http://${GameConfig.Domain}?gameid=${GameConfig.GameID}&parentid=${parentID}`);
+        }
 
         /**
          * 登录成功
@@ -66,9 +72,10 @@ namespace ScenePanel {
         /**
          * 登录失败
          */
-        private LoginError(error: string): void {
+        private LoginError(): void {
             //抛出错误提示
-            this.gameLoadScenes.LoadError(error);
+            // this.gameLoadScenes.LoadError(error);
+            // this.GoGameLobby();
             this.isLoginSuccess = false;
         }
 

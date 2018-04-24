@@ -6,7 +6,7 @@ namespace GameConfig {
     export const DeviceId: string = "123456";
     export const CacheType: number = 0; //0 localstorage , 1 cookie ,2 session
 
-    export const Domain: string = IsDebug ? "www.zyyft.cn" : "eg.s1.natapp.cc";
+    export const Domain: string = IsDebug ? "www.zyyft.cn" : "m.17guess.cn";
     export const WebApiBaseUrl: string = IsDebug ? "http://192.168.0.143:8200" : `http://${Domain}/api`;
     export const BetWebApiBaseUrl: string = IsDebug ? "http://192.168.0.143:8201" : `http://${Domain}/report`;
 
@@ -31,7 +31,7 @@ namespace GameConfig {
         if (IsDebug) {
             return `ws://192.168.0.143:9800?GameId=${this.GameID}&MemberId=${memberId}&Device=${this.DeviceType}&DeviceId=${this.DeviceId}&Token=${token}`;
         }
-        return `ws://s1.natapp.cc:9111?GameId=${this.GameID}&MemberId=${memberId}&Device=${this.DeviceType}&DeviceId=${this.DeviceId}&Token=${token}`;
+        return `ws://52.77.231.63:9111?GameId=${this.GameID}&MemberId=${memberId}&Device=${this.DeviceType}&DeviceId=${this.DeviceId}&Token=${token}`;
     }
     //获取APPID
     export function GetAppID(id: any) {
@@ -53,9 +53,9 @@ namespace GameConfig {
     export const WeChatImgUrl = "";
     export function GetWeChatShareDto(parentID: string, isAuthorize: boolean = true) {
         let dto: any = {
-            Title: "ShootDoor",
-            Desc: "射龙门H5游戏",
-            ImgUrl: "",
+            Title: "NB.ShootDoor",
+            Desc: "ShootDoor is a easy and exciting H5 game that simulated goal of soccer by poker,Please try it now!",
+            ImgUrl: `http://${this.Domain}/logo.jpg`,
             Link: ""
         }
         if (isAuthorize) {

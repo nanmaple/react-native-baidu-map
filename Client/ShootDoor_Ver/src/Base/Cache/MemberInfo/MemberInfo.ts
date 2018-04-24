@@ -10,7 +10,7 @@ namespace BaseCache {
          * 获取用户缓存的key
          */
         private GetMemberInfoKey(gameID: number): string {
-            return `UserInfo-${gameID}-CacheKey`;
+            return `UserInfo-CacheKey`;
         }
         /**
          * 获取会员授权信息

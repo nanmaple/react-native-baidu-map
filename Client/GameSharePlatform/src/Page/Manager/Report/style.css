@@ -3,7 +3,6 @@
     display: flex;
     border-bottom: 1px solid #ccc;
     align-items: center;
-    padding: 0 10px 0 10px;
     background:#fff;
 }
 .headdate{
@@ -50,7 +49,6 @@
 }
 .type{
     width:25%;
-    display: flex;
     justify-content: flex-start;
     align-items: center;
 }
@@ -189,6 +187,12 @@
     color:#333;
     margin-right: 20px;
 }
+.tallZero{
+    align-items: center;
+    justify-content: flex-end;
+    color:#333;
+    margin-right: 20px;
+}
 .allWin{
     flex:1;
     display: flex;
@@ -196,6 +200,18 @@
     justify-content: flex-end;
     color:#338ffe;
     margin-right: 20px;
+}
+.tallWin{
+    align-items: center;
+    justify-content: flex-end;
+    color:#338ffe;
+    margin-right: 20px;
+}
+.tallLose{
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 20px;
+    color:#fd4d4d
 }
 .allLose{
     flex:1;

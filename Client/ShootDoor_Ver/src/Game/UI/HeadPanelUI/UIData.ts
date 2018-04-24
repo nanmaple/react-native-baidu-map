@@ -15,6 +15,6 @@ namespace ScenePanel {
         public grHandler: Laya.Handler;
         public ruleHandler: Laya.Handler;
         public isTourists: boolean;
-
+        public balanceHander: Laya.Handler;
     }
 }

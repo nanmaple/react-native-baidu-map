@@ -16,7 +16,7 @@ namespace ScenePanel {
             this.ui.zOrder = 7;
             this.ui.cacheAs = "bitmap";
             this.uiData = HeadPanelUIData.GetInstance();
-            this.SetInfo(this.uiData.memberInfo, this.uiData.parentID, this.uiData.grHandler, this.uiData.ruleHandler, this.uiData.isTourists);
+            this.SetInfo(this.uiData.memberInfo, this.uiData.parentID, this.uiData.grHandler, this.uiData.ruleHandler, this.uiData.balanceHander, this.uiData.isTourists);
             let language: LanguageUtils.Language = new LanguageUtils.Language();
             let lang: number = language.GetLanguageType();
             if (lang == LanguageUtils.LanguageType.CH) {
@@ -39,10 +39,11 @@ namespace ScenePanel {
          * @param grHandler 
          * @param ruleHandler 
          */
-        public SetInfo(memberInfo: BaseDto.MemberInfoDto, parentID: string, grHandler: Laya.Handler, ruleHandler: Laya.Handler, isTourists: boolean): void {
+        public SetInfo(memberInfo: BaseDto.MemberInfoDto, parentID: string, grHandler: Laya.Handler, ruleHandler: Laya.Handler, balanceHander: Laya.Handler, isTourists: boolean): void {
             this.uiData.memberInfo = memberInfo;
             this.uiData.grHandler = grHandler;
             this.uiData.ruleHandler = ruleHandler;
+            this.uiData.balanceHander = balanceHander;
             this.uiData.parentID = parentID;
             this.uiData.isTourists = isTourists;
             if (memberInfo && !isTourists) {
@@ -68,7 +69,7 @@ namespace ScenePanel {
             this.ui.btnRule.on(Laya.Event.CLICK, this, this.onRuleHandler);
             this.ui.btnGR.on(Laya.Event.CLICK, this, this.onGRHandler);
             this.ui.attention.on(Laya.Event.CLICK, this, this.ClickAttention);
-
+            this.ui.money.on(Laya.Event.CLICK, this, this.OnBalanceHander);
         }
 
         /**
@@ -90,6 +91,12 @@ namespace ScenePanel {
          */
         private ClickAttention(): void {
             Laya.Browser.window.location.href = GameConfig.GetWeChatUrl(this.uiData.parentID, true);
+        }
+        /**
+         * 点击余额
+         */
+        private OnBalanceHander(): void{
+            this.uiData.balanceHander.run();
         }
 
         /**

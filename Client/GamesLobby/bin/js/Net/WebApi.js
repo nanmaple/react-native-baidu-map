@@ -25,6 +25,14 @@ var Net;
             return true;
         };
         /**
+         * 清除token
+         * @param token
+         */
+        WebApi.prototype.ClearToken = function () {
+            this.header.Authorization = "";
+            return true;
+        };
+        /**
          * 微信登录
          * @param dto 登录参数Dto
          * @param successHandler 成功回调

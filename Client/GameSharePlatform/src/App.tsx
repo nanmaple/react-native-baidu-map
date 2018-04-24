@@ -13,7 +13,7 @@ export default class App extends React.Component<any, any> {
         super(props);
     }
     componentWillMount() {
-        document.title = this.languageManager.GetErrorMsg("Plat");
+        //document.title = this.languageManager.GetErrorMsg("Plat");
     }
     componentDidMount() {
     }

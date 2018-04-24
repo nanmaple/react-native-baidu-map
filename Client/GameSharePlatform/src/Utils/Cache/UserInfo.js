@@ -1,7 +1,4 @@
-import IUserInfo from "./IUserInfo";
-import { UserInfoDto } from '../../../../Dto/UserInfoDto';
-import { Storage, StorageType } from '../../../../Utils/Storage';
-import { AuthorizationDto } from '../../../../Dto/AuthorizationDto';
+
 
 
 
@@ -35,7 +32,7 @@ UserInfo.prototype.GetUserInfo = function () {
  * 设置授权信息
  * @param dto
  */
-UserInfo.prototype.SetUserInfo(dto, gameId = null) = function () {
+UserInfo.prototype.SetUserInfo = function (dto, gameId = null) {
     if (!this.memberInfo) {
         this.memberInfo = new UserInfoDto();
     }
@@ -52,7 +49,7 @@ UserInfo.prototype.SetUserInfo(dto, gameId = null) = function () {
 /**
  * 清除用户数据
  */
-UserInfo.prototype.ClearUserInfo() = function () {
+UserInfo.prototype.ClearUserInfo = function () {
     this.memberInfo = null;
     let key = this.GetUserInfoKey();
     let storage = new Storage();

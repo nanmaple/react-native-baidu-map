@@ -11,7 +11,7 @@ namespace CacheData {
          * 获取用户缓存的key
          */
         private GetAuthorizationKey(gameID: number): string {
-            return `Authorization-${gameID}-CacheKey`;
+            return `Authorization-CacheKey`;
         }
 
         /**

@@ -4,7 +4,7 @@
 
 
 function Authorization() {
-    this.authorization = null;
+    this.authorization = {};
     this.cacheType = StorageType.LOCALSTORAGE;
 }
 Authorization.prototype.GetAuthorizationKey = function (gameId = null) {
@@ -27,13 +27,13 @@ Authorization.prototype.GetAuthorization = function () {
 }
 
 Authorization.prototype.SetAuthorization = function (dto, gameId = null) {
-    this.authorization.Code = dto.Code ? dto.Code : this.authorization.Code;
-    this.authorization.Token = dto.Token !== undefined ? dto.Token : this.authorization.Token;
-    this.authorization.IsMulti = dto.IsMulti !== undefined ? dto.IsMulti : this.authorization.IsMulti;
-    this.authorization.IsTourists = dto.IsTourists !== undefined ? dto.IsTourists : this.authorization.IsTourists;
-    this.authorization.Accounts = dto.Accounts !== undefined ? dto.Accounts : this.authorization.Accounts;
-    this.authorization.ParentID = dto.ParentID !== undefined ? dto.ParentID : this.authorization.ParentID;
-    this.authorization.IsClose = dto.IsClose !== undefined ? dto.IsClose : this.authorization.IsClose;
+    this.authorization.Code = dto.Code;
+    this.authorization.Token = dto.Token;
+    this.authorization.IsMulti = dto.IsMulti !== undefined ? dto.IsMulti : false;
+    this.authorization.IsTourists = dto.IsTourists !== undefined ? dto.IsTourists :true;
+    this.authorization.Accounts = dto.Accounts;
+    this.authorization.ParentID = dto.ParentID;
+    this.authorization.IsClose = dto.IsClose;
     let storage = new Storage();
     let key = this.GetAuthorizationKey(gameId);
     storage.Set(key, this.authorization, this.cacheType);

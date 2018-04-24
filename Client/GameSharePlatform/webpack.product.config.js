@@ -6,5 +6,15 @@ config.output = {
     path: __dirname + "/dist/gameSharePlatForm",
     publicPath: '/',
 },
-    config.plugins = config.plugins.concat([new uglify()]);
+    config.plugins = config.plugins.concat([new uglify(
+        {
+            uglifyOptions: {
+                compress: {
+                    warnings: false,
+                    // drop_debugger: true,
+                    // drop_console: true
+                }
+            }
+        }
+    )]);
 module.exports = config;

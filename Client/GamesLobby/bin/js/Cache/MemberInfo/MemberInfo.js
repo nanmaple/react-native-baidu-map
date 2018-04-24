@@ -11,7 +11,7 @@ var CacheData;
          * 获取用户缓存的key
          */
         MemberInfo.prototype.GetMemberInfoKey = function (gameID) {
-            return "UserInfo-" + gameID + "-CacheKey";
+            return "UserInfo-CacheKey";
         };
         /**
          * 获取会员授权信息

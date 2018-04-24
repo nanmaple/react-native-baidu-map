@@ -153,7 +153,7 @@ class MemberList extends React.Component<any, any> {
     public renderRowItem = (item: any, index: any): any => {
         let day = item.UpdateTime.split(" ")[0], time = item.UpdateTime.split(" ")[1];
         let remarks = JSON.parse(item.Remark),
-            data = (remarks.Data.replace(/\/"/, "'")),
+            data = JSON.parse(remarks.Data.replace(/\/"/, "'")),
             name = data.Nickname,
             remark = data.Remark ? `(${data.Remark})` : null;
         return (

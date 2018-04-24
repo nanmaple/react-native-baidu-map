@@ -7,6 +7,7 @@ class GameMain {
     private accountUI: ui.AccountListUI | ui.AccountList_VerUI;
     private screenMode: number;
     private status: number = 0;
+    private loginService: any = null;
     constructor() {
         let init = new InitState();
         this.ScreenMonitor();
@@ -19,8 +20,33 @@ class GameMain {
         if (!this.dto.GameID) {
             this.dto.GameID = 1;
         }
-        //登录
-        this.memberServer.Login(this.dto, Laya.Handler.create(this, this.LoginCallback));
+        let http:Utils.Http = new Utils.Http();
+        this.loginService = new Laya.Browser.window.LoginService(Utils.Http, Utils.Storage, (data)=>{this.LoginSuccess(data)},
+        (data)=> { this.LoginMultiSucess(data) }, ()=>{this.LoginError()}, Net.WebApi.instance);
+
+        this.loginService.Login();
+
+    }
+    /**
+     * 登录成功回调
+     */
+    private LoginSuccess(data:any):void{
+        this.Redirect();
+    }
+    /**
+     * 登录失败回调
+     */
+    private LoginError():void{
+        let language: LanguageUtils.Language = new LanguageUtils.Language();
+        alert(language.GetLanguage("LoginError"));
+    }
+    /**
+     * 登录成功多账号回调
+     */
+    private LoginMultiSucess(data:BaseDto.LoginResultDto):void{
+        this.list = data.Data;
+        this.status = 1;
+        this.MultiAccount(data.Data);
     }
     /**
      * 屏幕横竖屏监听
@@ -84,25 +110,6 @@ class GameMain {
         this.accountUI.login.text = language.GetLanguage("Login");
         this.accountUI.title.text = language.GetLanguage("AgentTitle");
     }
-    /**
-     * 登录回调
-     * @param data 
-     */
-    private LoginCallback(data: BaseDto.LoginResultDto): void {
-        let language: LanguageUtils.Language = new LanguageUtils.Language();
-        if (data.Result == BaseDto.ResultEnum.LOGIN) {
-            //登录成功，获取会员信息
-            this.memberServer.GetMemberInfo(this.dto.GameID, Laya.Handler.create(this, this.Redirect));
-        } else if (data.Result == BaseDto.ResultEnum.MULTI) {
-            this.list = data.Data;
-            this.status = 1;
-            this.MultiAccount(data.Data);
-        } else if (data.Result == BaseDto.ResultEnum.ERROR) {
-            alert(language.GetLanguage("LoginError"));
-        } else if (data.Result == BaseDto.ResultEnum.NO) {
-            this.Redirect();
-        }
-    }
 
     /**
      * 重定向
@@ -112,7 +119,8 @@ class GameMain {
             this.accountUI.login.visible = false;
         }
         if (this.dto.GameID) {
-            Laya.Browser.window.location.replace(GameConfig.GetRedirectUrl(this.dto.GameID));
+            // console.log("登录成功")
+            Laya.Browser.window.location.replace(GameConfig.GetRedirectUrl(this.dto.GameID,this.dto.ParentID));
         } else {
             alert("游戏不存在");
         }
@@ -173,7 +181,7 @@ class GameMain {
             this.accountUI.accountList.visible = false;
             this.accountUI.title.visible = false;
             this.dto.MemberID = this.list[index].MemberId;
-            this.memberServer.LoginByID(this.dto, Laya.Handler.create(this, this.LoginCallback));
+            this.loginService.LoginByID(this.dto.MemberID);
         }
     }
 }

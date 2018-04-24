@@ -129,6 +129,10 @@
         "50Lions": "五十雄狮",
         "StarBurst": "星光闪烁",
         "Dragonisland": "神龙岛",
+        "MoTuo":"热血摩托",
+        "ZhuoQiu":"梦想桌球",
+        "FeiBiao":"梦想飞镖",
+        "XiaoXiaoLe":"糖果消消乐",
         "Plat": "游戏分享平台",
 
 
@@ -143,5 +147,9 @@
         "Logining": "登陆中...",
         "Illegal": "长度或格式有误",
         "FullReport": "完整报表",
-        "Setting": "个人设置"
+        "Setting": "个人设置",
+
+        "OldPwd":"旧密码",
+        "NewPwd":"新密码",
+        "ConfirmPwd":"确认密码"
 }

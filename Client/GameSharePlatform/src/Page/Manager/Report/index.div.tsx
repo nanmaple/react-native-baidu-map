@@ -304,22 +304,6 @@ export default class Report extends React.Component<any, any> {
                 }
                 {
                     this.renderHeader(allReportList, routerParam, curTotalName, myTotal)
-                    // allReportList.length > 0 ? (
-                    //     // allReportList.length > 1 ? `${this.state.memberId}_${curTotalName}_${curRemark}_${startDate.replace(/\//g, "*")}_${endDate.replace(/\//g, "*")}` : `${this.state.memberId}_null_null_${startDate.replace(/\//g, "*")}_${endDate.replace(/\//g, "*")}`
-                    //     <Link to={{
-                    //         pathname: `${GetDetailRoute("/report/gameResult/", routerParam)}`,
-                    //     }} className={styles.head}>
-                    //         <div className={styles.type}>{allReportList.length > 1 ? curTotalName : this.languageManager.GetErrorMsg("Me")}</div>
-                    //         {
-                    //             allReportList.length > 1 ? (<div onClick={(e) => { e.stopPropagation(); e.preventDefault(); this.back() }} className={styles.back}>Back</div>) : null
-                    //         }
-
-                    //         <div className={myTotal == 0 ? styles.zero : myTotal > 0 ? styles.totalWin : styles.total}>{myTotal != null ? Money.Format(myTotal) : "---"}</div>
-                    //         <div className={styles.rightImg}>
-                    //             <img src={rightImg} />
-                    //         </div>
-                    //     </Link>
-                    // ) : null
                 }
 
                 <div>

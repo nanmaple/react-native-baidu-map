@@ -45,16 +45,16 @@ namespace Net {
             /**
              * 获取appid
              */
-            public GetAppID(successHandler: Laya.Handler, errorhandler?: Laya.Handler){
+            public GetAppID(successHandler: Laya.Handler){
                   this.http.Get(Net.ApiConfig.GetAppIDApi,{},this.header,(response: any)=>{
                         if (response.Result == BaseEnum.ErrorCode.Success) { 
                               GameConfig.GetAppID(response.Data);
                               successHandler.run();
                         } else {
-                              errorhandler.runWith(response.Result);
+                              console.log("获取APPID失败",response);
                         }
                   },(error: any)=>{
-                        errorhandler.runWith(error.toString());
+                        console.log("获取APPID失败",error);
                   })
             }
       }

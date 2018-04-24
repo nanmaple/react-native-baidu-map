@@ -13,8 +13,8 @@ class HeadPanelCtrl extends Laya.Sprite {
         //创建头部面板UI实例
         let grHandler: Laya.Handler = Laya.Handler.create(this, this.OnClickGR, null, false);
         let ruleHandler: Laya.Handler = Laya.Handler.create(this, this.OnClickRule, null, false);
-
-        this.gameUI.GetHeadPanel().SetInfo(memberInfo, parentID, grHandler, ruleHandler, isTourists);
+        let balanceHandler: Laya.Handler = Laya.Handler.create(this, this.OnClickBalance, null, false);
+        this.gameUI.GetHeadPanel().SetInfo(memberInfo, parentID, grHandler, ruleHandler, balanceHandler, isTourists);
     }
     /**
      * 点击个人投注记录
@@ -28,6 +28,18 @@ class HeadPanelCtrl extends Laya.Sprite {
      */
     private OnClickRule(): void {
         this.gameUI.GetRulePanel().ShowRule();
+    }
+    /**
+     * 点击余额刷新
+     */
+    private OnClickBalance(): void{
+        let loginService = new Laya.Browser.window.LoginService(Utils.Http, Utils.Storage, ()=>{
+            let memberInfo = loginService.GetMemberInfoByLocal();
+            let money = memberInfo.Score;
+            this.gameUI.GetHeadPanel().ChangeMoney(money);
+        });
+        //获取会员信息
+        loginService.GetMemberInfo(true);
     }
 
     /**

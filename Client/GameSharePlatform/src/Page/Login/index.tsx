@@ -7,7 +7,8 @@ import LanguageManager from '../../Language/LanguageManager';
 import UserCtrl from "../../Controller/UserCtrl";
 import { ResultEnum, LoginResultDto } from '../../Dto/LoginInfoDto';
 import { MultiAccountDto } from '../../Dto/AuthorizationDto';
-
+import Http from '../../Utils/Http'
+import { Domain } from "../../GameConfig";
 import { HomeRoute } from '../../Route/Config';
 const styles = require("./style.css");
 const rightImg = require("../../Image/right.png");
@@ -15,6 +16,7 @@ const rightImg = require("../../Image/right.png");
 export default class Login extends React.Component<any, any> {
     private userCtrl: UserCtrl = new UserCtrl();
     private languageManager: LanguageManager = new LanguageManager();
+    private Wechat: any;
     constructor(props: any) {
         super(props);
         this.state = {
@@ -26,11 +28,11 @@ export default class Login extends React.Component<any, any> {
     }
 
     componentWillMount() {
-        this.userCtrl.GetAppID();
-        this.userCtrl.Login(this.LoginCallback);
+        this.userCtrl.Login(this.LoginCallback, this.MultiLoginCallback, this.LoginErrorCallback);
+
     }
 
-    private LoginCallback = (response: LoginResultDto): void => {
+    private LoginCallback = (response: any): void => {
         if (response.Result == 3) {
             this.setState({
                 limite: true
@@ -40,11 +42,65 @@ export default class Login extends React.Component<any, any> {
             return;
         }
         if (response.Result == ResultEnum.LOGIN) {
+            let memberId = response.MemberInfo.MemberId;
+            let option = {
+                Title: "NB.Games",
+                Desc: "Many wonderful and exciting H5 gams in NewBao Games",
+                ImgUrl: `http://${Domain}/logo.jpg`,
+                Link: `http://${Domain}/gameshareplatform/?parentid=${memberId}`
+            }
+            this.Wechat = new window.Wechat(Http, this.WeChatShareHandler, option);
+            this.Wechat.GetJsSignature();
             //登录成功，获取会员信息
-            this.userCtrl.GetMemberInfo(this.Redirect);
-        } else if (response.Result == ResultEnum.MULTI) {
-            this.setState({ accountList: response.Data });
-        } else if (response.Result == ResultEnum.ERROR) {
+            // this.userCtrl.GetMemberInfo(this.Redirect);
+            // GetMemberInfo(this.Redirect);
+            this.Redirect();
+        }
+        // } else if (response.Result == ResultEnum.MULTI) {
+        //     this.setState({ accountList: response.Data });
+        // } else if (response.Result == ResultEnum.ERROR) {
+        //     this.Redirect();
+        // } else if (response.Result == ResultEnum.Tourist) {
+        //     this.Redirect();
+        // } else if (response.Result == ResultEnum.NO) {
+        //     this.Redirect();
+        // }
+    }
+
+    private MultiLoginCallback = (response: LoginResultDto): void => {
+        if (response.Result == 3) {
+            this.setState({
+                limite: true
+
+            });
+            this.props.loginComplete();
+            return;
+        }
+
+        this.setState({ accountList: response.Data });
+    }
+    /**
+     * 分享回调
+     * @param status 分享结果类型 1.分享成功 0.取消分享 -1.分享失败
+     */
+    public WeChatShareHandler(status: number): void {
+        console.log(status);
+    };
+    private LoginErrorCallback = (response: LoginResultDto): void => {
+        console.log(response);
+        if (response.Result == 3) {
+            this.setState({
+                limite: true
+
+            });
+            this.props.loginComplete();
+            return;
+        }
+        if (response.Result == ResultEnum.ERROR) {
+            if (response.Data == 2010) {
+                alert("其他地方登录");
+                return;
+            }
             this.Redirect();
         } else if (response.Result == ResultEnum.Tourist) {
             this.Redirect();
@@ -68,7 +124,7 @@ export default class Login extends React.Component<any, any> {
      * @param index 编号
      */
     private OnSelect = (memberID: number): void => {
-        this.userCtrl.LoginByID(memberID, this.LoginCallback);
+        this.userCtrl.loginService.LoginByID(memberID, this.LoginCallback);
     }
 
     /**

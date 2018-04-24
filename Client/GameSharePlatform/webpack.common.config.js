@@ -1,5 +1,5 @@
 module.exports = {
-    entry: "./src/index.tsx",
+    entry: ["babel-polyfill",'whatwg-fetch',"./src/index.tsx"],
     devtool: "source-map",
 
     resolve: {

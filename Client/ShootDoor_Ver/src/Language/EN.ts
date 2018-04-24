@@ -1,22 +1,22 @@
 namespace LanguageUtils {
     export const EN = {
-        in: "IN",
-        out: "OUT",
-        hit: "HIT",
+        in: "Goal",
+        out: "Out",
+        hit: "Hit",
         red: "Red",
         black: "Black",
         big: "Big",
         small: "Small",
         odd: "Odd",
         even: "Even",
-        lout: "Left",
-        rout: "Right",
-        lhit: "Left",
-        rhit: "Right",
-        leftOut: "LeftOut",
-        rightOut: "RightOut",
-        leftHit: "LeftHit",
-        rightHit: "RightHit",
+        lout: "L.Out",
+        rout: "R.Out",
+        lhit: "L.Hit",
+        rhit: "R.Hit",
+        leftOut: "L.Out",
+        rightOut: "R.Out",
+        leftHit: "L.Hit",
+        rightHit: "R.Hit",
         //投注信息提示
         betSuccess: "Bet Success",
         betFail: "Bet Fail",
@@ -56,7 +56,7 @@ namespace LanguageUtils {
         /**
          * 期号
          */
-        Issue: "Issue:",
+        Issue: "No:",
         /**
          * 等待开始
          */

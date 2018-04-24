@@ -1,9 +1,11 @@
 // 程序入口
 var GameMain = (function () {
     function GameMain() {
+        var _this = this;
         this.memberServer = new MemberManager.Member();
         this.dto = new BaseDto.LoginDto();
         this.status = 0;
+        this.loginService = null;
         var init = new InitState();
         this.ScreenMonitor();
         //获取地址栏中code
@@ -15,9 +17,31 @@ var GameMain = (function () {
         if (!this.dto.GameID) {
             this.dto.GameID = 1;
         }
-        //登录
-        this.memberServer.Login(this.dto, Laya.Handler.create(this, this.LoginCallback));
+        var http = new Utils.Http();
+        this.loginService = new Laya.Browser.window.LoginService(Utils.Http, Utils.Storage, function (data) { _this.LoginSuccess(data); }, function (data) { _this.LoginMultiSucess(data); }, function () { _this.LoginError(); }, Net.WebApi.instance);
+        this.loginService.Login();
     }
+    /**
+     * 登录成功回调
+     */
+    GameMain.prototype.LoginSuccess = function (data) {
+        this.Redirect();
+    };
+    /**
+     * 登录失败回调
+     */
+    GameMain.prototype.LoginError = function () {
+        var language = new LanguageUtils.Language();
+        alert(language.GetLanguage("LoginError"));
+    };
+    /**
+     * 登录成功多账号回调
+     */
+    GameMain.prototype.LoginMultiSucess = function (data) {
+        this.list = data.Data;
+        this.status = 1;
+        this.MultiAccount(data.Data);
+    };
     /**
      * 屏幕横竖屏监听
      */
@@ -84,28 +108,6 @@ var GameMain = (function () {
         this.accountUI.title.text = language.GetLanguage("AgentTitle");
     };
     /**
-     * 登录回调
-     * @param data
-     */
-    GameMain.prototype.LoginCallback = function (data) {
-        var language = new LanguageUtils.Language();
-        if (data.Result == BaseDto.ResultEnum.LOGIN) {
-            //登录成功，获取会员信息
-            this.memberServer.GetMemberInfo(this.dto.GameID, Laya.Handler.create(this, this.Redirect));
-        }
-        else if (data.Result == BaseDto.ResultEnum.MULTI) {
-            this.list = data.Data;
-            this.status = 1;
-            this.MultiAccount(data.Data);
-        }
-        else if (data.Result == BaseDto.ResultEnum.ERROR) {
-            alert(language.GetLanguage("LoginError"));
-        }
-        else if (data.Result == BaseDto.ResultEnum.NO) {
-            this.Redirect();
-        }
-    };
-    /**
      * 重定向
      */
     GameMain.prototype.Redirect = function () {
@@ -113,7 +115,8 @@ var GameMain = (function () {
             this.accountUI.login.visible = false;
         }
         if (this.dto.GameID) {
-            Laya.Browser.window.location.replace(GameConfig.GetRedirectUrl(this.dto.GameID));
+            // console.log("登录成功")
+            Laya.Browser.window.location.replace(GameConfig.GetRedirectUrl(this.dto.GameID, this.dto.ParentID));
         }
         else {
             alert("游戏不存在");
@@ -174,7 +177,7 @@ var GameMain = (function () {
             this.accountUI.accountList.visible = false;
             this.accountUI.title.visible = false;
             this.dto.MemberID = this.list[index].MemberId;
-            this.memberServer.LoginByID(this.dto, Laya.Handler.create(this, this.LoginCallback));
+            this.loginService.LoginByID(this.dto.MemberID);
         }
     };
     return GameMain;

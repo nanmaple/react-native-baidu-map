@@ -19,15 +19,15 @@ const rightImg = require("../../../Image/right.png");
 class MeTabList extends React.Component<any, any> {
     private languageManager: LanguageManager = new LanguageManager();
     private list: Array<string> = [
+        this.languageManager.GetErrorMsg("ScoreRecord"),
         this.languageManager.GetErrorMsg("GameRecord"),
         this.languageManager.GetErrorMsg("Report"),
-        this.languageManager.GetErrorMsg("ScoreRecord"),
         this.languageManager.GetErrorMsg("FullReport"),
         this.languageManager.GetErrorMsg("Setting")];
     private routerList: Array<string> = [
+        ScoreRecordRoute,
         GameRecordRoute,
         ReportRoute,
-        ScoreRecordRoute,
         AllReportRoute,
         SettingRoute];
     constructor(props: any) {

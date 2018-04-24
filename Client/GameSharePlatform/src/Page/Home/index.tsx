@@ -32,19 +32,20 @@ export default class Home extends React.Component<any, any> {
     private languageManager: LanguageManager = new LanguageManager();
     constructor(props: any) {
         super(props);
-        let memberInfo = this.userCtrl.GetMemberInfoByLocal();
+        let memberInfo = this.userCtrl.loginService.GetMemberInfoByLocal(),
+            authorization = this.userCtrl.loginService.GetAuthorizationDtoByLocal();
         this.state = {
-            isLogin: this.userCtrl.IsLogin(),
-            isClose: this.userCtrl.IsClose(),
+            isLogin: this.userCtrl.loginService.IsLogin(),
+            isClose: this.userCtrl.loginService.IsClose(),
             memberInfo: memberInfo,
             score: memberInfo && memberInfo.Score,
-            isTourists: this.userCtrl.GetAuthorizationDtoByLocal().IsTourists,
+            isTourists: authorization && authorization.IsTourists,
             gmeList: [],
             value: CacheManager.GetCache(CacheType.Language).language
         }
     }
     componentDidMount() {
-        this.userCtrl.GetMemberScore(this.Handler);
+        this.userCtrl.loginService.GetMemberScore(this.Handler);
 
     }
     /**
@@ -53,7 +54,8 @@ export default class Home extends React.Component<any, any> {
     public Handler = (data: any): void => {
         if (data) {
             this.setState({
-                score: data.Score
+                score: data.Score,
+                memberInfo: data
             })
         }
 
@@ -103,14 +105,14 @@ export default class Home extends React.Component<any, any> {
      * 渲染按钮
      */
     public renderButton = (): any => {
-        let { isTourists } = this.state;
+        let { isTourists, isLogin, isClose } = this.state;
         if (isTourists) {
             return (<div onClick={this.Attention} className={style.button}>{this.languageManager.GetErrorMsg("Attention")}</div>)
-        } else if (!this.state.isLogin) {
+        } else if (!isLogin) {
             return (<div onClick={this.Attention} className={style.button}>{this.languageManager.GetErrorMsg("Login")}</div>)
-        } else if (this.state.isClose) {
+        } else if (isClose) {
             return null;
-        } else if (this.state.isLogin) {
+        } else if (isLogin) {
             return (<Link to={MemberRoute} className={style.button}>{this.languageManager.GetErrorMsg("Manager")}</Link>)
         }
     }
@@ -160,6 +162,9 @@ export default class Home extends React.Component<any, any> {
 
         )
     }
+    private RefreshScore = () => {
+        this.userCtrl.loginService.GetMemberScore(this.Handler);
+    }
     /**
      * 切换语言
      */
@@ -183,7 +188,6 @@ export default class Home extends React.Component<any, any> {
         })
     }
     render() {
-        document.title = this.languageManager.GetErrorMsg("Plat");
         let socre: string = this.state.score ? this.state.score : "0",
             headImg = this.state.memberInfo && this.state.memberInfo.HeadImageUrl ? this.state.memberInfo.HeadImageUrl : logoImg
         return (
@@ -194,7 +198,7 @@ export default class Home extends React.Component<any, any> {
                         <img src={headImg} alt="" className={style.logo} />
                         {
                             this.state.isLogin ? (
-                                <label htmlFor="">{this.languageManager.GetErrorMsg("Score")}:{socre}</label>
+                                <label onClick={() => { this.RefreshScore() }} htmlFor="">{this.languageManager.GetErrorMsg("Score")}:{socre}</label>
                             ) : null
                         }
                     </div>

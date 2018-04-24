@@ -11,6 +11,7 @@ import { MultiAccountDto } from '../../Dto/AuthorizationDto';
 import Verification from "../../Utils/Verification";
 import CompToast, { ToastType } from '../../Components/Toast';
 import { ErrorCode } from '../../Enum/ErrorCode';
+import Http from '../../Utils/Http'
 
 import { HomeRoute } from '../../Route/Config';
 const styles = require("./style.css");
@@ -19,6 +20,7 @@ const rightImg = require("../../Image/right.png");
 export default class Login extends React.Component<any, any> {
     private userCtrl: UserCtrl = new UserCtrl();
     private toast: any;
+    private Wechat: any;
     private languageManager: LanguageManager = new LanguageManager();
     constructor(props: any) {
         super(props);
@@ -60,17 +62,24 @@ export default class Login extends React.Component<any, any> {
             this.ShowToast(this.languageManager.GetErrorMsg("Illegal"), ToastType.Error);
             return;
         }
-        console.log(account, passWord);
         this.ShowToast(this.languageManager.GetErrorMsg("Logining"), ToastType.Loading);
-        this.userCtrl.LoginByAccount(account, passWord, this.LoginCallback);
+        this.userCtrl.loginService.LoginByAccount(account, passWord, this.LoginCallback);
+        //this.userCtrl.LoginByAccount(account, passWord, this.LoginCallback);
     }
-    private LoginCallback = (response: LoginResultDto): void => {
+    /**
+ * 分享回调
+ * @param status 分享结果类型 1.分享成功 0.取消分享 -1.分享失败
+ */
+    public WeChatShareHandler(status: number): void {
+        console.log(status);
+    };
+    private LoginCallback = (response: any): void => {
         console.log(response);
+        this.toast.Hide();
         if (response.Result == 1) {
             this.setState({
                 login: true
             });
-            this.userCtrl.GetMemberInfo(() => { });
             return;
         } else if (response.Result == 3) {
             this.setState({
@@ -78,8 +87,7 @@ export default class Login extends React.Component<any, any> {
             });
             return;
         }
-        this.toast.Hide();
-        this.ShowToast(this.languageManager.GetErrorMsg(response.Data), ToastType.Error);
+        this.ShowToast(this.languageManager.GetErrorMsg(ErrorCode[response.Result]), ToastType.Error);
         return;
     }
     render() {

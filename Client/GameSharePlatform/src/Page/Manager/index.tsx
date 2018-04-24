@@ -27,7 +27,7 @@ export default class Manager extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            selectedIndex: tab[this.props.history.location.pathname]
+            selectedIndex: this.props.location.pathname.indexOf("/member") != -1 ? 0 : 1
         }
         this.tabClick = this.tabClick.bind(this);
 

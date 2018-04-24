@@ -98,18 +98,13 @@ namespace ServiceManager {
                     Laya.Browser.window.location.href = "";
                 } else {
                     console.log("获取游戏SocketToken失败",response);
-                    errorhandler.runWith(response.Result);
-                }
-            }, (error: any) => {
-                if(error){
-                    console.log("获取游戏SocketToken失败",error);
-                    errorhandler.runWith(error.toString());
-                }else{
                     errorhandler.run();
                 }
+            }, (error: any) => {
+                console.log("获取游戏SocketToken失败",error);
+                errorhandler.run();
             });
         }
-
 
         private LoginSuccess(response: BaseDto.LoginSuccessDto | BaseDto.LoginMultiAccountDto, successHandler: Laya.Handler) {
             //返回结果是登录成功
@@ -161,10 +156,10 @@ namespace ServiceManager {
                 if (response.Result == BaseEnum.ErrorCode.Success) {
                     successHandler.runWith(response.Data);
                 } else {
-                    // console.log("获取微信配置信息失败", response.Result);
+                    console.log("获取微信配置信息失败", response);
                 }
             }, (error: any) => {
-                // console.log("获取微信配置信息失败", error);
+                console.log("获取微信配置信息失败", error);
             });
         }
     }

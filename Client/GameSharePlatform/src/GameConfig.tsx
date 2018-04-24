@@ -1,6 +1,6 @@
 
 export const IsDebug = false;
-export const Domain = IsDebug ? "www.zyyft.cn" : "eg.s1.natapp.cc";
+export const Domain = IsDebug ? "www.zyyft.cn" : "m.17guess.cn";
 export const WebApiBaseUrl = IsDebug ? "http://192.168.0.143:8200" : `http://${Domain}/api`;
 export const BetWebApiBaseUrl = IsDebug ? "http://192.168.0.143:8201" : `http://${Domain}/report`;
 export const CacheType = 0; //0 localstorage , 1 cookie ,2 session
@@ -15,9 +15,9 @@ export const DeviceId = "123456";
 export function GetWeChatShareDto(parentID: string, isAuthorize: boolean = true) {
     let AppId = localStorage.getItem("AppId");
     let dto: any = {
-        Title: "游戏分享平台",
+        Title: "NB.Games",
         Desc: "精彩小游戏",
-        ImgUrl: `http://${Domain}/gameshareplatform/images/logo.png`,
+        ImgUrl: `http://${Domain}/logo.jpg`,
         Link: ""
     }
     if (isAuthorize) {

@@ -23,6 +23,14 @@ namespace Net {
                   return true;
             }
             /**
+             * 清除token
+             * @param token 
+             */
+            public ClearToken(): boolean {
+                  this.header.Authorization = "";
+                  return true;
+            }
+            /**
              * 微信登录
              * @param dto 登录参数Dto
              * @param successHandler 成功回调
