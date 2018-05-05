@@ -35,7 +35,8 @@ class GameRecord extends React.Component<any, any> {
     private param: any;
     constructor(props: any) {
         super(props);
-        this.param = JString.DecodeJson(this.props.match.params.memberId);//this.props.match.params.memberId.split("_");
+        //this.param = JString.DecodeJson(this.props.match.params.memberId);//this.props.match.params.memberId.split("_");
+        this.param = JSON.parse(localStorage.getItem("MemberMsg"));
         // date = param.split("_")[3];
         let dateNow: any = new Date();
         let startDate: string = this.param.startDate ? this.param.startDate : Time.GetNextMonth(dateNow, 7);
@@ -223,7 +224,7 @@ class GameRecord extends React.Component<any, any> {
             <div className={styles.container}>
                 <CompToast ref={(c: any) => this.toast = c} />
                 <div className={styles.listTitle}>
-                    <div className={styles.title}>{this.languageManager.GetErrorMsg("GameResult")}{nickName}{remark}</div>
+                    <div className={styles.title}>{this.languageManager.GetErrorMsg("GameResult")}{remark?`——${remark}`:nickName}</div>
                     <div className={styles.head}>
                         <div className={styles.timeContainer}>
                             <div className={styles.time} onClick={this.ShowStartPicker}>{this.state.startDate}</div>

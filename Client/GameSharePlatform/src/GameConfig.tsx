@@ -1,11 +1,11 @@
 
 export const IsDebug = false;
 export const Domain = IsDebug ? "www.zyyft.cn" : "m.17guess.cn";
-export const WebApiBaseUrl = IsDebug ? "http://192.168.0.143:8200" : `http://${Domain}/api`;
-export const BetWebApiBaseUrl = IsDebug ? "http://192.168.0.143:8201" : `http://${Domain}/report`;
+export const WebApiBaseUrl = IsDebug ? "http://192.168.0.143:8200" : `//${Domain}/api`;
+export const BetWebApiBaseUrl = IsDebug ? "http://192.168.0.143:8201" : `//${Domain}/report`;
 export const CacheType = 0; //0 localstorage , 1 cookie ,2 session
 export function GetRedirectUrl(gameID: any) {
-    return `http://${this.Domain}/${gameID}/`;
+    return `//${this.Domain}/${gameID}/`;
 }
 export let Language = "CH";
 

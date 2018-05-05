@@ -1,4 +1,4 @@
-import { SetAccountApi, GetOwnInfoApi, SetPasswordApi, SetSetAgentApi, GetChildScoreListApi, GetMemberInfoApi, UpdateCloseStatusApi, SetRemarkApi, TransferInApi, TransferOutApi, SetChildPasswordApi, GetTransferLogApi } from './Config';
+import { SetParentRemarkApi, GetParentInfoApi, SetAccountApi, GetOwnInfoApi, SetPasswordApi, SetSetAgentApi, GetChildScoreListApi, GetMemberInfoApi, UpdateCloseStatusApi, SetRemarkApi, TransferInApi, TransferOutApi, SetChildPasswordApi, GetTransferLogApi } from './Config';
 
 import { ListParamsDto, ListParamsCtrlDto, TransferLogDto, TransferLogCtrlDto } from '../Dto/ChildListParamsDto';
 import MemberInfoDto from '../Dto/MemberInfoDto';
@@ -274,16 +274,42 @@ export default class MemberCtrl extends BaseCtrl {
       * @param newPassword 新密码
       * @param handler 回调
     */
-    public SetPassword(oldPassword: number, newPassword: string, handler: Function): void {
+    public SetPassword(newPassword: string, handler: Function): void {
 
         let dto: any = {
-            OldPassword: oldPassword,
             NewPassword: newPassword
         }
         this.webApi.Post(SetPasswordApi, dto).then((data: any) => {
-            handler(null, [oldPassword, newPassword]);
+            handler(null, [newPassword]);
         }, (error: string) => {
-            handler(null, [oldPassword, newPassword], error);
+            handler(null, [newPassword], error);
+        })
+    }
+    /**
+      * 获取父级信息
+      * @param handler 回调
+    */
+    public GetParentInfo(handler: Function): void {
+
+        this.webApi.Post(GetParentInfoApi, {}).then((data: any) => {
+            handler(data);
+        }, (error: string) => {
+            handler("error",error);
+        })
+    }
+    /**
+     * 设置父级备注
+     * @param handler 回调
+    */
+    public SetParentRemark(remark: any, handler: Function): void {
+        let dto: any = {
+            MemberId: 0,
+            Remark: remark
+        }
+        this.webApi.Post(SetParentRemarkApi, dto).then((data: any) => {
+            handler([data,remark]);
+        }, (error: string) => {
+            handler("error",error);
         })
     }
 }

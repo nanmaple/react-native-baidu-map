@@ -23,14 +23,14 @@ const ResultEnum = {
 const DeviceType = "MOBILE";
 const DeviceId = "123456";
 const Domain = "m.17guess.cn";
-const LoginByTourist = `http://${Domain}/api/Member/DemoAccountLogin`;
-const GetMemberInfo = `http://${Domain}/api/Member/GetUserProfile`;
-const LoginCheck = `http://${Domain}/api/Member/LoginByToken`;
-const LoginById = `http://${Domain}/api/Member/SelectMember`;
-const Login = `http://${Domain}/api/Member/Login`;
-const GetJsSignature = `http://${Domain}/api/WeChat/GetJsSignature`;
-const GetAppIDApi = `http://${Domain}/api/WeChat/GetAppID`;
-const LoginByAccount = `http://${Domain}/api/Member/AccountLogin`;
+const LoginByTourist = `//${Domain}/api/Member/DemoAccountLogin`;
+const GetMemberInfo = `//${Domain}/api/Member/GetUserProfile`;
+const LoginCheck = `//${Domain}/api/Member/LoginByToken`;
+const LoginById = `//${Domain}/api/Member/SelectMember`;
+const Login = `//${Domain}/api/Member/Login`;
+const GetJsSignature = `//${Domain}/api/WeChat/GetJsSignature`;
+const GetAppIDApi = `//${Domain}/api/WeChat/GetAppID`;
+const LoginByAccount = `//${Domain}/api/Member/AccountLogin`;
 
 function GetQuery(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -55,18 +55,16 @@ LoginService.prototype.Login = function () {
     var parentId = GetQuery("parentid");
     //从缓存中获取Code，包括Code，Token,GameToken
     var authorizationDto = this.cache.Get("Authorization-CacheKey");
-    if (authorizationDto && authorizationDto.ParentID != parentId) {
-        this.ClearAuthorization();
-        authorizationDto = this.GetAuthorization();
-        this.ClearUserInfo();
-        LoginService.header.Authorization = "";
-        this.webApi.ClearToken();
-        console.log("clear parent");
-    }
-
-    if ((authorizationDto != null && code && code != authorizationDto.Code) || (authorizationDto == null && code)) {
+    if (code && (authorizationDto == null || code != authorizationDto.Code)) {
         //1.存在存储的Code，传入Code存在且不等于存储的Code，直接使用Code登录
         //2.没有存储的Code，传入Code存在，直接使用Code登录
+		if(authorizationDto){
+			this.ClearAuthorization();
+			authorizationDto = this.GetAuthorization();
+			this.ClearUserInfo();
+			LoginService.header.Authorization = "";
+			this.webApi.ClearToken();
+		}
         this.LoginByCode(code, parentId);
     } else if (authorizationDto != null && authorizationDto.Token && !authorizationDto.IsTourists) {
         //token存在，且不为游客
@@ -125,7 +123,6 @@ LoginService.prototype.LoginByID = function (memberId) {
         }
     } catch (error) {
         //var msg: string = this.languageManager.GetErrorMsg(JSON.stringify(error));
-        //alert(msg);
         console.log("LoginByID", error)
     }
 }
@@ -154,7 +151,7 @@ LoginService.prototype.LoginByCode = function (code, parentId) {
                 this.LoginMultiSuccess(Data, code, parentId, false);
             }
         } else {
-            this.LoginError(res);
+            this.LoginError(Result);
         }
 
     }, (err) => {
@@ -176,11 +173,24 @@ LoginService.prototype.LoginByToken = function (code, token, parentId) {
         //设置token到单例webapi
         LoginService.header.Authorization = token;
         this.webApi.SetToken(token);
+        var loginParamsDto = {};
+        if (parentId) {
+            loginParamsDto.DeviceType = DeviceType;
+            loginParamsDto.DeviceId = DeviceId;
+            loginParamsDto.ParentID = parentId;
+        }
+
         //调用单例api的Post方法
-        this.http.Post(LoginCheck, null, LoginService.header, (res) => {
+        this.http.Post(LoginCheck, loginParamsDto, LoginService.header, (res) => {
+			console.log("LoginByToken");
+			console.log(res);
             var { Data, Result } = res;
             if (Result == 1) {
-                this.LoginSuccess(Data, code, parentId, false);
+				if (!Data.Accounts) {
+					this.LoginSuccess(Data, code, parentId, false);
+				} else {
+					this.LoginMultiSuccess(Data, code, parentId, false);
+				}
             } else {
                 this.LoginError(Result);
             }
@@ -227,7 +237,7 @@ LoginService.prototype.LoginByTourist = function (code, token, parentId) {
         });
     } catch (error) {
         //var msg = this.languageManager.GetErrorMsg(JSON.stringify(error));
-        alert(error);
+        console.log(error);
     }
 }
 
@@ -369,6 +379,12 @@ LoginService.prototype.LoginMultiSuccess = function (response, code, parentId, i
  */
 LoginService.prototype.LoginError = function (error) {
     try {
+        this.ClearAuthorization();
+        this.ClearUserInfo();
+        if (error == 3 || error == 4004) {
+            window.location.href = "/gameList.html";
+            return;
+        }
         console.log("LoginError", error);
         var result = {};
         result.Result = ResultEnum.ERROR;
@@ -376,6 +392,7 @@ LoginService.prototype.LoginError = function (error) {
         if (typeof this.error === "function") {
             this.error(result);
         }
+
     } catch (error) {
         //var msg: string = this.languageManager.GetErrorMsg(JSON.stringify(error));
         console.log(error);
@@ -413,25 +430,21 @@ LoginService.prototype.GetMemberInfo = function (needToken) {
                     Token: LoginService.header.Authorization,
                     Result: 1
                 };
+                this.SetUserInfo(Data);
                 if (typeof this.success === "function") {
                     this.success(result);
                 }
-                this.SetUserInfo(Data);
+
             } else {
                 this.LoginError(Result);
             }
-
-
-
-
-
         }, (err) => {
             console.log("GetMemberInfo", err);
             this.LoginError(err);
         });
 
     } catch (error) {
-        alert(JSON.stringify(error));
+        console.log(JSON.stringify(error));
     }
 };
 
@@ -441,23 +454,20 @@ LoginService.prototype.GetMemberInfo = function (needToken) {
 LoginService.prototype.GetMemberScore = function (handler) {
     try {
         this.http.Post(GetMemberInfo, null, LoginService.header, (res) => {
-            console.log("GetMemberScore", res);
             var { Data, Result } = res;
             if (Result == 1) {
                 if (typeof handler === "function") {
                     handler(Data);
                 }
                 this.SetUserInfo(Data);
-            }else{
-                
             }
 
         }, (err) => {
-            console.log(err);
+            //console.log(err);
         });
 
     } catch (error) {
-        alert(JSON.stringify(error));
+        // alert(JSON.stringify(error));
     }
 };
 /**

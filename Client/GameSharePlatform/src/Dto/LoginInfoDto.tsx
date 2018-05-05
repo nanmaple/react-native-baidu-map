@@ -35,7 +35,7 @@ export class LoginByCodeDto extends LoginParamsDto {
     /**
      * 父级(推荐人)会员编号
      */
-    public ParentID: string = "1";
+    public ParentID: string = "";
 }
 /**
  * 通过Code登录
@@ -62,7 +62,7 @@ export class LoginDto extends LoginParamsDto {
     /**
      * 父级(推荐人)会员编号
      */
-    public ParentID: string = "1";
+    public ParentID: string = "";
     /**
      * 游戏ID
      */

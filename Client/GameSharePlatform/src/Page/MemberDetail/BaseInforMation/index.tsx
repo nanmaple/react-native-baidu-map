@@ -300,7 +300,7 @@ class BaseInformation extends React.Component<any, any> {
                 <InfoItemCheckBox label={this.languageManager.GetErrorMsg("State")} trueText={this.languageManager.GetErrorMsg("Normal")} falseText={this.languageManager.GetErrorMsg("Close")} memberClosed={this.state.memberClose} handler={this.SetMemberClosed} />
                 <InfoItemCheckBox label={this.languageManager.GetErrorMsg("SetasProxy")} trueText={this.languageManager.GetErrorMsg("AlreadyAgent")} falseText={this.languageManager.GetErrorMsg("SetOnlyOnce")} agent={this.state.agent} memberClosed={!this.state.agent} handler={this.agentPrompt} />
                 {/* <InfoItemInput label={this.languageManager.GetErrorMsg("Account")} value={memberNickname} disable={true}></InfoItemInput> */}
-                <InfoItemAmount label={this.languageManager.GetErrorMsg("Account")} value={account} handler={this.SetAmount}></InfoItemAmount>
+                <InfoItemInput label={this.languageManager.GetErrorMsg("Account")} value={account} disable={true}></InfoItemInput>
                 <InfoItemInput label={this.languageManager.GetErrorMsg("PassWord")} value={this.state.password} handler={this.SetPassWord}></InfoItemInput>
                 <InfoItemInput label={this.languageManager.GetErrorMsg("PhoneNumber")} value={phoneNumber} disable={true}></InfoItemInput>
 

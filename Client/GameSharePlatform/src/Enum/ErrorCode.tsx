@@ -1,6 +1,10 @@
 export enum ErrorCode {
     // 共有错误码
     /// <summary>
+    /// 父级不存在
+    /// </summary>
+    ParentNotExist = 4004,
+    /// <summary>
     /// 请求超时
     /// </summary>
     TimeOut = -1,

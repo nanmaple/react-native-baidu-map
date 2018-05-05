@@ -34,3 +34,15 @@ body {
 :global(.textPos){
     justify-content: center
 }
+:global(.timeContainer){
+    flex:5;
+    display: flex;
+    align-items: center; 
+}
+:global(.timeContainer)>div{
+    width:50%;
+}
+:global(.timeContainer) input{
+    width:80%;
+
+}

@@ -43,8 +43,13 @@ export default class Report extends React.Component<any, any> {
             nameList: [this.languageManager.GetErrorMsg("Me")],         //汇总行昵称数组
             ownBet: 0,
             ownPay: 0,
+            curAccount: null,
+            accountList: [],
+            remarkList: [],
+            myAccount: null,
+            init:true,
+            memberIdList:[],
         }
-        this.type = this.props.location.pathname.split("/")[3] == "allreport";
         this.ShowStartPicker = this.ShowStartPicker.bind(this);
     }
 
@@ -66,6 +71,22 @@ export default class Report extends React.Component<any, any> {
         this.toast.Show(msg, type);
     }
     public Handler = (data: any, isRefresh: any[], error?: string): void => {
+        // data = {
+        //     Account:"asd22",
+        //     ChildReportList:[
+        //         {
+        //             Account:"x0112", 
+        //             Nickname:"faith.",
+        //             OwnTotalBet:0,
+        //             OwnTotalPay:0,
+        //             Remark:null 
+        //         }
+        //     ],
+        //     Nickname:"faith.",
+        //     OwnTotalBet:0,
+        //     OwnTotalPay:0,
+        //     Remark:null
+        // }
         this.toast.Hide();
         if (error) {
             //提示错误信息
@@ -75,6 +96,12 @@ export default class Report extends React.Component<any, any> {
         if (isRefresh[0]) {
             this.calculateTotal(data); //计算总total
             this.setState({ curReportList: data }, () => {
+                if(this.state.init){
+                    this.setState({
+                        init:false,
+                        myAccount:data.Account
+                    })
+                }
                 let arr = this.state.allReportList, len = arr.length - 1;
                 //点击列表项 push
                 if (isRefresh[1] == "click") {
@@ -84,10 +111,10 @@ export default class Report extends React.Component<any, any> {
                     })
 
                 } else {   //点击查询按钮  进行替换
-
+                   console.log(data)
                     arr.splice(len, 1, data);
                     this.setState({
-                        allReportList: arr
+                        allReportList: arr,
                     })
                 }
 
@@ -127,14 +154,21 @@ export default class Report extends React.Component<any, any> {
     private goToChild = (item: any) => {
         this.ShowToast(this.languageManager.GetErrorMsg("Loading"), ToastType.Loading);
         let { startDate, endDate } = this.state;
-        let arr = this.state.nameList;
+        let arr = this.state.nameList, arr2 = this.state.accountList, arr3 = this.state.remarkList,arr4 = this.state.memberIdList;
         arr.push(item.Nickname);
+        arr2.push(item.Account);
+        arr3.push(item.Remark);
+        arr4.push(item.MemberId);
         this.setState({
             memberId: item.MemberId,
             curTotalName: item.Nickname,
             nameList: arr,
             curTotal: item.Total,
             curRemark: item.Remark,
+            curAccount: item.Account,
+            accountList: arr2,
+            remarkList: arr3,
+            memberIdList:arr4
         })
         this.ReportCtrl.GetReport(startDate, endDate, true, this.Handler, "click", item.MemberId);
     }
@@ -142,9 +176,12 @@ export default class Report extends React.Component<any, any> {
      * 返回上一级
      */
     private back = () => {
-        let arr = this.state.allReportList, arrName = this.state.nameList;
+        let arrID = this.state.memberIdList, arr = this.state.allReportList, arrName = this.state.nameList, arrAccount = this.state.accountList, arrRemark = this.state.remarkList;
         arr.pop();
         arrName.pop();
+        arrAccount.pop();
+        arrRemark.pop();
+        arrID.pop();
         if (arr.length <= 1) {
             this.setState({
                 memberId: null
@@ -153,8 +190,14 @@ export default class Report extends React.Component<any, any> {
         this.setState({
             allReportList: arr,
             nameList: arrName,
+            accountList: arrAccount,
+            memberIdList:arrID,
             curReportList: arr[arr.length - 1],
             curTotalName: arrName[arrName.length - 1],
+            curAccount: arrAccount[arrAccount.length - 1],
+            remarkList: arrRemark,
+            curRemark: arrRemark[arrRemark.length - 1],
+            memberId:arrID[arrID.length-1]
         })
         this.calculateTotal(arr[arr.length - 1]);
     }
@@ -214,14 +257,7 @@ export default class Report extends React.Component<any, any> {
         let total = rowItem.TotalPay - rowItem.TotalBet;
         return (
             <div key={index} className={styles.item} onClick={() => { this.goToChild(rowItem) }}>
-                <div className={styles.name}>{rowItem.Nickname}{rowItem.Remark ? `(${rowItem.Remark})` : null}</div>
-                {
-                    this.type && (<div className={styles.bet}>{Money.Format(rowItem.TotalBet)}</div>)
-                }
-                {
-                    this.type && (<div className={rowItem.TotalPay == 0 ? styles.ozero : rowItem.TotalPay > 0 ? styles.win : styles.lose}>{Money.Format(rowItem.TotalPay)}</div>)
-                }
-
+                <div className={styles.name}>{rowItem.Account}{rowItem.Remark ? `(${rowItem.Remark})` : `(${rowItem.Nickname})`}</div>
                 <div className={styles.score}>
                     <div className={total == 0 ? styles.rozero : total > 0 ? styles.rwin : styles.rlose}>
                         {Money.Format(total)}
@@ -248,21 +284,15 @@ export default class Report extends React.Component<any, any> {
     /**
      * 当前父级行
      */
-    renderHeader = (allReportList: any, routerParam: any, curTotalName: any, myTotal: any) => {
+    renderHeader = (allReportList: any, routerParam: any, curTotalName: any, myTotal: any, curRemark: any, curAccount: any) => {
         let { ownBet, ownPay } = this.state;
         return (allReportList.length > 0 ? (
             <Link to={{
                 pathname: `${GetDetailRoute("/report/gameResult/", routerParam)}`,
             }} className={styles.head}>
-                <div className={styles.type}>{allReportList.length > 1 ? curTotalName : this.languageManager.GetErrorMsg("Me")}</div>
+                <div className={styles.type}>{allReportList.length > 1 ? curAccount + (curRemark ? `(${curRemark})` : `(${curTotalName})`) : this.state.myAccount+`(${this.languageManager.GetErrorMsg("Me")})`}</div>
                 {
                     allReportList.length > 1 ? (<div onClick={(e) => { e.stopPropagation(); e.preventDefault(); this.back() }} className={styles.back}>Back</div>) : null
-                }
-                {
-                    this.type && allReportList.length <= 1 && (<div className={styles.bet}>{Money.Format(ownBet)}</div>)
-                }
-                {
-                    this.type && allReportList.length <= 1 && (<div className={ownPay == 0 ? styles.ozero : ownPay > 0 ? styles.win : styles.lose}>{Money.Format(ownPay)}</div>)
                 }
                 <div className={styles.score}>
                     <div className={myTotal == 0 ? styles.zero : myTotal > 0 ? styles.totalWin : styles.total}>
@@ -275,24 +305,23 @@ export default class Report extends React.Component<any, any> {
             </Link>
         ) : null)
     }
-    renderTitle = () => {
-        return (<div className={styles.rowTitle}>
-            <div className={styles.name}>昵称</div>
-            <div className={styles.bet}>投注</div>
-            <div className={styles.pay}>赔付</div>
-            <div className={styles.result}>输赢</div>
-        </div>)
-    }
     render() {
-        let { memberId, curReportList, allReportList, curTotal, curTotalName, curRemark, myTotal, startDate, endDate } = this.state;
+        let { memberId, curReportList, allReportList, curTotal, curTotalName, curRemark, curAccount, myTotal, startDate, endDate } = this.state;
         let { ChildReportList, Total } = curReportList;
         let routerParam = JString.EncodeJson({
+            memberId: memberId,
+            //nickName: curTotalName,
+            //remark: encodeURIComponent(curRemark),
+            startDate,
+            endDate
+        })
+        localStorage.setItem("MemberMsg",JSON.stringify({
             memberId: memberId,
             nickName: curTotalName,
             remark: curRemark,
             startDate,
             endDate
-        })
+        }));
         return (
             <div>
                 <CompToast ref={(c) => this.toast = c} />
@@ -300,10 +329,7 @@ export default class Report extends React.Component<any, any> {
                     this.renderSearch()
                 }
                 {
-                    this.type && this.renderTitle()
-                }
-                {
-                    this.renderHeader(allReportList, routerParam, curTotalName, myTotal)
+                    this.renderHeader(allReportList, routerParam, curTotalName, myTotal, curRemark, curAccount)
                 }
 
                 <div>

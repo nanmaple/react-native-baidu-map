@@ -13,7 +13,7 @@ export default class Home extends React.Component<any, any> {
     componentWillMount() {
     }
     click = () => {
-        window.location.href = "http://www.baidu.com"
+        window.location.href = "https://www.baidu.com"
     }
     render() {
 

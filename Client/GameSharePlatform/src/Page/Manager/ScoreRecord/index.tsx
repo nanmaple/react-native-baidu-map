@@ -155,7 +155,7 @@ class MemberList extends React.Component<any, any> {
         let remarks = JSON.parse(item.Remark),
             data = JSON.parse(remarks.Data.replace(/\/"/, "'")),
             name = data.Nickname,
-            remark = data.Remark ? `(${data.Remark})` : null;
+            remark = data.Remark ? data.Remark : data.Nickname;
         return (
             <div key={index} className={styles.row}>
                 <div className={styles.timeContent}>
@@ -170,7 +170,7 @@ class MemberList extends React.Component<any, any> {
                 <div className={styles.change}>{Money.Format(item.Balance)}</div>
                 <div className={styles.message}>
                     <div>{this.languageManager.GetErrorMsg(`TransactionType${item.TransactionType}`)}</div>
-                    <div>{name}{remark}</div>
+                    <div>{remark}</div>
                 </div>
             </div >
         )

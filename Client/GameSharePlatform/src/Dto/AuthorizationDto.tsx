@@ -44,5 +44,5 @@ export class AuthorizationDto {
     /**
      * 父级ID
      */
-    public ParentID: string = "1";
+    public ParentID: string = "";
 }

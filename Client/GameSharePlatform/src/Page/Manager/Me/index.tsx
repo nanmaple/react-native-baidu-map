@@ -8,12 +8,13 @@ import CompToast, { ToastType } from '../../../Components/Toast';
 import LanguageManager from '../../../Language/LanguageManager';
 import { ErrorCode } from '../../../Enum/ErrorCode';
 
-import { MeRoute, AllReportRoute, GameRecordRoute, ReportRoute, ScoreRecordRoute, SettingRoute, } from '../../../Route/Config';
+import { MeRoute, AllReportRoute, GameRecordRoute, ReportRoute, ScoreRecordRoute, SettingRoute,ParentMsgRoute } from '../../../Route/Config';
 import GameRecord from "../GameRecord";
 import Report from "../Report/index.div";
 import AllReport from "../Report/index";
 import ScoreRecord from "../ScoreRecord";
 import Setting from "./Setting";
+import ParentMsg from "../ParentMessage";
 const style = require("./style.css");
 const rightImg = require("../../../Image/right.png");
 class MeTabList extends React.Component<any, any> {
@@ -23,13 +24,15 @@ class MeTabList extends React.Component<any, any> {
         this.languageManager.GetErrorMsg("GameRecord"),
         this.languageManager.GetErrorMsg("Report"),
         this.languageManager.GetErrorMsg("FullReport"),
-        this.languageManager.GetErrorMsg("Setting")];
+        this.languageManager.GetErrorMsg("Setting"),
+        this.languageManager.GetErrorMsg("ParentMsg")];
     private routerList: Array<string> = [
         ScoreRecordRoute,
         GameRecordRoute,
         ReportRoute,
         AllReportRoute,
-        SettingRoute];
+        SettingRoute,
+        ParentMsgRoute];
     constructor(props: any) {
         super(props);
     }
@@ -55,6 +58,7 @@ class MeTabList extends React.Component<any, any> {
                 <Route path={AllReportRoute} component={AllReport} />
                 <Route path={ScoreRecordRoute} component={ScoreRecord} />
                 <Route path={SettingRoute} component={Setting} />
+                <Route path={ParentMsgRoute} component={ParentMsg} />
             </div>
         );
     }

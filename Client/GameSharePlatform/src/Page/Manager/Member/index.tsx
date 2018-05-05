@@ -135,16 +135,19 @@ export default class MemberList extends React.Component<any, any> {
     /**
      * 渲染每行数据
      */
-    public renderMemberItem = (rowItem: ChildScoreDto, index: number): any => {
+    public renderMemberItem = (rowItem: any, index: number): any => {
         return (
             <Link to={`${GetDetailRoute("/memberDetail/", rowItem.MemberId)}`} key={index} className={styles.rowItem}>
                 <div className={styles.nickName}>
-                    <div className={styles.number}>
+                    {/* <div className={styles.number}>
                         {index + 1}
-                    </div>
+                    </div> */}
                     <div className={styles.name}>
-                        {rowItem.Nickname}{rowItem.Remark ? "(" + rowItem.Remark + ")" : ""}
-                    </div></div>
+                        {rowItem.Account}{rowItem.Remark ? `(${rowItem.Remark})` : `(${rowItem.Nickname})`}
+
+                        {/* {rowItem.Nickname}{rowItem.Remark ? "(" + rowItem.Remark + ")" : ""} */}
+                    </div>
+                </div>
                 <div className={styles.score}>
                     <div className={rowItem.Score == 0 ? null : (rowItem.Score > 0 ? "zheng" : "fu")}>
                         {Money.Format(rowItem.Score)}

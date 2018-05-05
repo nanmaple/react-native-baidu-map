@@ -36,7 +36,7 @@ class BaseInformation extends React.Component<any, any> {
             newPassword: "",
             showModal: false,
             curPassword: "",
-            memberNickname:"",
+            memberNickname: "",
         }
     }
     componentDidMount() {
@@ -142,17 +142,17 @@ class BaseInformation extends React.Component<any, any> {
      *
      */
     private SetPassWord = () => {
-        let { oldPassword, newPassword, curPassword } = this.state;
-        if (!Verification.Password(oldPassword) || !Verification.Password(newPassword) || !Verification.Password(curPassword)) {
+        let { newPassword, curPassword } = this.state;
+        if (!Verification.Password(newPassword) || !Verification.Password(curPassword)) {
             this.ShowToast(this.languageManager.GetErrorMsg("Illegal"), ToastType.Error);
             return;
         }
         if (newPassword != curPassword) {
-            this.toast.Show("两次密码一样", ToastType.Error);
+            this.toast.Show("Confirm Password Error", ToastType.Error);
             return;
         }
 
-        this.MemberCtrl.SetPassword(oldPassword, newPassword, this.SetPassWordHandle);
+        this.MemberCtrl.SetPassword(newPassword, this.SetPassWordHandle);
     }
 
     /**
@@ -196,9 +196,6 @@ class BaseInformation extends React.Component<any, any> {
         let { oldPassword, newPassword, curPassword } = this.state;
         return (<div className={baseInforStyle.modal}>
             <div className={baseInforStyle.content}>
-                <div className={baseInforStyle.inputRow}>
-                    &nbsp;&nbsp;{this.languageManager.GetErrorMsg("OldPwd")}: &nbsp;<input className={baseInforStyle.input} type="password" value={oldPassword} onChange={this.handleAChange} />
-                </div>
                 <div className={baseInforStyle.inputRow}>
                     &nbsp;&nbsp;{this.languageManager.GetErrorMsg("NewPwd")}: &nbsp;<input className={baseInforStyle.input} type="password" value={newPassword} onChange={this.handlePChange} />
                 </div>

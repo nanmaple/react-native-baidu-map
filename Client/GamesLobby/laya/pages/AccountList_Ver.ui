@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":4,
-    "selecteID":11,
+    "selecteID":7,
     "props":{"width":750,"sceneColor":"#ffffff","height":1222},
     "nodeParent":-1,
     "label":"View",
@@ -53,9 +53,9 @@
                         {
                             "x":45,
                             "type":"Label",
-                            "props":{"y":0,"x":120,"width":300,"valign":"middle","text":"label","overflow":"hidden","name":"agent","height":70,"fontSize":26,"font":"Arial","color":"#333","align":"left"},
+                            "props":{"y":0,"x":20,"width":400,"valign":"middle","text":"label","overflow":"hidden","name":"nickName","height":70,"fontSize":26,"font":"Arial","color":"#333","align":"left"},
                             "nodeParent":4,
-                            "label":"Label(agent)",
+                            "label":"Label(nickName)",
                             "isDirectory":false,
                             "isAniNode":false,
                             "hasChild":false,
@@ -65,27 +65,27 @@
                         },
                         {
                             "x":45,
-                            "type":"Label",
-                            "props":{"y":0,"x":20,"width":100,"valign":"middle","text":"推荐人:","overflow":"hidden","name":"label","height":70,"fontSize":26,"font":"Arial","color":"#008000","bold":true,"align":"left"},
-                            "nodeParent":4,
-                            "label":"Label(label)",
-                            "isDirectory":false,
-                            "isAniNode":false,
-                            "hasChild":false,
-                            "compId":8,
-                            "child":[
-                                ]
-                        },
-                        {
-                            "x":45,
                             "type":"Image",
-                            "props":{"y":22,"x":715,"width":15,"skin":"go.png","right":20,"height":26},
+                            "props":{"y":25,"x":715,"width":15,"skin":"go.png","right":20,"height":26},
                             "nodeParent":4,
                             "label":"Image",
                             "isDirectory":false,
                             "isAniNode":false,
                             "hasChild":false,
                             "compId":11,
+                            "child":[
+                                ]
+                        },
+                        {
+                            "x":45,
+                            "type":"Label",
+                            "props":{"y":0,"width":250,"valign":"middle","text":"label","right":50,"overflow":"hidden","name":"agent","height":70,"fontSize":26,"font":"Arial","color":"#333","align":"right"},
+                            "nodeParent":4,
+                            "label":"Label(agent)",
+                            "isDirectory":false,
+                            "isAniNode":false,
+                            "hasChild":false,
+                            "compId":12,
                             "child":[
                                 ]
                         }]

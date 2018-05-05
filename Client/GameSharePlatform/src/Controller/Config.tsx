@@ -96,6 +96,15 @@ export const SetSetAgentApi = `${WebApiBaseUrl}/Member/SetAgent`;
  */
 export const SetAccountApi = `${WebApiBaseUrl}/Member/SetAccount`;
 
+/**
+ * 获取父级信息
+ */
+export const GetParentInfoApi = `${WebApiBaseUrl}/Member/GetParentInfo`;
+/**
+ * 设置父级备注
+ */
+export const SetParentRemarkApi = `${WebApiBaseUrl}/Member/SetParentRemark`;
+
 
 
 

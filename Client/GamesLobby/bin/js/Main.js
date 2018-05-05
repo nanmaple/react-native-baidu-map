@@ -148,24 +148,26 @@ var GameMain = (function () {
         var data = this.list[index];
         //根据子节点的名字listNumber，获取子节点对象。 
         var agent = cell.getChildByName("agent");
-        var agentLabel = cell.getChildByName("label");
-        if (lang == LanguageUtils.LanguageType.CH) {
-            agentLabel.width = 100;
-            agent.x = 120;
-        }
-        else {
-            agentLabel.width = 200;
-            agent.x = 220;
-        }
-        agentLabel.text = language.GetLanguage("Agent");
-        if (!data.Account && data.Account.length == 0) {
-            //label渲染列表文本（序号）
-            agent.text = data.ParentNickname;
-        }
-        else {
-            //label渲染列表文本（序号）
-            agent.text = data.ParentNickname + "(" + data.Account + ")";
-        }
+        var nickName = cell.getChildByName("nickName");
+        // let agentLabel:Laya.Label = cell.getChildByName("label") as Laya.Label;
+        // if(lang == LanguageUtils.LanguageType.CH){
+        //     // agentLabel.width = 100;
+        //     agent.x = 120;
+        // }else{
+        //     // agentLabel.width = 200;
+        //     agent.x = 220;
+        // }
+        // // agentLabel.text = language.GetLanguage("Agent");
+        // if (!data.Account && data.Account.length == 0) {
+        //     //label渲染列表文本（序号）
+        //     agent.text = data.ParentNickname;
+        // }
+        // else {
+        //label渲染列表文本（序号）
+        nickName.text = data.ParentNickname;
+        agent.text = data.Account;
+        console.log("Account：", data.Account);
+        // }
     };
     /**
      * 选中回调

@@ -7,6 +7,7 @@ import LanguageManager from '../../Language/LanguageManager';
 import UserCtrl from "../../Controller/UserCtrl";
 import { ResultEnum, LoginResultDto } from '../../Dto/LoginInfoDto';
 import { MultiAccountDto } from '../../Dto/AuthorizationDto';
+import { ErrorCode } from '../../Enum/ErrorCode';
 import Http from '../../Utils/Http'
 import { Domain } from "../../GameConfig";
 import { HomeRoute } from '../../Route/Config';
@@ -28,11 +29,14 @@ export default class Login extends React.Component<any, any> {
     }
 
     componentWillMount() {
+        let GetAppID = new window.Wechat(Http, this.WeChatShareHandler, {});
+        GetAppID.GetAppID();
         this.userCtrl.Login(this.LoginCallback, this.MultiLoginCallback, this.LoginErrorCallback);
 
     }
 
     private LoginCallback = (response: any): void => {
+
         if (response.Result == 3) {
             this.setState({
                 limite: true
@@ -88,25 +92,28 @@ export default class Login extends React.Component<any, any> {
     };
     private LoginErrorCallback = (response: LoginResultDto): void => {
         console.log(response);
-        if (response.Result == 3) {
-            this.setState({
-                limite: true
+        let { Data } = response;
+        alert(this.languageManager.GetErrorMsg(ErrorCode[Data]))
+        this.Redirect();
+        // if (response.Result == 3 || response.Data == 3) {
+        //     this.setState({
+        //         limite: true
 
-            });
-            this.props.loginComplete();
-            return;
-        }
-        if (response.Result == ResultEnum.ERROR) {
-            if (response.Data == 2010) {
-                alert("其他地方登录");
-                return;
-            }
-            this.Redirect();
-        } else if (response.Result == ResultEnum.Tourist) {
-            this.Redirect();
-        } else if (response.Result == ResultEnum.NO) {
-            this.Redirect();
-        }
+        //     });
+        //     this.props.loginComplete();
+        //     return;
+        // }
+        // if (response.Result == ResultEnum.ERROR) {
+        //     if (response.Data == 2010) {
+        //         alert("其他地方登录");
+        //         return;
+        //     }
+        //     this.Redirect();
+        // } else if (response.Result == ResultEnum.Tourist) {
+        //     this.Redirect();
+        // } else if (response.Result == ResultEnum.NO) {
+        //     this.Redirect();
+        // }
     }
 
 
@@ -133,15 +140,17 @@ export default class Login extends React.Component<any, any> {
     private renderAccountItem = (rowItem: MultiAccountDto, index: number) => {
         return (<div onClick={() => { this.OnSelect(rowItem.MemberId) }} key={index} className={styles.rowItem} >
             <div className={styles.nickName}>
-                <div className={styles.number}>
+                {/* <div className={styles.number}>
                     {this.languageManager.GetErrorMsg("Agent")}：
-                </div>
+                </div> */}
                 <div className={styles.name}>
                     {rowItem.ParentNickname}
-                </div></div>
+                </div>
+            </div>
             <div className={styles.score}>
                 <div>
-                    {rowItem.Account ? `${this.languageManager.GetErrorMsg("Account")}:${rowItem.Account}` : ""}
+                    {/* {rowItem.Account ? `${this.languageManager.GetErrorMsg("Account")}:${rowItem.Account}` : ""} */}
+                    {rowItem.Account ? `${rowItem.Account}` : ""}
                 </div>
                 <div>
                     <img src={rightImg} />

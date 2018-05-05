@@ -1,6 +1,6 @@
 export default class Verification {
     /**
-     * 验证密码 6-20位
+     * 验证密码 4-20位
      * @param password 密码
      */
     public static Password(password: string) {

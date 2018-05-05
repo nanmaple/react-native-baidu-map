@@ -15,6 +15,12 @@ import Money from '../../../Utils/Money';
 
 import { JString } from "../../../Utils/TransferJson";
 
+
+import DatePicker from 'react-datepicker';
+import * as moment from 'moment';
+import 'react-datepicker/dist/react-datepicker.css';
+
+
 const styles = require("./style.css");
 const rightImg = require("../../../Image/right.png");
 
@@ -25,6 +31,7 @@ export default class Report extends React.Component<any, any> {
     private timePicker1: any;
     private timePicker2: any;
     private type: boolean;    //true=完整报表  false=报表
+    private IsPC: boolean;
     constructor(props: any) {
         super(props);
         let dateNow: any = new Date();
@@ -43,15 +50,32 @@ export default class Report extends React.Component<any, any> {
             nameList: [this.languageManager.GetErrorMsg("Me")],         //汇总行昵称数组
             ownBet: 0,
             ownPay: 0,
+            myAccount: "",
         }
-        this.type = this.props.location.pathname.split("/")[3] == "allreport";
         this.ShowStartPicker = this.ShowStartPicker.bind(this);
     }
-
+    componentWillMount() {
+        this.IsPC = this.CheckPC();
+    }
     componentDidMount() {
         this.ShowToast(this.languageManager.GetErrorMsg("Loading"), ToastType.Loading);
         let { startDate, endDate } = this.state;
         this.ReportCtrl.GetReport(startDate, endDate, true, this.Handler, "search");
+    }
+
+    CheckPC = () => {
+        var userAgentInfo = navigator.userAgent;
+        var Agents = ["Android", "iPhone",
+            "SymbianOS", "Windows Phone",
+            "iPad", "iPod"];
+        var flag = true;
+        for (var v = 0; v < Agents.length; v++) {
+            if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                flag = false;
+                break;
+            }
+        }
+        return flag;
     }
     /**
     * 提示信息
@@ -74,7 +98,44 @@ export default class Report extends React.Component<any, any> {
         }
         if (isRefresh[0]) {
             this.calculateTotal(data); //计算总total
-            this.setState({ curReportList: data }, () => {
+            this.setState({
+                curReportList: data,
+                myAccount: data.Account
+            }, () => {
+                let arr = this.state.allReportList, len = arr.length - 1;
+                //点击列表项 push
+                if (isRefresh[1] == "click") {
+                    arr.push(data);
+                    this.setState({
+                        allReportList: arr
+                    })
+
+                } else {   //点击查询按钮  进行替换
+
+                    arr.splice(len, 1, data);
+                    this.setState({
+                        allReportList: arr
+                    })
+                }
+
+
+            });
+        }
+
+    }
+
+    public GoIntoHandler = (data: any, isRefresh: any[], error?: string): void => {
+        this.toast.Hide();
+        if (error) {
+            //提示错误信息
+            this.ShowToast(error, ToastType.Error);
+            return;
+        }
+        if (isRefresh[0]) {
+            this.calculateTotal(data); //计算总total
+            this.setState({
+                curReportList: data,
+            }, () => {
                 let arr = this.state.allReportList, len = arr.length - 1;
                 //点击列表项 push
                 if (isRefresh[1] == "click") {
@@ -129,14 +190,16 @@ export default class Report extends React.Component<any, any> {
         let { startDate, endDate } = this.state;
         let arr = this.state.nameList;
         arr.push(item.Nickname);
+        console.log(item);
         this.setState({
             memberId: item.MemberId,
             curTotalName: item.Nickname,
             nameList: arr,
             curTotal: item.Total,
             curRemark: item.Remark,
+            account: item.Account
         })
-        this.ReportCtrl.GetReport(startDate, endDate, true, this.Handler, "click", item.MemberId);
+        this.ReportCtrl.GetReport(startDate, endDate, true, this.GoIntoHandler, "click", item.MemberId);
     }
     /**
      * 返回上一级
@@ -169,6 +232,7 @@ export default class Report extends React.Component<any, any> {
             alert("请选择正确的时间");
             return;
         }
+        console.log(startDate, endDate);
         //查询自己的报表
         if (!this.state.memberId) {
             this.ReportCtrl.GetReport(startDate, endDate, true, this.Handler, "search");
@@ -205,38 +269,17 @@ export default class Report extends React.Component<any, any> {
     public EndTimeHanler = (value: string): void => {
         this.setState({ endDate: value });
     }
-    /**
-     * 渲染报表列表
-     * @param rowItem 当前条目
-     * @param index 当前条目序号
-     */
-    private renderReportItem = (rowItem: any, index: number): any => {
-        let total = rowItem.TotalPay - rowItem.TotalBet;
-        return (
-            <div key={index} className={styles.item} onClick={() => { this.goToChild(rowItem) }}>
-                <div className={styles.name}>{rowItem.Nickname}{rowItem.Remark ? `(${rowItem.Remark})` : null}</div>
-                {
-                    this.type && (<div className={styles.bet}>{Money.Format(rowItem.TotalBet)}</div>)
-                }
-                {
-                    this.type && (<div className={rowItem.TotalPay == 0 ? styles.ozero : rowItem.TotalPay > 0 ? styles.win : styles.lose}>{Money.Format(rowItem.TotalPay)}</div>)
-                }
-
-                <div className={styles.score}>
-                    <div className={total == 0 ? styles.rozero : total > 0 ? styles.rwin : styles.rlose}>
-                        {Money.Format(total)}
-                    </div>
-                    <div>
-                        <img src={rightImg} />
-                    </div>
-                </div>
-            </div>
-        )
+    GoGameResult = (routerParam: any) => {
+        console.log(this.props);
+        this.props.history.push({
+            path: "/report/wang",
+            param: routerParam
+        });
     }
     /**
-     * 日期搜索
-     */
-    renderSearch = () => {
+     * 手机日期搜索
+    */
+    renderMSearch = () => {
         return (<div className={styles.headdate}>
             <div className={styles.timeContainer}>
                 <div className={styles.time} onClick={this.ShowStartPicker}>{this.state.startDate}</div>
@@ -245,7 +288,26 @@ export default class Report extends React.Component<any, any> {
             <div className={styles.search} onClick={() => { this.searchReport() }}>{this.languageManager.GetErrorMsg("Inquire")}</div>
         </div>)
     }
-    renderHeader = (allReportList: any, routerParam: any, curTotalName: any, myTotal: any) => {
+    /**
+     * PC日期搜索
+     */
+    renderPSearch = () => {
+        return (<div className={styles.headdate}>
+            <div className="timeContainer">
+                <DatePicker
+                    selected={moment(this.state.startDate)}
+                    onChange={this.startHandleChange}
+                />
+                <DatePicker
+                    selected={moment(this.state.endDate)}
+                    onChange={this.endHandleChange}
+                />
+            </div>
+            <div className={styles.search} onClick={() => { this.searchReport() }}>{this.languageManager.GetErrorMsg("Inquire")}</div>
+        </div>)
+    }
+
+    renderHeader = (allReportList: any, routerParam: any, curTotalName: any, myTotal: any, curRemark: any, account: any, myAccount: any) => {
         let { ownBet, ownPay } = this.state;
         return (allReportList.length > 0 ? (
 
@@ -255,19 +317,30 @@ export default class Report extends React.Component<any, any> {
                 <table className={styles.table}>
                     <tbody>
                         <tr className={styles.tr}>
+
                             <td className={styles.td + " " + styles.marginL}>
-                                <span className={styles.type}>{allReportList.length > 1 ? curTotalName : this.languageManager.GetErrorMsg("Me")}</span>
+                                {
+                                    allReportList.length > 1 ? account : myAccount
+                                }
                             </td>
+                            {/* <td className={styles.td}>
+                                {allReportList.length > 1 ? curTotalName : this.languageManager.GetErrorMsg("Me")}
+                            </td> */}
+                            <td className={styles.td}>{allReportList.length > 1 ? curRemark : this.languageManager.GetErrorMsg("Me")}</td>
 
                             {
-                                allReportList.length > 1 ? (<td className={styles.td}><div onClick={(e) => { e.stopPropagation(); e.preventDefault(); this.back() }} className={styles.back}>Back</div></td>) : null
+                                allReportList.length > 1 ? (<td className={styles.td + " " + styles.tdBack}><div onClick={(e) => { e.stopPropagation(); e.preventDefault(); this.back() }} className={styles.back}>Back</div></td>) : null
                             }
                             {
-                                this.type && allReportList.length <= 1 && (<td className={styles.td}>{Money.Format(ownBet)}</td>)
+                                allReportList.length <= 1 && (<td className={styles.td}>{Money.Format(ownBet)}</td>)
                             }
 
                             {
-                                this.type && allReportList.length <= 1 && (<td className={ownPay == 0 ? styles.ozero : ownPay > 0 ? styles.win : styles.lose}>{Money.Format(ownPay)}</td>)
+                                allReportList.length <= 1 && (<td className={styles.td}>
+                                    <span className={ownPay == 0 ? styles.rozero : ownPay > 0 ? styles.rwin : styles.rlose}>
+                                        {Money.Format(ownPay)}
+                                    </span>
+                                </td>)
                             }
                             <td className={styles.td + " " + styles.marginR}>
                                 <span className={myTotal == 0 ? styles.rozero : myTotal > 0 ? styles.rwin : styles.rlose}>
@@ -283,16 +356,11 @@ export default class Report extends React.Component<any, any> {
             </Link>
         ) : null)
     }
-    renderTitle = () => {
-        return (<div className={styles.rowTitle}>
-            <div className={styles.name}>{this.languageManager.GetErrorMsg("NickName")}</div>
-            <div className={styles.bet}>{this.languageManager.GetErrorMsg("Bet")}</div>
-            <div className={styles.pay}>{this.languageManager.GetErrorMsg("Pay")}</div>
-            <div className={styles.result}>{this.languageManager.GetErrorMsg("WinOrlose")}</div>
-        </div>)
-    }
-
+    /**
+     * 渲染子列表
+     */
     renderTable = (ChildReportList: any) => {
+
         return (<div>
             {
                 ChildReportList && ChildReportList.length > 0 ? <table className={styles.table}>
@@ -302,9 +370,15 @@ export default class Report extends React.Component<any, any> {
                             ChildReportList.map((rowItem: any, index: any) => {
                                 let total = rowItem.TotalPay - rowItem.TotalBet;
                                 return (<tr key={index} className={styles.tr} onClick={() => { this.goToChild(rowItem) }}>
-                                    <td className={styles.td + " " + styles.marginL}>{rowItem.Nickname}{rowItem.Remark ? `(${rowItem.Remark})` : null}</td>
+                                    <td className={styles.td + " " + styles.marginL}>{rowItem.Account}</td>
+                                    {/* <td className={styles.td}>{rowItem.Nickname}</td> */}
+                                    <td className={styles.td}>{rowItem.Remark ? rowItem.Remark : null}</td>
                                     <td className={styles.td}>{Money.Format(rowItem.TotalBet)}</td>
-                                    <td className={rowItem.ts == 0 ? styles.ozero : rowItem.TotalPay > 0 ? styles.win : styles.lose}>{Money.Format(rowItem.TotalPay)}</td>
+                                    <td className={styles.td}>
+                                        <span className={rowItem.TotalPay == 0 ? styles.rozero : rowItem.TotalPay > 0 ? styles.rwin : styles.rlose}>
+                                            {Money.Format(rowItem.TotalPay)}
+                                        </span>
+                                    </td>
                                     <td className={styles.td + " " + styles.marginR}>
                                         <span className={total == 0 ? styles.rozero : total > 0 ? styles.rwin : styles.rlose}>
                                             {Money.Format(total)}
@@ -321,19 +395,18 @@ export default class Report extends React.Component<any, any> {
             }
         </div>)
     }
-    renderTr = (rowItem: any, index: any) => {
-        let total = rowItem.TotalPay - rowItem.TotalBet;
-        return (
-            <tr key={index} className={styles.item} onClick={() => { this.goToChild(rowItem) }}>
-                <td className={styles.name}>{rowItem.Nickname}{rowItem.Remark ? `(${rowItem.Remark})` : null}</td>
-                <td className={styles.name}>{rowItem.Nickname}{rowItem.Remark ? `(${rowItem.Remark})` : null}</td>
-                <td className={styles.name}>{rowItem.Nickname}{rowItem.Remark ? `(${rowItem.Remark})` : null}</td>
-                <td className={styles.name}>{rowItem.Nickname}{rowItem.Remark ? `(${rowItem.Remark})` : null}</td>
-            </tr>
-        )
+    startHandleChange = (date: any) => {
+        this.setState({
+            startDate: moment(date).format("YYYY/MM/DD")
+        });
+    }
+    endHandleChange = (date: any) => {
+        this.setState({
+            endDate: moment(date).format("YYYY/MM/DD")
+        });
     }
     render() {
-        let { memberId, curReportList, allReportList, curTotal, curTotalName, curRemark, myTotal, startDate, endDate } = this.state;
+        let { memberId, curReportList, allReportList, curTotal, curTotalName, curRemark, myTotal, startDate, endDate, account, myAccount } = this.state;
         let { ChildReportList, Total } = curReportList;
         let routerParam = JString.EncodeJson({
             memberId: memberId,
@@ -346,14 +419,16 @@ export default class Report extends React.Component<any, any> {
             <span>
                 <CompToast ref={(c) => this.toast = c} />
                 {
-                    this.renderSearch()
+                    this.IsPC ? this.renderPSearch() : this.renderMSearch()
                 }
                 <table className={styles.table}>
                     <tbody>
                         <tr className={styles.tr}>
-                            <td className={styles.td + " " + styles.marginL}>{this.languageManager.GetErrorMsg("NickName")}</td>
+                            <td className={styles.td + " " + styles.marginL}>{this.languageManager.GetErrorMsg("Account")}</td>
+                            {/* <td className={styles.td}>{this.languageManager.GetErrorMsg("NickName")}</td> */}
+                            <td className={styles.td}>{this.languageManager.GetErrorMsg("Remark")}</td>
                             <td className={styles.td}>{this.languageManager.GetErrorMsg("Bet")}</td>
-                            <td className={styles.ozero}>{this.languageManager.GetErrorMsg("Pay")}</td>
+                            <td className={styles.td}>{this.languageManager.GetErrorMsg("Pay")}</td>
                             <td className={styles.td + " " + styles.marginR}>
                                 {this.languageManager.GetErrorMsg("WinOrlose")}
                             </td>
@@ -361,7 +436,7 @@ export default class Report extends React.Component<any, any> {
                     </tbody>
                 </table>
                 {
-                    this.renderHeader(allReportList, routerParam, curTotalName, myTotal)
+                    this.renderHeader(allReportList, routerParam, curTotalName, myTotal, curRemark, account, myAccount)
                 }
 
                 {
@@ -385,7 +460,6 @@ export default class Report extends React.Component<any, any> {
                         </tbody>
                     </table>
                 }
-
                 <TimePicker ref={(e: any) => { this.timePicker1 = e }} time={this.state.startDate} timeHanler={this.StartTimeHanler} />
                 <TimePicker ref={(e: any) => { this.timePicker2 = e }} time={this.state.endDate} timeHanler={this.EndTimeHanler} />
             </span>

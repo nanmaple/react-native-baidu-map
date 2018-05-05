@@ -41,7 +41,9 @@ export default class Home extends React.Component<any, any> {
             score: memberInfo && memberInfo.Score,
             isTourists: authorization && authorization.IsTourists,
             gmeList: [],
-            value: CacheManager.GetCache(CacheType.Language).language
+            value: CacheManager.GetCache(CacheType.Language).language,
+            account: memberInfo && memberInfo.Account,
+            nickName:memberInfo&&memberInfo.Nickname
         }
     }
     componentDidMount() {
@@ -55,7 +57,8 @@ export default class Home extends React.Component<any, any> {
         if (data) {
             this.setState({
                 score: data.Score,
-                memberInfo: data
+                memberInfo: data,
+                account: data.Account
             })
         }
 
@@ -94,7 +97,7 @@ export default class Home extends React.Component<any, any> {
         //获取地址栏中state参数，即父级（推荐人）ID
         let parentID: string = GetQuery("parentid");
         if (!parentID) {
-            parentID = "1";
+            parentID = "";
         }
         let link = GameConfig.GetWeChatShareDto(parentID, true).Link;
         console.log(link);
@@ -189,30 +192,45 @@ export default class Home extends React.Component<any, any> {
     }
     render() {
         let socre: string = this.state.score ? this.state.score : "0",
-            headImg = this.state.memberInfo && this.state.memberInfo.HeadImageUrl ? this.state.memberInfo.HeadImageUrl : logoImg
+            headImg = this.state.memberInfo && this.state.memberInfo.HeadImageUrl ? this.state.memberInfo.HeadImageUrl : logoImg;
+        let { account,nickName} = this.state;
         return (
             <div className="home">
                 <CompToast ref={(c) => this.toast = c} />
                 <div className={style.header}>
                     <div className={style.info} >
                         <img src={headImg} alt="" className={style.logo} />
-                        {
-                            this.state.isLogin ? (
-                                <label onClick={() => { this.RefreshScore() }} htmlFor="">{this.languageManager.GetErrorMsg("Score")}:{socre}</label>
-                            ) : null
-                        }
+                        <div>
+                            <div>
+                                {
+                                    account && (account.indexOf("demo") == -1 ? (<label>{nickName} </label>) : (<label>{this.languageManager.GetErrorMsg("Test")}</label>))
+                                }
+                            </div>
+                            <div>
+                                {
+                                   <label>{this.languageManager.GetErrorMsg("Account")}:{this.state.account} </label>
+                                }
+
+                                {
+                                    this.state.isLogin ? (
+                                        <label onClick={() => { this.RefreshScore() }} htmlFor="">{this.languageManager.GetErrorMsg("Score")}:{socre}</label>
+                                    ) : null
+                                }
+                            </div>
+                        </div>
+
                     </div>
                     <div className={style.manager}>
                         {
                             this.renderButton()
                         }
                     </div>
-                    <div>
+                    {/* <div>
                         <select className={style.select} value={this.state.value} onChange={this.handleChange}>
                             <option value="0">中文</option>
                             <option value="1">English</option>
                         </select>
-                    </div>
+                    </div> */}
                 </div>
                 <div className={style.gameList}>
                     {

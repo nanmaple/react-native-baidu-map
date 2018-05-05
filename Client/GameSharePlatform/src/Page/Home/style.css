@@ -22,12 +22,16 @@
 }
 
 .info label {
-    line-height: 32px;
     vertical-align: middle;
     color: rgb(231, 172, 94);
     font-size: 14px;
 }
 
+.info p {
+    vertical-align: middle;
+    color: rgb(231, 172, 94);
+    font-size: 14px;
+}
 .manager {
     composes: flex1 from '../../Style/flex.css';
     text-align: right;

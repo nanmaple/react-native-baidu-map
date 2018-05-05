@@ -147,12 +147,12 @@ class MemberList extends React.Component<any, any> {
         )
     }
     render() {
-        let { memberList, isNoMore, action,init } = this.state;
+        let { memberList, isNoMore, action, init } = this.state;
         if (!memberList || memberList.length == 0) {
             return (
                 <div className="noData">
                     <CompToast ref={(c) => this.toast = c} />
-                    {!init&&this.languageManager.GetErrorMsg("NoData")}
+                    {!init && this.languageManager.GetErrorMsg("NoData")}
                 </div>
 
             )
