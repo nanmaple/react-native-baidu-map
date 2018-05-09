@@ -81,11 +81,14 @@ namespace ScenePanel {
         /**
          * 登录失败
          */
-        private LoginError(): void {
+        private LoginError(error: any): void {
             //抛出错误提示
             // this.gameLoadScenes.LoadError(error);
             // this.GoGameLobby();
             this.isLoginSuccess = false;
+            if(error == BaseEnum.ErrorCode.MemberClosed){
+                alert("账号已关闭!");
+            }
         }
 
         /**

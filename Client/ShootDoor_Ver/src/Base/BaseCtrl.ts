@@ -68,6 +68,8 @@ abstract class BaseCtrl {
         this.socket.on(ServiceManager.SocketEvent.OnConnect, this, this.OnConnectHandler);
         //关闭事件侦听
         this.socket.on(ServiceManager.SocketEvent.OnClose, this, this.OnCloseHandler);
+        //会员状态关闭事件侦听
+        this.socket.on(ServiceManager.SocketEvent.OnMemberClose, this, this.OnMemberCloseHandler);
         //错误事件侦听
         this.socket.on(ServiceManager.SocketEvent.OnError, this, this.OnErrorHandler);
         //重连事件侦听
@@ -128,7 +130,10 @@ abstract class BaseCtrl {
      * 侦听Socket关闭事件
      */
     abstract OnCloseHandler(message: string): void;
-
+    /**
+     * 侦听会员状态关闭事件
+     */
+    abstract OnMemberCloseHandler(): void;
     /**
      * 侦听Socket错误事件
      * @param message 错误信息

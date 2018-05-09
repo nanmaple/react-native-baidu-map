@@ -53,9 +53,15 @@ namespace ScenePanel {
         /**
          * 显示Connect Server
          */
-        public ShowConnect(): void {
+        public ShowConnect(memberClose:boolean = false): void {
+            let language: LanguageUtils.Language = new LanguageUtils.Language();
             this.uiData.showConnect = true;
             this.ui.visible = this.uiData.showConnect;
+            if(memberClose){
+                (this.ui.connectServer as Laya.Label).text = language.GetLanguage("MemberClosed");
+            }else{
+                (this.ui.connectServer as Laya.Label).text = "connecting server...";
+            }
             (this.ui.connectServer as Laya.Label).visible = true;
         }
 

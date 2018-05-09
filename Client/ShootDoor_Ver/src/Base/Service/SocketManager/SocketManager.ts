@@ -136,6 +136,12 @@ namespace ServiceManager {
                     //系统推送消息
                     this.event(ServiceManager.SocketEvent.OnSystemPush, messageDto.Data);
                     break;
+                case BaseEnum.MainCommand.MSG_MEMBERCLOSED:
+                    //断开连接
+                    this.socket.Close();
+                    //广播上层-会员状态已经关闭
+                    this.event(ServiceManager.SocketEvent.OnMemberClose);
+                    break;
                 default:
                     break;
             }

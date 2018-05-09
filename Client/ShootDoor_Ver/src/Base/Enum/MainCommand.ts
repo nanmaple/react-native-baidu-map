@@ -19,6 +19,10 @@ namespace BaseEnum {
         /**
          * 游戏消息
          */
-        MSG_GAME = 5
+        MSG_GAME = 5,
+        /**
+         * 会员状态已关闭
+         */
+        MSG_MEMBERCLOSED = 6
     }
 }

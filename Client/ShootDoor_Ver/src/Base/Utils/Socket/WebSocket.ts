@@ -154,5 +154,12 @@ namespace Utils.Socket {
                 this.isReConnect = status;
             }
         }
+        /**
+         * 设置重连状态
+         * @param status 
+         */
+        public SetReConnect(status: boolean): void{
+            this.isReConnect = status;
+        }
     }
 }

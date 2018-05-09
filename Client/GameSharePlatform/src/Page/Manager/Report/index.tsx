@@ -1,11 +1,10 @@
-import * as React from 'react';
+import * as React from "react";
 import {
     Link
 } from "react-router-dom";
 import { ReportGameResutlRoute, GetDetailRoute } from '../../../Route/Config';
 import ReportCtrl from '../../../Controller/ReportCtrl';
 
-import TimePicker from '../../../Components/TimePicker';
 import { Time } from '../../../Utils/Time';
 
 import CompToast, { ToastType } from '../../../Components/Toast';
@@ -23,6 +22,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 const styles = require("./style.css");
 const rightImg = require("../../../Image/right.png");
+
+import GPDatePicker from '../../../Components/DatePicker';
 
 export default class Report extends React.Component<any, any> {
     private ReportCtrl: ReportCtrl = new ReportCtrl();
@@ -460,8 +461,16 @@ export default class Report extends React.Component<any, any> {
                         </tbody>
                     </table>
                 }
-                <TimePicker ref={(e: any) => { this.timePicker1 = e }} time={this.state.startDate} timeHanler={this.StartTimeHanler} />
-                <TimePicker ref={(e: any) => { this.timePicker2 = e }} time={this.state.endDate} timeHanler={this.EndTimeHanler} />
+                <GPDatePicker
+                    ref={(e: any) => { this.timePicker1 = e }}
+                    value={this.state.startDate}
+                    onOk={this.StartTimeHanler}
+                />
+                <GPDatePicker
+                    ref={(e: any) => { this.timePicker2 = e }}
+                    value={this.state.endDate}
+                    onOk={this.EndTimeHanler}
+                />
             </span>
         );
     }

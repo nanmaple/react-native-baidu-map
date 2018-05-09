@@ -1,0 +1,16 @@
+.head{
+    display: flex;
+    padding: 0 15px;
+    height: 40px;
+    line-height: 40px;
+    background: #fff;
+    border-bottom: 1px solid #ccc;
+}
+.label{
+    margin-right: 10px;
+}
+.img{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+}

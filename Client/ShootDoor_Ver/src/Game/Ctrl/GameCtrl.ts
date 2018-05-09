@@ -25,7 +25,7 @@ class GameCtrl extends BaseCtrl {
         //添加UI到舞台
         this.gameUI = ScenePanel.GameUI.GetInstance();
         this.gameUI.ChangeModeHanler(Laya.Handler.create(this, this.ReInit, null, false));
-        ScenePanel.GameUI.GetInstance().GetLoadingPanel().ShowConnect();
+        ScenePanel.GameUI.GetInstance().GetLoadingPanel().ShowConnect(this.authorizationInfo.IsClose);
         // 创建游戏状态控制类实例
         this.RoundPanelCtrl = new RoundPanelCtrl();
         //创建扑克牌面板控制类实例
@@ -92,7 +92,12 @@ class GameCtrl extends BaseCtrl {
     public OnCloseHandler(message: string): void {
         ScenePanel.GameUI.GetInstance().GetLoadingPanel().ShowConnect();
     }
-
+    /**
+     * 侦听会员状态关闭事件
+     */
+    public OnMemberCloseHandler(): void{
+        ScenePanel.GameUI.GetInstance().GetLoadingPanel().ShowConnect(true);
+    }
     /**
      * 侦听Socket错误事件
      * @param data 

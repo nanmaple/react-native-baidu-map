@@ -99,7 +99,7 @@ namespace ServiceManager {
                     Laya.Browser.window.location.href = "";
                 } else {
                     console.log("获取游戏SocketToken失败",response);
-                    errorhandler.run();
+                    errorhandler.runWith(response.Result);
                 }
             }, (error: any) => {
                 console.log("获取游戏SocketToken失败",error);

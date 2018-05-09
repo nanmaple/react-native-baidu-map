@@ -34,5 +34,8 @@ namespace ServiceManager.SocketEvent {
      * ACK
      */
     export const OnAck: string = "OnAckEvent";
-
+    /**
+     * 会员状态关闭
+     */
+     export const OnMemberClose: string = "OnMemberClose";
 }

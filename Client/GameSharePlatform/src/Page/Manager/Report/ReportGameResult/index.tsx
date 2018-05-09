@@ -12,6 +12,8 @@ import Money from "../../../../Utils/Money";
 import TimePicker from '../../../../Components/TimePicker';
 import { Time } from '../../../../Utils/Time';
 
+import GPDatePicker from '../../../../Components/DatePicker';
+
 import ReportCtrl from '../../../../Controller/ReportCtrl';
 
 
@@ -231,8 +233,8 @@ class GameRecord extends React.Component<any, any> {
                             <div className={styles.time} onClick={this.ShowEndPicker}>{this.state.endDate}</div>
                         </div>
                         <div className={styles.search} onClick={() => { this.searchGameList() }}>{this.languageManager.GetErrorMsg("Inquire")}</div>
-                        <TimePicker ref={(e: any) => { this.timePicker1 = e }} time={this.state.startDate} timeHanler={this.StartTimeHanler} />
-                        <TimePicker ref={(e: any) => { this.timePicker2 = e }} time={this.state.endDate} timeHanler={this.EndTimeHanler} />
+                        <GPDatePicker ref={(e: any) => { this.timePicker1 = e }} value={this.state.startDate} onOk={this.StartTimeHanler} />
+                        <GPDatePicker ref={(e: any) => { this.timePicker2 = e }} value={this.state.endDate} onOk={this.EndTimeHanler} />
                     </div>
                     <div className={styles.headname}>
                         <div className={styles.name}>{this.languageManager.GetErrorMsg("GameName")}</div>

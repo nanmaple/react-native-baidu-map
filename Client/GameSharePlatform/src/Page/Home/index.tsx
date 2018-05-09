@@ -42,8 +42,8 @@ export default class Home extends React.Component<any, any> {
             isTourists: authorization && authorization.IsTourists,
             gmeList: [],
             value: CacheManager.GetCache(CacheType.Language).language,
-            account: memberInfo && memberInfo.Account,
-            nickName:memberInfo&&memberInfo.Nickname
+            account: memberInfo && memberInfo.Account.toUpperCase(),
+            nickName: memberInfo && memberInfo.Nickname
         }
     }
     componentDidMount() {
@@ -58,7 +58,8 @@ export default class Home extends React.Component<any, any> {
             this.setState({
                 score: data.Score,
                 memberInfo: data,
-                account: data.Account
+                account: memberInfo && data.Account.toUpperCase(),
+                nickName: memberInfo && data.Nickname
             })
         }
 
@@ -193,7 +194,8 @@ export default class Home extends React.Component<any, any> {
     render() {
         let socre: string = this.state.score ? this.state.score : "0",
             headImg = this.state.memberInfo && this.state.memberInfo.HeadImageUrl ? this.state.memberInfo.HeadImageUrl : logoImg;
-        let { account,nickName} = this.state;
+        let { account, nickName } = this.state;
+        let Test = this.state.memberInfo.Test;
         return (
             <div className="home">
                 <CompToast ref={(c) => this.toast = c} />
@@ -203,12 +205,12 @@ export default class Home extends React.Component<any, any> {
                         <div>
                             <div>
                                 {
-                                    account && (account.indexOf("demo") == -1 ? (<label>{nickName} </label>) : (<label>{this.languageManager.GetErrorMsg("Test")}</label>))
+                                    account && (!Test ? (<label>{nickName} </label>) : (<label>{this.languageManager.GetErrorMsg("Test")}</label>))
                                 }
                             </div>
                             <div>
                                 {
-                                   <label>{this.languageManager.GetErrorMsg("Account")}:{this.state.account} </label>
+                                    <label>{this.languageManager.GetErrorMsg("Account")}:{account} </label>
                                 }
 
                                 {

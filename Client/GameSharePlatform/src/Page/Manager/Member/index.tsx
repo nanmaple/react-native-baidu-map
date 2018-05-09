@@ -117,7 +117,7 @@ export default class MemberList extends React.Component<any, any> {
             this.memberCtrl.GetChildScoreList(true, this.Handler);
         } else if (action === STATS.loading && !this.state.isNoMore) {//加载更多
 
-            this.memberCtrl.GetChildScoreList(true, this.Handler);
+            this.memberCtrl.GetChildScoreList(false, this.Handler);
         } else if (action === STATS.loading && this.state.isNoMore) { //没有更多数据
             this.setState({
                 action: STATS.reset

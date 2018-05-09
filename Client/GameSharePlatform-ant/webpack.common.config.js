@@ -1,0 +1,39 @@
+//导入proxy
+var proxy = require('http-proxy-middleware');
+module.exports = {
+    entry: ["babel-polyfill",'whatwg-fetch',"./src/index.tsx"],
+    devtool: "source-map",
+
+    resolve: {
+        extensions: [".ts", ".tsx", ".js", ".json"]
+    },
+
+    module: {
+        rules: [{
+            test: /\.tsx?$/,
+            loader: "ts-loader"
+        },
+        {
+            enforce: "pre",
+            test: /\.js$/,
+            loader: "source-map-loader"
+        },
+        {
+            test: /\.css$/,
+            loader: "style-loader!css-loader",
+            include: /node_modules/
+        },
+        {
+            test: /\.css$/,
+            loader: "style-loader!css-loader?modules",
+            exclude: /node_modules/
+        },
+        {
+            test: /\.(png|jpe?g|gif)/,
+            loader: "url-loader?limit=8192&name=images/[hash:8].[name].[ext]"
+        }
+        ]
+    },
+
+    plugins: [],
+};

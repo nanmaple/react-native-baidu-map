@@ -1,11 +1,10 @@
-import * as React from 'react';
+import * as React from "react";
 import {
     Link
 } from "react-router-dom";
 import { ReportGameResutlRoute, GetDetailRoute } from '../../../Route/Config';
 import ReportCtrl from '../../../Controller/ReportCtrl';
 
-import TimePicker from '../../../Components/TimePicker';
 import { Time } from '../../../Utils/Time';
 
 import CompToast, { ToastType } from '../../../Components/Toast';
@@ -17,6 +16,8 @@ import { JString } from "../../../Utils/TransferJson";
 
 const styles = require("./style.div.css");
 const rightImg = require("../../../Image/right.png");
+
+import GPDatePicker from '../../../Components/DatePicker';
 
 export default class Report extends React.Component<any, any> {
     private ReportCtrl: ReportCtrl = new ReportCtrl();
@@ -47,8 +48,10 @@ export default class Report extends React.Component<any, any> {
             accountList: [],
             remarkList: [],
             myAccount: null,
-            init:true,
-            memberIdList:[],
+            init: true,
+            memberIdList: [],
+            dpVisible: false,
+            dpValue: null
         }
         this.ShowStartPicker = this.ShowStartPicker.bind(this);
     }
@@ -71,22 +74,6 @@ export default class Report extends React.Component<any, any> {
         this.toast.Show(msg, type);
     }
     public Handler = (data: any, isRefresh: any[], error?: string): void => {
-        // data = {
-        //     Account:"asd22",
-        //     ChildReportList:[
-        //         {
-        //             Account:"x0112", 
-        //             Nickname:"faith.",
-        //             OwnTotalBet:0,
-        //             OwnTotalPay:0,
-        //             Remark:null 
-        //         }
-        //     ],
-        //     Nickname:"faith.",
-        //     OwnTotalBet:0,
-        //     OwnTotalPay:0,
-        //     Remark:null
-        // }
         this.toast.Hide();
         if (error) {
             //提示错误信息
@@ -96,10 +83,10 @@ export default class Report extends React.Component<any, any> {
         if (isRefresh[0]) {
             this.calculateTotal(data); //计算总total
             this.setState({ curReportList: data }, () => {
-                if(this.state.init){
+                if (this.state.init) {
                     this.setState({
-                        init:false,
-                        myAccount:data.Account
+                        init: false,
+                        myAccount: data.Account
                     })
                 }
                 let arr = this.state.allReportList, len = arr.length - 1;
@@ -111,7 +98,7 @@ export default class Report extends React.Component<any, any> {
                     })
 
                 } else {   //点击查询按钮  进行替换
-                   console.log(data)
+                    console.log(data)
                     arr.splice(len, 1, data);
                     this.setState({
                         allReportList: arr,
@@ -154,7 +141,7 @@ export default class Report extends React.Component<any, any> {
     private goToChild = (item: any) => {
         this.ShowToast(this.languageManager.GetErrorMsg("Loading"), ToastType.Loading);
         let { startDate, endDate } = this.state;
-        let arr = this.state.nameList, arr2 = this.state.accountList, arr3 = this.state.remarkList,arr4 = this.state.memberIdList;
+        let arr = this.state.nameList, arr2 = this.state.accountList, arr3 = this.state.remarkList, arr4 = this.state.memberIdList;
         arr.push(item.Nickname);
         arr2.push(item.Account);
         arr3.push(item.Remark);
@@ -168,7 +155,7 @@ export default class Report extends React.Component<any, any> {
             curAccount: item.Account,
             accountList: arr2,
             remarkList: arr3,
-            memberIdList:arr4
+            memberIdList: arr4
         })
         this.ReportCtrl.GetReport(startDate, endDate, true, this.Handler, "click", item.MemberId);
     }
@@ -191,13 +178,13 @@ export default class Report extends React.Component<any, any> {
             allReportList: arr,
             nameList: arrName,
             accountList: arrAccount,
-            memberIdList:arrID,
+            memberIdList: arrID,
             curReportList: arr[arr.length - 1],
             curTotalName: arrName[arrName.length - 1],
             curAccount: arrAccount[arrAccount.length - 1],
             remarkList: arrRemark,
             curRemark: arrRemark[arrRemark.length - 1],
-            memberId:arrID[arrID.length-1]
+            memberId: arrID[arrID.length - 1]
         })
         this.calculateTotal(arr[arr.length - 1]);
     }
@@ -225,28 +212,28 @@ export default class Report extends React.Component<any, any> {
      * @param event 事件对象
      */
     private ShowStartPicker = (event: any): void => {
-        this.timePicker1.Show(this.state.startDate);
+        this.timePicker1.Show(true);
     }
     /**
      * 时间选择回调处理
      * @param value 时间
      */
     public StartTimeHanler = (value: string): void => {
-        this.setState({ startDate: value });
+        this.setState({ startDate: value, dpVisibleStart: false });
     }
     /**
       * 显示日历
       * @param event 事件对象
       */
     private ShowEndPicker = (event: any): void => {
-        this.timePicker2.Show(this.state.startDate);
+        this.timePicker2.Show(true);
     }
     /**
      * 时间选择回调处理
      * @param value 时间
      */
     public EndTimeHanler = (value: string): void => {
-        this.setState({ endDate: value });
+        this.setState({ endDate: value, dpVisibleEnd: false });
     }
     /**
      * 渲染报表列表
@@ -290,7 +277,7 @@ export default class Report extends React.Component<any, any> {
             <Link to={{
                 pathname: `${GetDetailRoute("/report/gameResult/", routerParam)}`,
             }} className={styles.head}>
-                <div className={styles.type}>{allReportList.length > 1 ? curAccount + (curRemark ? `(${curRemark})` : `(${curTotalName})`) : this.state.myAccount+`(${this.languageManager.GetErrorMsg("Me")})`}</div>
+                <div className={styles.type}>{allReportList.length > 1 ? curAccount + (curRemark ? `(${curRemark})` : `(${curTotalName})`) : this.state.myAccount + `(${this.languageManager.GetErrorMsg("Me")})`}</div>
                 {
                     allReportList.length > 1 ? (<div onClick={(e) => { e.stopPropagation(); e.preventDefault(); this.back() }} className={styles.back}>Back</div>) : null
                 }
@@ -305,17 +292,16 @@ export default class Report extends React.Component<any, any> {
             </Link>
         ) : null)
     }
+
     render() {
         let { memberId, curReportList, allReportList, curTotal, curTotalName, curRemark, curAccount, myTotal, startDate, endDate } = this.state;
         let { ChildReportList, Total } = curReportList;
         let routerParam = JString.EncodeJson({
             memberId: memberId,
-            //nickName: curTotalName,
-            //remark: encodeURIComponent(curRemark),
             startDate,
             endDate
         })
-        localStorage.setItem("MemberMsg",JSON.stringify({
+        localStorage.setItem("MemberMsg", JSON.stringify({
             memberId: memberId,
             nickName: curTotalName,
             remark: curRemark,
@@ -358,8 +344,17 @@ export default class Report extends React.Component<any, any> {
 
                     }
                 </div>
-                <TimePicker ref={(e: any) => { this.timePicker1 = e }} time={this.state.startDate} timeHanler={this.StartTimeHanler} />
-                <TimePicker ref={(e: any) => { this.timePicker2 = e }} time={this.state.endDate} timeHanler={this.EndTimeHanler} />
+
+                <GPDatePicker
+                    ref={(e: any) => { this.timePicker1 = e }}
+                    value={this.state.startDate}
+                    onOk={this.StartTimeHanler}
+                />
+                <GPDatePicker
+                    ref={(e: any) => { this.timePicker2 = e }}
+                    value={this.state.endDate}
+                    onOk={this.EndTimeHanler}
+                />
             </div>
         );
     }

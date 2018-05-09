@@ -142,7 +142,7 @@ namespace LanguageUtils {
         Test: "测试",
         //头部显示账号
         Account: "账号:",
-
+        
         /// <summary>
         /// 系统错误
         /// </summary>
@@ -171,7 +171,7 @@ namespace LanguageUtils {
         /// <summary>
         /// 会员被冻结
         /// </summary>
-        MemberClosed: "会员被冻结",
+        MemberClosed: "账号已关闭！",
        
 
         //Token错误

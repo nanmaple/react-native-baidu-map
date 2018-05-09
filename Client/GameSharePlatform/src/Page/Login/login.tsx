@@ -84,10 +84,6 @@ export default class Login extends React.Component<any, any> {
         } else if (response.Result == 3) {
             window.location.href = "/gameList.html";
             return;
-            this.setState({
-                limite: true
-            });
-            return;
         }
         this.ShowToast(this.languageManager.GetErrorMsg(ErrorCode[response.Result]), ToastType.Error);
         return;
