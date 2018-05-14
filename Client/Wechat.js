@@ -1,4 +1,5 @@
-var Domains = "m.17guess.cn";
+//var Domains = "m.17guess.cn";
+var Domains = "synjiguang.com";
 var GetJsSignatures = "//" + Domains + "/api/WeChat/GetJsSignature";
 var GetAppIDApis = "//" + Domains + "/api/WeChat/GetAppID";
 function Wechat(http, handler, option) {
@@ -279,8 +280,11 @@ Wechat.prototype.GetAppID = function () {
     return new Promise(function (resolve, reject) {
         _this.http.Get(GetAppIDApis, null, null, function (res) {
             console.log("GetAppID", res);
-            localStorage.setItem("AppId", res.Data);
-            resolve(res.Data);
+            if (res && res.Data) {
+                localStorage.setItem("AppId", res.Data);
+                resolve(res.Data);
+            }
+
         }, function (err) {
             console.log(err);
             reject(err);

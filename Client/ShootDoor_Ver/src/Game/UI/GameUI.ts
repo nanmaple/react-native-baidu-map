@@ -8,6 +8,7 @@ namespace ScenePanel {
         public historyPanel: HistoryPanelHor | HistoryPanelVer;
         public timePanel: TimePanelHor | TimePanelVer;
         public betPanel: BetPanelHor | BetPanelVer;
+        public betMorePanel: BetMorePanelHor | BetMorePanelVer;
 
         public cardPanel: CardPanelHor | CardPanelVer;
         public footballPanel: FootBallPanelHor | FootBallPanelVer;
@@ -80,6 +81,9 @@ namespace ScenePanel {
             this.rulePanel = new RulePanelHor();
             //添加关注提示面板
             this.tipsPanel = new TipsPanelHor();
+            //添加投注更多面板
+            this.betMorePanel = new BetMorePanelHor();
+
             //添加足球面板
             this.footballPanel = new FootBallPanelHor(this.cardPanel.GetGoalWidth(), this.cardPanel.GetGoalHeight(), this.cardPanel.GetGoalCenterX(), this.cardPanel.GetGoalBottom());
 
@@ -96,6 +100,7 @@ namespace ScenePanel {
             Laya.stage.addChild(this.tipsPanel.GetUI());
             Laya.stage.addChild(this.footballPanel.GetUI());
             Laya.stage.addChild(this.promptPanel.GetUI());
+            Laya.stage.addChild(this.betMorePanel.GetUI());
 
             if (this.pokerFlyEffect) {
                 this.pokerFlyEffect.RecoveryPoker();
@@ -133,6 +138,8 @@ namespace ScenePanel {
             this.rulePanel = new RulePanelVer();
             //添加关注提示面板
             this.tipsPanel = new TipsPanelVer();
+            //添加投注更多面板
+            this.betMorePanel = new BetMorePanelVer();
 
             //添加足球面板
             this.footballPanel = new FootBallPanelVer(this.cardPanel.GetGoalWidth(), this.cardPanel.GetGoalHeight(), this.cardPanel.GetGoalCenterX(), this.cardPanel.GetGoalBottom());
@@ -151,6 +158,8 @@ namespace ScenePanel {
             Laya.stage.addChild(this.tipsPanel.GetUI());
             Laya.stage.addChild(this.footballPanel.GetUI());
             Laya.stage.addChild(this.promptPanel.GetUI());
+            Laya.stage.addChild(this.betMorePanel.GetUI());
+
             if (this.pokerFlyEffect) {
                 this.pokerFlyEffect.RecoveryPoker();
             }
@@ -229,6 +238,13 @@ namespace ScenePanel {
         public GetFootBallPanel(): FootBallPanelHor | FootBallPanelVer {
             return this.footballPanel;
         }
+        /**
+         * 获取投注更多面板
+         */
+        public GetBetMorePanel(): BetMorePanelHor | BetMorePanelVer {
+            return this.betMorePanel;
+        }
+
         /**
          * 扑克牌飞行动画
          * @param dto 

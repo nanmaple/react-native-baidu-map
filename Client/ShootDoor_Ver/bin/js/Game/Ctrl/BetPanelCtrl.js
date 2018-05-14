@@ -13,12 +13,14 @@ var BetPanelCtrl = /** @class */ (function () {
         this.sendBetPosMsg = new Object();
         //当前投注分数
         this.currentBetSocre = 0;
+        //余额
+        this.balance = 0;
         //绑定handler回调
         this.handler = handler;
         //绑定账号是否关闭
         this.isClose = isClose;
         ScenePanel.GameUI.GetInstance().GetBetPanel().SetClickHandelr(Laya.Handler.create(this, this.BtnClickHandler, null, false));
-        if (memberInfo && memberInfo.Score) {
+        if (memberInfo) {
             this.balance = Number(memberInfo.Score);
         }
         //禁用投注
@@ -43,7 +45,6 @@ var BetPanelCtrl = /** @class */ (function () {
             //清除当前未投注成功的注单信息
             this.currentBetPosMsg = new Array();
         }
-        // if(data.RoundID)
         //重置按钮的赔率
         this.SetOdds(data.Odds);
         //设置限额

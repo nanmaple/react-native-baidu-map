@@ -7,7 +7,7 @@ namespace ScenePanel {
         private eventDispatcher: laya.events.EventDispatcher = new laya.events.EventDispatcher();
         private memberServer: ServiceManager.MemberManager;
         private loginService: any = null;
-
+        private resourceVersion:laya.net.ResourceVersion;
         constructor(onGameLoadSuccess: Laya.Handler) {
             super();
             this.onGameLoadSuccess = onGameLoadSuccess;
@@ -103,9 +103,15 @@ namespace ScenePanel {
             Laya.stage.addChild(this.gameLoadScenes.GetUI());
             // Laya.URL.basePath = "http://m.17guess.cn/1/";
             // Laya.URL.rootPath = "http://m.17guess.cn/1/";
-            //加载游戏资源内容
-            var dataArr: Array<any> = ScenePanel.LoadResourcesConfig;
-            Laya.loader.load(dataArr, Laya.Handler.create(this, this.onLoadResource), Laya.Handler.create(this, this.onProgress, null, false));
+
+            //设置版本控制类型为使用文件名映射的方式
+            Laya.ResourceVersion.type = Laya.ResourceVersion.FILENAME_VERSION;
+            // //加载版本信息文件
+            // Laya.ResourceVersion.enable("version.json", Laya.Handler.create(this, ()=>{
+                //加载游戏资源内容
+                var dataArr: Array<any> = ScenePanel.LoadResourcesConfig;
+                Laya.loader.load(dataArr, Laya.Handler.create(this, this.onLoadResource), Laya.Handler.create(this, this.onProgress, null, false));
+            // },null,false));  
         }
 
         /**

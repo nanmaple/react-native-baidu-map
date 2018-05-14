@@ -6,9 +6,9 @@ namespace GameConfig {
     export const DeviceId: string = "123456";
     export const CacheType: number = 0; //0 localstorage , 1 cookie ,2 session
 
-    export const Domain: string = IsDebug ? "www.zyyft.cn" : "m.17guess.cn";
-    export const WebApiBaseUrl: string = IsDebug ? "//192.168.0.143:8200" : `//${Domain}/api`;
-    export const BetWebApiBaseUrl: string = IsDebug ? "//192.168.0.143:8201" : `//${Domain}/report`;
+    export const Domain: string = IsDebug ? "www.zyyft.cn" : "m.synjiguang.com";
+    export const WebApiBaseUrl: string = IsDebug ? "//192.168.0.143:8200" : `http://${Domain}/api`;
+    export const BetWebApiBaseUrl: string = IsDebug ? "//192.168.0.143:8201" : `http://${Domain}/report`;
 
     export const DesignLength: number = 1334;
     export const DesignShort: number = 750;

@@ -28,7 +28,7 @@ var LoginByTourist = "//" + Domain + "/api/Member/DemoAccountLogin";
 var GetMemberInfo = "//" + Domain + "/api/Member/GetUserProfile";
 var LoginCheck = "//" + Domain + "/api/Member/LoginByToken";
 var LoginById = "//" + Domain + "/api/Member/SelectMember";
-var Login = "//" + Domain + "/api/Member/Login";
+var LoginUrl = "//" + Domain + "/api/Member/Login";
 var GetJsSignature = "//" + Domain + "/api/WeChat/GetJsSignature";
 var GetAppIDApi = "//" + Domain + "/api/WeChat/GetAppID";
 var LoginByAccount = "//" + Domain + "/api/Member/AccountLogin";
@@ -151,7 +151,7 @@ LoginService.prototype.LoginByCode = function (code, parentId) {
         DeviceType: DeviceType,
         DeviceId: DeviceId
     };
-    this.http.Post(Login, loginByCodeDto, LoginService.header, function (res) {
+    this.http.Post(LoginUrl, loginByCodeDto, LoginService.header, function (res) {
         console.log(res);
         
         if (res&&res.Result == 1) {

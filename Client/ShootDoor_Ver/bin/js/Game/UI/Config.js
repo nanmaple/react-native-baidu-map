@@ -1,5 +1,6 @@
 var ScenePanel;
 (function (ScenePanel) {
+    ScenePanel.Domain = "http://m.17guess.cn/1/";
     ScenePanel.LoadResourcesConfig = [
         { url: "res/atlas/ui.atlas", type: Laya.Loader.ATLAS },
         { url: "res/atlas/ui/vertical.atlas", type: Laya.Loader.ATLAS },

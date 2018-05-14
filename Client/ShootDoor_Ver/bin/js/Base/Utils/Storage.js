@@ -222,7 +222,7 @@ var Utils;
                         return dataObj.value;
                     }
                     else {
-                        this.RemoveLocalStorage(key);
+                        this.RemoveSessionStorage(key);
                         return null;
                     }
                 }

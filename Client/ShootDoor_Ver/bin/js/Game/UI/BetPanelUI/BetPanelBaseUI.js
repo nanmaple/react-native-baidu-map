@@ -161,13 +161,14 @@ var ScenePanel;
           */
         BetPanelBaseUI.prototype.Bet = function (i) {
             //启用确认投注按钮
-            this.DisabledBetBtn(false);
+            if (this.oddsLabelArr[i].text != "---") {
+                this.DisabledBetBtn(false);
+            }
             var params = {
                 Type: ClickType.ODDS,
                 Data: i + 1
             };
             this.uiData.handler.runWith(params);
-            Utils.BackgroundMusic.PlaySounds("sound/bet.wav");
         };
         /**
          * 设置不同位置的投注总金额
@@ -371,10 +372,16 @@ var ScenePanel;
          * @param txt 提示的信息
          */
         BetPanelBaseUI.prototype.ShowMsg = function (txt) {
-            var _this = this;
+            Laya.timer.clear(this, this.HideMsg);
             this.ui.MsgPanel.changeText(txt);
             this.ui.MsgPanel.visible = true;
-            Laya.timer.once(1500, this, function () { _this.ui.MsgPanel.visible = false; });
+            Laya.timer.once(2000, this, this.HideMsg);
+        };
+        /**
+         * 隐藏提示信息
+         */
+        BetPanelBaseUI.prototype.HideMsg = function () {
+            this.ui.MsgPanel.visible = false;
         };
         /**
          * 筹码动画回调

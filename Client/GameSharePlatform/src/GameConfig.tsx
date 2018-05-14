@@ -5,7 +5,8 @@ export const WebApiBaseUrl = IsDebug ? "http://192.168.0.143:8200" : `//${Domain
 export const BetWebApiBaseUrl = IsDebug ? "http://192.168.0.143:8201" : `//${Domain}/report`;
 export const CacheType = 0; //0 localstorage , 1 cookie ,2 session
 export function GetRedirectUrl(gameID: any) {
-    return `//${this.Domain}/${gameID}/`;
+    let v = Math.random();
+    return `//${this.Domain}/${gameID}/?v=${v}`;
 }
 export let Language = "CH";
 

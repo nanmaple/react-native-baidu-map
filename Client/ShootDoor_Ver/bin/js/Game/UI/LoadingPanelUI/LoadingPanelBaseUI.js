@@ -37,7 +37,6 @@ var ScenePanel;
         LoadingPanelBaseUI.prototype.ShowLoading = function () {
             this.uiData.showLoading = true;
             this.ui.visible = this.uiData.showLoading;
-            this.ui.loadingAni.play();
         };
         /**
          * 隐藏loading
@@ -45,16 +44,22 @@ var ScenePanel;
         LoadingPanelBaseUI.prototype.HideLoading = function () {
             this.uiData.showLoading = false;
             this.ui.visible = this.uiData.showLoading;
-            this.ui.loadingAni.stop();
         };
         /**
          * 显示Connect Server
          */
-        LoadingPanelBaseUI.prototype.ShowConnect = function () {
+        LoadingPanelBaseUI.prototype.ShowConnect = function (memberClose) {
+            if (memberClose === void 0) { memberClose = false; }
+            var language = new LanguageUtils.Language();
             this.uiData.showConnect = true;
             this.ui.visible = this.uiData.showConnect;
+            if (memberClose) {
+                this.ui.connectServer.text = language.GetLanguage("MemberClosed");
+            }
+            else {
+                this.ui.connectServer.text = "connecting server...";
+            }
             this.ui.connectServer.visible = true;
-            this.ui.loadingAni.visible = false;
         };
         /**
          * 隐藏Connect Server
@@ -63,7 +68,6 @@ var ScenePanel;
             this.uiData.showConnect = false;
             this.ui.visible = this.uiData.showConnect;
             this.ui.connectServer.visible = false;
-            this.ui.loadingAni.visible = true;
         };
         return LoadingPanelBaseUI;
     }());

@@ -6,6 +6,11 @@ var ScenePanel;
          * @param isHor 是否横版
          */
         function TipsPanelBaseUI(isHor) {
+            var language = new LanguageUtils.Language();
+            var htmlD = new Laya.HTMLDivElement();
+            htmlD.innerHTML = language.GetLanguage("GameTips");
+            htmlD.style.width = 360;
+            htmlD.style.height = 250;
             if (isHor) {
                 this.ui = new ui.TipsPanelUI();
             }
@@ -18,6 +23,8 @@ var ScenePanel;
             this.ui.closeBtn.on(Laya.Event.CLICK, this, this.CloseTip);
             this.uiData = ScenePanel.TipsPanelUIData.GetInstance();
             this.ui.visible = this.uiData.isShow;
+            this.ui.tips.vScrollBarSkin = "";
+            this.ui.tips.addChild(htmlD);
         }
         /**
          * 获取UI

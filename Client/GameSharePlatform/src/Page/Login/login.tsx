@@ -17,7 +17,7 @@ import { HomeRoute } from '../../Route/Config';
 const styles = require("./style.css");
 const rightImg = require("../../Image/right.png");
 
-export default class Login extends React.Component<any, any> {
+export default class LoginText extends React.Component<any, any> {
     private userCtrl: UserCtrl = new UserCtrl();
     private toast: any;
     private Wechat: any;

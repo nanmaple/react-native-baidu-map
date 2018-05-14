@@ -19,5 +19,9 @@ var Net;
          * 获取微信js签名信息
          */
         ApiConfig.GetJsSignature = GameConfig.WebApiBaseUrl + "/WeChat/GetJsSignature";
+        /**
+         * 获取APPID
+         */
+        ApiConfig.GetAppIDApi = GameConfig.WebApiBaseUrl + "/WeChat/GetAppID";
     })(ApiConfig = Net.ApiConfig || (Net.ApiConfig = {}));
 })(Net || (Net = {}));

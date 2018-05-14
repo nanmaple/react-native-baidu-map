@@ -52,14 +52,12 @@ var Utils;
             WebSocket.prototype.onOpen = function (msg) {
                 Laya.timer.clear(this, this.Connect);
                 this.OnConnect.run();
-                console.log("连接成功");
             };
             /**
              * 断开连接回调
              * @param msg
              */
             WebSocket.prototype.onClose = function (msg) {
-                console.log("断开连接" + this.isReConnect);
                 this.OnClosed.runWith(msg);
                 if (this.isReConnect) {
                     Laya.timer.clear(this, this.Connect);
@@ -71,7 +69,6 @@ var Utils;
              * @param msg
              */
             WebSocket.prototype.onError = function (error) {
-                console.log("连接出错");
                 this.OnError.runWith(error);
             };
             /**
@@ -138,6 +135,13 @@ var Utils;
                 if (this.isReConnect != status) {
                     this.isReConnect = status;
                 }
+            };
+            /**
+             * 设置重连状态
+             * @param status
+             */
+            WebSocket.prototype.SetReConnect = function (status) {
+                this.isReConnect = status;
             };
             return WebSocket;
         }());

@@ -10,11 +10,17 @@ D ui
 P 33339F7E attention.png
 P 3A418CAB attention_EN.png
 P 77B3A78D back.png
+P 97F7108C bet_close.png
+P 775812C5 bet_more_btn.png
+P 3BCC3279 bet_title.png
+P 48905094 bet_title_ico.png
 P 021FD09C betrecord.png
 P 7BCA921A betrecord_EN.png
 R 79D320FE bg.png
 R 577CD16E bg_alert.png
 R 5F047BC3 bg_bet.png
+R 34E1CFD1 bg_bet_more.png
+R 6F4233B6 bg_bet_more_v.png
 P A3238834 bg_chip .png
 R C39D2622 bg_chips.png
 R 3FD7116B bg_door.png
@@ -25,16 +31,19 @@ P C4BFFCC6 bg_money.png
 R 5C94EABC bg_record.png
 R 637EAD1B bg_round.png
 P 6199215C bg_time.png
+P D0E9D480 block.png
 P 5C977BB8 btn_chip.png
 P DB6FF241 cancel.png
 P EC8AD455 charge.png
 P B08B63FC chip_s.png
 P 60053BEA clip_number.png
 P 37A8BABC close.png
+P 2C943D88 club.png
 P 074168DC confirm.png
 P C7A39D13 football.png
 P 6686CBB6 go.png
 P EB631500 gr.png
+P E5873CFB heart.png
 P 4E35846D loading.png
 R 3947C27C mask.png
 P C55710AE ok.png
@@ -43,6 +52,7 @@ R 8167FC33 recordLine.png
 P ACAACF72 rule.png
 P 6A6F42C3 ruleTitle.png
 P D2D709FC ruleTitle_EN.png
+P 65BE05C5 spade.png
 R EC3ADF62 tip.png
 P DF53CC40 tipclose.png
 P 194513E0 title.png

@@ -92,7 +92,6 @@ var Utils;
                 });
             }
             else {
-                console.log("未引入weixin.js");
                 handler.runWith(-1);
             }
         };
@@ -125,7 +124,6 @@ var Utils;
                 });
             }
             else {
-                console.log("未引入weixin.js");
                 handler.runWith(-1);
             }
         };
@@ -158,7 +156,6 @@ var Utils;
                 });
             }
             else {
-                console.log("未引入weixin.js");
                 handler.runWith(-1);
             }
         };
@@ -191,7 +188,6 @@ var Utils;
                 });
             }
             else {
-                console.log("未引入weixin.js");
                 handler.runWith(-1);
             }
         };

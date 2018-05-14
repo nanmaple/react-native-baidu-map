@@ -17,6 +17,7 @@ var ScenePanel;
             _this.isLoginSuccess = false;
             _this.isLoadSuccess = false;
             _this.eventDispatcher = new laya.events.EventDispatcher();
+            _this.loginService = null;
             _this.onGameLoadSuccess = onGameLoadSuccess;
             document.addEventListener("screenMode", function () {
                 if (GameConfig.ScreenMode) {
@@ -27,34 +28,46 @@ var ScenePanel;
                 }
                 Laya.stage.addChild(_this.gameLoadScenes.GetUI());
             });
-            //从会员服务中获取用户信息
             _this.memberServer = new ServiceManager.MemberManager(GameConfig.GameID);
             //获取Socket Token
-            var authorizationInfo = _this.memberServer.GetSocketInfo();
+            _this.loginService = new Laya.Browser.window.LoginService(Utils.Http, Utils.Storage, function (data) {
+                _this.GetMemberInfoSuccess(data);
+            }, null, function () { _this.GetMemberInfoError(); });
+            var authorizationInfo = _this.loginService.GetAuthorizationDtoByLocal();
             if (!authorizationInfo.Token) {
-                var parentId = Utils.Url.GetQuery("parentid");
-                var dto = new BaseDto.LoginDto();
-                dto.DeviceType = GameConfig.DeviceType;
-                dto.DeviceId = GameConfig.DeviceId;
-                var successHandler = Laya.Handler.create(_this, _this.LoginSuccess, null, false);
-                var errorHandler = Laya.Handler.create(_this, _this.LoginError, null, false);
-                _this.memberServer.LoginByTourists(dto, authorizationInfo.Token, successHandler, errorHandler);
+                _this.GoGameLobby();
             }
             else {
                 _this.LoginSuccess(authorizationInfo.Token);
+                //获取会员信息
+                _this.loginService.GetMemberInfo(true);
             }
-            var url = Laya.Browser.window.location.href;
-            _this.memberServer.GetJsSignature(url, Laya.Handler.create(_this, _this.GetWeChatSuccess, null, false));
             //加载游戏开资源
             _this.onLoaded();
             return _this;
         }
         /**
-         * 获取微信配置信息成功
+         * 获取会员信息成功
          */
-        GameLoadCtrl.prototype.GetWeChatSuccess = function (dto) {
-            var wechat = new Utils.WeChat();
-            wechat.Init(dto);
+        GameLoadCtrl.prototype.GetMemberInfoSuccess = function (Data) {
+            var memberInfo = Data.MemberInfo;
+            var memberId = memberInfo.MemberId;
+            //微信js签名配置
+            var wechat = new Laya.Browser.window.Wechat(Utils.Http, function () { }, GameConfig.GetWeChatShareDto(memberId, false));
+            wechat.GetJsSignature();
+        };
+        /**
+         * 获取会员信息失败
+         */
+        GameLoadCtrl.prototype.GetMemberInfoError = function () {
+            // this.GoGameLobby();
+        };
+        /**
+         * 跳转至游戏大厅
+         */
+        GameLoadCtrl.prototype.GoGameLobby = function () {
+            var parentID = Utils.Url.GetQuery("parentid");
+            Laya.Browser.window.location.replace("http://" + GameConfig.Domain + "?gameid=" + GameConfig.GameID + "&parentid=" + parentID);
         };
         /**
          * 登录成功
@@ -78,14 +91,18 @@ var ScenePanel;
          */
         GameLoadCtrl.prototype.LoginError = function (error) {
             //抛出错误提示
-            this.gameLoadScenes.LoadError(error);
+            // this.gameLoadScenes.LoadError(error);
+            // this.GoGameLobby();
             this.isLoginSuccess = false;
-            console.log(error);
+            if (error == BaseEnum.ErrorCode.MemberClosed) {
+                alert("账号已关闭!");
+            }
         };
         /**
          * 开始加载游戏资源
          */
         GameLoadCtrl.prototype.onLoaded = function () {
+            var _this = this;
             if (GameConfig.ScreenMode) {
                 this.gameLoadScenes = new ScenePanel.GameLoadScenes();
             }
@@ -93,9 +110,16 @@ var ScenePanel;
                 this.gameLoadScenes = new ScenePanel.GameLoadScenes_Ver();
             }
             Laya.stage.addChild(this.gameLoadScenes.GetUI());
-            //加载游戏资源内容
-            var dataArr = ScenePanel.LoadResourcesConfig;
-            Laya.loader.load(dataArr, Laya.Handler.create(this, this.onLoadResource), Laya.Handler.create(this, this.onProgress, null, false));
+            // Laya.URL.basePath = "http://m.17guess.cn/1/";
+            // Laya.URL.rootPath = "http://m.17guess.cn/1/";
+            //设置版本控制类型为使用文件名映射的方式
+            Laya.ResourceVersion.type = Laya.ResourceVersion.FILENAME_VERSION;
+            // //加载版本信息文件
+            Laya.ResourceVersion.enable("version.json", Laya.Handler.create(this, function () {
+                //加载游戏资源内容
+                var dataArr = ScenePanel.LoadResourcesConfig;
+                Laya.loader.load(dataArr, Laya.Handler.create(_this, _this.onLoadResource), Laya.Handler.create(_this, _this.onProgress, null, false));
+            }, null, false));
         };
         /**
          * 加载游戏资源的进度回调

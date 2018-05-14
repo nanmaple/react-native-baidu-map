@@ -200,6 +200,10 @@ var ScenePanel;
         GameUI.prototype.GetFootBallPanel = function () {
             return this.footballPanel;
         };
+        /**
+         * 扑克牌飞行动画
+         * @param dto
+         */
         GameUI.prototype.PokerFly = function (dto) {
             var isChange = false;
             if (this.pokerChange != this.isChange) {
@@ -208,6 +212,9 @@ var ScenePanel;
             this.pokerArr = this.cardPanel.GetFlyPoker(isChange);
             this.pokerFlyEffect.FlyPoker(dto, this.cardPanel.GetFlyPoker(isChange), this.historyPanel.GetEndFlyPoker(isChange));
         };
+        /**
+         * 清除扑克牌飞行动画
+         */
         GameUI.prototype.ClearPokerFly = function () {
             this.pokerFlyEffect.ClearFlyPoker();
         };

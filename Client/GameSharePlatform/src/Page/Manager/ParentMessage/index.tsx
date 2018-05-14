@@ -25,6 +25,7 @@ class ParentMsg extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
+            account: "",
             headImg: "",
             nickName: "",
             remark: "",
@@ -83,6 +84,7 @@ class ParentMsg extends React.Component<any, any> {
             this.ShowToast(error, ToastType.Error);
         } else if (data != null) {
             this.setState({
+				account: data.Account,
                 headImg: data.HeadImageUrl,
                 nickName: data.Nickname,
                 remark: data.Remark
@@ -93,10 +95,11 @@ class ParentMsg extends React.Component<any, any> {
 
     }
     render() {
-        let { remark, nickName, headImg } = this.state;
+        let { account, remark, nickName, headImg } = this.state;
         return (
             <div className={style.home}>
                 <CompToast ref={(c) => this.toast = c} />
+                <InfoItemInput label={this.languageManager.GetErrorMsg("Account")} value={account} disable={true}></InfoItemInput>
                 <InfoItemInput label={this.languageManager.GetErrorMsg("NickName")} value={nickName} disable={true}></InfoItemInput>
                 <InfoItemInput label={this.languageManager.GetErrorMsg("Remark")} value={remark} handler={this.SetRemark}></InfoItemInput>
                 <div className={style.head}>

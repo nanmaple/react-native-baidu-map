@@ -52,6 +52,22 @@ var Net;
                 errorhandler.runWith(error.toString());
             });
         };
+        /**
+         * 获取appid
+         */
+        WebApi.prototype.GetAppID = function (successHandler) {
+            this.http.Get(Net.ApiConfig.GetAppIDApi, {}, this.header, function (response) {
+                if (response.Result == BaseEnum.ErrorCode.Success) {
+                    GameConfig.GetAppID(response.Data);
+                    successHandler.run();
+                }
+                else {
+                    console.log("获取APPID失败", response);
+                }
+            }, function (error) {
+                console.log("获取APPID失败", error);
+            });
+        };
         return WebApi;
     }(WebApiBaseCtrl));
     Net.WebApi = WebApi;

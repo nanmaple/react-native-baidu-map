@@ -7,7 +7,6 @@ namespace ScenePanel {
          */
         constructor() {
             super(true);
-
             if (GameConfig.RatioType) {
                 this.ui.CancleBetBtn.scale(1, GameConfig.LengthShort);
                 this.ui.ConfirmBetBtn.scale(1, GameConfig.LengthShort);

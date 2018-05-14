@@ -26,9 +26,9 @@ var ScenePanel;
             else {
                 this.ui.prompt.scale(1, GameConfig.ShortLength);
             }
-            var lang = Laya.Browser.window.navigator.language || Laya.Browser.window.navigator["userLanguage"]; //常规浏览器语言和IE浏览器  
-            lang = lang.substr(0, 2); //截取lang前2位字符 
-            if (lang == 'zh') {
+            var language = new LanguageUtils.Language();
+            var lang = language.GetLanguageType();
+            if (lang == LanguageUtils.LanguageType.CH) {
                 this.ui.title.skin = "ui/title.png";
                 this.ui.sureBtn.skin = "ui/ok.png";
             }

@@ -11,22 +11,35 @@ var BaseCtrl = /** @class */ (function () {
         var _this = this;
         this.gameID = gameID;
         this.parentID = Utils.Url.GetQuery("parentid");
-        //从会员服务中获取用户信息
-        var memberServer = new ServiceManager.MemberManager(this.gameID);
-        //获取Socket Token
-        this.authorizationInfo = memberServer.GetSocketInfo();
-        //获取会员信息
-        this.memberInfo = memberServer.GetMemberInfo();
+        var loginService = new Laya.Browser.window.LoginService(Utils.Http, Utils.Storage);
+        //获取会员信息缓存
+        this.memberInfo = loginService.GetMemberInfoByLocal();
         //获取会员ID
-        var memberId = this.memberInfo != null ? this.memberInfo.MemberId : 0;
+        this.memberId = this.memberInfo.MemberId;
+        // this.memberId = 121;
+        //获取授权信息缓存
+        this.authorizationInfo = loginService.GetAuthorizationDtoByLocal();
+        var wechat = new Laya.Browser.window.Wechat(Utils.Http, null, null);
+        var Storage = new Utils.Storage();
+        var appID = Storage.Get("AppId", 0);
+        if (appID) {
+            GameConfig.GetAppID(appID);
+        }
+        else {
+            wechat.GetAppID().then(function (appID) {
+                GameConfig.GetAppID(appID);
+            });
+        }
         //生成socket 地址
-        this.socketUrl = GameConfig.GetSocketUrl(memberId, GameConfig.SocketToken);
+        this.socketUrl = GameConfig.GetSocketUrl(this.memberId, GameConfig.SocketToken);
         //创建socket
         this.socket = new ServiceManager.SocketManager();
         //连接事件侦听
         this.socket.on(ServiceManager.SocketEvent.OnConnect, this, this.OnConnectHandler);
         //关闭事件侦听
         this.socket.on(ServiceManager.SocketEvent.OnClose, this, this.OnCloseHandler);
+        //会员状态关闭事件侦听
+        this.socket.on(ServiceManager.SocketEvent.OnMemberClose, this, this.OnMemberCloseHandler);
         //错误事件侦听
         this.socket.on(ServiceManager.SocketEvent.OnError, this, this.OnErrorHandler);
         //重连事件侦听
@@ -41,27 +54,15 @@ var BaseCtrl = /** @class */ (function () {
         this.socket.on(ServiceManager.SocketEvent.OnSystemPush, this, this.OnSystemPushHandler);
         //启动连接
         this.socket.Connect(this.socketUrl);
-        var wechat = new Utils.WeChat();
         var isWeChat = Laya.Browser.window.navigator.userAgent.indexOf('MicroMessenger') >= 0; //判断是否微信浏览器
         Laya.timer.loop(2000, this, function () {
             if (isWeChat) {
-                wechat.GetNetworkType(Laya.Handler.create(_this, _this.GetNetworkSuccess, null, false));
+                wechat.GetNetworkType(function (type) { _this.GetNetworkSuccess(type); });
             }
             else {
-                wechat.GetPcNetworkType(Laya.Handler.create(_this, _this.GetNetworkSuccess, null, false));
+                wechat.GetPcNetworkType(function (type) { _this.GetNetworkSuccess(type); });
             }
         });
-        var successHandler = Laya.Handler.create(this, this.WeChatShareHandler, null, false);
-        var authorizeDto = GameConfig.GetWeChatShareDto(memberId.toString(), false);
-        //分享微信好友
-        wechat.ShareAppMessage(authorizeDto.Title, authorizeDto.Desc, authorizeDto.ImgUrl, authorizeDto.Link, successHandler);
-        //分享QQ
-        wechat.ShareQQ(authorizeDto.Title, authorizeDto.Desc, authorizeDto.ImgUrl, authorizeDto.Link, successHandler);
-        var dto = GameConfig.GetWeChatShareDto(memberId.toString(), false);
-        //分享朋友圈
-        wechat.ShareTimeline(dto.Title, dto.ImgUrl, dto.Link, successHandler);
-        //分享qq空间
-        wechat.ShareQZone(dto.Title, dto.Desc, dto.ImgUrl, dto.Link, successHandler);
     }
     /**
      * 网络状态

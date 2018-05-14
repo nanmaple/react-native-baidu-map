@@ -42,9 +42,8 @@ var ScenePanel;
             this.ui.betDetails.text = language.GetLanguage("BetDetails");
             this.ui.noBetData.text = language.GetLanguage("NoBetRecord");
             this.ui.isLoading.text = language.GetLanguage("IsLoading");
-            var lang = Laya.Browser.window.navigator.language || Laya.Browser.window.navigator["userLanguage"]; //常规浏览器语言和IE浏览器  
-            lang = lang.substr(0, 2); //截取lang前2位字符 
-            if (lang == 'zh') {
+            var lang = language.GetLanguageType();
+            if (lang == LanguageUtils.LanguageType.CH) {
                 this.ui.title.skin = "ui/betrecord.png";
             }
             else {
@@ -141,10 +140,13 @@ var ScenePanel;
          * @param data
          */
         NoteRecordPanelBaseUI.prototype.GetBetResultPokerData = function (data) {
+            // console.log(data);
             var pokerData = JSON.parse(data.Data);
-            this.ui.poker1.skin = this.GetPokerUrl(pokerData.Cards.FirstCard);
-            this.ui.poker2.skin = this.GetPokerUrl(pokerData.Cards.SecondCard);
-            this.ui.poker3.skin = this.GetPokerUrl(pokerData.Cards.ThirdCard);
+            if (pokerData.Cards) {
+                this.ui.poker1.skin = this.GetPokerUrl(pokerData.Cards.FirstCard);
+                this.ui.poker2.skin = this.GetPokerUrl(pokerData.Cards.SecondCard);
+                this.ui.poker3.skin = this.GetPokerUrl(pokerData.Cards.ThirdCard);
+            }
         };
         /**
          * 获取投注详情数据
@@ -282,8 +284,6 @@ var ScenePanel;
          * 设置列表滚动距离
          */
         NoteRecordPanelBaseUI.prototype.SetListScrollValue = function () {
-            // let len:number = Math.round(this.uiData.listScrollValue / 100);
-            // this.ui._recordList.scrollTo(len);
             this.ui._recordList.scrollBar.value = this.uiData.listScrollValue;
         };
         /**

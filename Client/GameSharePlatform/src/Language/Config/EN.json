@@ -150,5 +150,6 @@
     "ParentMsg": "Recommender Setting",
     "HeadImg": "HeadImage",
     "GetWXJSError": "User share address error, please login again",
-    "Test": "Test"
+    "Test": "Test",
+    "OtherLogin":"Other Login"
 }

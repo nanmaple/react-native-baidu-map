@@ -12,7 +12,7 @@ var BaseCache;
          * 获取用户缓存的key
          */
         Authorization.prototype.GetAuthorizationKey = function (gameID) {
-            return "Authorization-" + gameID + "-CacheKey";
+            return "Authorization-CacheKey";
         };
         /**
          * 获取会员授权信息

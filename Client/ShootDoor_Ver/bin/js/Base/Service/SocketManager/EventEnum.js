@@ -37,5 +37,9 @@ var ServiceManager;
          * ACK
          */
         SocketEvent.OnAck = "OnAckEvent";
+        /**
+         * 会员状态关闭
+         */
+        SocketEvent.OnMemberClose = "OnMemberClose";
     })(SocketEvent = ServiceManager.SocketEvent || (ServiceManager.SocketEvent = {}));
 })(ServiceManager || (ServiceManager = {}));

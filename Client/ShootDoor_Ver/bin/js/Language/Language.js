@@ -33,11 +33,43 @@ var LanguageUtils;
                 if (!lang) {
                     this.CurrentLangue = LanguageUtils.DefaultLanguage;
                 }
+                else if (typeof (lang) != "number") {
+                    if (lang == LanguageUtils.LanguageType[0]) {
+                        this.CurrentLangue = LanguageUtils.LanguageType.CH;
+                    }
+                    else {
+                        this.CurrentLangue = LanguageUtils.LanguageType.EN;
+                    }
+                }
                 else {
                     this.CurrentLangue = lang;
                 }
             }
             return LanguageUtils[LanguageUtils.LanguageType[this.CurrentLangue]][key];
+        };
+        /**
+         * 获取游戏语言类型
+         */
+        Language.prototype.GetLanguageType = function () {
+            var CurrentLangue;
+            var storage = new Utils.Storage();
+            var key = this.GetLanguageKey(LanguageUtils.GameID);
+            var lang = storage.GetLocalStorage(key);
+            if (!lang) {
+                CurrentLangue = LanguageUtils.DefaultLanguage;
+            }
+            else if (typeof (lang) != "number") {
+                if (lang == LanguageUtils.LanguageType[0]) {
+                    CurrentLangue = LanguageUtils.LanguageType.CH;
+                }
+                else {
+                    CurrentLangue = LanguageUtils.LanguageType.EN;
+                }
+            }
+            else {
+                CurrentLangue = lang;
+            }
+            return CurrentLangue;
         };
         /**
          * 获取游戏语言key，传入gameID,

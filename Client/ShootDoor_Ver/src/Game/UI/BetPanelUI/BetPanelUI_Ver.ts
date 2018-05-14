@@ -5,7 +5,7 @@ namespace ScenePanel {
          * @param handler 传入回调绑定
          */
         constructor() {
-            super(false);
+            super(false);          
             if (GameConfig.RatioType) {
                 this.ui.CancleBetBtn.scale(GameConfig.LengthShort, 1);
                 this.ui.ConfirmBetBtn.scale(GameConfig.LengthShort, 1);
@@ -21,6 +21,7 @@ namespace ScenePanel {
                 }
                 this.ui.MsgPanel.scale(GameConfig.LengthShort, 1);
                 this.ui.Chips.bottom = 655;
+                
             } else {
                 this.ui.CancleBetBtn.scale(1, GameConfig.ShortLength);
                 this.ui.ConfirmBetBtn.scale(1, GameConfig.ShortLength);
@@ -36,8 +37,9 @@ namespace ScenePanel {
             //绑定事件
             this.BindClick();
             this.ChangeChip(this.uiData.selectedChipNum);
+            
         }
-
+        
         /**
          * 获取筹码坐标
          * 

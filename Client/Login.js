@@ -22,18 +22,16 @@ var ResultEnum = {
 };
 var DeviceType = "MOBILE";
 var DeviceId = "123456";
-var Domain = "m.17guess.cn";
-var AuthorizationCacheKey = "Authorization-CacheKey";
-var UserInfoCacheKey = "UserInfo-CacheKey";
+//var Domain = "m.17guess.cn";
+var Domain = "m.synjiguang.com";
 var LoginByTourist = "//" + Domain + "/api/Member/DemoAccountLogin";
 var GetMemberInfo = "//" + Domain + "/api/Member/GetUserProfile";
 var LoginCheck = "//" + Domain + "/api/Member/LoginByToken";
 var LoginById = "//" + Domain + "/api/Member/SelectMember";
-var Login = "//" + Domain + "/api/Member/Login";
+var LoginUrl = "//" + Domain + "/api/Member/Login";
 var GetJsSignature = "//" + Domain + "/api/WeChat/GetJsSignature";
 var GetAppIDApi = "//" + Domain + "/api/WeChat/GetAppID";
 var LoginByAccount = "//" + Domain + "/api/Member/AccountLogin";
-
 function GetQuery(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
@@ -41,7 +39,6 @@ function GetQuery(name) {
         return decodeURI(r[2]);
     return null;
 }
-
 function LoginService(http, cache, success, multisuccess, error, webApi) {
     this.http = new http();
     this.cache = new cache();
@@ -59,7 +56,7 @@ LoginService.prototype.Login = function () {
     //获取地址栏中state参数，即父级（推荐人）ID
     var parentId = GetQuery("parentid");
     //从缓存中获取Code，包括Code，Token,GameToken
-    var authorizationDto = this.cache.Get(AuthorizationCacheKey);
+    var authorizationDto = this.cache.Get("Authorization-CacheKey");
     if (code && (authorizationDto == null || code != authorizationDto.Code)) {
         //1.存在存储的Code，传入Code存在且不等于存储的Code，直接使用Code登录
         //2.没有存储的Code，传入Code存在，直接使用Code登录
@@ -71,10 +68,12 @@ LoginService.prototype.Login = function () {
             this.webApi.ClearToken();
         }
         this.LoginByCode(code, parentId);
-    } else if (authorizationDto != null && authorizationDto.Token && !authorizationDto.IsTourists) {
+    }
+    else if (authorizationDto != null && authorizationDto.Token && !authorizationDto.IsTourists) {
         //token存在，且不为游客
         this.LoginByToken(code, authorizationDto.Token, parentId);
-    } else {
+    }
+    else {
         //其他均为游客模式登录
         var token = "";
         if (authorizationDto && authorizationDto.Token) {
@@ -84,10 +83,10 @@ LoginService.prototype.Login = function () {
     }
 };
 /**
- * 多账号通过会员id和临时token选择一个账号登录
- * @param memberID 会员id
- * @param this.success 登录回调事件
- */
+* 多账号通过会员id和临时token选择一个账号登录
+* @param memberID 会员id
+* @param this.success 登录回调事件
+*/
 LoginService.prototype.LoginByID = function (memberId) {
     var _this = this;
     try {
@@ -97,7 +96,7 @@ LoginService.prototype.LoginByID = function (memberId) {
         //获取地址栏中state参数，即父级（推荐人）ID
         var parentID = GetQuery("parentid");
         //从缓存中获取Code，包括Code，Token,GameToken
-        var authorizationDto = this.cache.Get(AuthorizationCacheKey);
+        var authorizationDto = this.cache.Get("Authorization-CacheKey");
         if (authorizationDto != null && authorizationDto.Token) {
             var loginByIdDto = {
                 MemberID: memberId,
@@ -108,25 +107,30 @@ LoginService.prototype.LoginByID = function (memberId) {
             LoginService.header.Authorization = authorizationDto.Token;
             this.webApi.SetToken(authorizationDto.Token);
             this.http.Post(LoginById, loginByIdDto, LoginService.header, function (res) {
-                var Data = res.Data,
-                    Result = res.Result;
-                if (Result == 1) {
-                    _this.LoginSuccess(Data, code, parentID, false);
-                } else {
-                    _this.LoginError(Result);
+                if (res) {
+                    var Data = res.Data, Result = res.Result;
+                    if (Result == 1) {
+                        _this.LoginSuccess(Data, code, parentID, false);
+                    }
+                    else {
+                        _this.LoginError(Result);
+                    }
                 }
+
             }, function (err) {
                 console.log(err);
                 _this.LoginError(err);
             });
-        } else {
+        }
+        else {
             var result = {
                 Result: ResultEnum.NO
             };
             // result.Result = ResultEnum.NO;
             this.success(result);
         }
-    } catch (error) {
+    }
+    catch (error) {
         //var msg: string = this.languageManager.GetErrorMsg(JSON.stringify(error));
         console.log("LoginByID", error);
     }
@@ -147,17 +151,19 @@ LoginService.prototype.LoginByCode = function (code, parentId) {
         DeviceType: DeviceType,
         DeviceId: DeviceId
     };
-    this.http.Post(Login, loginByCodeDto, LoginService.header, function (res) {
+    this.http.Post(LoginUrl, loginByCodeDto, LoginService.header, function (res) {
         console.log(res);
-        var Data = res.Data,
-            Result = res.Result;
-        if (Result == 1) {
+        
+        if (res&&res.Result == 1) {
+            var Data = res.Data, Result = res.Result;
             if (!Data.Accounts) {
                 _this.LoginSuccess(Data, code, parentId, false);
-            } else {
+            }
+            else {
                 _this.LoginMultiSuccess(Data, code, parentId, false);
             }
-        } else {
+        }
+        else {
             _this.LoginError(Result);
         }
     }, function (err) {
@@ -189,22 +195,25 @@ LoginService.prototype.LoginByToken = function (code, token, parentId) {
         this.http.Post(LoginCheck, loginParamsDto, LoginService.header, function (res) {
             console.log("LoginByToken");
             console.log(res);
-            var Data = res.Data,
-                Result = res.Result;
-            if (Result == 1) {
+            
+            if (res&&res.Result == 1) {
+                var Data = res.Data, Result = res.Result;
                 if (!Data.Accounts) {
                     _this.LoginSuccess(Data, code, parentId, false);
-                } else {
+                }
+                else {
                     _this.LoginMultiSuccess(Data, code, parentId, false);
                 }
-            } else {
+            }
+            else {
                 _this.LoginError(Result);
             }
         }, function (err) {
             console.log(err);
             _this.LoginError(err);
         });
-    } catch (error) {
+    }
+    catch (error) {
         //var msg = this.languageManager.GetErrorMsg(JSON.stringify(error));
         console.log("LoginByToken", error);
     }
@@ -225,33 +234,36 @@ LoginService.prototype.LoginByTourist = function (code, token, parentId) {
         if (token) {
             LoginService.header.Authorization = token;
             this.webApi.SetToken(token);
-        } else {
+        }
+        else {
             LoginService.header.Authorization = "";
             this.webApi.ClearToken();
         }
         this.http.Post(LoginByTourist, loginParamsDto, LoginService.header, function (res) {
-            var Data = res.Data,
-                Result = res.Result;
-            if (Result == 1) {
+            
+            if (res&&res.Result == 1) {
+                var Data = res.Data, Result = res.Result;
                 _this.LoginSuccess(Data, code, parentId, true);
-            } else {
+            }
+            else {
                 _this.LoginError(Result);
             }
         }, function (err) {
             console.log("LoginByTourist", err);
             _this.LoginError(err);
         });
-    } catch (error) {
+    }
+    catch (error) {
         //var msg = this.languageManager.GetErrorMsg(JSON.stringify(error));
         console.log(error);
     }
 };
 /**
- * 账号密码登录
- * @param account 账号
- * @param passWord 密码
- * @param handler 回调
- */
+* 账号密码登录
+* @param account 账号
+* @param passWord 密码
+* @param handler 回调
+*/
 LoginService.prototype.LoginByAccount = function (account, passWord, handler) {
     var _this = this;
     console.log("LoginByAccount");
@@ -275,9 +287,13 @@ LoginService.prototype.LoginByAccount = function (account, passWord, handler) {
     //     this.LoginError(error, handler);
     // });
     this.http.Post(LoginByAccount, loginByAccountDto, LoginService.header, function (res) {
-        var Data = res.Data,
-            Result = res.Result;
-        _this.LoginByAccountSuccess(res, null, null, false, handler);
+        if(res){
+            var Data = res.Data, Result = res.Result;
+            _this.LoginByAccountSuccess(res, null, null, false, handler);
+        }else{
+            console.log(res);
+        }
+
     }, function (err) {
         console.log("LoginByTourist", err);
     });
@@ -288,8 +304,7 @@ LoginService.prototype.LoginByAccount = function (account, passWord, handler) {
  */
 LoginService.prototype.LoginByAccountSuccess = function (response, code, parentId, isTourist, handler) {
     try {
-        var Data = response.Data,
-            Result = response.Result;
+        var Data = response.Data, Result = response.Result;
         var dto = {};
         //返回结果是登录成功
         if (Result == 1) {
@@ -313,7 +328,8 @@ LoginService.prototype.LoginByAccountSuccess = function (response, code, parentI
         if (typeof handler === "function") {
             handler(result);
         }
-    } catch (error) {
+    }
+    catch (error) {
         console.log(error);
     }
 };
@@ -323,8 +339,7 @@ LoginService.prototype.LoginByAccountSuccess = function (response, code, parentI
  */
 LoginService.prototype.LoginSuccess = function (response, code, parentId, isTourist) {
     try {
-        var Data = response.Data,
-            Result = response.Result;
+        var Data = response.Data, Result = response.Result;
         //返回结果是登录成功
         var dto = {};
         dto.Code = code || '';
@@ -339,7 +354,8 @@ LoginService.prototype.LoginSuccess = function (response, code, parentId, isTour
         //写入缓存中
         this.SetAuthorization(dto);
         this.GetMemberInfo();
-    } catch (error) {
+    }
+    catch (error) {
         console.log(error);
     }
 };
@@ -368,7 +384,8 @@ LoginService.prototype.LoginMultiSuccess = function (response, code, parentId, i
         if (typeof this.success === "function") {
             this.multisuccess(result);
         }
-    } catch (error) {
+    }
+    catch (error) {
         //var msg: string = this.languageManager.GetErrorMsg(JSON.stringify(error));
         console.log(error);
     }
@@ -392,7 +409,8 @@ LoginService.prototype.LoginError = function (error) {
         if (typeof this.error === "function") {
             this.error(result);
         }
-    } catch (error) {
+    }
+    catch (error) {
         //var msg: string = this.languageManager.GetErrorMsg(JSON.stringify(error));
         console.log(error);
     }
@@ -420,8 +438,7 @@ LoginService.prototype.GetMemberInfo = function (needToken) {
     try {
         this.http.Post(GetMemberInfo, null, header, function (res) {
             console.log("GetMemberInfo", res);
-            var Data = res.Data,
-                Result = res.Result;
+            var Data = res.Data, Result = res.Result;
             if (Result == 1) {
                 var result = {
                     Data: _this.authorization,
@@ -433,26 +450,27 @@ LoginService.prototype.GetMemberInfo = function (needToken) {
                 if (typeof _this.success === "function") {
                     _this.success(result);
                 }
-            } else {
+            }
+            else {
                 _this.LoginError(Result);
             }
         }, function (err) {
             console.log("GetMemberInfo", err);
             _this.LoginError(err);
         });
-    } catch (error) {
+    }
+    catch (error) {
         console.log(JSON.stringify(error));
     }
 };
 /**
- * 获取会员分数
- */
+* 获取会员分数
+*/
 LoginService.prototype.GetMemberScore = function (handler) {
     var _this = this;
     try {
         this.http.Post(GetMemberInfo, null, LoginService.header, function (res) {
-            var Data = res.Data,
-                Result = res.Result;
+            var Data = res.Data, Result = res.Result;
             if (Result == 1) {
                 if (typeof handler === "function") {
                     handler(Data);
@@ -462,7 +480,8 @@ LoginService.prototype.GetMemberScore = function (handler) {
         }, function (err) {
             //console.log(err);
         });
-    } catch (error) {
+    }
+    catch (error) {
         // alert(JSON.stringify(error));
     }
 };
@@ -480,7 +499,7 @@ LoginService.prototype.SetAuthorization = function (dto, gameId) {
         IsClose: dto.IsClose,
         IsTourists: dto.IsTourists
     };
-    this.cache.Set(AuthorizationCacheKey, this.authorization);
+    this.cache.Set("Authorization-CacheKey", this.authorization);
     return true;
 };
 /**
@@ -495,7 +514,7 @@ LoginService.prototype.SetUserInfo = function (dto, gameId) {
         Score: dto.Score,
         MemberId: dto.MemberId
     };
-    this.cache.Set(UserInfoCacheKey, this.memberInfo);
+    this.cache.Set("UserInfo-CacheKey", this.memberInfo);
     return true;
 };
 /**
@@ -505,7 +524,7 @@ LoginService.prototype.GetAuthorization = function () {
     if (this.authorization) {
         return this.authorization;
     }
-    this.authorization = this.cache.Get(AuthorizationCacheKey);
+    this.authorization = this.cache.Get("Authorization-CacheKey");
     return this.authorization;
 };
 /**
@@ -513,21 +532,21 @@ LoginService.prototype.GetAuthorization = function () {
  */
 LoginService.prototype.GetMemberInfoByLocal = function () {
     //从缓存中获取会员信息
-    var memberInfoDto = this.cache.Get(UserInfoCacheKey);
+    var memberInfoDto = this.cache.Get("UserInfo-CacheKey");
     return memberInfoDto;
 };
 /**
  * 清除用户数据
  */
 LoginService.prototype.ClearUserInfo = function () {
-    this.cache.Set(UserInfoCacheKey, null);
+    this.cache.Set("UserInfo-CacheKey", null);
 };
 /**
  * 清除授权数据
  */
 LoginService.prototype.ClearAuthorization = function () {
     this.authorization = null;
-    this.cache.Set(AuthorizationCacheKey, null);
+    this.cache.Set("Authorization-CacheKey", null);
 };
 /**
  * 是否登录

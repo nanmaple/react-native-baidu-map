@@ -41,11 +41,17 @@ namespace ScenePanel {
             }
             this.ui.zOrder = 5;
             this.uiData = BetPanelUIData.GetInstance();
-
+            
             this.ResetBetBtnLabel();
             this.DisabledBetBtn(true);
+            this.ui.Bet_More_Btn.on(Laya.Event.CLICK,this,this.ShowBetMorePanel);
         }
-
+        /**
+         * 打开投注更多面板
+         */
+        private ShowBetMorePanel():void{
+            ScenePanel.GameUI.GetInstance().GetBetMorePanel().ShowBetMorePanel();
+        }
         /**
          * 获取UI
          */
@@ -313,31 +319,34 @@ namespace ScenePanel {
             let card: number = Utils.Poker.GetNumber(gameResult.ThirdCard);
             let msg: Array<string> = new Array<string>();
             for (let i in data.SettleResult) {
-                if (data.SettleResult[i] > 0) {
-                    if (card == 7) {
-                        let pos: Enum.BetPosType = Number(i);
-                        if (Enum.BetPosType.BIG == pos) {
-                            (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
-                            continue;
-                        } else if (Enum.BetPosType.SMALL == pos) {
-                            (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
-                            continue;
-                        } else if (Enum.BetPosType.ODD == pos) {
-                            (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
-                            continue;
-                        } else if (Enum.BetPosType.EVEN == pos) {
-                            (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
-                            continue;
+                if(Number(i) > 0 && Number(i) <= 13){
+                    if (data.SettleResult[i] > 0) {
+                        if (card == 7) {
+                            let pos: Enum.BetPosType = Number(i);
+                            if (Enum.BetPosType.BIG == pos) {
+                                (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
+                                continue;
+                            } else if (Enum.BetPosType.SMALL == pos) {
+                                (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
+                                continue;
+                            } else if (Enum.BetPosType.ODD == pos) {
+                                (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
+                                continue;
+                            } else if (Enum.BetPosType.EVEN == pos) {
+                                (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
+                                continue;
+                            }
                         }
-                    }
-                    (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
-                    if (data.SettleResult[i] > 100) {
-                        data.SettleResult[i] = Utils.Money.Format(data.SettleResult[i], 0);
-                    }
-                    (this.betMoneyLabelArr[Number(i) - 1] as Laya.Button).label = data.SettleResult[i];
+                        (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
+                        if (data.SettleResult[i] > 100) {
+                            data.SettleResult[i] = Utils.Money.Format(data.SettleResult[i], 0);
+                        }
+                        (this.betMoneyLabelArr[Number(i) - 1] as Laya.Button).label = data.SettleResult[i];
 
-                    this.uiData.guessSuccess = true;
+                        this.uiData.guessSuccess = true;
+                    }
                 }
+                
             }
             if (!this.uiData.guessSuccess) {
                 this.ShowMsg(language.GetLanguage("gameFail"));

@@ -22,5 +22,9 @@ var BaseEnum;
          * 游戏消息
          */
         MainCommand[MainCommand["MSG_GAME"] = 5] = "MSG_GAME";
+        /**
+         * 会员状态已关闭
+         */
+        MainCommand[MainCommand["MSG_MEMBERCLOSED"] = 6] = "MSG_MEMBERCLOSED";
     })(MainCommand = BaseEnum.MainCommand || (BaseEnum.MainCommand = {}));
 })(BaseEnum || (BaseEnum = {}));

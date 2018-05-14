@@ -18,6 +18,10 @@ var BaseEnum;
         /// 参数无效
         /// </summary>
         ErrorCode[ErrorCode["InvalidArgument"] = 2] = "InvalidArgument";
+        /// <summary>
+        /// IP受限
+        /// </summary>
+        ErrorCode[ErrorCode["IPLimited"] = 3] = "IPLimited";
         // 登录错误码
         /// <summary>
         /// 会员已存在(注册新账号时)

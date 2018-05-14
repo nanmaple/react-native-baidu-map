@@ -26,7 +26,7 @@ var GameCtrl = /** @class */ (function (_super) {
         //添加UI到舞台
         _this.gameUI = ScenePanel.GameUI.GetInstance();
         _this.gameUI.ChangeModeHanler(Laya.Handler.create(_this, _this.ReInit, null, false));
-        ScenePanel.GameUI.GetInstance().GetLoadingPanel().ShowConnect();
+        ScenePanel.GameUI.GetInstance().GetLoadingPanel().ShowConnect(_this.authorizationInfo.IsClose);
         // 创建游戏状态控制类实例
         _this.RoundPanelCtrl = new RoundPanelCtrl();
         //创建扑克牌面板控制类实例
@@ -85,21 +85,24 @@ var GameCtrl = /** @class */ (function (_super) {
      */
     GameCtrl.prototype.OnCloseHandler = function (message) {
         ScenePanel.GameUI.GetInstance().GetLoadingPanel().ShowConnect();
-        console.log(message);
+    };
+    /**
+     * 侦听会员状态关闭事件
+     */
+    GameCtrl.prototype.OnMemberCloseHandler = function () {
+        ScenePanel.GameUI.GetInstance().GetLoadingPanel().ShowConnect(true);
     };
     /**
      * 侦听Socket错误事件
      * @param data
      */
     GameCtrl.prototype.OnErrorHandler = function (message) {
-        console.log(message);
     };
     /**
      * 侦听Socket连接事件
      * @param data
      */
     GameCtrl.prototype.OnWillReconnectHandler = function () {
-        console.log("将要重连");
     };
     /**
      * 侦听登出事件
@@ -132,7 +135,6 @@ var GameCtrl = /** @class */ (function (_super) {
      */
     GameCtrl.prototype.OnGameInit = function (data, isReInit) {
         if (isReInit === void 0) { isReInit = false; }
-        console.log("初始化", data);
         ScenePanel.GameUI.GetInstance().GetLoadingPanel().HideConnect();
         this.cacheData = data;
         if (!this.roundID || this.roundID <= data.RoundID) {
@@ -183,15 +185,12 @@ var GameCtrl = /** @class */ (function (_super) {
         ScenePanel.GameUI.GetInstance().ClearPokerFly();
         this.CardPanelCtrl.ClearPokerFlip();
         if (!this.roundID || this.roundID < data.RoundID) {
-            console.log("开始-不同局", data, this.roundID, data.RoundID, new Date().getTime());
             this.roundID = data.RoundID;
         }
         else if (this.roundID == data.RoundID) {
-            console.log("开始-同一局", data, this.roundID, data.RoundID, new Date().getTime());
             this.roundID = data.RoundID;
         }
         else {
-            console.log("开始 return ", data, this.roundID, data.RoundID, new Date().getTime());
             return;
         }
         if (data && data.RoundID) {
@@ -233,15 +232,12 @@ var GameCtrl = /** @class */ (function (_super) {
      */
     GameCtrl.prototype.OnBetResult = function (data) {
         if (!this.roundID || this.roundID < data.RoundID) {
-            console.log("投注结果", data, this.roundID, data.RoundID);
             this.roundID = data.RoundID;
         }
         else if (this.roundID == data.RoundID) {
-            console.log("投注结果-同一局", data, this.roundID, data.RoundID);
             this.roundID = data.RoundID;
         }
         else {
-            console.log("投注结果 return ", data, this.roundID, data.RoundID);
             return;
         }
         //投注结果返回
@@ -266,15 +262,12 @@ var GameCtrl = /** @class */ (function (_super) {
     GameCtrl.prototype.OnGameResult = function (data) {
         var _this = this;
         if (!this.roundID || this.roundID < data.RoundID) {
-            console.log("结束", data, this.roundID, data.RoundID, new Date().getTime());
             this.roundID = data.RoundID;
         }
         else if (this.roundID == data.RoundID) {
-            console.log("结束-同一局", data, this.roundID, data.RoundID, new Date().getTime());
             this.roundID = data.RoundID;
         }
         else {
-            console.log("结束 return ", data, this.roundID, data.RoundID, new Date().getTime());
             return;
         }
         //缓存数据
@@ -326,15 +319,12 @@ var GameCtrl = /** @class */ (function (_super) {
     GameCtrl.prototype.OnSettleResult = function (data) {
         var _this = this;
         if (!this.roundID || this.roundID < data.RoundID) {
-            console.log("结算", data, this.roundID, data.RoundID);
             this.roundID = data.RoundID;
         }
         else if (this.roundID == data.RoundID) {
-            console.log("结算-同一局", data, this.roundID, data.RoundID);
             this.roundID = data.RoundID;
         }
         else {
-            console.log("结算 return ", data, this.roundID, data.RoundID);
             return;
         }
         this.cacheData.Status = BaseEnum.GameStatus.SETTLEED;

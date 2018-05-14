@@ -64,6 +64,9 @@ var ServiceManager;
                 if (response.Result == BaseEnum.ErrorCode.Success) {
                     _this.LoginSuccess(response.Data, successHandler);
                 }
+                else if (response.Result == BaseEnum.ErrorCode.IPLimited) {
+                    Laya.Browser.window.location.href = "";
+                }
                 else {
                     errorhandler.runWith(response.Result);
                 }
@@ -84,14 +87,20 @@ var ServiceManager;
             //请求调Net的api，
             http.Post(Net.ApiConfig.LoginGame, obj, header, function (response) {
                 if (response.Result == BaseEnum.ErrorCode.Success) {
+                    console.log("获取游戏SocketToken成功", response);
                     GameConfig.SocketToken = response.Data;
                     successHandler.run();
                 }
+                else if (response.Result == BaseEnum.ErrorCode.IPLimited) {
+                    Laya.Browser.window.location.href = "";
+                }
                 else {
+                    console.log("获取游戏SocketToken失败", response);
                     errorhandler.runWith(response.Result);
                 }
             }, function (error) {
-                errorhandler.runWith(error.toString());
+                console.log("获取游戏SocketToken失败", error);
+                errorhandler.run();
             });
         };
         MemberManager.prototype.LoginSuccess = function (response, successHandler) {
@@ -142,10 +151,10 @@ var ServiceManager;
                     successHandler.runWith(response.Data);
                 }
                 else {
-                    // console.log("获取微信配置信息失败", response.Result);
+                    console.log("获取微信配置信息失败", response);
                 }
             }, function (error) {
-                // console.log("获取微信配置信息失败", error);
+                console.log("获取微信配置信息失败", error);
             });
         };
         return MemberManager;

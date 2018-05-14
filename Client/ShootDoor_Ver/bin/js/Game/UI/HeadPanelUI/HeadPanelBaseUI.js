@@ -15,10 +15,10 @@ var ScenePanel;
             this.ui.zOrder = 7;
             this.ui.cacheAs = "bitmap";
             this.uiData = ScenePanel.HeadPanelUIData.GetInstance();
-            this.SetInfo(this.uiData.memberInfo, this.uiData.parentID, this.uiData.grHandler, this.uiData.ruleHandler, this.uiData.isTourists);
-            var lang = Laya.Browser.window.navigator.language || Laya.Browser.window.navigator["userLanguage"]; //常规浏览器语言和IE浏览器  
-            lang = lang.substr(0, 2); //截取lang前2位字符 
-            if (lang == 'zh') {
+            this.SetInfo(this.uiData.memberInfo, this.uiData.parentID, this.uiData.grHandler, this.uiData.ruleHandler, this.uiData.balanceHander, this.uiData.isTourists);
+            var language = new LanguageUtils.Language();
+            var lang = language.GetLanguageType();
+            if (lang == LanguageUtils.LanguageType.CH) {
                 this.ui.attention.skin = "ui/attention.png";
             }
             else {
@@ -37,19 +37,22 @@ var ScenePanel;
          * @param grHandler
          * @param ruleHandler
          */
-        HeadPanelBaseUI.prototype.SetInfo = function (memberInfo, parentID, grHandler, ruleHandler, isTourists) {
+        HeadPanelBaseUI.prototype.SetInfo = function (memberInfo, parentID, grHandler, ruleHandler, balanceHander, isTourists) {
             this.uiData.memberInfo = memberInfo;
             this.uiData.grHandler = grHandler;
             this.uiData.ruleHandler = ruleHandler;
+            this.uiData.balanceHander = balanceHander;
             this.uiData.parentID = parentID;
             this.uiData.isTourists = isTourists;
             if (memberInfo && !isTourists) {
+                var language = new LanguageUtils.Language();
                 //显示头像
                 this.ui.info.visible = true; //显示头像
                 this.ui.attention.visible = false;
                 //隐藏关注按钮
-                this.ui.headPic.skin = memberInfo.HeadImageUrl;
-                this.ui.nickname.text = memberInfo.Nickname ? memberInfo.Nickname : memberInfo.Account;
+                this.ui.headPic.skin = memberInfo.HeadImageUrl.replace("http", "https");
+                this.ui.nickname.text = memberInfo.Nickname;
+                this.ui.agent.text = language.GetLanguage("Account") + memberInfo.Account;
                 this.ui.score.text = Utils.Money.Format(memberInfo.Score);
             }
             else {
@@ -68,6 +71,7 @@ var ScenePanel;
             this.ui.btnRule.on(Laya.Event.CLICK, this, this.onRuleHandler);
             this.ui.btnGR.on(Laya.Event.CLICK, this, this.onGRHandler);
             this.ui.attention.on(Laya.Event.CLICK, this, this.ClickAttention);
+            this.ui.money.on(Laya.Event.CLICK, this, this.OnBalanceHander);
         };
         /**
          * 点击规则
@@ -86,6 +90,12 @@ var ScenePanel;
          */
         HeadPanelBaseUI.prototype.ClickAttention = function () {
             Laya.Browser.window.location.href = GameConfig.GetWeChatUrl(this.uiData.parentID, true);
+        };
+        /**
+         * 点击余额
+         */
+        HeadPanelBaseUI.prototype.OnBalanceHander = function () {
+            this.uiData.balanceHander.run();
         };
         /**
          * 改变金额

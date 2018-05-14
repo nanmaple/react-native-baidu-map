@@ -102,6 +102,7 @@ var ScenePanel;
          * @param value 缓动后投注数量
          */
         BetPanelHor.prototype.ChipsFly = function (i, value) {
+            Utils.BackgroundMusic.PlaySounds("sound/bet.wav");
             var curBetPosChip = this.betBtnArr[i].getChildAt(2);
             //从对象池获取移动对象
             var flyChip = Laya.Pool.getItemByClass("flyChip", Laya.Button);

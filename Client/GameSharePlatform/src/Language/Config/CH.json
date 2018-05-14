@@ -154,5 +154,6 @@
         "ConfirmPwd": "确认密码",
         "ParentNotExist": "请联系推荐人",
         "GetWXJSError": "用户分享地址错误, 请重新登录",
-        "Test":"测试"
+        "Test":"测试",
+        "OtherLogin":"其他地方登录"
 }

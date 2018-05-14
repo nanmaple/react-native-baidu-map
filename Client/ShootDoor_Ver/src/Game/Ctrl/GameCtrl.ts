@@ -201,6 +201,7 @@ class GameCtrl extends BaseCtrl {
      * @param data 游戏开始信息
      */
     public OnGameStart(data: Dto.StartGameDto): void {
+        // console.log("游戏开始：",data)
         ScenePanel.GameUI.GetInstance().ClearPokerFly();
         this.CardPanelCtrl.ClearPokerFlip();
         if (!this.roundID || this.roundID < data.RoundID) {
@@ -248,6 +249,7 @@ class GameCtrl extends BaseCtrl {
      * @param data 游戏投注结果信息
      */
     public OnBetResult(data: Dto.BetResultDto): void {
+        console.log("投注结果：",data)
         if (!this.roundID || this.roundID < data.RoundID) {
             this.roundID = data.RoundID;
         } else if (this.roundID == data.RoundID) {
@@ -333,6 +335,7 @@ class GameCtrl extends BaseCtrl {
      * @param data 游戏结算结果信息
      */
     public OnSettleResult(data: Dto.GameResultDto): void {
+        console.log("结算：",data);
         if (!this.roundID || this.roundID < data.RoundID) {
             this.roundID = data.RoundID;
         } else if (this.roundID == data.RoundID) {
