@@ -155,5 +155,6 @@
         "ParentNotExist": "请联系推荐人",
         "GetWXJSError": "用户分享地址错误, 请重新登录",
         "Test":"测试",
-        "OtherLogin":"其他地方登录"
+        "OtherLogin":"其他地方登录",
+        "PleaseSelectTime":"请选择时间"
 }

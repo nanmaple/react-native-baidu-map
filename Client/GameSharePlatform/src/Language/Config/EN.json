@@ -151,5 +151,6 @@
     "HeadImg": "HeadImage",
     "GetWXJSError": "User share address error, please login again",
     "Test": "Test",
-    "OtherLogin":"Other Login"
+    "OtherLogin":"Other Login",
+    "PleaseSelectTime":"Please Select Time"
 }

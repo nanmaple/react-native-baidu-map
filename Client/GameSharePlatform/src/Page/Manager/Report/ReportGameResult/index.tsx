@@ -113,7 +113,7 @@ class GameRecord extends React.Component<any, any> {
         //获取起始时间
         let { startDate, endDate } = this.state;
         if (startDate == "") {
-            alert("请选择正确的时间");
+            alert(this.languageManager.GetErrorMsg("PleaseSelectTime"));
             return;
         }
         this.ReportCtrl.GetGameReport(startDate, endDate, true, this.Handler, this.state.memberId);
@@ -221,12 +221,15 @@ class GameRecord extends React.Component<any, any> {
 
     render() {
         let { nickName, remark } = this.state;
-        nickName = nickName == "我" ? null : `——${nickName}`
+        let showName = `——${nickName}`
+        if(remark){
+            showName = `——${remark}`;
+        }
         return (
             <div className={styles.container}>
                 <CompToast ref={(c: any) => this.toast = c} />
                 <div className={styles.listTitle}>
-                    <div className={styles.title}>{this.languageManager.GetErrorMsg("GameResult")}{remark?`——${remark}`:nickName}</div>
+                    <div className={styles.title}>{this.languageManager.GetErrorMsg("GameResult")}{showName}</div>
                     <div className={styles.head}>
                         <div className={styles.timeContainer}>
                             <div className={styles.time} onClick={this.ShowStartPicker}>{this.state.startDate}</div>

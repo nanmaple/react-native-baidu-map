@@ -16,7 +16,7 @@ import { Storage } from "../Utils/Storage";
 
 export default class UserCtrl extends BaseCtrl {
     private languageManager: LanguageManager = new LanguageManager();
-    public loginService: any;
+    public loginService = new window.LoginService(Http, Storage, null, null, null, this.webApi);
     /**
      * 登录Dto信息
      */
@@ -33,7 +33,9 @@ export default class UserCtrl extends BaseCtrl {
         this.loginService.success = handler;
         this.loginService.multisuccess = multiSuccess;
         this.loginService.error = loginError;
-        this.loginService = new window.LoginService(Http, Storage, null, null, null, this.webApi);
+        // this.loginService = new window.LoginService(Http, Storage, WeChat, handler, (data: any) => {
+        //     console.log("loginErrorCallBack", data)
+        // });
         this.loginService.Login(); return;
     }
 

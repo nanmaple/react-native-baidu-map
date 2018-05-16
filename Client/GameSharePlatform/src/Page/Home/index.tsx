@@ -195,7 +195,7 @@ export default class Home extends React.Component<any, any> {
         let socre: string = this.state.score ? this.state.score : "0",
             headImg = this.state.memberInfo && this.state.memberInfo.HeadImageUrl ? this.state.memberInfo.HeadImageUrl : logoImg;
         let { account, nickName } = this.state;
-        let Test = this.state.memberInfo.Test;
+        let Test = this.state.memberInfo?this.state.memberInfo.Test:"";
         return (
             <div className="home">
                 <CompToast ref={(c) => this.toast = c} />

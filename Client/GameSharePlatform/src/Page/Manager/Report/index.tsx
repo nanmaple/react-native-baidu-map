@@ -415,7 +415,14 @@ export default class Report extends React.Component<any, any> {
             remark: curRemark,
             startDate,
             endDate
-        })
+        });
+        localStorage.setItem("MemberMsg", JSON.stringify({
+            memberId: memberId,
+            nickName: curTotalName,
+            remark: curRemark,
+            startDate,
+            endDate
+        }));
         return (
             <span>
                 <CompToast ref={(c) => this.toast = c} />
