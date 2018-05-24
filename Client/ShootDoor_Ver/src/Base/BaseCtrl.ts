@@ -172,6 +172,7 @@ abstract class BaseCtrl {
     }
     private endData: any;
     private settleCacheData: any;
+    
     /**
      * 侦听游戏命令
      * @param data 
