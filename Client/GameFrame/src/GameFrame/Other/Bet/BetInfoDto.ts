@@ -71,4 +71,32 @@ namespace Bet {
          */
         public Odds: number;
     }
+
+    /**
+     * 投注成功后 投注分数及游戏分数
+     */
+    export class BetResultDto {
+        /**
+         * 投注后位置及分数
+         */
+        public Result: BetPosAmountDto;
+        /**
+         * 游戏剩余分数
+         */
+        public MemScore: number;
+    }
+
+    /** 
+     * 投注位置投注后数据
+    */
+    export class BetPosAmountDto {
+        /**
+         * 投注位置
+         */
+        public Pos: number;
+        /**
+         * 投注分数
+         */
+        public Amount: number;
+    }
 }

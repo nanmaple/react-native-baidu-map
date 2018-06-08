@@ -7,11 +7,12 @@
          * 显示Connect Server
          */
         public ShowLoading(txt: string): void {
+            let language: LanguageUtils.Language = new LanguageUtils.Language();
             if (!this.ui) {
                 return;
             }
             this.loadingShow = true;
-            this.loadingTxt = txt;
+            this.loadingTxt = language.GetLanguage(txt);
             this.ui.visible = this.loadingShow;
             this.ui.txt.text = this.loadingTxt;
         }
@@ -37,16 +38,16 @@
                     this.HideLoading();
                     break;
                 case GameEnum.GameModalEnum.Open:
-                    this.ShowLoading("Connect Service")
+                    this.ShowLoading(LanguageUtils.Type.ConnectService)
                     break;
                 case GameEnum.GameModalEnum.Msg:
                     this.ShowLoading(data.Data);
                     break;
                 case GameEnum.GameModalEnum.LoginOut:
-                    this.ShowLoading("你的账户已在其他地方登陆")
+                    this.ShowLoading(LanguageUtils.Type.AccountLoginOut)
                     break;
                 case GameEnum.GameModalEnum.MemClose:
-                    this.ShowLoading("账户已关闭")
+                    this.ShowLoading(LanguageUtils.Type.MemberClosed)
                     break;
                 default:
                     break;

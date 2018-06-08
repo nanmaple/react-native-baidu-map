@@ -16,7 +16,7 @@ namespace Bet{
             //用户余额是否大于最小投注限额，用户已投分数与余额之差大于最小限额
             //取投注位置已投注数据(成功投分数，已投注分数，正在投注分数)
             //比较新投注数据和已投注数据,是否超过
-            let alreadyBet:number = this.BeforeAmount(currentBet,betInfo.NoBetSuceessData,betInfo.BetSuccessData);
+            let alreadyBet:number = this.BeforeAmount(currentBet,betInfo);
             let pos:number = currentBet.Pos;
 
             if(memScore == 0 ){
@@ -45,10 +45,10 @@ namespace Bet{
                         betInfo.NoBetSuceessData[pos] = bet;
                     }
                     betInfo.BetSocre += currentBet.Amount;
-                    return {success:true,data:betInfo};
+                    return {success:true,data:(currentBet.Amount+alreadyBet)};
 
                 }else{
-                    return {success:false,data:'之前投注已达到最大额'};
+                    return {success:false,data:'投注已达到最大额'};
                 }
             }else{
                 return {success:false,data:'低于最小投注额'};
@@ -70,17 +70,24 @@ namespace Bet{
         /**
          * 之前的投注额
          * @param currentBet 本次投注信息
-         * @param NoBetSuceessData 当前一次未投注成功的注单信息
-         * @param BetSuccessData 当前投注成功的投注信息
+         * @param betInfo 注单信息
          */
-        private BeforeAmount(currentBet : Bet.BetPosValue, NoBetSuceessData : any, BetSuccessData : any):number{
+        private BeforeAmount(currentBet : Bet.BetPosValue,betInfo:Bet.BetDataDto):number{
+            // betInfo.NoBetSuceessData[6]= {Amount:10,BetPos:6,Odds:7.7}
+            // betInfo.BetSuccessData[6]= {Amount:10,BetPos:6,Odds:7.7}
+            // betInfo.SendingBetData = {111:{Socre:10,Data:{6:{Amount:10,BetPos:6,Odds:7.7}}}}
             let pos = currentBet.Pos;
             let alreadyBet:number = 0;
-            if(NoBetSuceessData[pos]){
-                alreadyBet += NoBetSuceessData[pos].Amount;
+            if(betInfo.NoBetSuceessData[pos]){
+                alreadyBet += betInfo.NoBetSuceessData[pos].Amount;
             }
-            if(BetSuccessData[pos]){
-                alreadyBet += BetSuccessData[pos].Amount;
+            if(betInfo.BetSuccessData[pos]){
+                alreadyBet += betInfo.BetSuccessData[pos].Amount;
+            }
+            for(let i in betInfo.SendingBetData){
+                if(betInfo.SendingBetData[i].Data[pos]){
+                    alreadyBet += betInfo.SendingBetData[i].Data[pos].Amount;
+                }
             }
             return alreadyBet;
         }

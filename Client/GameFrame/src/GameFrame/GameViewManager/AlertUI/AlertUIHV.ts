@@ -42,6 +42,7 @@ class AlertHV extends AlertBaseUI implements IUI{
      * @param txt 显示内容
      */
     public Show(type:any = 0, txt: string): void {
+        let language: LanguageUtils.Language = new LanguageUtils.Language();
         if (!this.ui) {
             return;
         }
@@ -49,7 +50,7 @@ class AlertHV extends AlertBaseUI implements IUI{
         this.AlertType(type);
         this.ui.prompt.scale(0,0);
         this.alertShow = true;
-        this.alertTxt = txt;
+        this.alertTxt = language.GetLanguage(txt);
         this.ui.visible = this.alertShow;
         this.ui.txt.text = this.alertTxt;
         Laya.Tween.to(this.ui.prompt,{scaleX:1,scaleY:1},500,Laya.Ease.backOut);

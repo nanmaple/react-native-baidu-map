@@ -44,9 +44,10 @@ module ui {
 module ui {
     export class BetBtnVUI extends View {
 		public betName:Laya.Label;
+		public betOdd:Laya.Label;
 		public betBtn:Laya.Button;
 
-        public static  uiView:any ={"type":"View","props":{"width":200,"height":70},"child":[{"type":"Label","props":{"width":60,"var":"betName","valign":"middle","text":"label","name":"betName","left":20,"height":40,"fontSize":28,"color":"#faf114","centerY":0,"align":"center"}},{"type":"Label","props":{"width":60,"valign":"middle","text":"---","right":20,"name":"betOdd","height":40,"fontSize":28,"color":"#f6e03b","centerY":0,"align":"center"}},{"type":"Button","props":{"y":-2,"var":"betBtn","stateNum":1,"skin":"ui/btn_chip.png","name":"betBtn","left":20,"label":"1","centerY":0}}]};
+        public static  uiView:any ={"type":"View","props":{"width":200,"height":70},"child":[{"type":"Label","props":{"width":60,"var":"betName","valign":"middle","text":"label","name":"betName","left":20,"height":40,"fontSize":28,"color":"#faf114","centerY":0,"align":"center"}},{"type":"Label","props":{"width":60,"var":"betOdd","valign":"middle","text":"---","right":20,"name":"betOdd","height":40,"fontSize":28,"color":"#f6e03b","centerY":0,"align":"center"}},{"type":"Button","props":{"y":-2,"var":"betBtn","stateNum":1,"skin":"ui/btn_chip.png","name":"betBtn","left":20,"label":"1","centerY":0}}]};
         constructor(){ super()}
         createChildren():void {
         
@@ -77,8 +78,10 @@ module ui {
 module ui {
     export class GameBgVUI extends View {
 		public close:Laya.Image;
+		public score:Laya.Label;
+		public btnsure:Laya.Label;
 
-        public static  uiView:any ={"type":"View","props":{"width":750,"height":1334},"child":[{"type":"Image","props":{"y":0,"x":0,"skin":"ui/gameBg_v.png"}},{"type":"Image","props":{"y":268,"x":86,"var":"close","skin":"ui/close.png"}}]};
+        public static  uiView:any ={"type":"View","props":{"width":750,"height":1334},"child":[{"type":"Image","props":{"y":0,"x":0,"skin":"ui/gameBg_v.png"}},{"type":"Image","props":{"y":268,"x":86,"var":"close","skin":"ui/close.png"}},{"type":"Label","props":{"wordWrap":true,"width":200,"var":"score","valign":"top","text":"1","overflow":"scroll","height":40,"fontSize":32,"font":"Arial","color":"#ffffff","centerX":-263,"bottom":1272,"align":"center"}},{"type":"Label","props":{"wordWrap":true,"width":100,"var":"btnsure","valign":"top","text":"确定","overflow":"scroll","height":40,"fontSize":32,"font":"Arial","color":"#ffffff","centerX":-280,"bottom":35,"align":"center"}}]};
         constructor(){ super()}
         createChildren():void {
         
