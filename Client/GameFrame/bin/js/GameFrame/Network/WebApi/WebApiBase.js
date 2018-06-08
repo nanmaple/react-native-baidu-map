@@ -5,13 +5,8 @@ var WebApiBase = /** @class */ (function () {
         this.header = {
             Authorization: ""
         };
-    }
-    /**
-     * 初始化http
-     */
-    WebApiBase.prototype.InitHttp = function () {
         this.http = new Utils.Http();
-    };
+    }
     /**
      * 初始化充缓存中获取token
      */
@@ -29,6 +24,26 @@ var WebApiBase = /** @class */ (function () {
      */
     WebApiBase.prototype.SetToken = function (token) {
         this.header.Authorization = token;
+    };
+    /**
+     * Post方法
+     * @param url 地址
+     * @param params 参数
+     * @param successBack 成功回调
+     * @param failBack 失败回调
+     */
+    WebApiBase.prototype.Post = function (url, params, header, successBack, failBack) {
+        this.http.Post(url, params, Utils.ObjectEx.assign({}, this.header, header), successBack, failBack);
+    };
+    /**
+     * Get方法
+     * @param url 地址
+     * @param params 参数
+     * @param successBack 成功回调
+     * @param failBack 失败回调
+     */
+    WebApiBase.prototype.Get = function (url, params, header, successBack, failBack) {
+        this.http.Get(url, params, Utils.ObjectEx.assign({}, this.header, header), successBack, failBack);
     };
     return WebApiBase;
 }());

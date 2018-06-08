@@ -81,12 +81,14 @@ class CardPanelCtrl extends Laya.Sprite {
     public EndGameHander(endGameHander: Laya.Handler): void {
         this.endGameHander = endGameHander;
     }
+    
     /**
      * 清除足球动画
      */
     public ClearFootBallAnimation(): void {
         this.gameUI.GetFootBallPanel().ClearTween();
     }
+
     /**
      * 进球动画
      * @param data 扑克牌数组(三张牌)
@@ -124,3 +126,9 @@ class CardPanelCtrl extends Laya.Sprite {
     }
 
 }
+
+
+
+
+
+

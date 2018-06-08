@@ -17,10 +17,14 @@ namespace Network.Http {
         public static GetInstance(): WebApi {
             if (!this.instance) {
                 this.instance = new WebApi();
-                this.instance.InitHttp();
                 this.instance.InitToken();
             }
             return this.instance;
         }
+
+        public Log():void{
+            
+        }
+        
     }
 }

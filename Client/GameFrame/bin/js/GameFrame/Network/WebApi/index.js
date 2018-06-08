@@ -28,10 +28,11 @@ var Network;
             WebApi.GetInstance = function () {
                 if (!this.instance) {
                     this.instance = new WebApi();
-                    this.instance.InitHttp();
                     this.instance.InitToken();
                 }
                 return this.instance;
+            };
+            WebApi.prototype.Log = function () {
             };
             return WebApi;
         }(WebApiBase));

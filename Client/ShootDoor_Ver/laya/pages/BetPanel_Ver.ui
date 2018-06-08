@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":74,
+    "selecteID":403,
     "props":{"y":0,"width":750,"sceneColor":"#ffffff","height":1334},
     "nodeParent":-1,
     "label":"View",
@@ -830,7 +830,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":660,"x":687,"var":"Bet_More_Btn","skin":"ui/bet_more_btn.png","right":0,"centerY":10},
+            "props":{"x":687,"var":"Bet_More_Btn","skin":"ui/bet_more_btn.png","right":0,"bottom":640},
             "nodeParent":1,
             "label":"Image(Bet_More_Btn)",
             "isDirectory":false,

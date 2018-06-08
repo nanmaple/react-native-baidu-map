@@ -1,12 +1,17 @@
 
 export const IsDebug = false;
-export const Domain = IsDebug ? "www.zyyft.cn" : "m.synjiguang.com";
-export const WebApiBaseUrl = IsDebug ? "http://192.168.0.143:8200" : `//${Domain}/api`;
-export const BetWebApiBaseUrl = IsDebug ? "http://192.168.0.143:8201" : `//${Domain}/report`;
+export const Domain = IsDebug ? "192.168.0.2:9113" : "m.synjiguang.com";
+export const WebApiBaseUrl = `//${Domain}/api`;
+export const BetWebApiBaseUrl = `//${Domain}/report`;
 export const CacheType = 0; //0 localstorage , 1 cookie ,2 session
-export function GetRedirectUrl(gameID: any) {
-    let v = Math.random();
-    return `//${this.Domain}/${gameID}/?v=${v}`;
+export function GetRedirectUrl(gameID: number, local:boolean, token:string, lang:string = 'ch') {
+	if(local) {
+		let v = Math.random();
+		return `//${this.Domain}/${gameID}/?v=${v}`;
+	} else {
+		let backUrl = encodeURIComponent(window.location.href);
+		return `//${this.Domain}/Login/Games/${gameID}/?token=${token}&lang=${lang}&backurl=${backUrl}`;
+	}
 }
 export let Language = "CH";
 
@@ -18,10 +23,12 @@ export function GetWeChatShareDto(parentID: string, isAuthorize: boolean = true)
     let dto: any = {
         Link: ""
     }
+	let sharGameUrl = `http://${this.Domain}/gameshareplatform/?parentid=${parentID}`;
     if (isAuthorize) {
-        dto.Link = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${AppId}&redirect_uri=http%3A%2F%2F${this.Domain}%2Fgameshareplatform%2F%3fparentid%3d${parentID}&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`;
+		sharGameUrl = encodeURIComponent(sharGameUrl);
+        dto.Link = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${AppId}&redirect_uri=${sharGameUrl}&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`;
     } else {
-        dto.Link = `http://${this.Domain}/gameshareplatform/?parentid=${parentID}`;
+        dto.Link = sharGameUrl;
     }
     return dto;
 }

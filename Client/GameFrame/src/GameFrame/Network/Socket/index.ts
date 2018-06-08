@@ -143,5 +143,8 @@ namespace Network.Socket {
             }
         }
 
+        public Log():void{
+            
+        }
     }
 }

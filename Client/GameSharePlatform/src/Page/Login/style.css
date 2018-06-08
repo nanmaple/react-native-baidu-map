@@ -93,6 +93,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    max-width: 300px;
 }
 .input{
     width:60%;
@@ -107,4 +108,5 @@
     align-items: center;
     justify-content: center;
     color: #fff;
+    max-width: 220px;
 }

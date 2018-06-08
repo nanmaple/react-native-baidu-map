@@ -80,10 +80,14 @@ export default class Home extends React.Component<any, any> {
      * @param id  游戏ID
      * @param url 游戏地址
      */
-    private GameLogin = (id: any) => {
+    private GameLogin = (id: any, local:boolean) => {
         let isLogin = this.userCtrl.GameLogin(id);
         if (isLogin) {
-            window.location.href = GetRedirectUrl(id)
+			let token = this.userCtrl.loginService.GetAuthorization();
+			if(token == null) {
+				return;
+			}
+            window.location.href = GetRedirectUrl(id, local, token.Token, 'ch')
         }
         else {
             //todo
@@ -128,7 +132,7 @@ export default class Home extends React.Component<any, any> {
             <div key={index}>
                 {
                     item.complete ? (
-                        <div key={index} className={style.rowItem} onClick={() => { this.GameLogin(item.id) }}>
+                        <div key={index} className={style.rowItem} onClick={() => { this.GameLogin(item.id, item.local) }}>
                             <div className={style.img}>
                                 <img style={{ width: 60, height: 60 }} src={item.imgUrl} />
                             </div>

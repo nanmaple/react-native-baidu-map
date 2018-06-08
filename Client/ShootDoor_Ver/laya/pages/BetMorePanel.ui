@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":3,
-    "selecteID":4,
+    "selectedBox":4,
+    "selecteID":7,
     "props":{"width":1334,"sceneColor":"#ffffff","height":750},
     "nodeParent":-1,
     "label":"View",
@@ -42,7 +42,7 @@
                             "props":{"y":0,"width":1257,"var":"Title","height":120,"centerX":0},
                             "nodeParent":3,
                             "label":"Box(Title)",
-                            "isOpen":false,
+                            "isOpen":true,
                             "isDirectory":true,
                             "isAniNode":true,
                             "hasChild":true,
@@ -77,7 +77,7 @@
                                 {
                                     "x":60,
                                     "type":"Image",
-                                    "props":{"var":"Close","skin":"ui/bet_close.png","right":60,"centerY":0},
+                                    "props":{"var":"Close","skin":"ui/bet_close.png","right":30,"centerY":0},
                                     "nodeParent":4,
                                     "label":"Image(Close)",
                                     "isDirectory":false,
@@ -91,18 +91,19 @@
                         {
                             "x":45,
                             "type":"Box",
-                            "props":{"y":120,"width":1235,"var":"BetBox","height":360,"centerX":0},
+                            "props":{"y":122,"width":1237,"var":"BetBox","height":352,"centerX":0},
                             "nodeParent":3,
                             "label":"Box(BetBox)",
-                            "isOpen":false,
+                            "isOpen":true,
                             "isDirectory":true,
                             "isAniNode":true,
                             "hasChild":true,
                             "compId":8,
                             "child":[
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":270,"x":95,"width":95,"name":"Spade_13","height":90},
+                                    "props":{"y":264,"x":0,"width":95,"runtime":"mask","name":"Spade_13","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Spade_13)",
                                     "isOpen":false,
@@ -162,8 +163,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":270,"x":190,"width":95,"name":"Spade_12","height":90},
+                                    "props":{"y":264,"x":95,"width":95,"runtime":"mask","name":"Spade_12","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Spade_12)",
                                     "isOpen":false,
@@ -223,8 +225,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":270,"x":285,"width":95,"name":"Spade_11","height":90},
+                                    "props":{"y":264,"x":190,"width":95,"runtime":"mask","name":"Spade_11","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Spade_11)",
                                     "isOpen":false,
@@ -284,8 +287,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":270,"x":380,"width":95,"name":"Spade_10","height":90},
+                                    "props":{"y":264,"x":285,"width":95,"runtime":"mask","name":"Spade_10","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Spade_10)",
                                     "isOpen":false,
@@ -345,8 +349,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":270,"x":475,"width":95,"name":"Spade_9","height":90},
+                                    "props":{"y":264,"x":380,"width":95,"runtime":"mask","name":"Spade_9","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Spade_9)",
                                     "isOpen":false,
@@ -406,8 +411,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":270,"x":570,"width":95,"name":"Spade_8","height":90},
+                                    "props":{"y":264,"x":475,"width":95,"runtime":"mask","name":"Spade_8","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Spade_8)",
                                     "isOpen":false,
@@ -467,8 +473,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":270,"x":665,"width":95,"name":"Spade_7","height":90},
+                                    "props":{"y":264,"x":570,"width":95,"runtime":"mask","name":"Spade_7","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Spade_7)",
                                     "isOpen":false,
@@ -528,8 +535,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":270,"x":760,"width":95,"name":"Spade_6","height":90},
+                                    "props":{"y":264,"x":665,"width":95,"runtime":"mask","name":"Spade_6","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Spade_6)",
                                     "isOpen":false,
@@ -589,8 +597,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":270,"x":855,"width":95,"name":"Spade_5","height":90},
+                                    "props":{"y":264,"x":760,"width":95,"runtime":"mask","name":"Spade_5","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Spade_5)",
                                     "isOpen":false,
@@ -650,8 +659,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":270,"x":950,"width":95,"name":"Spade_4","height":90},
+                                    "props":{"y":264,"x":855,"width":95,"runtime":"mask","name":"Spade_4","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Spade_4)",
                                     "isOpen":false,
@@ -711,8 +721,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":270,"x":1045,"width":95,"name":"Spade_3","height":90},
+                                    "props":{"y":264,"x":950,"width":95,"runtime":"mask","name":"Spade_3","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Spade_3)",
                                     "isOpen":false,
@@ -772,8 +783,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":270,"x":1140,"width":95,"name":"Spade_2","height":90},
+                                    "props":{"y":264,"x":1045,"width":95,"runtime":"mask","name":"Spade_2","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Spade_2)",
                                     "isOpen":false,
@@ -833,8 +845,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":270,"x":0,"width":95,"name":"Spade_1","height":90},
+                                    "props":{"y":264,"x":1140,"width":95,"runtime":"mask","name":"Spade_1","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Spade_1)",
                                     "isOpen":false,
@@ -894,8 +907,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":0,"x":95,"width":95,"name":"Block_13","height":90},
+                                    "props":{"y":1,"x":0,"width":95,"runtime":"mask","name":"Block_13","height":88},
                                     "nodeParent":8,
                                     "label":"Box(Block_13)",
                                     "isOpen":false,
@@ -955,8 +969,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":0,"x":190,"width":95,"name":"Block_12","height":90},
+                                    "props":{"y":1,"x":95,"width":95,"runtime":"mask","name":"Block_12","height":88},
                                     "nodeParent":8,
                                     "label":"Box(Block_12)",
                                     "isOpen":false,
@@ -1016,8 +1031,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":0,"x":285,"width":95,"name":"Block_11","height":90},
+                                    "props":{"y":1,"x":190,"width":95,"runtime":"mask","name":"Block_11","height":88},
                                     "nodeParent":8,
                                     "label":"Box(Block_11)",
                                     "isOpen":false,
@@ -1077,8 +1093,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":0,"x":380,"width":95,"name":"Block_10","height":90},
+                                    "props":{"y":1,"x":285,"width":95,"runtime":"mask","name":"Block_10","height":88},
                                     "nodeParent":8,
                                     "label":"Box(Block_10)",
                                     "isOpen":false,
@@ -1138,8 +1155,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":0,"x":475,"width":95,"name":"Block_9","height":90},
+                                    "props":{"y":1,"x":380,"width":95,"runtime":"mask","name":"Block_9","height":88},
                                     "nodeParent":8,
                                     "label":"Box(Block_9)",
                                     "isOpen":false,
@@ -1199,8 +1217,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":0,"x":570,"width":95,"name":"Block_8","height":90},
+                                    "props":{"y":1,"x":475,"width":95,"runtime":"mask","name":"Block_8","height":88},
                                     "nodeParent":8,
                                     "label":"Box(Block_8)",
                                     "isOpen":false,
@@ -1260,8 +1279,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":0,"x":665,"width":95,"name":"Block_7","height":90},
+                                    "props":{"y":1,"x":570,"width":95,"runtime":"mask","name":"Block_7","height":88},
                                     "nodeParent":8,
                                     "label":"Box(Block_7)",
                                     "isOpen":false,
@@ -1321,8 +1341,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":0,"x":760,"width":95,"name":"Block_6","height":90},
+                                    "props":{"y":1,"x":665,"width":95,"runtime":"mask","name":"Block_6","height":88},
                                     "nodeParent":8,
                                     "label":"Box(Block_6)",
                                     "isOpen":false,
@@ -1382,8 +1403,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":0,"x":855,"width":95,"name":"Block_5","height":90},
+                                    "props":{"y":1,"x":760,"width":95,"runtime":"mask","name":"Block_5","height":88},
                                     "nodeParent":8,
                                     "label":"Box(Block_5)",
                                     "isOpen":false,
@@ -1443,8 +1465,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":0,"x":950,"width":95,"name":"Block_4","height":90},
+                                    "props":{"y":1,"x":855,"width":95,"runtime":"mask","name":"Block_4","height":88},
                                     "nodeParent":8,
                                     "label":"Box(Block_4)",
                                     "isOpen":false,
@@ -1504,8 +1527,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":0,"x":1045,"width":95,"name":"Block_3","height":90},
+                                    "props":{"y":1,"x":950,"width":95,"runtime":"mask","name":"Block_3","height":88},
                                     "nodeParent":8,
                                     "label":"Box(Block_3)",
                                     "isOpen":false,
@@ -1565,8 +1589,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":0,"x":1140,"width":95,"name":"Block_2","height":90},
+                                    "props":{"y":1,"x":1045,"width":95,"runtime":"mask","name":"Block_2","height":88},
                                     "nodeParent":8,
                                     "label":"Box(Block_2)",
                                     "isOpen":false,
@@ -1626,8 +1651,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":0,"x":0,"width":95,"name":"Block_1","height":90},
+                                    "props":{"y":1,"x":1140,"width":95,"runtime":"mask","name":"Block_1","height":88},
                                     "nodeParent":8,
                                     "label":"Box(Block_1)",
                                     "isOpen":false,
@@ -1687,8 +1713,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":90,"x":95,"width":95,"name":"Club_13","height":90},
+                                    "props":{"y":89,"x":0,"width":95,"runtime":"mask","name":"Club_13","height":86},
                                     "nodeParent":8,
                                     "label":"Box(Club_13)",
                                     "isOpen":false,
@@ -1748,8 +1775,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":90,"x":190,"width":95,"name":"Club_12","height":90},
+                                    "props":{"y":89,"x":95,"width":95,"runtime":"mask","name":"Club_12","height":86},
                                     "nodeParent":8,
                                     "label":"Box(Club_12)",
                                     "isOpen":false,
@@ -1809,8 +1837,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":90,"x":285,"width":95,"name":"Club_11","height":90},
+                                    "props":{"y":89,"x":190,"width":95,"runtime":"mask","name":"Club_11","height":86},
                                     "nodeParent":8,
                                     "label":"Box(Club_11)",
                                     "isOpen":false,
@@ -1870,8 +1899,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":90,"x":380,"width":95,"name":"Club_10","height":90},
+                                    "props":{"y":89,"x":285,"width":95,"runtime":"mask","name":"Club_10","height":86},
                                     "nodeParent":8,
                                     "label":"Box(Club_10)",
                                     "isOpen":false,
@@ -1931,8 +1961,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":90,"x":475,"width":95,"name":"Club_9","height":90},
+                                    "props":{"y":89,"x":380,"width":95,"runtime":"mask","name":"Club_9","height":86},
                                     "nodeParent":8,
                                     "label":"Box(Club_9)",
                                     "isOpen":false,
@@ -1992,8 +2023,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":90,"x":570,"width":95,"name":"Club_8","height":90},
+                                    "props":{"y":89,"x":475,"width":95,"runtime":"mask","name":"Club_8","height":86},
                                     "nodeParent":8,
                                     "label":"Box(Club_8)",
                                     "isOpen":false,
@@ -2053,8 +2085,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":90,"x":665,"width":95,"name":"Club_7","height":90},
+                                    "props":{"y":89,"x":570,"width":95,"runtime":"mask","name":"Club_7","height":86},
                                     "nodeParent":8,
                                     "label":"Box(Club_7)",
                                     "isOpen":false,
@@ -2114,8 +2147,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":90,"x":760,"width":95,"name":"Club_6","height":90},
+                                    "props":{"y":89,"x":665,"width":95,"runtime":"mask","name":"Club_6","height":86},
                                     "nodeParent":8,
                                     "label":"Box(Club_6)",
                                     "isOpen":false,
@@ -2175,8 +2209,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":90,"x":855,"width":95,"name":"Club_5","height":90},
+                                    "props":{"y":89,"x":760,"width":95,"runtime":"mask","name":"Club_5","height":86},
                                     "nodeParent":8,
                                     "label":"Box(Club_5)",
                                     "isOpen":false,
@@ -2236,8 +2271,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":90,"x":950,"width":95,"name":"Club_4","height":90},
+                                    "props":{"y":89,"x":855,"width":95,"runtime":"mask","name":"Club_4","height":86},
                                     "nodeParent":8,
                                     "label":"Box(Club_4)",
                                     "isOpen":false,
@@ -2297,8 +2333,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":90,"x":1045,"width":95,"name":"Club_3","height":90},
+                                    "props":{"y":89,"x":950,"width":95,"runtime":"mask","name":"Club_3","height":86},
                                     "nodeParent":8,
                                     "label":"Box(Club_3)",
                                     "isOpen":false,
@@ -2358,8 +2395,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":90,"x":1140,"width":95,"name":"Club_2","height":90},
+                                    "props":{"y":89,"x":1045,"width":95,"runtime":"mask","name":"Club_2","height":86},
                                     "nodeParent":8,
                                     "label":"Box(Club_2)",
                                     "isOpen":false,
@@ -2419,8 +2457,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":90,"x":0,"width":95,"name":"Club_1","height":90},
+                                    "props":{"y":89,"x":1140,"width":95,"runtime":"mask","name":"Club_1","height":86},
                                     "nodeParent":8,
                                     "label":"Box(Club_1)",
                                     "isOpen":false,
@@ -2480,8 +2519,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":180,"x":95,"width":95,"name":"Heart_13","height":90},
+                                    "props":{"y":176,"x":0,"width":95,"runtime":"mask","name":"Heart_13","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Heart_13)",
                                     "isOpen":false,
@@ -2541,8 +2581,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":180,"x":190,"width":95,"name":"Heart_12","height":90},
+                                    "props":{"y":176,"x":95,"width":95,"runtime":"mask","name":"Heart_12","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Heart_12)",
                                     "isOpen":false,
@@ -2602,8 +2643,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":180,"x":285,"width":95,"name":"Heart_11","height":90},
+                                    "props":{"y":176,"x":190,"width":95,"runtime":"mask","name":"Heart_11","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Heart_11)",
                                     "isOpen":false,
@@ -2663,8 +2705,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":180,"x":380,"width":95,"name":"Heart_10","height":90},
+                                    "props":{"y":176,"x":285,"width":95,"runtime":"mask","name":"Heart_10","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Heart_10)",
                                     "isOpen":false,
@@ -2724,8 +2767,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":180,"x":475,"width":95,"name":"Heart_9","height":90},
+                                    "props":{"y":176,"x":380,"width":95,"runtime":"mask","name":"Heart_9","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Heart_9)",
                                     "isOpen":false,
@@ -2785,8 +2829,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":180,"x":570,"width":95,"name":"Heart_8","height":90},
+                                    "props":{"y":176,"x":475,"width":95,"runtime":"mask","name":"Heart_8","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Heart_8)",
                                     "isOpen":false,
@@ -2846,8 +2891,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":180,"x":665,"width":95,"name":"Heart_7","height":90},
+                                    "props":{"y":176,"x":570,"width":95,"runtime":"mask","name":"Heart_7","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Heart_7)",
                                     "isOpen":false,
@@ -2907,8 +2953,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":180,"x":760,"width":95,"name":"Heart_6","height":90},
+                                    "props":{"y":176,"x":665,"width":95,"runtime":"mask","name":"Heart_6","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Heart_6)",
                                     "isOpen":false,
@@ -2968,8 +3015,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":180,"x":855,"width":95,"name":"Heart_5","height":90},
+                                    "props":{"y":176,"x":760,"width":95,"runtime":"mask","name":"Heart_5","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Heart_5)",
                                     "isOpen":false,
@@ -3029,8 +3077,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":180,"x":950,"width":95,"name":"Heart_4","height":90},
+                                    "props":{"y":176,"x":855,"width":95,"runtime":"mask","name":"Heart_4","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Heart_4)",
                                     "isOpen":false,
@@ -3090,8 +3139,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":180,"x":1045,"width":95,"name":"Heart_3","height":90},
+                                    "props":{"y":176,"x":950,"width":95,"runtime":"mask","name":"Heart_3","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Heart_3)",
                                     "isOpen":false,
@@ -3151,8 +3201,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":180,"x":1140,"width":95,"name":"Heart_2","height":90},
+                                    "props":{"y":176,"x":1045,"width":95,"runtime":"mask","name":"Heart_2","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Heart_2)",
                                     "isOpen":false,
@@ -3212,8 +3263,9 @@
                                         }]
                                 },
                                 {
+                                    "x":60,
                                     "type":"Box",
-                                    "props":{"y":180,"x":0,"width":95,"name":"Heart_1","height":90},
+                                    "props":{"y":176,"x":1140,"width":95,"runtime":"mask","name":"Heart_1","height":87},
                                     "nodeParent":8,
                                     "label":"Box(Heart_1)",
                                     "isOpen":false,
@@ -3314,7 +3366,7 @@
                                 {
                                     "x":60,
                                     "type":"Clip",
-                                    "props":{"y":0,"x":0,"width":32,"skin":"ui/clip_number.png","name":"item0","height":40,"clipX":10},
+                                    "props":{"y":0,"x":0,"width":30,"skin":"ui/clip_number.png","name":"item0","height":40,"clipX":10},
                                     "nodeParent":522,
                                     "label":"Clip(item0)",
                                     "isDirectory":false,
@@ -3327,7 +3379,7 @@
                                 {
                                     "x":60,
                                     "type":"Clip",
-                                    "props":{"y":0,"x":30,"width":32,"skin":"ui/clip_number.png","sizeGrid":"0,0,0,0","name":"item1","index":0,"height":40,"clipX":10},
+                                    "props":{"y":0,"x":30,"width":30,"skin":"ui/clip_number.png","sizeGrid":"0,0,0,0","name":"item1","index":0,"height":40,"clipX":10},
                                     "nodeParent":522,
                                     "label":"Clip(item1)",
                                     "isDirectory":false,

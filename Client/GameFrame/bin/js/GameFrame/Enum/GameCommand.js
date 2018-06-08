@@ -1,5 +1,8 @@
 var GameEnum;
 (function (GameEnum) {
+    /**
+     * 游戏命令
+     */
     var GameCommand;
     (function (GameCommand) {
         /**

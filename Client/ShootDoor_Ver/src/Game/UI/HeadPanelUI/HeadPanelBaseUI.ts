@@ -52,7 +52,9 @@ namespace ScenePanel {
                 this.ui.info.visible = true;   //显示头像
                 this.ui.attention.visible = false;
                 //隐藏关注按钮
-                this.ui.headPic.skin = memberInfo.HeadImageUrl.replace("http","https");
+                if(memberInfo.HeadImageUrl){
+                    this.ui.headPic.skin = memberInfo.HeadImageUrl.replace("http","https");
+                }
                 this.ui.nickname.text = memberInfo.Nickname;
                 this.ui.agent.text = language.GetLanguage("Account") + memberInfo.Account;
                 this.ui.score.text = Utils.Money.Format(memberInfo.Score);

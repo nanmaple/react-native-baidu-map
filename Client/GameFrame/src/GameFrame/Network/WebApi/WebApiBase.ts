@@ -8,12 +8,6 @@ abstract class WebApiBase {
     protected http: Utils.Http;
 
     constructor() {
-    }
-
-    /**
-     * 初始化http
-     */
-    protected InitHttp() {
         this.http = new Utils.Http();
     }
 
@@ -35,5 +29,27 @@ abstract class WebApiBase {
      */
     public SetToken(token: string): void {
         this.header.Authorization = token;
+    }
+
+    /**
+     * Post方法
+     * @param url 地址
+     * @param params 参数
+     * @param successBack 成功回调
+     * @param failBack 失败回调
+     */
+    public Post(url: string, params: any,header:any, successBack: Function, failBack: Function): void {
+        this.http.Post(url, params,  Utils.ObjectEx.assign({},this.header,header), successBack, failBack);
+    }
+
+    /**
+     * Get方法
+     * @param url 地址
+     * @param params 参数
+     * @param successBack 成功回调
+     * @param failBack 失败回调
+     */
+    public Get(url: string, params: any,header:any, successBack: Function, failBack: Function): void {
+        this.http.Get(url, params, Utils.ObjectEx.assign({},this.header,header), successBack, failBack);
     }
 }

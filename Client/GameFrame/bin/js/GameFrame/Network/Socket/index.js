@@ -147,6 +147,8 @@ var Network;
                         break;
                 }
             };
+            SocketManager.prototype.Log = function () {
+            };
             return SocketManager;
         }(Laya.EventDispatcher));
         Socket.SocketManager = SocketManager;

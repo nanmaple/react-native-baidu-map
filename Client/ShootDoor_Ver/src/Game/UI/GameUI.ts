@@ -1,7 +1,7 @@
 namespace ScenePanel {
     export class GameUI {
         private static instance: GameUI;
-        public bgPanel: GameBgHor | HeadPanelVer;
+        public bgPanel: GameBgHor | GameBgVer;
         public headPanel: HeadPanelHor | HeadPanelVer;
         public loadingPanel: LoadingPanelHor | LoadingPanelVer;
         public roundPanel: RoundPanelHor | RoundPanelVer;
@@ -106,8 +106,6 @@ namespace ScenePanel {
                 this.pokerFlyEffect.RecoveryPoker();
             }
             this.pokerFlyEffect = new PokerFlyEffect();
-            
-
         }
 
         /**

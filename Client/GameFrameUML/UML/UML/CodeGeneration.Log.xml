@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="file:///C:/PROGRAM FILES (X86)/MICROSOFT VISUAL STUDIO 12.0/COMMON7/IDE/EXTENSIONS/MICROSOFT/ARCHITECTURE TOOLS/EXTENSIBILITY/Logging/CodeGenLog.xslt"?>
+<Log xmlns="http://schemas.microsoft.com/VisualStudio/2010/CodeGen.RE.Log" Label="代码生成/文本转换记录">
+  <MessageClass Name="Message" Label="消息" Option="显示提供相关信息的消息" />
+  <MessageClass Name="Warning" Label="警告" Option="显示警告" />
+  <MessageClass Name="Error" Label="错误" Option="显示错误" />
+  <MessageClass Name="Property" Label="属性" Option="显示元数据" />
+  <MessageClass Name="Diagnostic" Label="消息" Option="显示诊断消息" />
+  <Message Timestamp="2018-05-29T09:59:06" Importance="High" Text="已启动代码生成或文本转换。" />
+  <Message Timestamp="2018-05-29T09:59:06" Importance="Diagnostic" Text="名称 = ClassTemplate" />
+  <Message Timestamp="2018-05-29T09:59:06" Importance="Diagnostic" Text="覆盖 = True" />
+  <Message Timestamp="2018-05-29T09:59:06" Importance="Diagnostic" Text="ProjectPath = ..\UMLLib\UMLLib.csproj" />
+  <Message Timestamp="2018-05-29T09:59:06" Importance="Diagnostic" Text="TargetDirectory = GeneratedCode\{PackageStructure}" />
+  <Message Timestamp="2018-05-29T09:59:06" Importance="Diagnostic" Text="TargetName = {Name}" />
+  <Message Timestamp="2018-05-29T09:59:06" Importance="Diagnostic" Text="TemplateFilePath = C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\ClassTemplate.t4" />
+  <Message Timestamp="2018-05-29T09:59:06" Importance="Diagnostic" Text="ResolvedTemplateFilePath = C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\ClassTemplate.t4" />
+  <Message Timestamp="2018-05-29T09:59:06" Importance="Medium" Text="UML 的文本模板绑定: “ClassTemplate”会将 ClassTemplate.t4 应用于: “UML::WebApiBase”-  (Class), “UML::WebApi”-  (Class), “UML::SocketManager”-  (Class), “UML::MemberManager”-  (Class), “UML::GameManager”-  (Class), “UML::GameUI”-  (Class), “UML::GameView”-  (Class), “UML::GameMain”-  (Class), “UML::BetPos”-  (Class), “UML::BetPosValue”-  (Class), “UML::GameManager”-  (Class), “UML::Bet”-  (Class) " />
+  <Message Timestamp="2018-05-29T09:59:17" Importance="Medium" Text="新增项目: F:\Laya\Client\GameFrameUML\UML\UMLLib\UMLLib.csproj" />
+  <Message Timestamp="2018-05-29T09:59:17" Importance="Medium" Text="“UML::WebApiBase”-  (Class) : 成功(已创建文件) - F:\Laya\Client\GameFrameUML\UML\UMLLib\GeneratedCode\WebApiBase.cs" />
+  <Message Timestamp="2018-05-29T09:59:19" Importance="Medium" Text="“UML::WebApi”-  (Class) : 成功(已创建文件) - F:\Laya\Client\GameFrameUML\UML\UMLLib\GeneratedCode\WebApi.cs" />
+  <Message Timestamp="2018-05-29T09:59:19" Importance="Medium" Text="“UML::SocketManager”-  (Class) : 成功(已创建文件) - F:\Laya\Client\GameFrameUML\UML\UMLLib\GeneratedCode\SocketManager.cs" />
+  <Message Timestamp="2018-05-29T09:59:20" Importance="Medium" Text="“UML::MemberManager”-  (Class) : 成功(已创建文件) - F:\Laya\Client\GameFrameUML\UML\UMLLib\GeneratedCode\MemberManager.cs" />
+  <Message Timestamp="2018-05-29T09:59:20" Importance="Medium" Text="“UML::GameManager”-  (Class) : 成功(已创建文件) - F:\Laya\Client\GameFrameUML\UML\UMLLib\GeneratedCode\GameManager.cs" />
+  <Message Timestamp="2018-05-29T09:59:20" Importance="Medium" Text="“UML::GameUI”-  (Class) : 成功(已创建文件) - F:\Laya\Client\GameFrameUML\UML\UMLLib\GeneratedCode\GameUI.cs" />
+  <Message Timestamp="2018-05-29T09:59:21" Importance="Medium" Text="“UML::GameView”-  (Class) : 成功(已创建文件) - F:\Laya\Client\GameFrameUML\UML\UMLLib\GeneratedCode\GameView.cs" />
+  <Message Timestamp="2018-05-29T09:59:21" Importance="Medium" Text="“UML::GameMain”-  (Class) : 成功(已创建文件) - F:\Laya\Client\GameFrameUML\UML\UMLLib\GeneratedCode\GameMain.cs" />
+  <Message Timestamp="2018-05-29T09:59:22" Importance="Medium" Text="“UML::BetPos”-  (Class) : 成功(已创建文件) - F:\Laya\Client\GameFrameUML\UML\UMLLib\GeneratedCode\BetPos.cs" />
+  <Message Timestamp="2018-05-29T09:59:22" Importance="Medium" Text="“UML::BetPosValue”-  (Class) : 成功(已创建文件) - F:\Laya\Client\GameFrameUML\UML\UMLLib\GeneratedCode\BetPosValue.cs" />
+  <Message Timestamp="2018-05-29T09:59:23" Importance="Medium" Text="“UML::GameManager”-  (Class) : 成功(已替换文件) - F:\Laya\Client\GameFrameUML\UML\UMLLib\GeneratedCode\GameManager.cs" />
+  <Message Timestamp="2018-05-29T09:59:23" Importance="Medium" Text="“UML::Bet”-  (Class) : 成功(已创建文件) - F:\Laya\Client\GameFrameUML\UML\UMLLib\GeneratedCode\Bet.cs" />
+  <Message Timestamp="2018-05-29T09:59:23" Importance="Diagnostic" Text="名称 = EnumTemplate" />
+  <Message Timestamp="2018-05-29T09:59:23" Importance="Diagnostic" Text="覆盖 = True" />
+  <Message Timestamp="2018-05-29T09:59:23" Importance="Diagnostic" Text="ProjectPath = ..\UMLLib\UMLLib.csproj" />
+  <Message Timestamp="2018-05-29T09:59:23" Importance="Diagnostic" Text="TargetDirectory = GeneratedCode\{PackageStructure}" />
+  <Message Timestamp="2018-05-29T09:59:23" Importance="Diagnostic" Text="TargetName = {Name}" />
+  <Message Timestamp="2018-05-29T09:59:23" Importance="Diagnostic" Text="TemplateFilePath = C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\EnumTemplate.t4" />
+  <Message Timestamp="2018-05-29T09:59:23" Importance="Diagnostic" Text="ResolvedTemplateFilePath = C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\EnumTemplate.t4" />
+  <Message Timestamp="2018-05-29T09:59:23" Importance="Medium" Text="UML 的文本模板绑定: “EnumTemplate”会将 EnumTemplate.t4 应用于: “UML::BetPosStatus”-  (Enumeration) " />
+  <Message Timestamp="2018-05-29T09:59:23" Importance="Medium" Text="“UML::BetPosStatus”-  (Enumeration) : 成功(已创建文件) - F:\Laya\Client\GameFrameUML\UML\UMLLib\GeneratedCode\BetPosStatus.cs" />
+  <Message Timestamp="2018-05-29T09:59:23" Importance="Diagnostic" Text="名称 = InterfaceTemplate" />
+  <Message Timestamp="2018-05-29T09:59:23" Importance="Diagnostic" Text="覆盖 = True" />
+  <Message Timestamp="2018-05-29T09:59:23" Importance="Diagnostic" Text="ProjectPath = ..\UMLLib\UMLLib.csproj" />
+  <Message Timestamp="2018-05-29T09:59:23" Importance="Diagnostic" Text="TargetDirectory = GeneratedCode\{PackageStructure}" />
+  <Message Timestamp="2018-05-29T09:59:23" Importance="Diagnostic" Text="TargetName = {Name}" />
+  <Message Timestamp="2018-05-29T09:59:23" Importance="Diagnostic" Text="TemplateFilePath = C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\InterfaceTemplate.t4" />
+  <Message Timestamp="2018-05-29T09:59:23" Importance="Diagnostic" Text="ResolvedTemplateFilePath = C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\InterfaceTemplate.t4" />
+  <Message Timestamp="2018-05-29T09:59:23" Importance="Medium" Text="UML 的文本模板绑定: “InterfaceTemplate”会将 InterfaceTemplate.t4 应用于: “UML::ISocketManager”-  (Interface), “UML::IMemberManager”-  (Interface), “UML::IUI”-  (Interface) " />
+  <Message Timestamp="2018-05-29T09:59:24" Importance="Medium" Text="“UML::ISocketManager”-  (Interface) : 成功(已创建文件) - F:\Laya\Client\GameFrameUML\UML\UMLLib\GeneratedCode\ISocketManager.cs" />
+  <Message Timestamp="2018-05-29T09:59:24" Importance="Medium" Text="“UML::IMemberManager”-  (Interface) : 成功(已创建文件) - F:\Laya\Client\GameFrameUML\UML\UMLLib\GeneratedCode\IMemberManager.cs" />
+  <Message Timestamp="2018-05-29T09:59:24" Importance="Medium" Text="“UML::IUI”-  (Interface) : 成功(已创建文件) - F:\Laya\Client\GameFrameUML\UML\UMLLib\GeneratedCode\IUI.cs" />
+  <Message Timestamp="2018-05-29T09:59:24" Importance="Diagnostic" Text="名称 = StructTemplate" />
+  <Message Timestamp="2018-05-29T09:59:24" Importance="Diagnostic" Text="覆盖 = True" />
+  <Message Timestamp="2018-05-29T09:59:24" Importance="Diagnostic" Text="ProjectPath = ..\UMLLib\UMLLib.csproj" />
+  <Message Timestamp="2018-05-29T09:59:24" Importance="Diagnostic" Text="TargetDirectory = GeneratedCode\{PackageStructure}" />
+  <Message Timestamp="2018-05-29T09:59:24" Importance="Diagnostic" Text="TargetName = {Name}" />
+  <Message Timestamp="2018-05-29T09:59:24" Importance="Diagnostic" Text="TemplateFilePath = C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\StructTemplate.t4" />
+  <Message Timestamp="2018-05-29T09:59:24" Importance="Diagnostic" Text="ResolvedTemplateFilePath = C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\StructTemplate.t4" />
+  <Message Timestamp="2018-05-29T09:59:24" Importance="Medium" Text="UML 的文本模板绑定: “StructTemplate”会将 StructTemplate.t4 应用于: “UML::WebApiBase”-  (Class), “UML::WebApi”-  (Class), “UML::SocketManager”-  (Class), “UML::MemberManager”-  (Class), “UML::GameManager”-  (Class), “UML::GameUI”-  (Class), “UML::GameView”-  (Class), “UML::GameMain”-  (Class), “UML::BetPos”-  (Class), “UML::BetPosValue”-  (Class), “UML::GameManager”-  (Class), “UML::Bet”-  (Class) " />
+  <Message Timestamp="2018-05-29T09:59:24" Importance="Diagnostic" Text="“UML::WebApiBase”-  (Class):  没有生成任何文件，因为模板“StructTemplate.t4”的“AppliesToElement”方法的计算结果为 false。" />
+  <Message Timestamp="2018-05-29T09:59:24" Importance="Diagnostic" Text="“UML::WebApi”-  (Class):  没有生成任何文件，因为模板“StructTemplate.t4”的“AppliesToElement”方法的计算结果为 false。" />
+  <Message Timestamp="2018-05-29T09:59:24" Importance="Diagnostic" Text="“UML::SocketManager”-  (Class):  没有生成任何文件，因为模板“StructTemplate.t4”的“AppliesToElement”方法的计算结果为 false。" />
+  <Message Timestamp="2018-05-29T09:59:24" Importance="Diagnostic" Text="“UML::MemberManager”-  (Class):  没有生成任何文件，因为模板“StructTemplate.t4”的“AppliesToElement”方法的计算结果为 false。" />
+  <Message Timestamp="2018-05-29T09:59:24" Importance="Diagnostic" Text="“UML::GameManager”-  (Class):  没有生成任何文件，因为模板“StructTemplate.t4”的“AppliesToElement”方法的计算结果为 false。" />
+  <Message Timestamp="2018-05-29T09:59:24" Importance="Diagnostic" Text="“UML::GameUI”-  (Class):  没有生成任何文件，因为模板“StructTemplate.t4”的“AppliesToElement”方法的计算结果为 false。" />
+  <Message Timestamp="2018-05-29T09:59:24" Importance="Diagnostic" Text="“UML::GameView”-  (Class):  没有生成任何文件，因为模板“StructTemplate.t4”的“AppliesToElement”方法的计算结果为 false。" />
+  <Message Timestamp="2018-05-29T09:59:25" Importance="Diagnostic" Text="“UML::GameMain”-  (Class):  没有生成任何文件，因为模板“StructTemplate.t4”的“AppliesToElement”方法的计算结果为 false。" />
+  <Message Timestamp="2018-05-29T09:59:25" Importance="Diagnostic" Text="“UML::BetPos”-  (Class):  没有生成任何文件，因为模板“StructTemplate.t4”的“AppliesToElement”方法的计算结果为 false。" />
+  <Message Timestamp="2018-05-29T09:59:25" Importance="Diagnostic" Text="“UML::BetPosValue”-  (Class):  没有生成任何文件，因为模板“StructTemplate.t4”的“AppliesToElement”方法的计算结果为 false。" />
+  <Message Timestamp="2018-05-29T09:59:25" Importance="Diagnostic" Text="“UML::GameManager”-  (Class):  没有生成任何文件，因为模板“StructTemplate.t4”的“AppliesToElement”方法的计算结果为 false。" />
+  <Message Timestamp="2018-05-29T09:59:25" Importance="Diagnostic" Text="“UML::Bet”-  (Class):  没有生成任何文件，因为模板“StructTemplate.t4”的“AppliesToElement”方法的计算结果为 false。" />
+  <Message Timestamp="2018-05-29T09:59:25" Importance="Diagnostic" Text="选定内容包含未绑定到模板的 13 元素。" />
+  <Message Timestamp="2018-05-29T09:59:25" Importance="Diagnostic" Text="“UML::”-  (InterfaceRealization):  没有绑定的模板。" />
+  <Message Timestamp="2018-05-29T09:59:25" Importance="Diagnostic" Text="“5ab07c41-1696-4959-9285-145edd2dd24f”-  (Generalization):  没有绑定的模板。" />
+  <Message Timestamp="2018-05-29T09:59:25" Importance="Diagnostic" Text="“UML::”-  (InterfaceRealization):  没有绑定的模板。" />
+  <Message Timestamp="2018-05-29T09:59:25" Importance="Diagnostic" Text="“c96b3836-3181-4279-8419-5192798c7002”-  (Generalization):  没有绑定的模板。" />
+  <Message Timestamp="2018-05-29T09:59:25" Importance="Diagnostic" Text="“UML::”-  (Association):  没有绑定的模板。" />
+  <Message Timestamp="2018-05-29T09:59:25" Importance="Diagnostic" Text="“UML::”-  (InterfaceRealization):  没有绑定的模板。" />
+  <Message Timestamp="2018-05-29T09:59:25" Importance="Diagnostic" Text="“UML::”-  (Association):  没有绑定的模板。" />
+  <Message Timestamp="2018-05-29T09:59:25" Importance="Diagnostic" Text="“UML::”-  (Association):  没有绑定的模板。" />
+  <Message Timestamp="2018-05-29T09:59:25" Importance="Diagnostic" Text="“UML::”-  (Association):  没有绑定的模板。" />
+  <Message Timestamp="2018-05-29T09:59:25" Importance="Diagnostic" Text="“UML::”-  (Association):  没有绑定的模板。" />
+  <Message Timestamp="2018-05-29T09:59:25" Importance="Diagnostic" Text="“UML::”-  (Association):  没有绑定的模板。" />
+  <Message Timestamp="2018-05-29T09:59:25" Importance="Diagnostic" Text="“159ff8b5-3323-4823-be73-ee25693e1c3f”-  (Generalization):  没有绑定的模板。" />
+  <Message Timestamp="2018-05-29T09:59:25" Importance="Diagnostic" Text="“UML::”-  (Association):  没有绑定的模板。" />
+  <Message Timestamp="2018-05-29T09:59:25" Importance="High" Text="代码生成完成。错误:  0。警告:  0。" />
+</Log>

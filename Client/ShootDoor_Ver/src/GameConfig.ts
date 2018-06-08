@@ -6,9 +6,10 @@ namespace GameConfig {
     export const DeviceId: string = "123456";
     export const CacheType: number = 0; //0 localstorage , 1 cookie ,2 session
 
-    export const Domain: string = IsDebug ? "www.zyyft.cn" : "m.synjiguang.com";
-    export const WebApiBaseUrl: string = IsDebug ? "//192.168.0.143:8200" : `http://${Domain}/api`;
-    export const BetWebApiBaseUrl: string = IsDebug ? "//192.168.0.143:8201" : `http://${Domain}/report`;
+    export const Domain: string = IsDebug ? "192.168.0.2:9113" : "m.synjiguang.com";
+	export const SocketUrl: string = IsDebug ? "ws://192.168.0.2:9110" : "ws://m.synjiguang.com:9111";
+    export const WebApiBaseUrl: string = `//${Domain}/api`;
+    export const BetWebApiBaseUrl: string = `//${Domain}/report`;
 
     export const DesignLength: number = 1334;
     export const DesignShort: number = 750;
@@ -28,11 +29,9 @@ namespace GameConfig {
     }
     export const DebugToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNZW1iZXJJZCI6NTAsIkRldmljZUlEIjoiMTIzNDU2IiwiRGV2aWNlVHlwZSI6MSwiZXhwIjoxNTE2Nzc3NDk0LCJpYXQiOjE1MTYxNzI2OTR9.o_bo9T4qe_NwqKCxK0YknrQvCoK70jAxqV5-Yj-lJnM";
     export function GetSocketUrl(memberId: number, token: string) {
-        if (IsDebug) {
-            return `ws://192.168.0.143:9800?GameId=${this.GameID}&MemberId=${memberId}&Device=${this.DeviceType}&DeviceId=${this.DeviceId}&Token=${token}`;
-        }
-        return `ws://${Domain}:9111?GameId=${this.GameID}&MemberId=${memberId}&Device=${this.DeviceType}&DeviceId=${this.DeviceId}&Token=${token}`;
+        return `${SocketUrl}?GameId=${this.GameID}&MemberId=${memberId}&Device=${this.DeviceType}&DeviceId=${this.DeviceId}&Token=${token}`;
     }
+    
     //获取APPID
     export function GetAppID(id: any) {
         GameConfig.AppId = id;
@@ -41,8 +40,10 @@ namespace GameConfig {
     //微信相关
     export let AppId:any = null;
     export function GetWeChatUrl(parentID: string, isAuthorize: boolean = true) {
+        let sharGameUrl = `http://${this.Domain}?gameid=${this.GameID}&parentid=${parentID}`;
         if (isAuthorize) {
-            return `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.AppId}&redirect_uri=http%3A%2F%2F${this.Domain}%3fgameid%3d${this.GameID}%26parentid%3d${parentID}&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`;
+            sharGameUrl = encodeURIComponent(sharGameUrl);
+            return `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.AppId}&redirect_uri=${sharGameUrl}&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`;
         } else {
             return `http://${this.Domain}?gameid=${this.GameID}&parentid=${parentID}`;
         }
@@ -58,10 +59,12 @@ namespace GameConfig {
             ImgUrl: `http://${this.Domain}/logo.jpg`,
             Link: ""
         }
+		let sharGameUrl = `http://${this.Domain}?gameid=${this.GameID}&parentid=${parentID}`;
         if (isAuthorize) {
-            dto.Link = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.AppId}&redirect_uri=http%3A%2F%2F${this.Domain}%3fgameid%3d${this.GameID}%26parentid%3d${parentID}&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`;
+			sharGameUrl = encodeURIComponent(sharGameUrl);
+            dto.Link = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.AppId}&redirect_uri=${sharGameUrl}&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`;
         } else {
-            dto.Link = `http://${this.Domain}?gameid=${this.GameID}&parentid=${parentID}`;
+            dto.Link = sharGameUrl;
         }
         return dto;
     }

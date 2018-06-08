@@ -37,6 +37,7 @@ class InitState {
         Laya.stage.bgColor = "#ffffff";
         /***********舞台设置**********/
     }
+    
     /**
      * 屏幕横竖屏监听
      */
@@ -100,6 +101,7 @@ class InitState {
             GameConfig.ShortLength = GameConfig.ShortRatio / GameConfig.LengthRatio;
         }
         document.dispatchEvent(this.event);
+    
     }
 
 }

@@ -95,9 +95,15 @@ class NoteRecordPanelCtrl extends Laya.Sprite {
      * @param data 
      */
     private Success(handlerDto: Dto.HandlerDto): void {
-        let data: Array<Dto.NoteRecordDto> = handlerDto.Data;
-        for (let i = 0; i < data.length; i++) {
-            data[i].GameData = JSON.parse(data[i].GameData);
+        // console.log(handlerDto)
+        let data: Array<Dto.NoteRecordDto> = new Array<Dto.NoteRecordDto>();
+        if(handlerDto && handlerDto.Data){
+            data = handlerDto.Data;
+            for (let i = 0; i < data.length; i++) {
+                data[i].GameData = JSON.parse(data[i].GameData);
+            }
+        }else{
+            data = [];
         }
         this.GetNoteRecordData(data);
         if (!data || data.length < 10) {

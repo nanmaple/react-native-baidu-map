@@ -72,6 +72,7 @@ namespace LanguageUtils {
         gameFail: "Guess Fail",
         Maximum: "Max",
         Minimum: "Min",
+        BetMaxPosNum: "One maximum allowed 20 bets at one time",
         /**
          * 成功
          */

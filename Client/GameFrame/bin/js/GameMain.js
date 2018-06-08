@@ -1,4 +1,4 @@
-/// <reference path="GameFrame/GameManager/index.ts"/>
+/// <reference path="./GameFrame/GameManager/index.ts"/>
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -9,11 +9,22 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var GameMain = /** @class */ (function (_super) {
+var GameMain = (function (_super) {
     __extends(GameMain, _super);
     function GameMain() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super.call(this) || this;
+        _this.socketUrl = null;
+        // this.InitSocket();
+        // this.StartSocket(this.socketUrl);
+        _this.GameView = new GameView();
+        Laya.timer.once(2000, _this, function () {
+            _this.GameView.onLoginSucess = true;
+            _this.GameView.CheckLoad();
+        });
+        return _this;
     }
+    GameMain.prototype.GameMain = function () {
+    };
     /**
     * 侦听Socket连接事件
     */
@@ -78,6 +89,14 @@ var GameMain = /** @class */ (function (_super) {
     GameMain.prototype.OnSystemPushHandler = function (data) {
     };
     ;
+    /**
+     * 发送消息回调
+     * @param dto
+     */
+    GameMain.prototype.SendHandelr = function (dto) {
+        var msgID = dto.MsgID ? dto.MsgID : Utils.Guid.Create();
+        this.Send(dto.Data, msgID);
+    };
     return GameMain;
 }(GameManager));
 //# sourceMappingURL=GameMain.js.map

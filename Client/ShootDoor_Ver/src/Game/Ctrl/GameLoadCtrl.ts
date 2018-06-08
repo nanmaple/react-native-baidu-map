@@ -26,7 +26,7 @@ namespace ScenePanel {
                this.GetMemberInfoSuccess(data);
             }, null, ()=>{ this.GetMemberInfoError() });
             let authorizationInfo = this.loginService.GetAuthorizationDtoByLocal(); 
-       
+ 
             if (!authorizationInfo.Token) {
                 this.GoGameLobby();
             } else {
@@ -53,6 +53,7 @@ namespace ScenePanel {
         private GetMemberInfoError():void{
             // this.GoGameLobby();
         }
+        
         /**
          * 跳转至游戏大厅
          */

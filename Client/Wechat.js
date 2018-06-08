@@ -1,4 +1,3 @@
-//var Domains = "m.17guess.cn";
 var Domains = "synjiguang.com";
 var GetJsSignatures = "//" + Domains + "/api/WeChat/GetJsSignature";
 var GetAppIDApis = "//" + Domains + "/api/WeChat/GetAppID";
@@ -38,6 +37,7 @@ Wechat.prototype.GetJsSignature = function () {
                 else if (_this.GetJsSignatureTimes <= 4) {
                     _this.GetJsSignatureTimes++;
                     _this.GetJsSignature();
+					return;
                 }
                 else {
                     alert("用户分享地址错误, 请重新登录");

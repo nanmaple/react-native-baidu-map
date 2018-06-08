@@ -29,7 +29,7 @@ namespace ScenePanel {
         public ChipsFly(i: number, value: number): void {
             Utils.BackgroundMusic.PlaySounds("sound/bet.wav");
             let betBoxChild: any = this.ui.BetBox.getChildByName(Enum.BetMorePosType[i]);
-            let curBetPosChip = betBoxChild.getChildAt(3) as Laya.Button;
+            let curBetPosChip = betBoxChild.getChildAt(4) as Laya.Button;
             //从对象池获取移动对象
             this.ChipsFlyCallBack(curBetPosChip,value);
         }

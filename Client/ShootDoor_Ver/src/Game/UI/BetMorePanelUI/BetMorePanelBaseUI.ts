@@ -37,12 +37,14 @@ namespace ScenePanel {
          * @param time 
          */
         public StartGameTime(time: number): void {
+            this.ui.time.visible = true;
             this.timeEffect.StartGameTime(time);
         }
         /**
          * 游戏时间结束
          */
         public EndGameTime(): void {
+            this.ui.time.visible = false;
             this.timeEffect.EndGameTime();
         }
         /**
@@ -95,19 +97,18 @@ namespace ScenePanel {
             //绑定投注按钮
             for (let i = 1; i <= 52; i++) {
                 let j:number = i%13 == 0 ? 100 * Math.floor(i/13) + 13 : Math.floor(i/13 + 1) * 100 + i%13;
-                let betBoxChild: any = this.ui.BetBox.getChildByName(Enum.BetMorePosType[j]);
+                let betBoxChild: any = this.ui.BetBox.getChildByName(Enum.BetMorePosType[j]) as mask;
                 //绑定点击事件 
                 betBoxChild.on(Laya.Event.CLICK, this, this.Bet, [i - 1,j]);
                 this.betBtnArr.push(betBoxChild as Laya.Box);
-                this.betMoneyLabelArr.push(betBoxChild.getChildAt(3) as Laya.Button);
-                this.oddsLabelArr.push(betBoxChild.getChildAt(1) as Laya.Label);
+                this.betMoneyLabelArr.push(betBoxChild.getChildAt(4) as Laya.Button);
+                this.oddsLabelArr.push(betBoxChild.getChildAt(2) as Laya.Label);
             }
             //确认投注
             this.ui.ConfirmBetBtn.on(Laya.Event.CLICK, this, this.ConfirmBet);
             //取消投注
             this.ui.CancleBetBtn.on(Laya.Event.CLICK, this, this.CancleBet);
 
-            // this.GetBetBtnPoint();
         }
 
 
@@ -154,7 +155,9 @@ namespace ScenePanel {
                 if (odd == 0) {
                     this.oddsLabelArr[i-1].text = "---";
                     this.betBtnArr[i-1].disabled = true;
+                    this.betBtnArr[i-1].Show();
                 } else {
+                    this.betBtnArr[i-1].Hide();
                     this.oddsLabelArr[i-1].text = odds[j];
                 }
             }
@@ -270,6 +273,9 @@ namespace ScenePanel {
             this.SetBetPos(BetResultMsg);
             //禁用按钮
             this.DisabledAllBtn();
+            for (let i = 0, len = this.betBtnArr.length; i < len; i++) {
+                this.betBtnArr[i].Hide();
+            }
         }
 
         /**

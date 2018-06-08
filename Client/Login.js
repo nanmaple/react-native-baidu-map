@@ -1,29 +1,21 @@
 var ResultEnum = {
-    /**
-     * 错误
-     */
+    /*错误*/
     ERROR: 0,
-    /**
-     * 登录成功
-     */
+    /*登录成功*/
     LOGIN: 1,
-    /**
-     * 多账号
-     */
+    /*多账号*/
     MULTI: 2,
-    /**
-     * 未登录
-     */
+    /*未登录*/
     NO: 3,
-    /**
-     * 游客
-     */
+    /*游客*/
     Tourist: 4
 };
+
+var Domain = "m.synjiguang.com";
+
 var DeviceType = "MOBILE";
 var DeviceId = "123456";
-//var Domain = "m.17guess.cn";
-var Domain = "m.synjiguang.com";
+
 var LoginByTourist = "//" + Domain + "/api/Member/DemoAccountLogin";
 var GetMemberInfo = "//" + Domain + "/api/Member/GetUserProfile";
 var LoginCheck = "//" + Domain + "/api/Member/LoginByToken";
@@ -32,6 +24,7 @@ var LoginUrl = "//" + Domain + "/api/Member/Login";
 var GetJsSignature = "//" + Domain + "/api/WeChat/GetJsSignature";
 var GetAppIDApi = "//" + Domain + "/api/WeChat/GetAppID";
 var LoginByAccount = "//" + Domain + "/api/Member/AccountLogin";
+
 function GetQuery(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
@@ -39,6 +32,7 @@ function GetQuery(name) {
         return decodeURI(r[2]);
     return null;
 }
+
 function LoginService(http, cache, success, multisuccess, error, webApi) {
     this.http = new http();
     this.cache = new cache();
@@ -49,7 +43,10 @@ function LoginService(http, cache, success, multisuccess, error, webApi) {
     this.error = error;
     this.webApi = webApi;
 }
+
 LoginService.header = {};
+
+/*****登录*****/
 LoginService.prototype.Login = function () {
     //获取地址栏中code
     var code = GetQuery("code");
@@ -82,6 +79,7 @@ LoginService.prototype.Login = function () {
         this.LoginByTourist(code, token, parentId);
     }
 };
+
 /**
 * 多账号通过会员id和临时token选择一个账号登录
 * @param memberID 会员id
@@ -135,6 +133,7 @@ LoginService.prototype.LoginByID = function (memberId) {
         console.log("LoginByID", error);
     }
 };
+
 /**
  * 有Code，使用授权Code登录
  * @param code code
@@ -171,6 +170,7 @@ LoginService.prototype.LoginByCode = function (code, parentId) {
         _this.LoginError(err);
     });
 };
+
 /**
  * 有token使用token登录
  * @param token token
@@ -218,6 +218,7 @@ LoginService.prototype.LoginByToken = function (code, token, parentId) {
         console.log("LoginByToken", error);
     }
 };
+
 /**
  * 游客登录
  * @param token 游客临时token
@@ -258,6 +259,7 @@ LoginService.prototype.LoginByTourist = function (code, token, parentId) {
         console.log(error);
     }
 };
+
 /**
 * 账号密码登录
 * @param account 账号
@@ -270,7 +272,9 @@ LoginService.prototype.LoginByAccount = function (account, passWord, handler) {
     //通过Code登录
     var loginByAccountDto = {
         Account: account,
-        Password: passWord
+        Password: passWord,
+        DeviceType: DeviceType,
+        DeviceId: DeviceId
     };
     loginByAccountDto.Account = account;
     loginByAccountDto.Password = passWord;
@@ -298,6 +302,7 @@ LoginService.prototype.LoginByAccount = function (account, passWord, handler) {
         console.log("LoginByTourist", err);
     });
 };
+
 /**
  * 账号密码登录成功回调
  * @param response 会员信息
@@ -333,6 +338,7 @@ LoginService.prototype.LoginByAccountSuccess = function (response, code, parentI
         console.log(error);
     }
 };
+
 /**
  * 登录成功回调
  * @param response 会员信息
@@ -359,6 +365,7 @@ LoginService.prototype.LoginSuccess = function (response, code, parentId, isTour
         console.log(error);
     }
 };
+
 /**
  * 登录成功多账号回调
  * @param response 会员信息
@@ -390,6 +397,7 @@ LoginService.prototype.LoginMultiSuccess = function (response, code, parentId, i
         console.log(error);
     }
 };
+
 /**
  * 登录错误
  * @param error
@@ -415,6 +423,7 @@ LoginService.prototype.LoginError = function (error) {
         console.log(error);
     }
 };
+
 /**
  * 获取本地授权信息
  */
@@ -423,6 +432,7 @@ LoginService.prototype.GetAuthorizationDtoByLocal = function () {
     var authorizationDto = this.GetAuthorization();
     return authorizationDto;
 };
+
 /**
  * 获取会员信息
  */
@@ -463,6 +473,7 @@ LoginService.prototype.GetMemberInfo = function (needToken) {
         console.log(JSON.stringify(error));
     }
 };
+
 /**
 * 获取会员分数
 */
@@ -485,6 +496,7 @@ LoginService.prototype.GetMemberScore = function (handler) {
         // alert(JSON.stringify(error));
     }
 };
+
 /**
  * 设置授权信息
  * @param dto
@@ -502,6 +514,7 @@ LoginService.prototype.SetAuthorization = function (dto, gameId) {
     this.cache.Set("Authorization-CacheKey", this.authorization);
     return true;
 };
+
 /**
  * 设置会员信息
  * @param dto

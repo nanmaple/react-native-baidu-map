@@ -270,7 +270,9 @@ LoginService.prototype.LoginByAccount = function (account, passWord, handler) {
     //通过Code登录
     var loginByAccountDto = {
         Account: account,
-        Password: passWord
+        Password: passWord,
+        DeviceType: DeviceType,
+        DeviceId: DeviceId
     };
     loginByAccountDto.Account = account;
     loginByAccountDto.Password = passWord;

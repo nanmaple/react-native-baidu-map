@@ -8,7 +8,11 @@ namespace Utils {
      * Http类，
      */
     export class Http implements Utils.IHttp {
-        private headers = [];
+        private headers = [
+            "Accept", "application/json",
+            'Content-Type', "application/x-www-form-urlencoded",
+            'Access-Control-Allow-Origin', "*",
+        ];
 
         /**
          * 请求方法

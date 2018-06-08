@@ -1,4 +1,4 @@
-/// <reference path='GameCommand.ts'/>
+/// <reference path='../Enum/GameCommand.ts'/>
 var Dto;
 (function (Dto) {
     /**

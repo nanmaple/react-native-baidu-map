@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":1,
-    "selecteID":1,
+    "selectedBox":3,
+    "selecteID":5,
     "props":{"width":114,"sceneColor":"#ffffff","height":133,"centerX":0,"bottom":880},
     "nodeParent":-1,
     "label":"View",
@@ -39,7 +39,7 @@
                         {
                             "x":45,
                             "type":"Clip",
-                            "props":{"y":0,"x":0,"width":32,"skin":"ui/clip_number.png","name":"item0","height":40,"clipX":10},
+                            "props":{"y":0,"x":0,"width":30,"skin":"ui/clip_number.png","name":"item0","height":40,"clipX":10},
                             "nodeParent":3,
                             "label":"Clip(item0)",
                             "isDirectory":false,
@@ -52,7 +52,7 @@
                         {
                             "x":45,
                             "type":"Clip",
-                            "props":{"y":0,"x":30,"width":32,"skin":"ui/clip_number.png","sizeGrid":"0,0,0,0","name":"item1","index":0,"height":40,"clipX":10},
+                            "props":{"y":0,"x":30,"width":30,"skin":"ui/clip_number.png","sizeGrid":"0,0,0,0","name":"item1","index":0,"height":40,"clipX":10},
                             "nodeParent":3,
                             "label":"Clip(item1)",
                             "isDirectory":false,

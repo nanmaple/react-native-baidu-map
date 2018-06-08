@@ -10,7 +10,11 @@ var Utils;
      */
     var Http = /** @class */ (function () {
         function Http() {
-            this.headers = [];
+            this.headers = [
+                "Accept", "application/json",
+                'Content-Type', "application/x-www-form-urlencoded",
+                'Access-Control-Allow-Origin', "*",
+            ];
         }
         /**
          * 请求方法

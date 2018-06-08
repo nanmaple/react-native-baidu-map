@@ -33,9 +33,6 @@ export default class UserCtrl extends BaseCtrl {
         this.loginService.success = handler;
         this.loginService.multisuccess = multiSuccess;
         this.loginService.error = loginError;
-        // this.loginService = new window.LoginService(Http, Storage, WeChat, handler, (data: any) => {
-        //     console.log("loginErrorCallBack", data)
-        // });
         this.loginService.Login(); return;
     }
 
@@ -148,11 +145,9 @@ export default class UserCtrl extends BaseCtrl {
             //从缓存中获取Code，包括Code，Token,GameToken
             let cacheAuthorization: Authorization = CacheManager.GetCache(CacheType.Authorization);
             let authorizationDto: AuthorizationDto = cacheAuthorization.GetAuthorization();
-            //cacheAuthorization.SetAuthorization(authorizationDto, gameId);
             //从缓存中用户信息
             let cacheUserInfo: UserInfo = CacheManager.GetCache(CacheType.UserInfo);
             let userInfoDto: UserInfoDto = cacheUserInfo.GetUserInfo();
-            //cacheUserInfo.SetUserInfo(userInfoDto, gameId);
             return true;
         }
         return false;

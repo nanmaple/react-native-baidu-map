@@ -1,5 +1,8 @@
 var GameEnum;
 (function (GameEnum) {
+    /**
+     * 游戏状态
+     */
     var GameStatus;
     (function (GameStatus) {
         /**

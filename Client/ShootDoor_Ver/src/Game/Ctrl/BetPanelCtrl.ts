@@ -69,13 +69,14 @@ class BetPanelCtrl {
         }
         ScenePanel.GameUI.GetInstance().GetBetPanel().GameInit(this.lastBetPosMsg, this.currentBetPosMsg, true);
         ScenePanel.GameUI.GetInstance().GetBetMorePanel().GameInit(this.lastBetPosMsg, this.currentBetPosMsg, true);
+        ScenePanel.GameUI.GetInstance().GetBetMorePanel().StartGameTime(data.BetTime);
     }
 
     /**
      * 开始新一局游戏
      * @param odds 赔率信息
      */
-    public GameStart(odds: any): void {
+    public GameStart(data: Dto.StartGameDto): void {
         //清除当前未投注成功的注单信息
         this.currentBetPosMsg = new Array<Dto.BetDto>();
         //清除上一个注单投注成功的投注信息
@@ -90,7 +91,7 @@ class BetPanelCtrl {
         ScenePanel.GameUI.GetInstance().GetBetPanel().SetBetting(true);
         ScenePanel.GameUI.GetInstance().GetBetMorePanel().SetBetting(true);
         //重置按钮的赔率
-        this.SetOdds(odds);
+        this.SetOdds(data.Odds);
         //账号未关闭
         if (!this.isClose) {
             //重置确认投注按钮
@@ -99,6 +100,7 @@ class BetPanelCtrl {
             //启动定时重发
             Laya.timer.loop(5000, this, this.ReSend);
         }
+        ScenePanel.GameUI.GetInstance().GetBetMorePanel().StartGameTime(data.BetTime);
     }
 
     /**
@@ -124,7 +126,7 @@ class BetPanelCtrl {
             this.balance = dto.Balance;
             //改变投注信息为本次投注成功的注单信息 this.lastBetPosMsg
             this.lastBetPosMsg = dto.TotalBet;
-            console.log("上一次投注数据:",this.lastBetPosMsg);
+            // console.log("上一次投注数据:",this.lastBetPosMsg);
             ScenePanel.GameUI.GetInstance().GetBetPanel().SetBetPos(this.lastBetPosMsg);
             ScenePanel.GameUI.GetInstance().GetBetMorePanel().SetBetPos(this.lastBetPosMsg);
             //提示投注成功
@@ -163,6 +165,7 @@ class BetPanelCtrl {
         //清除当前未投注成功的注单信息
         this.currentBetPosMsg = new Array<Dto.BetDto>();
         this.currentBetSocre = 0;
+        ScenePanel.GameUI.GetInstance().GetBetMorePanel().EndGameTime();
     }
 
     /**
@@ -284,7 +287,7 @@ class BetPanelCtrl {
         }
 
         //当前未投注注单中存在该类型投注，则追加该类型
-        if (!hasPos) {
+        if (!hasPos) {        
             let dto: Dto.BetDto = new Dto.BetDto();
             dto.BetPos = posType;
             //当前位置所有投注金额
@@ -363,7 +366,8 @@ class BetPanelCtrl {
         let dto: Dto.HandlerDto = new Dto.HandlerDto();
         dto.MsgID = null;
         dto.Data = this.currentBetPosMsg;
-        console.log("确认投注：",dto)
+        // console.log(JSON.stringify(dto))
+
         this.handler.runWith(dto);
     }
 
@@ -394,7 +398,6 @@ class BetPanelCtrl {
         //改变投注信息为上一次投注成功的注单信息 this.lastBetPosMsg
         type == 0 ? ScenePanel.GameUI.GetInstance().GetBetPanel().SetBetPos(this.lastBetPosMsg) :
         ScenePanel.GameUI.GetInstance().GetBetMorePanel().SetBetPos(this.lastBetPosMsg);
-
     }
 
     /**

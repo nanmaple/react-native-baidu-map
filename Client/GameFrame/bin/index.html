@@ -41,36 +41,94 @@
 	<!-- 物理引擎matter.js -->
 	<!--用户自定义顺序文件添加到这里-->
 	<!--jsfile--Custom-->
+	<!--<script src="//res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>-->
+	<script src="Login.js"></script>
+	<script src="WeChat.js"></script>
+
+	<script src="js/Game/GameConfig.js"></script>
+	<script src="js/Game/ResourceConfig.js"></script>
+
+	<script src="js/GameFrame/Utils/Http/index.js"></script>
+	<script src="js/GameFrame/Utils/Socket/ISocket.js"></script>
+	<script src="js/GameFrame/Utils/Socket/index.js"></script>
+	<script src="js/GameFrame/Utils/Url.js"></script>
+	<script src="js/GameFrame/Utils/Storage/index.js"></script>
+	<script src="js/GameFrame/Utils/NetworkCheck/index.js"></script>
+	<script src="js/GameFrame/Utils/Http/IHttp.js"></script>
+	<script src="js/GameFrame/Utils/Guid.js"></script>
+	<script src="js/GameFrame/Utils/Object.js"></script>
+
+	<script src="js/GameFrame/Enum/MainCommand.js"></script>
+	<script src="js/GameFrame/Enum/GameViewEnum.js"></script>
+	<script src="js/GameFrame/Enum/ErrorCode.js"></script>
+	<script src="js/GameFrame/Enum/CheckLoginEnum.js"></script>
+	<script src="js/GameFrame/Enum/BetPosStatusEnum.js"></script>
+	<script src="js/GameFrame/Enum/GameModalEnum.js"></script>
+	<script src="js/GameFrame/Enum/GameCommand.js"></script>
+
+	<script src="js/GameFrame/Dto/MessageDto.js"></script>
+	<script src="js/GameFrame/Dto/MemberInfoDto.js"></script>
+	<script src="js/GameFrame/Dto/CheckLoginDto.js"></script>
+	<script src="js/GameFrame/Dto/AuthorizationDto.js"></script>
+	<script src="js/GameFrame/Dto/GameModalDto.js"></script>
+
+	<script src="js/GameFrame/Other/BetPos/BetPosValue.js"></script>
+	<script src="js/GameFrame/Other/BetPos/BetPosDto.js"></script>
+	<script src="js/GameFrame/Other/BetPos/BetPos.js"></script>
+
+	<script src="js/GameFrame/MemberManager/IMemberManager.js"></script>
+	<script src="js/GameFrame/MemberManager/index.js"></script>
+	
+	<script src="js/GameFrame/Network/WebApi/WebApiBase.js"></script>
+	<script src="js/GameFrame/Network/WebApi/index.js"></script>
+	<script src="js/GameFrame/Network/Socket/EventEnum.js"></script>
+	<script src="js/GameFrame/Network/Socket/ISocketManager.js"></script>
+	<script src="js/GameFrame/Network/Socket/index.js"></script>
+
+	<script src="js/GameFrame/GameViewManager/IUI.js"></script>
+	<script src="js/GameFrame/GameViewManager/AlertUI/AlertBaseUI.js"></script>
+	<script src="js/GameFrame/GameViewManager/AlertUI/AlertUIHV.js"></script>
+	<script src="js/GameFrame/GameViewManager/LoadingUI/LoadingBaseUI.js"></script>
+	<script src="js/GameFrame/GameViewManager/LoadingUI/LoadingUIHV.js"></script>
+	<script src="js/GameFrame/GameViewManager/LoadResourceUI/LoadResourceBaseUI.js"></script>
+	<script src="js/GameFrame/GameViewManager/LoadResourceUI/LoadResourceUIHV.js"></script>
+	<script src="js/GameFrame/GameViewManager/index.js"></script>
+
+	<script src="js/GameFrame/Logic/Bet.js"></script>
+	
+	<script src="js/GameFrame/GameManager/index.js"></script>
+	
+	<script src="js/Game/WebApi/Config.js"></script>
+
+	<script src="js/Enum/GameStatus.js"></script>
+	<script src="js/Enum/BetPosType.js"></script>
+	<script src="js/Enum/BetErrorCode.js"></script>
+	<script src="js/Enum/ListenUIEnum.js"></script>
+	<script src="js/Enum/GameViewHandlerEnum.js"></script>
+
+	<script src="js/Dto/SendDto.js"></script>
+	<script src="js/Dto/SendBetDto.js"></script>
+	<script src="js/Dto/MessageDto.js"></script>
+	<script src="js/Dto/Common/MessageDto.js"></script>
+	<script src="js/Dto/Common/BroadcastDto.js"></script>
+	<script src="js/Dto/BetInfoDto.js"></script>
+	
 	<!--jsfile--Custom-->
 	<!--自定义的js(src文件夹下)文件自动添加到下面jsfile模块标签里面里-->
 	<!--删除标签，ide不会自动添加js文件，请谨慎操作-->
 	<!--jsfile--startTag-->
-	<script src="js/GameFrame/Utils/Storage/index.js"></script>
-	<script src="js/GameFrame/Utils/Socket/ISocket.js"></script>
-	<script src="js/GameFrame/Utils/NetworkCheck/index.js"></script>
-	<script src="js/GameFrame/Utils/Http/IHttp.js"></script>
-	<script src="js/GameFrame/Utils/Guid.js"></script>
-	<script src="js/GameFrame/Network/WebApi/WebApiBase.js"></script>
-	<script src="js/GameFrame/Network/Socket/EventEnum.js"></script>
-	<script src="js/GameFrame/MemberManager/IMemberManager.js"></script>
-	<script src="js/GameFrame/Logic/Bet.js"></script>
-	<script src="js/GameFrame/Enum/MainCommand.js"></script>
-	<script src="js/GameFrame/Enum/ErrorCode.js"></script>
-	<script src="js/GameFrame/Dto/MessageDto.js"></script>
-	<script src="js/GameFrame/Dto/MemberInfoDto.js"></script>
-	<script src="js/GameFrame/Dto/AuthorizationDto.js"></script>
-	<script src="js/Dto/MessageDto.js"></script>
-	<script src="js/Dto/GameStatus.js"></script>
-	<script src="js/Dto/GameCommand.js"></script>
-	<script src="js/Dto/BetErrorCode.js"></script>
-	<script src="js/GameFrame/GameManager/index.js"></script>
-	<script src="js/GameFrame/GameMain.js"></script>
-	<script src="js/GameFrame/MemberManager/index.js"></script>
-	<script src="js/GameFrame/Network/Socket/ISocketManager.js"></script>
-	<script src="js/GameFrame/Network/Socket/index.js"></script>
-	<script src="js/GameFrame/Network/WebApi/index.js"></script>
-	<script src="js/GameFrame/Utils/Http/index.js"></script>
-	<script src="js/GameFrame/Utils/Socket/index.js"></script>
+	<script src="js/wx.js"></script>
+	<script src="js/Login.js"></script>
+	<script src="js/Init.js"></script>
+	<script src="js/GameFrame/Other/Bet/BetPos.js"></script>
+	<script src="js/GameFrame/Other/Bet/BetLogic.js"></script>
+	<script src="js/GameFrame/Other/Bet/BetInfoDto.js"></script>
+	<script src="js/GameFrame/Enum/GameStatus.js"></script>
+	<script src="js/Game/GameBgUI/GameBgBaseUI.js"></script>
+	<script src="js/Game/GameBgUI/GameBgUIHV.js"></script>
+	<script src="js/Game/GameMain.js"></script>
+	<script src="js/Game/GameView.js"></script>
+	<script src="js/ui/layaUI.max.all.js"></script>
 	<!--jsfile--endTag-->
 
 	<!--启动类添加到这里-->

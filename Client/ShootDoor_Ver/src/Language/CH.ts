@@ -72,6 +72,7 @@ namespace LanguageUtils {
         gameFail: "很遗憾，再接再厉",
         Maximum: "最大",
         Minimum: "最小",
+        BetMaxPosNum: "一次最大允许20个投注位置",
         /**
          * 成功
          */
