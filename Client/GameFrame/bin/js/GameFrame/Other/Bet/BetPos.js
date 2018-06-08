@@ -5,6 +5,7 @@ var Bet;
     */
     var BetPos = /** @class */ (function () {
         function BetPos() {
+            this.zOrder = 0;
         }
         /**
          * 设置UI类型
@@ -43,6 +44,7 @@ var Bet;
         BetPos.prototype.Refresh = function () {
             this.ui.pos(this.x, this.y);
             this.ui.size(this.width, this.height);
+            this.ui.zOrder = this.zOrder;
             //this.ui处理
             var uiOdd = this.ui.getChildByName('betOdd');
             uiOdd.text = this.Odds ? this.Odds.toString() : '---';
@@ -106,12 +108,13 @@ var Bet;
          */
         BetPos.prototype.onClick = function () {
             var data = new Dto.BroadcastDto();
-            data.value = this.GetValue();
+            data.Value = this.GetValue();
             data.Type = Enum.ListenUIEnum.BetPos;
             var event = new CustomEvent("GameUI", { detail: data });
             document.dispatchEvent(event);
         };
         return BetPos;
     }());
+    Bet.BetPos = BetPos;
 })(Bet || (Bet = {}));
 //# sourceMappingURL=BetPos.js.map

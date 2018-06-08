@@ -1,7 +1,7 @@
 class GameView extends GameViewManager {
     public GameBgUI: GameBgHV;
-    private Handler:Laya.Handler;
-    constructor(Handler:Laya.Handler) {
+    private Handler: Laya.Handler;
+    constructor(Handler: Laya.Handler) {
         super();
         this.Handler = Handler;
         this.GameLoad();
@@ -12,7 +12,7 @@ class GameView extends GameViewManager {
      */
     public ListenScreen(): void {
         let isVer = this.ScreenStatus == ScreenStatus.Ver;
-        if(this.onLoadSuccess && this.onLoginSucess){
+        if (this.onLoadSuccess && this.onLoginSucess) {
             this.GameBgUI.ResetScreen(isVer);
         }
     }
@@ -24,14 +24,13 @@ class GameView extends GameViewManager {
     public ListenUI(data: Dto.BroadcastDto): void {
         switch (data.Type) {
             case Enum.ListenUIEnum.GameLoadComplate:
-                this.CheckLoad(); 
+                this.CheckLoad();
                 break;
             case Enum.ListenUIEnum.OnGameBgClick:
                 this.ShowAlert(1, "点击关闭");
                 break;
             case Enum.ListenUIEnum.BetPos:
-                this.Handler.runWith([Enum.GameViewHandlerEnum.BetPos,'']);
-                console.log(data.value);
+                this.Handler.runWith([Enum.GameViewHandlerEnum.BetPos, data.Value]);
 
                 break;
             default:
@@ -50,7 +49,7 @@ class GameView extends GameViewManager {
         // Laya.ResourceVersion.type = Laya.ResourceVersion.FILENAME_VERSION;
         //加载版本信息文件
         // Laya.ResourceVersion.enable("version.json", Laya.Handler.create(this, ()=>{
-            this.LoadResourceUI.StartLoad(GameResourceConfig.LoadResourcesConfig);
+        this.LoadResourceUI.StartLoad(GameResourceConfig.LoadResourcesConfig);
         // },null,false)); 
     }
     /**
@@ -67,7 +66,7 @@ class GameView extends GameViewManager {
     /**
      * 加载游戏主界面
      */
-    private GameMainUI():void{
+    private GameMainUI(): void {
         let isVer = this.ScreenStatus == ScreenStatus.Ver;
         this.GameBgUI = new GameBgHV();
         this.GameBgUI.ResetScreen(isVer);
@@ -84,7 +83,7 @@ class GameView extends GameViewManager {
     public SetData(type: GameEnum.GameViewEnum, data: any): void {
         switch (type) {
             case GameEnum.GameViewEnum.Alert:
-                this.ShowAlert(0,data);
+                this.ShowAlert(0, data);
                 break;
             case GameEnum.GameViewEnum.Error:
                 console.log(data);
@@ -105,11 +104,11 @@ class GameView extends GameViewManager {
                 break;
         }
     }
-    
+
     /**
      * 游戏登录完成，检查游戏资源加载状态
      */
-    private GameLoginComplete():void{
+    private GameLoginComplete(): void {
         this.onLoginSucess = true;
         if (this.onLoadSuccess) {
             this.LoadResourceUI.Remove();
@@ -133,7 +132,7 @@ class GameView extends GameViewManager {
                 this.OnBetResult(data.Data);
                 break;
             case GameEnum.GameCommand.MSG_GAME_STOPBET:
-                this.OnStopBet();
+                this.OnStopBet(data);
                 break;
             case GameEnum.GameCommand.MSG_GAME_GAMERESULT:
                 this.OnGameResult(data.Data);
@@ -148,22 +147,40 @@ class GameView extends GameViewManager {
         }
     }
     public OnGameInit(data: any): void {
-
+        /**测试 */
+        this.GameBgUI.Set({ type: 0, data: data.RoundID });
+        this.GameBgUI.Set({ type: 1, data: data.Status });
+        this.GameBgUI.Set({ type: 2, data: data.Balance });
+        this.GameBgUI.Set({ type: 3, data: data.Cards });
+        /**测试 */
     }
     public OnGameStart(data: any): void {
-
+        /**测试 */
+        this.GameBgUI.Set({ type: 0, data: data.RoundID });
+        this.GameBgUI.Set({ type: 1, data: data.Status });
+        this.GameBgUI.Set({ type: 3, data:  { FirstCard:  data.FirstCard, SecondCard:"", ThirdCard: "" } });
+        /**测试 */
     }
     public OnBetResult(data: any): void {
-
+        /**测试 */
+        this.GameBgUI.Set({ type: 2, data: data.Balance });
+        /**测试 */
     }
-    public OnStopBet(): void {
-
+    public OnStopBet(data: any): void {
+        /**测试 */
+        this.GameBgUI.Set({ type: 1, data: data.Status });
+        /**测试 */
     }
     public OnGameResult(data: any): void {
-
+        /**测试 */
+        this.GameBgUI.Set({ type: 1, data: data.Status });
+        this.GameBgUI.Set({ type: 3, data: { FirstCard: data.FirstCard, SecondCard: data.SecondCard, ThirdCard: data.ThirdCard } });
+        /**测试 */
     }
     public OnSettleResult(data: any): void {
-
+        /**测试 */
+        this.GameBgUI.Set({ type: 1, data: data.Status });
+        /**测试 */
     }
     public OnGameOther(data: any): void {
 

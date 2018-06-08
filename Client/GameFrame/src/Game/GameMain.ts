@@ -99,6 +99,7 @@ class GameMain extends GameManager {
     public Handler(Type:Enum.GameViewHandlerEnum,Data:any):void{
         switch(Type){
             case Enum.GameViewHandlerEnum.BetPos:
+            this.Bet(Data);
             break;
         }
     }

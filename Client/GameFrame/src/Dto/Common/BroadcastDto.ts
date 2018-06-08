@@ -10,6 +10,6 @@ namespace Dto{
         /**
          * 值
          */
-        value: any = null;
+        Value: any = null;
     }
 }

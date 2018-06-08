@@ -190,6 +190,7 @@ abstract class GameManager {
             case GameEnum.GameCommand.MSG_GAME_START: //游戏开始
                 //修改游戏状态:游戏开始，可投注
                 this.GameStatus = GameEnum.GameStatus.BET;
+                data.Status = this.GameStatus;
                 break;
             case GameEnum.GameCommand.MSG_GAME_BETRESULT://投注结果
                 //同步会员分数
@@ -198,19 +199,23 @@ abstract class GameManager {
             case GameEnum.GameCommand.MSG_GAME_STOPBET://游戏停止投注
                 //修改游戏状态:结束
                 this.GameStatus = GameEnum.GameStatus.END;
+                data.Status = this.GameStatus;
                 break
             case GameEnum.GameCommand.MSG_GAME_GAMERESULT: //游戏结果
                 //修改游戏状态:正在结算
                 this.GameStatus = GameEnum.GameStatus.SETTLE;
+                data.Status = this.GameStatus;
                 break;
             case GameEnum.GameCommand.MSG_GAME_SETTLERESULT://游戏结算
                 //修改游戏状态:已结算
                 this.GameStatus = GameEnum.GameStatus.SETTLEED;
+                data.Status = this.GameStatus;
                 //同步会员分数
                 this.SetMemberScore(data.Balance);
             default:
                 break;
         }
+        response.Data = data;
         this.OnMessageHandler(response);
     }
 
@@ -317,15 +322,15 @@ abstract class GameManager {
      * 设置会员分数，服务器同步过来的分数
      * @param score 分数
      */
-    protected SetMemberScore(score: string) {
+    protected SetMemberScore(score: number) {
         this.MemberInfo.Score = score;
     }
-    
+
     /**
      * 同步服务器已投注成功数据
      * @param data 服务投注数据
      */
-    protected SyncBetData(data:any){
+    protected SyncBetData(data: any) {
         this.BetInfo.BetSuccessData = data;
     }
 
@@ -334,6 +339,13 @@ abstract class GameManager {
      */
     private ResetInfo(): void {
 
+    }
+    /**
+     * 投注逻辑
+     * @param data 位置传输的数据
+     */
+    protected Bet(data: Bet.BetPosValue) {
+        let result = this.betLogic.Bet(this.MemberInfo.Score, this.BetInfo, data);
     }
 
     /********************* 数据处理 *********************/

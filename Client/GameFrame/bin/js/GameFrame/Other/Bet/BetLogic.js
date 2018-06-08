@@ -17,6 +17,9 @@ var Bet;
             //比较新投注数据和已投注数据,是否超过
             var alreadyBet = this.BeforeAmount(currentBet, betInfo.NoBetSuceessData, betInfo.BetSuccessData);
             var pos = currentBet.Pos;
+            if (memScore == 0) {
+                return { success: false, data: '余额不足' };
+            }
             if (alreadyBet != 0 || memScore >= currentBet.MinLimit) { //------------1
                 if (alreadyBet < currentBet.MaxLimit) { //------------2
                     if (currentBet.Amount + alreadyBet > currentBet.MaxLimit) { //------------3.1
@@ -36,14 +39,14 @@ var Bet;
                         betInfo.NoBetSuceessData[pos] = bet;
                     }
                     betInfo.BetSocre += currentBet.Amount;
-                    return betInfo;
+                    return { success: true, data: betInfo };
                 }
                 else {
-                    return '之前投注已达到最大额';
+                    return { success: false, data: '之前投注已达到最大额' };
                 }
             }
             else {
-                return '低于最小投注额';
+                return { success: false, data: '低于最小投注额' };
             }
         };
         /**
@@ -66,10 +69,10 @@ var Bet;
             var pos = currentBet.Pos;
             var alreadyBet = 0;
             if (NoBetSuceessData[pos]) {
-                alreadyBet += NoBetSuceessData[pos].Value;
+                alreadyBet += NoBetSuceessData[pos].Amount;
             }
             if (BetSuccessData[pos]) {
-                alreadyBet += BetSuccessData[pos].Value;
+                alreadyBet += BetSuccessData[pos].Amount;
             }
             return alreadyBet;
         };

@@ -18,7 +18,7 @@ namespace GameDto {
         /**
          * 分数
          */
-        public Score: string = null;
+        public Score: number = null;
         /**
          * 头像
          */

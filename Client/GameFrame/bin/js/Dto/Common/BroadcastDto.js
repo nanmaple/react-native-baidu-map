@@ -8,7 +8,7 @@ var Dto;
             /**
              * 值
              */
-            this.value = null;
+            this.Value = null;
         }
         return BroadcastDto;
     }());

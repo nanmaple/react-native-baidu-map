@@ -107,6 +107,7 @@ var GameMain = /** @class */ (function (_super) {
     GameMain.prototype.Handler = function (Type, Data) {
         switch (Type) {
             case Enum.GameViewHandlerEnum.BetPos:
+                this.Bet(Data);
                 break;
         }
     };

@@ -38,8 +38,7 @@ var GameView = /** @class */ (function (_super) {
                 this.ShowAlert(1, "点击关闭");
                 break;
             case Enum.ListenUIEnum.BetPos:
-                this.Handler.runWith([Enum.GameViewHandlerEnum.BetPos, '']);
-                console.log(data.value);
+                this.Handler.runWith([Enum.GameViewHandlerEnum.BetPos, data.Value]);
                 break;
             default:
                 break;
@@ -138,7 +137,7 @@ var GameView = /** @class */ (function (_super) {
                 this.OnBetResult(data.Data);
                 break;
             case GameEnum.GameCommand.MSG_GAME_STOPBET:
-                this.OnStopBet();
+                this.OnStopBet(data);
                 break;
             case GameEnum.GameCommand.MSG_GAME_GAMERESULT:
                 this.OnGameResult(data.Data);
@@ -153,16 +152,40 @@ var GameView = /** @class */ (function (_super) {
         }
     };
     GameView.prototype.OnGameInit = function (data) {
+        /**测试 */
+        this.GameBgUI.Set({ type: 0, data: data.RoundID });
+        this.GameBgUI.Set({ type: 1, data: data.Status });
+        this.GameBgUI.Set({ type: 2, data: data.Balance });
+        this.GameBgUI.Set({ type: 3, data: data.Cards });
+        /**测试 */
     };
     GameView.prototype.OnGameStart = function (data) {
+        /**测试 */
+        this.GameBgUI.Set({ type: 0, data: data.RoundID });
+        this.GameBgUI.Set({ type: 1, data: data.Status });
+        this.GameBgUI.Set({ type: 3, data: { FirstCard: data.FirstCard, SecondCard: "", ThirdCard: "" } });
+        /**测试 */
     };
     GameView.prototype.OnBetResult = function (data) {
+        /**测试 */
+        this.GameBgUI.Set({ type: 2, data: data.Balance });
+        /**测试 */
     };
-    GameView.prototype.OnStopBet = function () {
+    GameView.prototype.OnStopBet = function (data) {
+        /**测试 */
+        this.GameBgUI.Set({ type: 1, data: data.Status });
+        /**测试 */
     };
     GameView.prototype.OnGameResult = function (data) {
+        /**测试 */
+        this.GameBgUI.Set({ type: 1, data: data.Status });
+        this.GameBgUI.Set({ type: 3, data: { FirstCard: data.FirstCard, SecondCard: data.SecondCard, ThirdCard: data.ThirdCard } });
+        /**测试 */
     };
     GameView.prototype.OnSettleResult = function (data) {
+        /**测试 */
+        this.GameBgUI.Set({ type: 1, data: data.Status });
+        /**测试 */
     };
     GameView.prototype.OnGameOther = function (data) {
     };

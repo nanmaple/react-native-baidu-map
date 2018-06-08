@@ -2,11 +2,12 @@ namespace Bet {
     /*
     * name;
     */
-    class BetPos {
+   export class BetPos {
         public width: number;
         public height: number;
         public x: number;
         public y: number;
+        public zOrder: number = 0;
         public MinLimit: number;
         public MaxLimit: number;
         public Pos: number;//服务器对应位置
@@ -26,7 +27,7 @@ namespace Bet {
         /** 
          * 设置UI类型
         */
-        private SetType(Type: number): void {
+        public SetType(Type?: number): void {
             this.Type = Type;
             switch (Type) {
                 case 0:
@@ -63,6 +64,7 @@ namespace Bet {
         public Refresh(): void {
             this.ui.pos(this.x, this.y);
             this.ui.size(this.width, this.height);
+            this.ui.zOrder = this.zOrder;
             //this.ui处理
             let uiOdd = <Laya.Label>this.ui.getChildByName('betOdd');
             uiOdd.text = this.Odds ? this.Odds.toString() : '---';
@@ -130,7 +132,7 @@ namespace Bet {
          */
         private onClick(): void {
             let data: Dto.BroadcastDto = new Dto.BroadcastDto();
-            data.value = this.GetValue();
+            data.Value = this.GetValue();
             data.Type = Enum.ListenUIEnum.BetPos;
 
             let event = new CustomEvent("GameUI", { detail: data });

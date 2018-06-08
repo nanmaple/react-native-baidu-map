@@ -52,6 +52,10 @@ var GameManager = /** @class */ (function () {
          * 会员管理
          */
         this.memberManager = new MemberManager.Member();
+        /**
+         * 投注管理
+         */
+        this.betLogic = new Bet.BetLogic();
         //启动网络监测
         this.InitNetWork();
         this.InitState();
@@ -161,6 +165,7 @@ var GameManager = /** @class */ (function () {
             case GameEnum.GameCommand.MSG_GAME_START: //游戏开始
                 //修改游戏状态:游戏开始，可投注
                 this.GameStatus = GameEnum.GameStatus.BET;
+                data.Status = this.GameStatus;
                 break;
             case GameEnum.GameCommand.MSG_GAME_BETRESULT: //投注结果
                 //同步会员分数
@@ -169,19 +174,23 @@ var GameManager = /** @class */ (function () {
             case GameEnum.GameCommand.MSG_GAME_STOPBET: //游戏停止投注
                 //修改游戏状态:结束
                 this.GameStatus = GameEnum.GameStatus.END;
+                data.Status = this.GameStatus;
                 break;
             case GameEnum.GameCommand.MSG_GAME_GAMERESULT: //游戏结果
                 //修改游戏状态:正在结算
                 this.GameStatus = GameEnum.GameStatus.SETTLE;
+                data.Status = this.GameStatus;
                 break;
             case GameEnum.GameCommand.MSG_GAME_SETTLERESULT: //游戏结算
                 //修改游戏状态:已结算
                 this.GameStatus = GameEnum.GameStatus.SETTLEED;
+                data.Status = this.GameStatus;
                 //同步会员分数
                 this.SetMemberScore(data.Balance);
             default:
                 break;
         }
+        response.Data = data;
         this.OnMessageHandler(response);
     };
     /**
@@ -251,6 +260,13 @@ var GameManager = /** @class */ (function () {
      * 重置信息
      */
     GameManager.prototype.ResetInfo = function () {
+    };
+    /**
+     * 投注逻辑
+     * @param data 位置传输的数据
+     */
+    GameManager.prototype.Bet = function (data) {
+        var result = this.betLogic.Bet(this.MemberInfo.Score, this.BetInfo, data);
     };
     /********************* 数据处理 *********************/
     /********************* 登录处理 *********************/
