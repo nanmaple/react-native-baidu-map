@@ -21,7 +21,7 @@ namespace MemberManager {
             this.failHanlder = failHanlder;
             let authorizationInfo = this.GetAuthorization();
             if (!authorizationInfo || !authorizationInfo.Token) {
-                !GameConfig.IsDebug && this.GoGameLobby();
+                // !GameConfig.IsDebug && this.GoGameLobby();
             } else {
                 //获取会员信息
                 this.loginService.GetMemberInfo(true);

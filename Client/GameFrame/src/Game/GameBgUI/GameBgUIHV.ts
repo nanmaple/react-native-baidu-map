@@ -14,6 +14,7 @@ class GameBgHV extends GameBgBaseUI implements IUI {
     private firstCard: string = "";
     private secondCard: string = "";
     private thirdCard: string = "";
+    private btnPosArr:any = new Object();
     constructor() {
         super();
         this.roundIdUI = this.CreateLabel(300, 200);
@@ -23,29 +24,32 @@ class GameBgHV extends GameBgBaseUI implements IUI {
         this.balanceUI = this.CreateLabel(400, 250);
         Laya.stage.addChild(this.balanceUI);
 
-        this.firstCardUI = this.CreateLabel(100, 500);
+        this.firstCardUI = this.CreateLabel(200, 300);
         Laya.stage.addChild(this.firstCardUI);
-        this.secondCardUI = this.CreateLabel(250, 500);
+        this.secondCardUI = this.CreateLabel(300, 300);
         Laya.stage.addChild(this.secondCardUI);
-        this.thirdCardUI = this.CreateLabel(400, 500);
+        this.thirdCardUI = this.CreateLabel(400, 300);
         Laya.stage.addChild(this.thirdCardUI);
 
 
-        this.btnUI = new Bet.BetPos();
-        this.btnUI.SetOdds(0.51);
-        this.btnUI.SetText("射偏");
-        this.btnUI.SetValue(10);
-        this.btnUI.SetType();
-        this.btnUI.x = 300;
-        this.btnUI.y = 500;
-        this.btnUI.width = 150;
-        this.btnUI.height = 50;
-        this.btnUI.zOrder = 2;
-        this.btnUI.MinLimit = 10;
-        this.btnUI.MaxLimit = 100;
-        this.btnUI.Pos = 5;
-        this.btnUI.Refresh();
-        Laya.stage.addChild(this.btnUI.GetUI());
+        for(let i = 0;i < 13;i++){
+            this.btnUI = new Bet.BetPos();
+            // this.btnUI.SetOdds(0.51);
+            this.btnUI.SetText("射偏");
+            // this.btnUI.SetValue(10);
+            this.btnUI.SetType(1);   
+            this.btnUI.width = 200;
+            this.btnUI.height = 80;
+            this.btnUI.x = 500;
+            this.btnUI.y = 300 + i * this.btnUI.height;
+            this.btnUI.zOrder = 2;
+            this.btnUI.MinLimit = 10;
+            this.btnUI.MaxLimit = 100;
+            this.btnUI.Pos = i + 1;
+            this.btnUI.Refresh();
+            this.btnPosArr[this.btnUI.Pos] = this.btnUI;
+            Laya.stage.addChild(this.btnUI.GetUI());
+        }
     }
 
     private CreateLabel = (x: number, y: number, color: string = "yellow"): any => {
@@ -58,19 +62,19 @@ class GameBgHV extends GameBgBaseUI implements IUI {
         return ui;
     }
 
-    private CreateBtn = (x: number, y: number, label: string = ""): any => {
-        let ui = new Laya.Button();
-        ui.label =label;//设置 textInput 的文本。
-        ui.skin = 'comp/button.png';
-        ui.labelSize = 22;//设置 textInput 的字体大小。
-        ui.x = x;//设置 textInput 对象的属性 x 的值，用于控制 textInput 对象的显示位置。
-        ui.y = y;//设置 textInput 对象的属性 y 的值，用于控制 textInput 对象的显示位置。
-        ui.width = 150;//设置 textInput 的宽度。
-        ui.height = 36;//设置 textInput 的高度。
-        ui.zOrder = 2;
-        ui.on(Laya.Event.CLICK, this, this.Bet);
-        return ui;
-    }
+    // private CreateBtn = (x: number, y: number, label: string = ""): any => {
+    //     let ui = new Laya.Button();
+    //     ui.label =label;//设置 textInput 的文本。
+    //     ui.skin = 'comp/button.png';
+    //     ui.labelSize = 22;//设置 textInput 的字体大小。
+    //     ui.x = x;//设置 textInput 对象的属性 x 的值，用于控制 textInput 对象的显示位置。
+    //     ui.y = y;//设置 textInput 对象的属性 y 的值，用于控制 textInput 对象的显示位置。
+    //     ui.width = 150;//设置 textInput 的宽度。
+    //     ui.height = 36;//设置 textInput 的高度。
+    //     ui.zOrder = 2;
+    //     ui.on(Laya.Event.CLICK, this, this.Bet);
+    //     return ui;
+    // }
 
     public Log(): void { }
     public Set(data: any): void {
@@ -85,14 +89,37 @@ class GameBgHV extends GameBgBaseUI implements IUI {
                 this.balance = data.data;
                 break;
             case 3:
-                this.firstCard = data.data.FirstCard;
-                this.secondCard = data.data.SecondCard;
-                this.thirdCard = data.data.ThirdCard;
+                if(data.data){
+                    this.firstCard = data.data.FirstCard;
+                    this.secondCard = data.data.SecondCard;
+                    this.thirdCard = data.data.ThirdCard;
+                }
+                break;
+            case 4:
+                this.SetOdds(data.data);
+                break;
+            case 5:
+                this.GameEnd();
                 break;
             default:
                 break;
         }
         this.Refresh();
+    }
+    private GameEnd():void{
+        for(let i in this.btnPosArr){
+            this.btnPosArr[i].SetValue();
+            // this.btnPosArr[i].SetOdds(0);
+            this.btnPosArr[i].Refresh();
+        }
+    }
+    private SetOdds(data:any):void{
+        for(let i in data){
+            if(Number(i) <= 13){
+                this.btnPosArr[i].SetOdds(data[i]);
+                this.btnPosArr[i].Refresh();
+            }
+        }
     }
     public Refresh(): void {
         this.roundIdUI.text = this.roundId;
@@ -103,11 +130,17 @@ class GameBgHV extends GameBgBaseUI implements IUI {
         this.thirdCardUI.text = this.thirdCard;
     }
 
-    private Bet(){
-        this.broadcast.Type = Enum.ListenUIEnum.BetPos;
-        let betDto:Bet.BetDto= new Bet.BetDto();
-        betDto.BetPos = parseInt((Math.random()*10).toString());
-        this.broadcast.Value 
+    public IsBet(data:Bet.BetPosAmountDto):void{
+        for(let i in this.btnPosArr){
+            if(data.Pos == Number(i)){
+                this.btnPosArr[i].SetValue(data.Amount);
+                this.btnPosArr[i].Refresh();
+            }
+        }
+    }
+
+    public ConfirmBet(){
+        this.broadcast.Type = Enum.ListenUIEnum.ConfirmBet;
         let event = new CustomEvent("GameUI", { detail: this.broadcast });
         document.dispatchEvent(event);
     }
@@ -119,7 +152,6 @@ class GameBgHV extends GameBgBaseUI implements IUI {
         this.broadcast.Type = Enum.ListenUIEnum.OnGameBgClick;
         let event = new CustomEvent("GameUI", { detail: this.broadcast });
         document.dispatchEvent(event);
-
     }
     public Close(): void {
         this.Broadcast();

@@ -136,6 +136,22 @@ namespace LanguageUtils {
         /// <summary>
         /// 账户登出
         /// </summary>
-        AccountLoginOut: "Account Login Out"
+        AccountLoginOut: "Account Login Out",
+        /// <summary>
+        /// 正在连接
+        /// </summary>
+        ConnectService: "Connect Service...",
+        /// <summary>
+        /// 余额不足
+        /// </summary>
+        BALANCE_SMALL: "BALANCE SMALL",
+        /// <summary>
+        /// 超过最大投注限额
+        /// </summary>
+        OVER_LIMIT: "OVER LIMIT",
+        /// <summary>
+        /// 低于最小投注限额
+        /// </summary>
+        LOW_LIMIT: "LOW LIMIT"
     }
 }

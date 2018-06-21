@@ -187,6 +187,7 @@ var GameManager = /** @class */ (function () {
                 data.Status = this.GameStatus;
                 //同步会员分数
                 this.SetMemberScore(data.Balance);
+                break;
             default:
                 break;
         }
@@ -237,7 +238,7 @@ var GameManager = /** @class */ (function () {
         if (msg === void 0) { msg = ""; }
         if (key === void 0) { key = "log"; }
         if (GameConfig.IsDebug) {
-            console.log(Date.now().toString(), key + ":", msg);
+            // console.log(Date.now().toString(), key + ":", msg);
         }
     };
     /********************* 网络状态 *********************/
@@ -267,6 +268,7 @@ var GameManager = /** @class */ (function () {
      */
     GameManager.prototype.Bet = function (data) {
         var result = this.betLogic.Bet(this.MemberInfo.Score, this.BetInfo, data);
+        return result;
     };
     /********************* 数据处理 *********************/
     /********************* 登录处理 *********************/

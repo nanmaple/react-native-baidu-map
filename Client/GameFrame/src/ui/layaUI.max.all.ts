@@ -62,8 +62,9 @@ module ui {
 module ui {
     export class GameBgHUI extends View {
 		public close:Laya.Image;
+		public btnsure:Laya.Label;
 
-        public static  uiView:any ={"type":"View","props":{"width":1334,"height":750},"child":[{"type":"Image","props":{"y":0,"x":0,"width":1334,"skin":"ui/gameBg.png","height":750}},{"type":"Image","props":{"y":372,"x":471,"var":"close","skin":"ui/close.png"}}]};
+        public static  uiView:any ={"type":"View","props":{"width":1334,"height":750},"child":[{"type":"Image","props":{"y":0,"x":0,"width":1334,"skin":"ui/gameBg.png","height":750}},{"type":"Image","props":{"y":372,"x":471,"var":"close","skin":"ui/close.png"}},{"type":"Label","props":{"wordWrap":true,"width":100,"var":"btnsure","valign":"top","text":"确定","overflow":"scroll","height":40,"fontSize":32,"font":"Arial","color":"#ffffff","centerX":-563,"bottom":29,"align":"center"}}]};
         constructor(){ super()}
         createChildren():void {
         
@@ -78,10 +79,9 @@ module ui {
 module ui {
     export class GameBgVUI extends View {
 		public close:Laya.Image;
-		public score:Laya.Label;
 		public btnsure:Laya.Label;
 
-        public static  uiView:any ={"type":"View","props":{"width":750,"height":1334},"child":[{"type":"Image","props":{"y":0,"x":0,"skin":"ui/gameBg_v.png"}},{"type":"Image","props":{"y":268,"x":86,"var":"close","skin":"ui/close.png"}},{"type":"Label","props":{"wordWrap":true,"width":200,"var":"score","valign":"top","text":"1","overflow":"scroll","height":40,"fontSize":32,"font":"Arial","color":"#ffffff","centerX":-263,"bottom":1272,"align":"center"}},{"type":"Label","props":{"wordWrap":true,"width":100,"var":"btnsure","valign":"top","text":"确定","overflow":"scroll","height":40,"fontSize":32,"font":"Arial","color":"#ffffff","centerX":-280,"bottom":35,"align":"center"}}]};
+        public static  uiView:any ={"type":"View","props":{"width":750,"height":1334},"child":[{"type":"Image","props":{"y":0,"x":0,"skin":"ui/gameBg_v.png"}},{"type":"Image","props":{"y":268,"x":86,"var":"close","skin":"ui/close.png"}},{"type":"Label","props":{"wordWrap":true,"width":100,"var":"btnsure","valign":"top","text":"确定","overflow":"scroll","height":40,"fontSize":32,"font":"Arial","color":"#ffffff","centerX":-280,"bottom":35,"align":"center"}}]};
         constructor(){ super()}
         createChildren():void {
         
@@ -129,7 +129,7 @@ module ui {
     export class LoadingHUI extends View {
 		public txt:Laya.Label;
 
-        public static  uiView:any ={"type":"View","props":{"width":1334,"height":750},"child":[{"type":"Image","props":{"y":0,"x":0,"width":1334,"skin":"ui/maskBg.png","height":750}},{"type":"Label","props":{"width":242.798828125,"visible":false,"var":"txt","text":"connecting server...","strokeColor":"#d00400","stroke":5,"height":28,"fontSize":28,"color":"#fbff70","centerY":0,"centerX":0,"anchorY":0.5,"anchorX":0.5}}]};
+        public static  uiView:any ={"type":"View","props":{"width":1334,"height":750},"child":[{"type":"Image","props":{"y":0,"x":0,"width":1334,"skin":"ui/maskBg.png","height":750}},{"type":"Label","props":{"width":242.798828125,"visible":true,"var":"txt","text":"connecting server...","strokeColor":"#d00400","stroke":5,"height":28,"fontSize":28,"color":"#fbff70","centerY":0,"centerX":0,"anchorY":0.5,"anchorX":0.5}}]};
         constructor(){ super()}
         createChildren():void {
         
@@ -145,7 +145,7 @@ module ui {
     export class LoadingVUI extends View {
 		public txt:Laya.Label;
 
-        public static  uiView:any ={"type":"View","props":{"width":750,"height":1334},"child":[{"type":"Image","props":{"y":0,"x":0,"width":750,"skin":"ui/maskBg.png","height":1334}},{"type":"Label","props":{"width":242.798828125,"visible":false,"var":"txt","text":"connecting server...","strokeColor":"#d00400","stroke":5,"height":28,"fontSize":28,"color":"#fbff70","centerY":0,"centerX":0,"anchorY":0.5,"anchorX":0.5}}]};
+        public static  uiView:any ={"type":"View","props":{"width":750,"height":1334},"child":[{"type":"Image","props":{"y":0,"x":0,"width":750,"skin":"ui/maskBg.png","height":1334}},{"type":"Label","props":{"width":242.798828125,"visible":true,"var":"txt","text":"connecting server...","strokeColor":"#d00400","stroke":5,"height":28,"fontSize":28,"color":"#fbff70","centerY":0,"centerX":0,"anchorY":0.5,"anchorX":0.5}}]};
         constructor(){ super()}
         createChildren():void {
         

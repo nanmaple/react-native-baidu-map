@@ -14,6 +14,8 @@ var Enum;
          */
         ListenUIEnum[ListenUIEnum["BetPos"] = 1] = "BetPos";
         ListenUIEnum[ListenUIEnum["OnGameBgClick"] = 2] = "OnGameBgClick";
+        ListenUIEnum[ListenUIEnum["ConfirmBet"] = 3] = "ConfirmBet";
+        ListenUIEnum[ListenUIEnum["CancelBet"] = 4] = "CancelBet";
     })(ListenUIEnum = Enum.ListenUIEnum || (Enum.ListenUIEnum = {}));
 })(Enum || (Enum = {}));
 //# sourceMappingURL=ListenUIEnum.js.map

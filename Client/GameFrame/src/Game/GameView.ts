@@ -30,8 +30,11 @@ class GameView extends GameViewManager {
                 this.ShowAlert(1, "点击关闭");
                 break;
             case Enum.ListenUIEnum.BetPos:
+                data.Value.Amount = 10;
                 this.Handler.runWith([Enum.GameViewHandlerEnum.BetPos, data.Value]);
-
+                break;
+            case Enum.ListenUIEnum.ConfirmBet:
+                this.Handler.runWith([Enum.GameViewHandlerEnum.ConfirmBet, null]);
                 break;
             default:
                 break;
@@ -89,7 +92,7 @@ class GameView extends GameViewManager {
                 console.log(data);
                 break;
             case GameEnum.GameViewEnum.Loading:
-                this.LoadingUI.LoadingHandle(data);
+                this.LoadingUI.Set(data);
                 break;
             case GameEnum.GameViewEnum.LoginComplete:
                 this.GameLoginComplete();
@@ -98,7 +101,7 @@ class GameView extends GameViewManager {
                 this.OnMessageHandler(data);
                 break;
             case GameEnum.GameViewEnum.BetPos:
-                console.log(data)
+                this.GameBgUI.IsBet(data);
                 break;
             default:
                 break;
@@ -147,21 +150,26 @@ class GameView extends GameViewManager {
         }
     }
     public OnGameInit(data: any): void {
+        // console.log("gameInit:",data)
         /**测试 */
         this.GameBgUI.Set({ type: 0, data: data.RoundID });
         this.GameBgUI.Set({ type: 1, data: data.Status });
         this.GameBgUI.Set({ type: 2, data: data.Balance });
         this.GameBgUI.Set({ type: 3, data: data.Cards });
+        this.GameBgUI.Set({ type: 4, data: data.Odds });
         /**测试 */
     }
     public OnGameStart(data: any): void {
+        // console.log("gameStart:",data)
         /**测试 */
         this.GameBgUI.Set({ type: 0, data: data.RoundID });
         this.GameBgUI.Set({ type: 1, data: data.Status });
-        this.GameBgUI.Set({ type: 3, data:  { FirstCard:  data.FirstCard, SecondCard:"", ThirdCard: "" } });
+        this.GameBgUI.Set({ type: 3, data:  { FirstCard: data.FirstCard, SecondCard: data.SecondCard, ThirdCard: "/" } });
+        this.GameBgUI.Set({ type: 4, data: data.Odds });
         /**测试 */
     }
     public OnBetResult(data: any): void {
+        console.log("BetResult:",data)
         /**测试 */
         this.GameBgUI.Set({ type: 2, data: data.Balance });
         /**测试 */
@@ -172,14 +180,18 @@ class GameView extends GameViewManager {
         /**测试 */
     }
     public OnGameResult(data: any): void {
+        console.log("GameResult:",data)
         /**测试 */
         this.GameBgUI.Set({ type: 1, data: data.Status });
         this.GameBgUI.Set({ type: 3, data: { FirstCard: data.FirstCard, SecondCard: data.SecondCard, ThirdCard: data.ThirdCard } });
+        this.GameBgUI.Set({ type: 5, data: null});
         /**测试 */
     }
     public OnSettleResult(data: any): void {
+        console.log("SettleResult:",data)
         /**测试 */
         this.GameBgUI.Set({ type: 1, data: data.Status });
+        this.GameBgUI.Set({ type: 2, data: data.Balance });
         /**测试 */
     }
     public OnGameOther(data: any): void {

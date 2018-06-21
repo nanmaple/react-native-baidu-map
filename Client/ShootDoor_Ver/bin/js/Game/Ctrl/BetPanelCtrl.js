@@ -19,12 +19,14 @@ var BetPanelCtrl = /** @class */ (function () {
         this.handler = handler;
         //绑定账号是否关闭
         this.isClose = isClose;
-        ScenePanel.GameUI.GetInstance().GetBetPanel().SetClickHandelr(Laya.Handler.create(this, this.BtnClickHandler, null, false));
+        ScenePanel.GameUI.GetInstance().GetBetPanel().SetClickHandelr(Laya.Handler.create(this, this.BtnClickHandler, [0], false));
+        ScenePanel.GameUI.GetInstance().GetBetMorePanel().SetClickHandelr(Laya.Handler.create(this, this.BtnClickHandler, [1], false));
         if (memberInfo) {
             this.balance = Number(memberInfo.Score);
         }
         //禁用投注
         ScenePanel.GameUI.GetInstance().GetBetPanel().DisabledAllBtn();
+        ScenePanel.GameUI.GetInstance().GetBetMorePanel().DisabledAllBtn();
     }
     /**
      * 设置赔率
@@ -34,6 +36,7 @@ var BetPanelCtrl = /** @class */ (function () {
         this.currentOdds = odds;
         //改变按钮赔率
         ScenePanel.GameUI.GetInstance().GetBetPanel().SetOdds(odds);
+        ScenePanel.GameUI.GetInstance().GetBetMorePanel().SetOdds(odds);
     };
     /**
      * 游戏初始化
@@ -55,12 +58,14 @@ var BetPanelCtrl = /** @class */ (function () {
             this.lastBetPosMsg = data.TotalBet;
         }
         ScenePanel.GameUI.GetInstance().GetBetPanel().GameInit(this.lastBetPosMsg, this.currentBetPosMsg, true);
+        ScenePanel.GameUI.GetInstance().GetBetMorePanel().GameInit(this.lastBetPosMsg, this.currentBetPosMsg, true);
+        ScenePanel.GameUI.GetInstance().GetBetMorePanel().StartGameTime(data.BetTime);
     };
     /**
      * 开始新一局游戏
      * @param odds 赔率信息
      */
-    BetPanelCtrl.prototype.GameStart = function (odds) {
+    BetPanelCtrl.prototype.GameStart = function (data) {
         //清除当前未投注成功的注单信息
         this.currentBetPosMsg = new Array();
         //清除上一个注单投注成功的投注信息
@@ -70,17 +75,21 @@ var BetPanelCtrl = /** @class */ (function () {
         ScenePanel.GameUI.GetInstance().GetBetPanel().ClearFlyChip();
         //重置投注面板
         ScenePanel.GameUI.GetInstance().GetBetPanel().ResetBetBtnLabel();
+        ScenePanel.GameUI.GetInstance().GetBetMorePanel().ResetBetBtnLabel();
         //禁用投注按钮
         ScenePanel.GameUI.GetInstance().GetBetPanel().SetBetting(true);
+        ScenePanel.GameUI.GetInstance().GetBetMorePanel().SetBetting(true);
         //重置按钮的赔率
-        this.SetOdds(odds);
+        this.SetOdds(data.Odds);
         //账号未关闭
         if (!this.isClose) {
             //重置确认投注按钮
             ScenePanel.GameUI.GetInstance().GetBetPanel().DisabledBetPanel(false);
+            ScenePanel.GameUI.GetInstance().GetBetMorePanel().DisabledBetPanel(false);
             //启动定时重发
             Laya.timer.loop(5000, this, this.ReSend);
         }
+        ScenePanel.GameUI.GetInstance().GetBetMorePanel().StartGameTime(data.BetTime);
     };
     /**
      * 投注Ack回调
@@ -104,9 +113,12 @@ var BetPanelCtrl = /** @class */ (function () {
             this.balance = dto.Balance;
             //改变投注信息为本次投注成功的注单信息 this.lastBetPosMsg
             this.lastBetPosMsg = dto.TotalBet;
+            // console.log("上一次投注数据:",this.lastBetPosMsg);
             ScenePanel.GameUI.GetInstance().GetBetPanel().SetBetPos(this.lastBetPosMsg);
+            ScenePanel.GameUI.GetInstance().GetBetMorePanel().SetBetPos(this.lastBetPosMsg);
             //提示投注成功
             ScenePanel.GameUI.GetInstance().GetBetPanel().ShowMsg(language.GetLanguage("betSuccess"));
+            ScenePanel.GameUI.GetInstance().GetBetMorePanel().ShowMsg(language.GetLanguage("betSuccess"));
         }
         else {
             //根据错误码转换对应错误信息
@@ -114,8 +126,10 @@ var BetPanelCtrl = /** @class */ (function () {
             var errorMsg = language_1.GetLanguage(BaseEnum.BetErrorCode[dto.ErrorCode], GameConfig.GameID);
             //提示错误信息
             ScenePanel.GameUI.GetInstance().GetBetPanel().ShowMsg(errorMsg);
+            ScenePanel.GameUI.GetInstance().GetBetMorePanel().ShowMsg(errorMsg);
             //还原上次成功的投注状态
             ScenePanel.GameUI.GetInstance().GetBetPanel().SetBetPos(this.lastBetPosMsg);
+            ScenePanel.GameUI.GetInstance().GetBetMorePanel().SetBetPos(this.lastBetPosMsg);
         }
     };
     /**
@@ -126,15 +140,19 @@ var BetPanelCtrl = /** @class */ (function () {
             return;
         }
         ScenePanel.GameUI.GetInstance().GetBetPanel().SetBetting(false);
+        ScenePanel.GameUI.GetInstance().GetBetMorePanel().SetBetting(false);
         //禁用所有按钮
         ScenePanel.GameUI.GetInstance().GetBetPanel().DisabledAllBtn();
+        ScenePanel.GameUI.GetInstance().GetBetMorePanel().DisabledAllBtn();
         //清除已发送的注单
         this.sendBetPosMsg = new Object();
         //修改位置和数值
         ScenePanel.GameUI.GetInstance().GetBetPanel().GameResult(this.lastBetPosMsg);
+        ScenePanel.GameUI.GetInstance().GetBetMorePanel().GameResult(this.lastBetPosMsg);
         //清除当前未投注成功的注单信息
         this.currentBetPosMsg = new Array();
         this.currentBetSocre = 0;
+        ScenePanel.GameUI.GetInstance().GetBetMorePanel().EndGameTime();
     };
     /**
      * 游戏结算
@@ -146,6 +164,7 @@ var BetPanelCtrl = /** @class */ (function () {
         this.balance = data.Balance;
         //输赢动画效果
         ScenePanel.GameUI.GetInstance().GetBetPanel().SettleResult(data, this.lastBetPosMsg);
+        ScenePanel.GameUI.GetInstance().GetBetMorePanel().SettleResult(data, this.lastBetPosMsg);
         //清除上一个注单投注成功的投注信息
         this.lastBetPosMsg = new Object();
     };
@@ -153,19 +172,19 @@ var BetPanelCtrl = /** @class */ (function () {
      * 按钮回调事件
      * @param clickType 按钮类型及数据
      */
-    BetPanelCtrl.prototype.BtnClickHandler = function (dto) {
+    BetPanelCtrl.prototype.BtnClickHandler = function (type, dto) {
         switch (dto.Type) {
             case ScenePanel.ClickType.ODDS:
                 //点击投注回调
-                this.BetPosType(dto.Data);
+                this.BetPosType(dto.Data, type);
                 break;
             case ScenePanel.ClickType.BET:
                 //投注确认回调
-                this.BetConfirm();
+                this.BetConfirm(type);
                 break;
             case ScenePanel.ClickType.CANCEL:
                 //投注取消按钮回调
-                this.BetCancel();
+                this.BetCancel(type);
                 break;
             case ScenePanel.ClickType.CHIP:
                 //切换筹码回调
@@ -179,7 +198,8 @@ var BetPanelCtrl = /** @class */ (function () {
      * 下注
      * @param posType 投注类型
      */
-    BetPanelCtrl.prototype.BetPosType = function (posType) {
+    BetPanelCtrl.prototype.BetPosType = function (posType, type) {
+        if (type === void 0) { type = 0; }
         var language = new LanguageUtils.Language();
         var length = this.currentBetPosMsg.length;
         var hasPos = false;
@@ -203,39 +223,47 @@ var BetPanelCtrl = /** @class */ (function () {
                     var willAllBetMoney = this.currentBetSocre + this.chip;
                     if (willAllBetMoney > this.balance) {
                         //todo 多语言处理
-                        ScenePanel.GameUI.GetInstance().GetBetPanel().ShowMsg(language.GetLanguage("BALANCE_SMALL"));
+                        type == 0 ? ScenePanel.GameUI.GetInstance().GetBetPanel().ShowMsg(language.GetLanguage("BALANCE_SMALL")) :
+                            ScenePanel.GameUI.GetInstance().GetBetMorePanel().ShowMsg(language.GetLanguage("BALANCE_SMALL"));
                         if (!this.currentBetPosMsg || this.currentBetPosMsg.length == 0) {
-                            ScenePanel.GameUI.GetInstance().GetBetPanel().DisabledBetBtn();
+                            type == 0 ? ScenePanel.GameUI.GetInstance().GetBetPanel().DisabledBetBtn() :
+                                ScenePanel.GameUI.GetInstance().GetBetMorePanel().DisabledBetBtn();
                         }
                         return;
                     }
                     this.currentBetSocre = willAllBetMoney;
                     this.currentBetPosMsg[index].Amount = currentBetSocre;
-                    ScenePanel.GameUI.GetInstance().GetBetPanel().ChipsFly(posType - 1, allBetSocre);
+                    type == 0 ? ScenePanel.GameUI.GetInstance().GetBetPanel().ChipsFly(posType - 1, allBetSocre) :
+                        ScenePanel.GameUI.GetInstance().GetBetMorePanel().ChipsFly(posType, allBetSocre);
                 }
                 else if (allBetSocre > this.limitScore.MaxBet) {
                     var betMoney = this.limitScore.MaxBet - (allBetSocre - this.chip);
                     //投注金额为0，已结达到最大额度
                     if (betMoney <= 0) {
                         //todo 多语言处理
-                        ScenePanel.GameUI.GetInstance().GetBetPanel().ShowMsg(language.GetLanguage("OVER_LIMIT"));
+                        type == 0 ? ScenePanel.GameUI.GetInstance().GetBetPanel().ShowMsg(language.GetLanguage("OVER_LIMIT")) :
+                            ScenePanel.GameUI.GetInstance().GetBetMorePanel().ShowMsg(language.GetLanguage("OVER_LIMIT"));
                         if (!this.currentBetPosMsg || this.currentBetPosMsg.length == 0) {
-                            ScenePanel.GameUI.GetInstance().GetBetPanel().DisabledBetBtn();
+                            type == 0 ? ScenePanel.GameUI.GetInstance().GetBetPanel().DisabledBetBtn() :
+                                ScenePanel.GameUI.GetInstance().GetBetMorePanel().DisabledBetBtn();
                         }
                         return;
                     }
                     var willAllBetMoney = this.currentBetSocre + betMoney;
                     if (willAllBetMoney > this.balance) {
                         //todo 多语言处理
-                        ScenePanel.GameUI.GetInstance().GetBetPanel().ShowMsg(language.GetLanguage("BALANCE_SMALL"));
+                        type == 0 ? ScenePanel.GameUI.GetInstance().GetBetPanel().ShowMsg(language.GetLanguage("BALANCE_SMALL")) :
+                            ScenePanel.GameUI.GetInstance().GetBetMorePanel().ShowMsg(language.GetLanguage("BALANCE_SMALL"));
                         if (!this.currentBetPosMsg || this.currentBetPosMsg.length == 0) {
-                            ScenePanel.GameUI.GetInstance().GetBetPanel().DisabledBetBtn();
+                            type == 0 ? ScenePanel.GameUI.GetInstance().GetBetPanel().DisabledBetBtn() :
+                                ScenePanel.GameUI.GetInstance().GetBetMorePanel().DisabledBetBtn();
                         }
                         return;
                     }
                     this.currentBetSocre = willAllBetMoney;
                     this.currentBetPosMsg[index].Amount = this.limitScore.MaxBet;
-                    ScenePanel.GameUI.GetInstance().GetBetPanel().ChipsFly(posType - 1, this.limitScore.MaxBet);
+                    type == 0 ? ScenePanel.GameUI.GetInstance().GetBetPanel().ChipsFly(posType - 1, this.limitScore.MaxBet) :
+                        ScenePanel.GameUI.GetInstance().GetBetMorePanel().ChipsFly(posType, this.limitScore.MaxBet);
                 }
                 break;
             }
@@ -252,9 +280,11 @@ var BetPanelCtrl = /** @class */ (function () {
                 var willAllBetMoney = this.currentBetSocre + this.chip;
                 if (willAllBetMoney > this.balance) {
                     //todo 多语言处理
-                    ScenePanel.GameUI.GetInstance().GetBetPanel().ShowMsg(language.GetLanguage("BALANCE_SMALL"));
+                    type == 0 ? ScenePanel.GameUI.GetInstance().GetBetPanel().ShowMsg(language.GetLanguage("BALANCE_SMALL")) :
+                        ScenePanel.GameUI.GetInstance().GetBetMorePanel().ShowMsg(language.GetLanguage("BALANCE_SMALL"));
                     if (!this.currentBetPosMsg || this.currentBetPosMsg.length == 0) {
-                        ScenePanel.GameUI.GetInstance().GetBetPanel().DisabledBetBtn();
+                        type == 0 ? ScenePanel.GameUI.GetInstance().GetBetPanel().DisabledBetBtn() :
+                            ScenePanel.GameUI.GetInstance().GetBetMorePanel().DisabledBetBtn();
                     }
                     return;
                 }
@@ -262,7 +292,8 @@ var BetPanelCtrl = /** @class */ (function () {
                 dto.Odds = this.currentOdds[posType];
                 dto.Amount = this.chip;
                 this.currentBetPosMsg.push(dto);
-                ScenePanel.GameUI.GetInstance().GetBetPanel().ChipsFly(posType - 1, allBetSocre);
+                type == 0 ? ScenePanel.GameUI.GetInstance().GetBetPanel().ChipsFly(posType - 1, allBetSocre) :
+                    ScenePanel.GameUI.GetInstance().GetBetMorePanel().ChipsFly(posType, allBetSocre);
             }
             else if (allBetSocre > this.limitScore.MaxBet) {
                 //求出达到超过最大投注额度时，实际可投注的金额
@@ -270,9 +301,11 @@ var BetPanelCtrl = /** @class */ (function () {
                 //投注金额为0，已结达到最大额度
                 if (betMoney <= 0) {
                     //todo 多语言处理
-                    ScenePanel.GameUI.GetInstance().GetBetPanel().ShowMsg(language.GetLanguage("OVER_LIMIT"));
+                    type == 0 ? ScenePanel.GameUI.GetInstance().GetBetPanel().ShowMsg(language.GetLanguage("OVER_LIMIT")) :
+                        ScenePanel.GameUI.GetInstance().GetBetMorePanel().ShowMsg(language.GetLanguage("OVER_LIMIT"));
                     if (!this.currentBetPosMsg || this.currentBetPosMsg.length == 0) {
-                        ScenePanel.GameUI.GetInstance().GetBetPanel().DisabledBetBtn();
+                        type == 0 ? ScenePanel.GameUI.GetInstance().GetBetPanel().DisabledBetBtn() :
+                            ScenePanel.GameUI.GetInstance().GetBetMorePanel().DisabledBetBtn();
                     }
                     return;
                 }
@@ -280,9 +313,11 @@ var BetPanelCtrl = /** @class */ (function () {
                 var willAllBetMoney = this.currentBetSocre + betMoney;
                 if (willAllBetMoney > this.balance) {
                     //todo 多语言处理
-                    ScenePanel.GameUI.GetInstance().GetBetPanel().ShowMsg(language.GetLanguage("BALANCE_SMALL"));
+                    type == 0 ? ScenePanel.GameUI.GetInstance().GetBetPanel().ShowMsg(language.GetLanguage("BALANCE_SMALL")) :
+                        ScenePanel.GameUI.GetInstance().GetBetMorePanel().ShowMsg(language.GetLanguage("BALANCE_SMALL"));
                     if (!this.currentBetPosMsg || this.currentBetPosMsg.length == 0) {
-                        ScenePanel.GameUI.GetInstance().GetBetPanel().DisabledBetBtn();
+                        type == 0 ? ScenePanel.GameUI.GetInstance().GetBetPanel().DisabledBetBtn() :
+                            ScenePanel.GameUI.GetInstance().GetBetMorePanel().DisabledBetBtn();
                     }
                     return;
                 }
@@ -292,18 +327,20 @@ var BetPanelCtrl = /** @class */ (function () {
                 dto.Amount = betMoney;
                 dto.Odds = this.currentOdds[posType];
                 this.currentBetPosMsg.push(dto);
-                ScenePanel.GameUI.GetInstance().GetBetPanel().ChipsFly(posType - 1, this.limitScore.MaxBet);
+                type == 0 ? ScenePanel.GameUI.GetInstance().GetBetPanel().ChipsFly(posType - 1, this.limitScore.MaxBet) :
+                    ScenePanel.GameUI.GetInstance().GetBetMorePanel().ChipsFly(posType, this.limitScore.MaxBet);
             }
         }
         if (!this.currentBetPosMsg || this.currentBetPosMsg.length == 0) {
-            ScenePanel.GameUI.GetInstance().GetBetPanel().DisabledBetBtn();
+            type == 0 ? ScenePanel.GameUI.GetInstance().GetBetPanel().DisabledBetBtn() :
+                ScenePanel.GameUI.GetInstance().GetBetMorePanel().DisabledBetBtn();
         }
     };
     /**
      * 确认投注
      * @param
      */
-    BetPanelCtrl.prototype.BetConfirm = function () {
+    BetPanelCtrl.prototype.BetConfirm = function (type) {
         if (this.isClose || !this.currentBetPosMsg || this.currentBetPosMsg.length === 0) {
             return;
         }
@@ -311,6 +348,7 @@ var BetPanelCtrl = /** @class */ (function () {
         var dto = new Dto.HandlerDto();
         dto.MsgID = null;
         dto.Data = this.currentBetPosMsg;
+        // console.log(JSON.stringify(dto))
         this.handler.runWith(dto);
     };
     /**
@@ -330,14 +368,16 @@ var BetPanelCtrl = /** @class */ (function () {
      * 取消投注
      * @param posType 投注类型
      */
-    BetPanelCtrl.prototype.BetCancel = function () {
+    BetPanelCtrl.prototype.BetCancel = function (type) {
+        if (type === void 0) { type = 0; }
         if (this.isClose) {
             return;
         }
         this.currentBetPosMsg = new Array();
         this.currentBetSocre = 0;
         //改变投注信息为上一次投注成功的注单信息 this.lastBetPosMsg
-        ScenePanel.GameUI.GetInstance().GetBetPanel().SetBetPos(this.lastBetPosMsg);
+        type == 0 ? ScenePanel.GameUI.GetInstance().GetBetPanel().SetBetPos(this.lastBetPosMsg) :
+            ScenePanel.GameUI.GetInstance().GetBetMorePanel().SetBetPos(this.lastBetPosMsg);
     };
     /**
      * 改筹码

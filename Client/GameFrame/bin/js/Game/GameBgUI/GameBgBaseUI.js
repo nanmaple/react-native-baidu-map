@@ -28,6 +28,7 @@ var GameBgBaseUI = /** @class */ (function () {
         this.ui.zOrder = 1;
         this.ui.cacheAs = "bitmap";
         this.ui.close.on(Laya.Event.CLICK, this, this.Close);
+        this.ui.btnsure.on(Laya.Event.CLICK, this, this.ConfirmBet);
         Laya.stage.addChild(this.ui);
     };
     return GameBgBaseUI;

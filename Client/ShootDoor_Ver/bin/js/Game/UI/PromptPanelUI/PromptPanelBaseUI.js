@@ -13,7 +13,7 @@ var ScenePanel;
                 this.ui = new ui.Prompt_VerUI();
             }
             //将提示UI类缓存为静态图像
-            this.ui.zOrder = 8;
+            this.ui.zOrder = 9;
             this.ui.cacheAs = "bitmap";
             this.uiData = ScenePanel.PromptPanelUIData.GetInstance();
             this.ui.visible = this.uiData.isShow;

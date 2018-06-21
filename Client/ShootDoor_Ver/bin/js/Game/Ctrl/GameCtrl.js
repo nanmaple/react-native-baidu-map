@@ -182,6 +182,7 @@ var GameCtrl = /** @class */ (function (_super) {
      * @param data 游戏开始信息
      */
     GameCtrl.prototype.OnGameStart = function (data) {
+        // console.log("游戏开始：",data)
         ScenePanel.GameUI.GetInstance().ClearPokerFly();
         this.CardPanelCtrl.ClearPokerFlip();
         if (!this.roundID || this.roundID < data.RoundID) {
@@ -203,7 +204,7 @@ var GameCtrl = /** @class */ (function (_super) {
         //1.显示赔率
         if (data && data.Odds) {
             this.cacheData.Odds = data.Odds;
-            this.BetCtrl.GameStart(data.Odds);
+            this.BetCtrl.GameStart(data);
         }
         //4.显示历史记录data.History
         if (data && data.History) {
@@ -231,6 +232,7 @@ var GameCtrl = /** @class */ (function (_super) {
      * @param data 游戏投注结果信息
      */
     GameCtrl.prototype.OnBetResult = function (data) {
+        // console.log("投注结果：",data)
         if (!this.roundID || this.roundID < data.RoundID) {
             this.roundID = data.RoundID;
         }
@@ -318,6 +320,7 @@ var GameCtrl = /** @class */ (function (_super) {
      */
     GameCtrl.prototype.OnSettleResult = function (data) {
         var _this = this;
+        // console.log("结算：",data);
         if (!this.roundID || this.roundID < data.RoundID) {
             this.roundID = data.RoundID;
         }

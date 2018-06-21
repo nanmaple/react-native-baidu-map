@@ -8,5 +8,7 @@ namespace Enum {
          * 投注操作
         */
         BetPos = 0,
+
+        ConfirmBet = 1,
     }
 }

@@ -102,7 +102,6 @@ var ScenePanel;
          * 开始加载游戏资源
          */
         GameLoadCtrl.prototype.onLoaded = function () {
-            var _this = this;
             if (GameConfig.ScreenMode) {
                 this.gameLoadScenes = new ScenePanel.GameLoadScenes();
             }
@@ -115,11 +114,11 @@ var ScenePanel;
             //设置版本控制类型为使用文件名映射的方式
             Laya.ResourceVersion.type = Laya.ResourceVersion.FILENAME_VERSION;
             // //加载版本信息文件
-            Laya.ResourceVersion.enable("version.json", Laya.Handler.create(this, function () {
-                //加载游戏资源内容
-                var dataArr = ScenePanel.LoadResourcesConfig;
-                Laya.loader.load(dataArr, Laya.Handler.create(_this, _this.onLoadResource), Laya.Handler.create(_this, _this.onProgress, null, false));
-            }, null, false));
+            // Laya.ResourceVersion.enable("version.json", Laya.Handler.create(this, ()=>{
+            //加载游戏资源内容
+            var dataArr = ScenePanel.LoadResourcesConfig;
+            Laya.loader.load(dataArr, Laya.Handler.create(this, this.onLoadResource), Laya.Handler.create(this, this.onProgress, null, false));
+            // },null,false));  
         };
         /**
          * 加载游戏资源的进度回调

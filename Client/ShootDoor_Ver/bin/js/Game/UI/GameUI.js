@@ -60,6 +60,8 @@ var ScenePanel;
             this.rulePanel = new ScenePanel.RulePanelHor();
             //添加关注提示面板
             this.tipsPanel = new ScenePanel.TipsPanelHor();
+            //添加投注更多面板
+            this.betMorePanel = new ScenePanel.BetMorePanelHor();
             //添加足球面板
             this.footballPanel = new ScenePanel.FootBallPanelHor(this.cardPanel.GetGoalWidth(), this.cardPanel.GetGoalHeight(), this.cardPanel.GetGoalCenterX(), this.cardPanel.GetGoalBottom());
             Laya.stage.addChild(this.bgPanel.GetUI());
@@ -75,6 +77,7 @@ var ScenePanel;
             Laya.stage.addChild(this.tipsPanel.GetUI());
             Laya.stage.addChild(this.footballPanel.GetUI());
             Laya.stage.addChild(this.promptPanel.GetUI());
+            Laya.stage.addChild(this.betMorePanel.GetUI());
             if (this.pokerFlyEffect) {
                 this.pokerFlyEffect.RecoveryPoker();
             }
@@ -108,6 +111,8 @@ var ScenePanel;
             this.rulePanel = new ScenePanel.RulePanelVer();
             //添加关注提示面板
             this.tipsPanel = new ScenePanel.TipsPanelVer();
+            //添加投注更多面板
+            this.betMorePanel = new ScenePanel.BetMorePanelVer();
             //添加足球面板
             this.footballPanel = new ScenePanel.FootBallPanelVer(this.cardPanel.GetGoalWidth(), this.cardPanel.GetGoalHeight(), this.cardPanel.GetGoalCenterX(), this.cardPanel.GetGoalBottom());
             Laya.stage.addChild(this.bgPanel.GetUI());
@@ -123,6 +128,7 @@ var ScenePanel;
             Laya.stage.addChild(this.tipsPanel.GetUI());
             Laya.stage.addChild(this.footballPanel.GetUI());
             Laya.stage.addChild(this.promptPanel.GetUI());
+            Laya.stage.addChild(this.betMorePanel.GetUI());
             if (this.pokerFlyEffect) {
                 this.pokerFlyEffect.RecoveryPoker();
             }
@@ -199,6 +205,12 @@ var ScenePanel;
          */
         GameUI.prototype.GetFootBallPanel = function () {
             return this.footballPanel;
+        };
+        /**
+         * 获取投注更多面板
+         */
+        GameUI.prototype.GetBetMorePanel = function () {
+            return this.betMorePanel;
         };
         /**
          * 扑克牌飞行动画

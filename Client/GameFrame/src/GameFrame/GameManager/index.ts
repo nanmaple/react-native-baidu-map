@@ -212,6 +212,7 @@ abstract class GameManager {
                 data.Status = this.GameStatus;
                 //同步会员分数
                 this.SetMemberScore(data.Balance);
+                break;
             default:
                 break;
         }
@@ -312,7 +313,7 @@ abstract class GameManager {
 
     protected Log(msg: any = "", key: string = "log"): void {
         if (GameConfig.IsDebug) {
-            console.log(Date.now().toString(), key + ":", msg);
+            // console.log(Date.now().toString(), key + ":", msg);
         }
     }
     /********************* 网络状态 *********************/
@@ -344,8 +345,9 @@ abstract class GameManager {
      * 投注逻辑
      * @param data 位置传输的数据
      */
-    protected Bet(data: Bet.BetPosValue) {
+    protected Bet(data: Bet.BetPosValue):any {
         let result = this.betLogic.Bet(this.MemberInfo.Score, this.BetInfo, data);
+        return result;
     }
 
     /********************* 数据处理 *********************/

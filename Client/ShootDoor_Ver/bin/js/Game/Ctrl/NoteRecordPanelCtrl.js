@@ -101,9 +101,16 @@ var NoteRecordPanelCtrl = /** @class */ (function (_super) {
      * @param data
      */
     NoteRecordPanelCtrl.prototype.Success = function (handlerDto) {
-        var data = handlerDto.Data;
-        for (var i = 0; i < data.length; i++) {
-            data[i].GameData = JSON.parse(data[i].GameData);
+        // console.log(handlerDto)
+        var data = new Array();
+        if (handlerDto && handlerDto.Data) {
+            data = handlerDto.Data;
+            for (var i = 0; i < data.length; i++) {
+                data[i].GameData = JSON.parse(data[i].GameData);
+            }
+        }
+        else {
+            data = [];
         }
         this.GetNoteRecordData(data);
         if (!data || data.length < 10) {

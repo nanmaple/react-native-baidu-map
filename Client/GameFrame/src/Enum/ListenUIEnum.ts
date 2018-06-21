@@ -14,5 +14,9 @@ namespace Enum{
         BetPos = 1,
 
         OnGameBgClick,
+
+        ConfirmBet,
+
+        CancelBet,
     }
 }

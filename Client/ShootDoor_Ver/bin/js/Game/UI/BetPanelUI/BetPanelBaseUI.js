@@ -42,7 +42,14 @@ var ScenePanel;
             this.uiData = ScenePanel.BetPanelUIData.GetInstance();
             this.ResetBetBtnLabel();
             this.DisabledBetBtn(true);
+            this.ui.Bet_More_Btn.on(Laya.Event.CLICK, this, this.ShowBetMorePanel);
         }
+        /**
+         * 打开投注更多面板
+         */
+        BetPanelBaseUI.prototype.ShowBetMorePanel = function () {
+            ScenePanel.GameUI.GetInstance().GetBetMorePanel().ShowBetMorePanel();
+        };
         /**
          * 获取UI
          */
@@ -286,32 +293,34 @@ var ScenePanel;
             var card = Utils.Poker.GetNumber(gameResult.ThirdCard);
             var msg = new Array();
             for (var i in data.SettleResult) {
-                if (data.SettleResult[i] > 0) {
-                    if (card == 7) {
-                        var pos = Number(i);
-                        if (Enum.BetPosType.BIG == pos) {
-                            this.betBtnArr[Number(i) - 1].gray = false;
-                            continue;
+                if (Number(i) > 0 && Number(i) <= 13) {
+                    if (data.SettleResult[i] > 0) {
+                        if (card == 7) {
+                            var pos = Number(i);
+                            if (Enum.BetPosType.BIG == pos) {
+                                this.betBtnArr[Number(i) - 1].gray = false;
+                                continue;
+                            }
+                            else if (Enum.BetPosType.SMALL == pos) {
+                                this.betBtnArr[Number(i) - 1].gray = false;
+                                continue;
+                            }
+                            else if (Enum.BetPosType.ODD == pos) {
+                                this.betBtnArr[Number(i) - 1].gray = false;
+                                continue;
+                            }
+                            else if (Enum.BetPosType.EVEN == pos) {
+                                this.betBtnArr[Number(i) - 1].gray = false;
+                                continue;
+                            }
                         }
-                        else if (Enum.BetPosType.SMALL == pos) {
-                            this.betBtnArr[Number(i) - 1].gray = false;
-                            continue;
+                        this.betBtnArr[Number(i) - 1].gray = false;
+                        if (data.SettleResult[i] > 100) {
+                            data.SettleResult[i] = Utils.Money.Format(data.SettleResult[i], 0);
                         }
-                        else if (Enum.BetPosType.ODD == pos) {
-                            this.betBtnArr[Number(i) - 1].gray = false;
-                            continue;
-                        }
-                        else if (Enum.BetPosType.EVEN == pos) {
-                            this.betBtnArr[Number(i) - 1].gray = false;
-                            continue;
-                        }
+                        this.betMoneyLabelArr[Number(i) - 1].label = data.SettleResult[i];
+                        this.uiData.guessSuccess = true;
                     }
-                    this.betBtnArr[Number(i) - 1].gray = false;
-                    if (data.SettleResult[i] > 100) {
-                        data.SettleResult[i] = Utils.Money.Format(data.SettleResult[i], 0);
-                    }
-                    this.betMoneyLabelArr[Number(i) - 1].label = data.SettleResult[i];
-                    this.uiData.guessSuccess = true;
                 }
             }
             if (!this.uiData.guessSuccess) {

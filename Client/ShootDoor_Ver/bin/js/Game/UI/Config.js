@@ -17,6 +17,8 @@ var ScenePanel;
         { url: "ui/bg_bet.png", type: Laya.Loader.IMAGE },
         { url: "ui/bg_door.png", type: Laya.Loader.IMAGE },
         { url: "ui/bg_chips.png", type: Laya.Loader.IMAGE },
+        { url: "ui/bg_bet_more.png", type: Laya.Loader.IMAGE },
+        { url: "ui/bg_bet_more_v.png", type: Laya.Loader.IMAGE },
         { url: "ui/vertical/bg_alert_v.png", type: Laya.Loader.IMAGE },
         { url: "ui/vertical/bet_v1.png", type: Laya.Loader.IMAGE },
         { url: "ui/vertical/betBg_v.png", type: Laya.Loader.IMAGE },

@@ -42,6 +42,7 @@ var Bet;
         };
         //刷新
         BetPos.prototype.Refresh = function () {
+            this.ui.disabled = false;
             this.ui.pos(this.x, this.y);
             this.ui.size(this.width, this.height);
             this.ui.zOrder = this.zOrder;
@@ -67,12 +68,9 @@ var Bet;
          * @param value
          */
         BetPos.prototype.SetValue = function (value) {
-            if ((value + this.Value) >= this.MaxLimit) {
+            if (value >= this.MaxLimit) {
                 this.Status = GameEnum.BetPosStatus.Full;
                 this.Value = this.MaxLimit;
-                return;
-            }
-            else if (value != null && value < this.MinLimit) {
                 return;
             }
             else if (value == null) {
@@ -80,9 +78,6 @@ var Bet;
             }
             else {
                 this.Status = GameEnum.BetPosStatus.Allow;
-                if (this.Value) {
-                    value += this.Value;
-                }
             }
             this.Value = value;
         };
@@ -91,8 +86,11 @@ var Bet;
          * @param value
          */
         BetPos.prototype.SetOdds = function (value) {
-            if (this.Odds == null || this.Status == GameEnum.BetPosStatus.Forbid) {
-                //是否判断禁用状态时 赔率的显示
+            if (value == 0) {
+                this.Status = GameEnum.BetPosStatus.Forbid;
+            }
+            else {
+                this.Status = GameEnum.BetPosStatus.Allow;
             }
             this.Odds = value;
         };
