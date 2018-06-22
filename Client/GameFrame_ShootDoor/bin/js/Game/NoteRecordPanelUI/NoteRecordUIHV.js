@@ -57,6 +57,7 @@ var NoteRecordUIHV = /** @class */ (function (_super) {
     };
     NoteRecordUIHV.prototype.CloseNoteRecord = function () {
         this.isShow = false;
+        this.detailShow = false;
         this.ui.visible = false;
         this.listArray = [];
         this.detailListArray = [];
@@ -123,6 +124,7 @@ var NoteRecordUIHV = /** @class */ (function (_super) {
         var data = this.listArray[index];
         //获取listBox的高度
         this.listBoxH = cell.height;
+        console.log(this.listArray, index);
         //根据子节点的名字，获取子节点对象。   
         var betTime = cell.getChildByName("betTime");
         var betDate = cell.getChildByName("betDate");
@@ -201,6 +203,7 @@ var NoteRecordUIHV = /** @class */ (function (_super) {
     NoteRecordUIHV.prototype.SetListDetailShow = function () {
         if (this.detailShow) {
             this.ui.recordBox.x = -this.recordWidth;
+            this.detailListArray = [];
             this.GoNoteRecordDetail(this.detailData);
         }
         else {

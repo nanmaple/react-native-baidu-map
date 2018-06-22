@@ -1,9 +1,9 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":19,
-    "selecteID":26,
-    "props":{"y":0,"width":1334,"sceneColor":"#ffffff","height":100},
+    "selectedBox":18,
+    "selecteID":22,
+    "props":{"y":0,"width":1334,"sceneColor":"#ffffff","height":93},
     "nodeParent":-1,
     "label":"View",
     "isOpen":true,
@@ -27,7 +27,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":0,"x":0,"width":1334,"var":"headBox","top":0,"height":93,"centerX":0},
+                    "props":{"width":1334,"var":"headBox","top":0,"height":93,"centerX":0},
                     "nodeParent":25,
                     "label":"Image(headBox)",
                     "isOpen":true,
@@ -39,7 +39,7 @@
                         {
                             "x":45,
                             "type":"Button",
-                            "props":{"y":4,"x":932,"width":124,"var":"btnGR","stateNum":"1","skin":"ui/gr.png","height":72},
+                            "props":{"width":124,"var":"btnGR","top":6,"stateNum":"1","skin":"ui/gr.png","right":274,"height":72},
                             "nodeParent":2,
                             "label":"Button(btnGR)",
                             "isDirectory":false,
@@ -52,7 +52,7 @@
                         {
                             "x":45,
                             "type":"Button",
-                            "props":{"y":4,"x":1130,"width":124,"var":"btnRule","stateNum":"1","skin":"ui/rule.png","height":72},
+                            "props":{"width":124,"var":"btnRule","top":6,"stateNum":"1","skin":"ui/rule.png","right":100,"height":72},
                             "nodeParent":2,
                             "label":"Button(btnRule)",
                             "isDirectory":false,
@@ -65,16 +65,17 @@
                         {
                             "x":45,
                             "type":"Image",
-                            "props":{"y":5,"x":510,"width":313,"var":"money","skin":"ui/bg_money.png","height":73},
+                            "props":{"width":313,"var":"money","top":6,"skin":"ui/bg_money.png","height":73,"centerX":0},
                             "nodeParent":2,
                             "label":"Image(money)",
-                            "isOpen":false,
+                            "isOpen":true,
                             "isDirectory":true,
                             "isAniNode":true,
                             "hasChild":true,
                             "compId":18,
                             "child":[
                                 {
+                                    "x":60,
                                     "type":"Label",
                                     "props":{"y":15,"x":77,"width":214,"var":"score","text":"0","overflow":"hidden","height":32,"fontSize":32,"color":"#333333","align":"center"},
                                     "nodeParent":18,
@@ -90,7 +91,7 @@
                         {
                             "x":45,
                             "type":"Image",
-                            "props":{"y":4,"x":76,"width":260,"var":"info","skin":"ui/bg_info.png","height":76},
+                            "props":{"width":260,"var":"info","top":4,"skin":"ui/bg_info.png","left":100,"height":74},
                             "nodeParent":2,
                             "label":"Image(info)",
                             "isOpen":true,
@@ -142,7 +143,7 @@
                         {
                             "x":45,
                             "type":"Image",
-                            "props":{"y":4,"x":130,"visible":false,"var":"attention","skin":"ui/attention.png"},
+                            "props":{"width":124,"visible":false,"var":"attention","top":6,"skin":"ui/attention.png","left":100,"height":72},
                             "nodeParent":2,
                             "label":"Image(attention)",
                             "isDirectory":false,

@@ -48,7 +48,7 @@ var CardUIHV = /** @class */ (function (_super) {
         this.cardList[0].Status = Dto.PokerStatus.Show;
         this.pokerEffect.Show(this.cardList[0]);
         this.cardList[1].Card = card.ThirdCard;
-        this.cardList[1].Status = card.ThirdCard ? Dto.PokerStatus.Show : Dto.PokerStatus.Flip;
+        this.cardList[1].Status = card.ThirdCard ? Dto.PokerStatus.Show : Dto.PokerStatus.Obverse;
         this.pokerEffect.Show(this.cardList[1]);
         this.cardList[2].Card = card.SecondCard;
         this.cardList[2].Status = Dto.PokerStatus.Show;
@@ -63,13 +63,14 @@ var CardUIHV = /** @class */ (function (_super) {
         this.cardList[0].Status = Dto.PokerStatus.Show;
         this.pokerEffect.FlyIn(this.cardList[0]);
         this.cardList[1].Card = card.ThirdCard;
-        this.cardList[1].Status = Dto.PokerStatus.Flip;
+        this.cardList[1].Status = Dto.PokerStatus.Obverse;
         this.pokerEffect.FlyIn(this.cardList[1]);
         this.cardList[2].Card = card.SecondCard;
         this.cardList[2].Status = Dto.PokerStatus.Show;
         this.pokerEffect.FlyIn(this.cardList[2]);
     };
     CardUIHV.prototype.GameResult = function (card) {
+        var _this = this;
         this.Log(card, "Cards");
         if (!card) {
             return;
@@ -79,10 +80,20 @@ var CardUIHV = /** @class */ (function (_super) {
         this.cardList[0].Status = Dto.PokerStatus.Show;
         this.cardList[2].Card = card.SecondCard;
         this.pokerEffect.Show(this.cardList[2]);
-        this.cardList[2].Status = Dto.PokerStatus.Show;
+        this.cardList[2].Status = Dto.PokerStatus.Flip;
         this.cardList[1].Card = card.ThirdCard;
         this.cardList[1].Status = Dto.PokerStatus.Show;
         this.pokerEffect.Flip(this.cardList[1], [this.cardList[0], this.cardList[1], this.cardList[2]]);
+        Laya.timer.once(2000, this, function () {
+            _this.cardList[0].Status = Dto.PokerStatus.Fly;
+            _this.cardList[1].Status = Dto.PokerStatus.Fly;
+            _this.cardList[2].Status = Dto.PokerStatus.Fly;
+            Laya.timer.once(2000, _this, function () {
+                _this.cardList[0].Status = Dto.PokerStatus.End;
+                _this.cardList[1].Status = Dto.PokerStatus.End;
+                _this.cardList[2].Status = Dto.PokerStatus.End;
+            });
+        });
     };
     return CardUIHV;
 }(CardBaseUI));

@@ -20,24 +20,12 @@ var AlertBaseUI = /** @class */ (function () {
         Laya.stage.removeChild(this.ui);
         if (isVer) {
             this.ui = new ui.AlertVUI();
-            if (GameConfig.RatioType) {
-                this.ui.prompt.scale(GameConfig.LengthShort, 1);
-            }
-            else {
-                this.ui.prompt.scale(1, GameConfig.ShortLength);
-            }
         }
         else {
             this.ui = new ui.AlertHUI();
-            if (GameConfig.RatioType) {
-                this.ui.prompt.scale(1, GameConfig.LengthShort);
-            }
-            else {
-                this.ui.prompt.scale(GameConfig.ShortLength, 1);
-            }
         }
         //将提示UI类缓存为静态图像
-        this.ui.zOrder = 10;
+        this.ui.zOrder = 8;
         this.ui.cacheAs = "bitmap";
         //确认、取消按钮绑定点击事件
         this.ui.close.on(Laya.Event.CLICK, this, this.Hide);

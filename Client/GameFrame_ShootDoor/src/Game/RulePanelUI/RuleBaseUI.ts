@@ -33,7 +33,7 @@ abstract class RuleBaseUI{
             htmlD.style.width = 940;
         }
         //基础样式
-        this.ui.zOrder = 8;
+        this.ui.zOrder = 7;
         this.ui.cacheAs = "bitmap";
         this.ui.rule.addChild(htmlD);
         this.ui.rule.vScrollBarSkin = "";

@@ -12,29 +12,12 @@ var HeadBaseUI = /** @class */ (function () {
         Laya.stage.removeChild(this.ui);
         if (isVer) {
             this.ui = new ui.HeadVUI();
-            if (GameConfig.RatioType) {
-                this.ui.btnGR.scale(GameConfig.LengthShort, 1);
-                this.ui.btnRule.scale(GameConfig.LengthShort, 1);
-                this.ui.headBox.scale(GameConfig.LengthShort, 1);
-            }
-            else {
-                this.ui.headBg.scale(1, GameConfig.ShortLength);
-                this.ui.btnGR.scale(1, GameConfig.ShortLength);
-                this.ui.btnRule.scale(1, GameConfig.ShortLength);
-                this.ui.headBox.scale(1, GameConfig.ShortLength);
-            }
         }
         else {
             this.ui = new ui.HeadHUI();
-            if (GameConfig.RatioType) {
-                this.ui.headBg.scale(1, GameConfig.LengthShort);
-            }
-            else {
-                this.ui.headBg.scale(GameConfig.ShortLength, 1);
-            }
         }
         //基础样式
-        this.ui.zOrder = 7;
+        this.ui.zOrder = 5;
         this.ui.cacheAs = "bitmap";
         var language = new LanguageUtils.Language();
         var lang = language.GetLanguageType();

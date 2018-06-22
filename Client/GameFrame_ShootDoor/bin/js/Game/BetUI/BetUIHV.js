@@ -51,7 +51,7 @@ var BetUIHV = /** @class */ (function (_super) {
             return;
         }
         this.SetLimit(data.Limit);
-        if (data.Status == Enum.GameStatus.DEFAULT) {
+        if (data.Status == Enum.GameStatus.DEFAULT || data.Status == Enum.GameStatus.SETTLE) {
             return;
         }
         this.SetOdds(data.Odds);
@@ -498,26 +498,36 @@ var BetUIHV = /** @class */ (function (_super) {
         }
     };
     /**
-     * 确认投注
+     * 点击确定投注
      */
     BetUIHV.prototype.ConfirmBet = function () {
-        this.DisabledBetBtn(true);
         this.broadcast.Type = Enum.ListenUIEnum.ConfirmBet;
         var event = new CustomEvent("GameUI", { detail: this.broadcast });
         document.dispatchEvent(event);
     };
     ;
     /**
-     * 取消投注
+     * 点击取消投注
      */
-    BetUIHV.prototype.CancleBet = function () {
-        this.DisabledBetBtn(true);
-        this.SetBetPos(this.lastBetPosMsg);
+    BetUIHV.prototype.CancelBet = function () {
         this.broadcast.Type = Enum.ListenUIEnum.CancelBet;
         var event = new CustomEvent("GameUI", { detail: this.broadcast });
         document.dispatchEvent(event);
     };
     ;
+    /**
+     * 确定投注
+     */
+    BetUIHV.prototype.Confirm = function () {
+        this.DisabledBetBtn(true);
+    };
+    /**
+     * 取消投注
+     */
+    BetUIHV.prototype.Cancel = function () {
+        this.DisabledBetBtn(true);
+        this.SetBetPos(this.lastBetPosMsg);
+    };
     /**
      * 筹码动画
      * @param endX 结束位置x坐标
@@ -528,42 +538,23 @@ var BetUIHV = /** @class */ (function (_super) {
      */
     BetUIHV.prototype.ChipsFly = function (data) {
         Utils.BackgroundMusic.PlaySounds("sound/bet.wav");
-        var curBetPosChip = this.betBtnArr[data.Pos].GetUI().getChildAt(2);
         //从对象池获取移动对象
         var flyChip = Laya.Pool.getItemByClass("flyChip", Laya.Button);
         //设置状态数
+        flyChip.zOrder = 5;
         flyChip.stateNum = 1;
+        flyChip.scale(1.1, 1.1);
         flyChip.label = this.chipPrice.toString();
         flyChip.labelSize = 20;
         flyChip.labelColors = "#f00";
         flyChip.anchorX = 0.5;
         flyChip.anchorY = 0.5;
         flyChip.skin = this.chipsNormalSkin;
-        this.ui.addChild(flyChip);
+        Laya.stage.addChild(flyChip);
         //筹码动画
         var endX = (this.betBtnArr[data.Pos].GetUI().getChildAt(2).x + this.betBtnArr[data.Pos].x);
         var endY = this.betBtnArr[data.Pos].GetUI().getChildAt(2).localToGlobal(new Laya.Point(this.betBtnArr[data.Pos].GetUI().getChildAt(2).width / 2, this.betBtnArr[data.Pos].GetUI().getChildAt(2).height / 2));
         var obj = { x: endY.x, y: endY.y, scaleX: 1, scaleY: 1 };
-        if (GameConfig.ScreenMode == ScreenStatus.Ver) {
-            if (GameConfig.RatioType) {
-                flyChip.scale(1.1 * GameConfig.LengthShort, 1.1);
-                obj.scaleX = GameConfig.LengthShort;
-            }
-            else {
-                flyChip.scale(1.1, 1.1 * GameConfig.ShortLength);
-                obj.scaleY = GameConfig.ShortLength;
-            }
-        }
-        else {
-            if (GameConfig.RatioType) {
-                flyChip.scale(1.1, 1.1 * GameConfig.LengthShort);
-                obj.scaleY = GameConfig.LengthShort;
-            }
-            else {
-                flyChip.scale(1.1 * GameConfig.ShortLength, 1.1);
-                obj.scaleX = GameConfig.ShortLength;
-            }
-        }
         //设置初始位置为当前选择的筹码的位置
         var chip = this.selectedChip.localToGlobal(new Laya.Point(this.selectedChip.width / 2, this.selectedChip.height / 2));
         flyChip.pos(chip.x, chip.y);

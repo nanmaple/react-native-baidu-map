@@ -45,7 +45,7 @@ abstract class HeadBaseUI{
             this.ui = new ui.HeadHUI();
         }
         //基础样式
-        this.ui.zOrder = 7;
+        this.ui.zOrder = 5;
         this.ui.cacheAs = "bitmap";
         let language: LanguageUtils.Language = new LanguageUtils.Language();
         let lang: number = language.GetLanguageType();

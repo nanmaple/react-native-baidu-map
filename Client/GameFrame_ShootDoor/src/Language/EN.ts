@@ -350,5 +350,60 @@ namespace LanguageUtils {
         GameTips:"<p style='fontSize:35'>Since you haven't logged in yet, now it's a play mode, to experience more fun games, click on the top left</p>"+
         "<p style='fontSize:35;color:red'>&nbsp;'attention'&nbsp;</p>"+
         "<p style='fontSize:35'>button to log in.</p>",
+
+
+        //局号面板投注状态信息（BetStatus）
+        /**
+         * 期号
+         */
+        Issue: "No:",
+        /**
+         * 等待开始
+         */
+        WaitStart: "Waiting",
+        /**
+         * 正在投注
+         */        
+        Betting: "Betting",
+        /**
+         * 停止投注
+         */
+        EndBet: "End Bet",
+        /**
+         * 正在结算
+         */
+        Settling: "Settling",
+        /**
+         * 已结算
+         */
+        HaveSettled: "Settled",
+
+
+        //游戏结果进球提示
+        /**
+         * 球进啦
+         */
+        ShootIn: "Shoot In",
+        /**
+         * 左边射偏啦
+         */
+        ShootLeft: "Shoot Left",
+        /**
+         * 右边射偏啦
+         */
+        ShootRight: "Shoot Right",
+        /**
+         * 撞柱啦
+         */
+        ShootGoalPost: "Shoot GoalPost",
+        /**
+         * 左边撞柱啦
+         */
+        ShootLeftGoalPost: "Shoot Left GoalPost",
+        /**
+         * 右边撞柱啦
+         */
+        ShootRightGoalPost: "Shoot Right GoalPost",
+
     }
 }

@@ -10,6 +10,8 @@ class GameView extends GameViewManager {
     public HistoryUI: HistoryUIHV;
     public BetMoreUI: BetMoreUIHV;
     public TipsUI : TipsUIHV;
+    public RoundUI : RoundUIHV;
+    public FootballUI: FootballHV;
 
     constructor(Handler: Laya.Handler) {
         super();
@@ -33,6 +35,8 @@ class GameView extends GameViewManager {
             this.HistoryUI.ResetScreen(isVer);
             this.BetMoreUI.ResetScreen(isVer);
             this.TipsUI.ResetScreen(isVer);
+            this.RoundUI.ResetScreen(isVer);
+            this.FootballUI.ResetScreen(isVer);
         }
     }
     /**
@@ -113,6 +117,10 @@ class GameView extends GameViewManager {
         this.BetMoreUI.ResetScreen(isVer);
         this.TipsUI = new TipsUIHV();
         this.TipsUI.ResetScreen(isVer);
+        this.RoundUI = new RoundUIHV();
+        this.RoundUI.ResetScreen(isVer);
+        this.FootballUI = new FootballHV();
+        this.FootballUI.ResetScreen(isVer);
     }
 
     /**
@@ -130,9 +138,13 @@ class GameView extends GameViewManager {
                 this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.BetPos, data.Value]);
                 break;
             case Enum.ListenUIEnum.ConfirmBet:
+                this.BetUI.Confirm();
+                this.BetMoreUI.Confirm();
                 this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.ConfirmBet, null]);
                 break;
             case Enum.ListenUIEnum.CancelBet:
+                this.BetUI.Cancel();
+                this.BetMoreUI.Cancel();
                 this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.CancelBet, null]);
                 break;
             case Enum.ListenUIEnum.ShowRule:
@@ -237,6 +249,15 @@ class GameView extends GameViewManager {
      */
     public OnGameInit(data: Dto.InitGameDto): void {
         this.Log(data, "GameInit");
+        //通知round界面
+        this.RoundUI.SetGameRound(data.RoundID);
+        if(data.Status == Enum.GameStatus.DEFAULT){
+            this.RoundUI.SetGameState(Enum.GameStatus.DEFAULT);
+        }else{
+            this.RoundUI.SetGameState(Enum.GameStatus.BET);
+        }
+        
+
         if (data) {
             this.BetUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_INIT, Data: data });
             this.CardUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_INIT, Data: data.Cards });
@@ -254,6 +275,10 @@ class GameView extends GameViewManager {
      */
     public OnGameStart(data: Dto.StartGameDto): void {
         this.Log(data, "GameStart");
+        //通知round界面
+        this.RoundUI.SetGameRound(data.RoundID);
+        this.RoundUI.SetGameState(Enum.GameStatus.BET);
+
         if (data && data.Odds) {
             this.BetUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_START, Data: data });
             this.BetMoreUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_START, Data: data });
@@ -295,9 +320,12 @@ class GameView extends GameViewManager {
      */
     public OnGameResult(data: Dto.EndGameDto): void {
         this.Log(data, "GameResult");
+        //通知round界面
+        this.RoundUI.SetGameState(Enum.GameStatus.END);
+
         this.BetUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_GAMERESULT, Data: data });
         this.CardUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_GAMERESULT, Data: { FirstCard: data.FirstCard, SecondCard: data.SecondCard, ThirdCard: data.ThirdCard } });
-
+        
         let historyDto: Dto.HistoryRoundDto = new Dto.HistoryRoundDto();
         historyDto.RoundID = data.RoundID;
         historyDto.FirstCard = data.FirstCard;
@@ -306,6 +334,9 @@ class GameView extends GameViewManager {
         this.HistoryUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_GAMERESULT, Data: historyDto });
         this.BetMoreUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_GAMERESULT, Data: data });
         this.TimeUI.EndGameTime();
+        Laya.timer.once(2000, this, ()=>{
+            this.FootballUI.Set(data);
+        })
     }
 
     /**
@@ -314,7 +345,13 @@ class GameView extends GameViewManager {
      */
     public OnSettleResult(data: Dto.GameResultDto): void {
         this.Log(data, "SettleResult");
+        //通知round界面
+        this.RoundUI.SetGameState(Enum.GameStatus.SETTLE);
+
         Laya.timer.once(5000, this, () => {
+            //通知round界面
+            this.RoundUI.SetGameState(Enum.GameStatus.SETTLEED);
+
             this.BetUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_SETTLERESULT, Data: data });
             this.BetMoreUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_SETTLERESULT, Data: data });
             this.HeadUIHV.ChangeMoney(data.Balance)

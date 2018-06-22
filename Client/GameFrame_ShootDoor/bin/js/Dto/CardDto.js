@@ -30,9 +30,30 @@ var Dto;
     }());
     var PokerStatus;
     (function (PokerStatus) {
+        /**
+         * 隐藏
+         */
         PokerStatus[PokerStatus["Hide"] = 0] = "Hide";
+        /**
+         * 正常显示
+         */
         PokerStatus[PokerStatus["Show"] = 1] = "Show";
-        PokerStatus[PokerStatus["Flip"] = 2] = "Flip";
+        /**
+         * 反面
+         */
+        PokerStatus[PokerStatus["Obverse"] = 2] = "Obverse";
+        /**
+         * 翻转
+         */
+        PokerStatus[PokerStatus["Flip"] = 3] = "Flip";
+        /**
+         * 飞动
+         */
+        PokerStatus[PokerStatus["Fly"] = 4] = "Fly";
+        /**
+         * 缩小在历史面板
+         */
+        PokerStatus[PokerStatus["End"] = 5] = "End";
     })(PokerStatus = Dto.PokerStatus || (Dto.PokerStatus = {}));
 })(Dto || (Dto = {}));
 //# sourceMappingURL=CardDto.js.map

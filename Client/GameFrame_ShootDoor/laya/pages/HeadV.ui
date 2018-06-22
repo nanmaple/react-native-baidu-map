@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":4,
-    "selecteID":12,
+    "selectedBox":11,
+    "selecteID":5,
     "props":{"width":750,"sceneColor":"#ffffff","height":200},
     "nodeParent":-1,
     "label":"View",
@@ -70,14 +70,13 @@
                     "props":{"width":260,"var":"info","skin":"ui/bg_info.png","left":50,"height":76,"centerY":0},
                     "nodeParent":11,
                     "label":"Image(info)",
-                    "isOpen":true,
+                    "isOpen":false,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
                     "compId":4,
                     "child":[
                         {
-                            "x":45,
                             "type":"Label",
                             "props":{"y":10,"x":80,"width":180,"var":"nickname","valign":"middle","text":"测试","overflow":"hidden","height":25,"fontSize":20,"color":"#333333","align":"left"},
                             "nodeParent":4,
@@ -90,7 +89,6 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Image",
                             "props":{"y":8,"x":8,"width":56,"var":"headPic","skin":"ui/userImg.png","height":56},
                             "nodeParent":4,
@@ -103,7 +101,6 @@
                                 ]
                         },
                         {
-                            "x":45,
                             "type":"Label",
                             "props":{"y":35,"x":80,"width":180,"var":"agent","valign":"middle","text":"1","overflow":"hidden","height":25,"fontSize":20,"color":"#333333","align":"left"},
                             "nodeParent":4,
@@ -122,14 +119,13 @@
                     "props":{"width":313,"var":"money","skin":"ui/bg_money.png","right":50,"height":73,"centerY":0},
                     "nodeParent":11,
                     "label":"Image(money)",
-                    "isOpen":true,
+                    "isOpen":false,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
                     "compId":3,
                     "child":[
                         {
-                            "x":45,
                             "type":"Label",
                             "props":{"y":15,"x":77,"width":214,"var":"score","text":"0","overflow":"hidden","height":32,"fontSize":32,"color":"#333333","align":"center"},
                             "nodeParent":3,

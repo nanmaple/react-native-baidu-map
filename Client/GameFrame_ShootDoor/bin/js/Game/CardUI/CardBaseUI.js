@@ -27,6 +27,9 @@ var CardBaseUI = /** @class */ (function () {
         Laya.stage.removeChild(this.cardList[0].Poker);
         Laya.stage.removeChild(this.cardList[1].Poker);
         Laya.stage.removeChild(this.cardList[2].Poker);
+        this.pokerEffect.ClearPoker(this.cardList[0].Poker);
+        this.pokerEffect.ClearPoker(this.cardList[1].Poker);
+        this.pokerEffect.ClearPoker(this.cardList[2].Poker);
         var pokerPos = isVer ? this.pokerPosV : this.pokerPosH;
         var pokerEndPos = isVer ? this.pokerEndPosV : this.pokerEndPosH;
         var pokerScale = isVer ? this.pokerScaleV : this.pokerScaleH;
@@ -38,9 +41,7 @@ var CardBaseUI = /** @class */ (function () {
             this.cardList[i].Scale.scaleX = pokerScale.scaleX;
             this.cardList[i].Scale.scaleY = pokerScale.scaleY;
             Laya.stage.addChild(this.cardList[i].Poker);
-            if (this.cardList[i].Status !== Dto.PokerStatus.Hide) {
-                this.pokerEffect.Show(this.cardList[i]);
-            }
+            this.pokerEffect.Show(this.cardList[i]);
         }
     };
     /**

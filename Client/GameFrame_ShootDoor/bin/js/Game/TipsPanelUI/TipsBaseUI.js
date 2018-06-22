@@ -3,7 +3,7 @@
 */
 var TipsBaseUI = /** @class */ (function () {
     function TipsBaseUI() {
-        this.isShow = false;
+        this.isShow = true;
     }
     /**
      * 切换横竖屏
@@ -18,24 +18,12 @@ var TipsBaseUI = /** @class */ (function () {
         htmlD.style.height = 250;
         if (isVer) {
             this.ui = new ui.TipsVUI();
-            if (GameConfig.RatioType) {
-                this.ui.tipmsg.scale(GameConfig.LengthShort, 1);
-            }
-            else {
-                this.ui.tipmsg.scale(1, GameConfig.ShortLength);
-            }
         }
         else {
             this.ui = new ui.TipsHUI();
-            if (GameConfig.RatioType) {
-                this.ui.tipmsg.scale(1, GameConfig.LengthShort);
-            }
-            else {
-                this.ui.tipmsg.scale(GameConfig.ShortLength, 1);
-            }
         }
         //基础样式
-        this.ui.zOrder = 10;
+        this.ui.zOrder = 7;
         this.ui.cacheAs = "bitmap";
         this.ui.visible = this.isShow;
         this.ui.tips.vScrollBarSkin = "";

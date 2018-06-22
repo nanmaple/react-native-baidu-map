@@ -27,12 +27,22 @@ var PokerEffect = /** @class */ (function () {
         dto.Poker.scale(1, 1);
         dto.Poker.x = dto.BaseScale.x;
         dto.Poker.y = dto.BaseScale.y;
-        dto.Poker.visible = true;
         if (dto.Card) {
             dto.Poker.img.skin = this.GetPokerUrl(dto.Card);
         }
         else {
             dto.Poker.img.skin = this.pokerBgUrl;
+        }
+        switch (dto.Status) {
+            case Dto.PokerStatus.Hide:
+            case Dto.PokerStatus.End:
+            case Dto.PokerStatus.Flip:
+            case Dto.PokerStatus.Fly:
+                dto.Poker.visible = false;
+                break;
+            default:
+                dto.Poker.visible = true;
+                break;
         }
     };
     /**
@@ -52,31 +62,30 @@ var PokerEffect = /** @class */ (function () {
     PokerEffect.prototype.Flip = function (dto, pokerData) {
         if (dto.Card) {
             dto.Poker.scaleX = 1;
-            Laya.Tween.to(dto.Poker, { scaleX: 0 }, 1000, Laya.Ease.circIn, Laya.Handler.create(this, this.EndFlip, [dto.Poker, dto.Card, pokerData], false));
+            Laya.Tween.to(dto.Poker, { scaleX: 0 }, 1000, Laya.Ease.circIn, Laya.Handler.create(this, this.EndFlip, [dto, pokerData], false));
         }
     };
     /**
      * 翻转后半程(扑克容器scaleX为0开始)
      */
-    PokerEffect.prototype.EndFlip = function (poker, type, pokerData) {
+    PokerEffect.prototype.EndFlip = function (dto, pokerData) {
         var _this = this;
-        poker.img.skin = this.GetPokerUrl(type);
-        Laya.Tween.to(poker, { scaleX: 1 }, 1000, Laya.Ease.circOut, Laya.Handler.create(this, function () {
-            poker.scale(1, 1);
+        dto.Poker.img.skin = this.GetPokerUrl(dto.Card);
+        Laya.Tween.to(dto.Poker, { scaleX: 1 }, 1000, Laya.Ease.circOut, Laya.Handler.create(this, function () {
+            dto.Poker.scale(1, 1);
             if (pokerData) {
-                _this.FlyOut(pokerData);
+                var length_1 = pokerData.length;
+                for (var i = 0; i < length_1; i++) {
+                    _this.FlyOut(pokerData[i]);
+                }
             }
         }));
     };
-    PokerEffect.prototype.FlyOut = function (pokerData) {
-        var length = pokerData.length;
-        for (var i = 0; i < length; i++) {
-            var item = pokerData[i];
-            Laya.Tween.to(item.Poker, { x: item.Scale.x, y: item.Scale.y, scaleX: item.Scale.scaleX, scaleY: item.Scale.scaleY }, 2000, Laya.Ease.sineInOut, Laya.Handler.create(this, function (pokerItem) {
-                // pokerItem.poker.visible = false;
-                // this.ClearPoker(pokerItem.poker);
-            }, [item]));
-        }
+    PokerEffect.prototype.FlyOut = function (item) {
+        Laya.Tween.to(item.Poker, { x: item.Scale.x, y: item.Scale.y, scaleX: item.Scale.scaleX, scaleY: item.Scale.scaleY }, 2000, Laya.Ease.sineInOut, Laya.Handler.create(this, function (pokerItem) {
+            // pokerItem.poker.visible = false;
+            // this.ClearPoker(pokerItem.poker);
+        }, [item]));
     };
     /**
      * 清理扑克牌动画

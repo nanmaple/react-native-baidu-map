@@ -30,9 +30,12 @@ abstract class CardBaseUI {
         Laya.stage.removeChild(this.cardList[0].Poker);
         Laya.stage.removeChild(this.cardList[1].Poker);
         Laya.stage.removeChild(this.cardList[2].Poker);
-        let pokerPos = isVer ?this.pokerPosV:this.pokerPosH;
-        let pokerEndPos = isVer ?this.pokerEndPosV:this.pokerEndPosH;
-        let pokerScale = isVer ?this.pokerScaleV:this.pokerScaleH;
+        this.pokerEffect.ClearPoker(this.cardList[0].Poker);
+        this.pokerEffect.ClearPoker(this.cardList[1].Poker);
+        this.pokerEffect.ClearPoker(this.cardList[2].Poker);
+        let pokerPos = isVer ? this.pokerPosV : this.pokerPosH;
+        let pokerEndPos = isVer ? this.pokerEndPosV : this.pokerEndPosH;
+        let pokerScale = isVer ? this.pokerScaleV : this.pokerScaleH;
         for (var i = 0; i < this.pokerNum; i++) {
             this.cardList[i].BaseScale.x = pokerPos[i].x;
             this.cardList[i].BaseScale.y = pokerPos[i].y;
@@ -41,9 +44,7 @@ abstract class CardBaseUI {
             this.cardList[i].Scale.scaleX = pokerScale.scaleX;
             this.cardList[i].Scale.scaleY = pokerScale.scaleY;
             Laya.stage.addChild(this.cardList[i].Poker);
-            if (this.cardList[i].Status !== Dto.PokerStatus.Hide) {
-                this.pokerEffect.Show(this.cardList[i]);
-            }
+            this.pokerEffect.Show(this.cardList[i]);
         }
     }
 

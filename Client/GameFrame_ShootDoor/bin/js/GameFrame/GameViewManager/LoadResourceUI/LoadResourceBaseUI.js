@@ -13,21 +13,9 @@ var LoadResourceBaseUI = /** @class */ (function () {
         Laya.stage.removeChild(this.ui);
         if (isVer) {
             this.ui = new ui.GameLoadVUI();
-            if (GameConfig.RatioType) {
-                this.ui.progressLabel.scale(GameConfig.LengthShort, 1);
-            }
-            else {
-                this.ui.progressLabel.scale(1, GameConfig.ShortLength);
-            }
         }
         else {
             this.ui = new ui.GameLoadHUI();
-            if (GameConfig.RatioType) {
-                this.ui.progressLabel.scale(1, GameConfig.LengthShort);
-            }
-            else {
-                this.ui.progressLabel.scale(GameConfig.ShortLength, 1);
-            }
         }
         this.ui.zOrder = 1;
         this.ui.cacheAs = "bitmap";

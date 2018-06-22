@@ -21,58 +21,17 @@ var BetBaseUI = /** @class */ (function () {
         if (isVer) {
             this.ui = new ui.BetVUI();
             this.CreateBetBtn(isVer);
-            if (GameConfig.RatioType) {
-                this.ui.CancleBetBtn.scale(GameConfig.LengthShort, 1);
-                this.ui.ConfirmBetBtn.scale(GameConfig.LengthShort, 1);
-                this.ui.Chips.scale(GameConfig.LengthShort, 1);
-                for (var i = 0; i < 13; i++) {
-                    var Box = this.ui.BetBox.getChildAt(i);
-                    var child1 = Box.getChildAt(0);
-                    var child2 = Box.getChildAt(1);
-                    var child3 = Box.getChildAt(2);
-                    child1.scale(GameConfig.LengthShort, 1);
-                    child2.scale(GameConfig.LengthShort, 1);
-                    child3.scale(GameConfig.LengthShort, 1);
-                }
-                this.ui.MsgPanel.scale(GameConfig.LengthShort, 1);
-                this.ui.Chips.bottom = 655;
-            }
-            else {
-                this.ui.CancleBetBtn.scale(1, GameConfig.ShortLength);
-                this.ui.ConfirmBetBtn.scale(1, GameConfig.ShortLength);
-                this.ui.Chips.scale(1, GameConfig.ShortLength);
-                this.ui.ChipsBg.scale(1, GameConfig.ShortLength);
-                this.ui.BetBox.scale(1, GameConfig.ShortLength);
-                this.ui.BetBg.scale(1, GameConfig.ShortLength);
-                this.ui.MsgPanel.scale(1, GameConfig.ShortLength);
-                this.ui.Chips.bottom = 655 * GameConfig.ShortLength;
-                this.ui.ChipsBg.bottom = 655 * GameConfig.ShortLength;
-            }
         }
         else {
             this.ui = new ui.BetHUI();
             this.CreateBetBtn(isVer);
-            if (GameConfig.RatioType) {
-                this.ui.CancleBetBtn.scale(1, GameConfig.LengthShort);
-                this.ui.ConfirmBetBtn.scale(1, GameConfig.LengthShort);
-                this.ui.Chips.scale(1, GameConfig.LengthShort);
-                this.ui.BetBox.scale(1, GameConfig.LengthShort);
-                this.ui.MsgPanel.scale(1, GameConfig.LengthShort);
-            }
-            else {
-                this.ui.CancleBetBtn.scale(GameConfig.ShortLength, 1);
-                this.ui.ConfirmBetBtn.scale(GameConfig.ShortLength, 1);
-                this.ui.Chips.scale(GameConfig.ShortLength, 1);
-                this.ui.BetBox.scale(GameConfig.ShortLength, 1);
-                this.ui.MsgPanel.scale(GameConfig.ShortLength, 1);
-            }
         }
         this.ui.zOrder = 3;
         Laya.stage.addChild(this.ui);
         //确认投注
         this.ui.ConfirmBetBtn.on(Laya.Event.CLICK, this, this.ConfirmBet);
         //取消投注
-        this.ui.CancleBetBtn.on(Laya.Event.CLICK, this, this.CancleBet);
+        this.ui.CancleBetBtn.on(Laya.Event.CLICK, this, this.CancelBet);
         //打开更多投注面板
         this.ui.Bet_More_Btn.on(Laya.Event.CLICK, this, this.OpenMoreBet);
         //筹码点击

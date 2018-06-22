@@ -53,8 +53,11 @@ var BetMoreUIHV = /** @class */ (function (_super) {
             return;
         }
         this.SetLimit(data.Limit);
-        if (data.Status == Enum.GameStatus.DEFAULT) {
+        if (data.Status == Enum.GameStatus.DEFAULT || data.Status == Enum.GameStatus.SETTLE) {
             return;
+        }
+        if (data.BetTime > 0) {
+            this.StartGameTime(data.BetTime);
         }
         this.SetOdds(data.Odds);
         //初始化界面
@@ -71,6 +74,7 @@ var BetMoreUIHV = /** @class */ (function (_super) {
         this.cacheData.Odds = data.Odds;
         this.cacheData.Status = Enum.GameStatus.BET;
         this.DisabledBetBtn(true);
+        this.StartGameTime(data.BetTime);
         this.SetOdds(data.Odds);
         //清除上一个注单投注成功的投注信息
         this.lastBetPosMsg = new Object();
@@ -108,7 +112,9 @@ var BetMoreUIHV = /** @class */ (function (_super) {
      */
     BetMoreUIHV.prototype.GameResult = function (data) {
         this.DisabledAllBtn();
+        this.EndGameTime();
         this.SetBetPos(this.lastBetPosMsg);
+        this.cacheData.Status = Enum.GameStatus.SETTLE;
         for (var i in this.betBtnArr) {
             this.betBtnArr[i].GetUI().getChildByName("masks").visible = false;
         }
@@ -319,24 +325,24 @@ var BetMoreUIHV = /** @class */ (function (_super) {
                 if (i >= 1 && i <= 13) {
                     var ico = btnUI.GetUI().getChildByName("ico").skin = this.spadeIco;
                     btnUI.GetUI().getChildByName("betName").color = "#000";
-                    btnUI.x = btnUI.width * 3;
-                    btnUI.y = btnUI.height * (13 - i) + 13 - i;
+                    btnUI.x = btnUI.width * (13 - i);
+                    btnUI.y = btnUI.height * 3;
                 }
                 if (i >= 14 && i <= 26) {
                     var ico = btnUI.GetUI().getChildByName("ico").skin = this.heartIco;
-                    btnUI.x = btnUI.width * 2;
-                    btnUI.y = btnUI.height * (13 * 2 - i) + 13 * 2 - i;
+                    btnUI.x = btnUI.width * (13 * 2 - i);
+                    btnUI.y = btnUI.height * 2;
                 }
                 if (i >= 27 && i <= 39) {
                     var ico = btnUI.GetUI().getChildByName("ico").skin = this.clubIco;
                     btnUI.GetUI().getChildByName("betName").color = "#000";
-                    btnUI.x = btnUI.width;
-                    btnUI.y = btnUI.height * (13 * 3 - i) + 13 * 3 - i;
+                    btnUI.x = btnUI.width * (13 * 3 - i);
+                    btnUI.y = btnUI.height;
                 }
                 if (i >= 40 && i <= 52) {
                     var ico = btnUI.GetUI().getChildByName("ico").skin = this.blockIco;
-                    btnUI.x = 0;
-                    btnUI.y = btnUI.height * (13 * 4 - i) + 13 * 4 - i;
+                    btnUI.x = btnUI.width * (13 * 4 - i);
+                    btnUI.y = 0;
                 }
                 btnUI.Refresh();
                 this.ui.BetBox.addChild(btnUI.GetUI());
@@ -344,26 +350,36 @@ var BetMoreUIHV = /** @class */ (function (_super) {
         }
     };
     /**
-     * 确认投注
+     * 点击确定投注
      */
     BetMoreUIHV.prototype.ConfirmBet = function () {
-        this.DisabledBetBtn(true);
         this.broadcast.Type = Enum.ListenUIEnum.ConfirmBet;
         var event = new CustomEvent("GameUI", { detail: this.broadcast });
         document.dispatchEvent(event);
     };
     ;
     /**
-     * 取消投注
+     * 点击取消投注
      */
-    BetMoreUIHV.prototype.CancleBet = function () {
-        this.DisabledBetBtn(true);
-        this.SetBetPos(this.lastBetPosMsg);
+    BetMoreUIHV.prototype.CancelBet = function () {
         this.broadcast.Type = Enum.ListenUIEnum.CancelBet;
         var event = new CustomEvent("GameUI", { detail: this.broadcast });
         document.dispatchEvent(event);
     };
     ;
+    /**
+     * 确定投注
+     */
+    BetMoreUIHV.prototype.Confirm = function () {
+        this.DisabledBetBtn(true);
+    };
+    /**
+     * 取消投注
+     */
+    BetMoreUIHV.prototype.Cancel = function () {
+        this.DisabledBetBtn(true);
+        this.SetBetPos(this.lastBetPosMsg);
+    };
     /**
      * 打开面板
      */
@@ -377,6 +393,34 @@ var BetMoreUIHV = /** @class */ (function (_super) {
     BetMoreUIHV.prototype.Close = function () {
         this.isShow = false;
         this.ui.visible = this.isShow;
+    };
+    /**
+     * 开始倒计时
+     * @param time
+     */
+    BetMoreUIHV.prototype.StartGameTime = function (time) {
+        this.cacheData.BetTime = time;
+        this.timeStamp = new Date().getTime();
+        this.ui.time.visible = true;
+        this.timeEffect.StartGameTime(time);
+    };
+    /**
+     * 游戏时间结束
+     */
+    BetMoreUIHV.prototype.EndGameTime = function () {
+        this.timeEffect.EndGameTime();
+        this.ui.time.visible = false;
+    };
+    /**
+     * 设置游戏时间
+     * @param time
+     */
+    BetMoreUIHV.prototype.SetTime = function () {
+        var nowDate = new Date().getTime();
+        var date;
+        date = this.cacheData.BetTime - (nowDate - this.timeStamp) / 1000;
+        this.cacheData.BetTime = date < 0 ? 0 : date;
+        // return this.time;
     };
     return BetMoreUIHV;
 }(BetMoreBaseUI));

@@ -58,6 +58,12 @@ class HistoryUIHV extends HistoryBaseUI implements IUI {
     }
 
     private GameResult(dto: Dto.HistoryRoundDto) {
+         let item: any = {
+                poker0: { skin: this.GetPokerUrl(dto.FirstCard) },
+                poker1: { skin: this.GetPokerUrl(dto.SecondCard) },
+                poker2: { skin: this.GetPokerUrl(dto.ThirdCard) }
+            }
+        this.listArr.unshift(item);
         Laya.timer.once(2000, this, () => {
             Laya.Tween.to(this.ui._list, { y: this.listBoxH }, 2000, Laya.Ease.quadInOut, Laya.Handler.create(this, () => {
                 this.ShowPoker(dto);

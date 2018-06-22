@@ -3,7 +3,7 @@
 */
 abstract class TipsBaseUI{
     protected ui: ui.TipsHUI | ui.TipsVUI;
-    protected isShow:boolean = false;
+    protected isShow:boolean = true;
 
     constructor(){
 
@@ -26,7 +26,7 @@ abstract class TipsBaseUI{
             this.ui = new ui.TipsHUI();
         }
         //基础样式
-        this.ui.zOrder = 10;
+        this.ui.zOrder = 7;
         this.ui.cacheAs = "bitmap";
         this.ui.visible = this.isShow;
         this.ui.tips.vScrollBarSkin = "";

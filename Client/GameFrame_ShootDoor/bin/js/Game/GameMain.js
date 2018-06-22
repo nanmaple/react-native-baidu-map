@@ -104,6 +104,8 @@ var GameMain = /** @class */ (function (_super) {
                 this.BetInfo.BetSocre = 0;
                 this.BetInfo.BetingSocre = 0;
                 this.BetInfo.SendingBetData = new Object();
+                var money = this.MemberInfo.Score - (this.BetInfo.BetSocre + this.BetInfo.BetingSocre);
+                this.GameView.SetData(GameEnum.GameViewEnum.ChangMoney, money);
                 break;
             case GameEnum.GameCommand.MSG_GAME_SETTLERESULT: //游戏结算
                 this.BetInfo.BetSuccessData = new Object();

@@ -33,6 +33,8 @@ var GameView = /** @class */ (function (_super) {
             this.HistoryUI.ResetScreen(isVer);
             this.BetMoreUI.ResetScreen(isVer);
             this.TipsUI.ResetScreen(isVer);
+            this.RoundUI.ResetScreen(isVer);
+            this.FootballUI.ResetScreen(isVer);
         }
     };
     /**
@@ -108,6 +110,10 @@ var GameView = /** @class */ (function (_super) {
         this.BetMoreUI.ResetScreen(isVer);
         this.TipsUI = new TipsUIHV();
         this.TipsUI.ResetScreen(isVer);
+        this.RoundUI = new RoundUIHV();
+        this.RoundUI.ResetScreen(isVer);
+        this.FootballUI = new FootballHV();
+        this.FootballUI.ResetScreen(isVer);
     };
     /**
      * UI监听
@@ -124,9 +130,13 @@ var GameView = /** @class */ (function (_super) {
                 this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.BetPos, data.Value]);
                 break;
             case Enum.ListenUIEnum.ConfirmBet:
+                this.BetUI.Confirm();
+                this.BetMoreUI.Confirm();
                 this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.ConfirmBet, null]);
                 break;
             case Enum.ListenUIEnum.CancelBet:
+                this.BetUI.Cancel();
+                this.BetMoreUI.Cancel();
                 this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.CancelBet, null]);
                 break;
             case Enum.ListenUIEnum.ShowRule:
@@ -282,6 +292,7 @@ var GameView = /** @class */ (function (_super) {
      * @param data 游戏结果数据
      */
     GameView.prototype.OnGameResult = function (data) {
+        var _this = this;
         this.Log(data, "GameResult");
         this.BetUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_GAMERESULT, Data: data });
         this.CardUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_GAMERESULT, Data: { FirstCard: data.FirstCard, SecondCard: data.SecondCard, ThirdCard: data.ThirdCard } });
@@ -293,6 +304,9 @@ var GameView = /** @class */ (function (_super) {
         this.HistoryUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_GAMERESULT, Data: historyDto });
         this.BetMoreUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_GAMERESULT, Data: data });
         this.TimeUI.EndGameTime();
+        Laya.timer.once(2000, this, function () {
+            _this.FootballUI.Set(data);
+        });
     };
     /**
      * 结算命令

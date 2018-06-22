@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Label",
-            "props":{"y":0,"x":0,"width":95,"name":"masks","height":88,"bgColor":"#6dac7c"},
+            "props":{"y":0,"x":0,"width":95,"visible":false,"name":"masks","height":88,"bgColor":"#6dac7c"},
             "nodeParent":1,
             "label":"Label(masks)",
             "isDirectory":false,

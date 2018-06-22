@@ -29,9 +29,30 @@ namespace Dto {
     }
 
     export enum PokerStatus {
+        /**
+         * 隐藏
+         */
         Hide = 0,
+        /**
+         * 正常显示
+         */
         Show = 1,
-        Flip = 2,
+        /**
+         * 反面
+         */
+        Obverse = 2,
+        /**
+         * 翻转
+         */
+        Flip = 3,
+        /**
+         * 飞动
+         */
+        Fly = 4,
+        /**
+         * 缩小在历史面板
+         */
+        End = 5,
     }
 }
 

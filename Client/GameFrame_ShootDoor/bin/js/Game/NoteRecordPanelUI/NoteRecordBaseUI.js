@@ -40,24 +40,12 @@ var NoteRecordBaseUI = /** @class */ (function () {
         Laya.stage.removeChild(this.ui);
         if (isVer) {
             this.ui = new ui.NoteRecordVUI();
-            if (GameConfig.RatioType) {
-                this.ui.prompt.scale(GameConfig.LengthShort, 1);
-            }
-            else {
-                this.ui.prompt.scale(1, GameConfig.ShortLength);
-            }
         }
         else {
             this.ui = new ui.NoteRecordHUI();
-            if (GameConfig.RatioType) {
-                this.ui.prompt.scale(1, GameConfig.LengthShort);
-            }
-            else {
-                this.ui.prompt.scale(GameConfig.ShortLength, 1);
-            }
         }
         //基础样式
-        this.ui.zOrder = 8;
+        this.ui.zOrder = 7;
         this.ui.cacheAs = "bitmap";
         this.ui._recordList.visible = false;
         this.ui.noBetData.visible = false;
@@ -77,11 +65,11 @@ var NoteRecordBaseUI = /** @class */ (function () {
         else {
             this.ui.title.skin = "ui/betrecord_EN.png";
         }
+        this.recordWidth = this.ui.recordHome.width;
+        this.listH = this.ui._recordList.height;
         if (this.isShow) {
             this.Init();
         }
-        this.recordWidth = this.ui.recordHome.width;
-        this.listH = this.ui._recordList.height;
         //事件绑定
         this.ui.close.on(Laya.Event.CLICK, this, this.CloseNoteRecord);
         this.ui.back.on(Laya.Event.CLICK, this, this.BackNoteRecordList);

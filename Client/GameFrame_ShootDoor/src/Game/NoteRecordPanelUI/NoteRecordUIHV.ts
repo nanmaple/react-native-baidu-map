@@ -52,6 +52,7 @@ class NoteRecordUIHV extends NoteRecordBaseUI{
 
     public CloseNoteRecord():void{
         this.isShow = false;
+        this.detailShow = false;
         this.ui.visible = false;
         this.listArray = [];
         this.detailListArray = [];
@@ -122,6 +123,7 @@ class NoteRecordUIHV extends NoteRecordBaseUI{
         var data: any = this.listArray[index];
         //获取listBox的高度
         this.listBoxH = cell.height;
+        console.log(this.listArray,index)
         //根据子节点的名字，获取子节点对象。   
         let betTime: Laya.Label = cell.getChildByName("betTime") as Laya.Label;
         let betDate: Laya.Label = cell.getChildByName("betDate") as Laya.Label;
@@ -203,6 +205,7 @@ class NoteRecordUIHV extends NoteRecordBaseUI{
     private SetListDetailShow():void{
         if(this.detailShow){
             this.ui.recordBox.x = -this.recordWidth;  
+            this.detailListArray = [];
             this.GoNoteRecordDetail(this.detailData);
         }
         else{

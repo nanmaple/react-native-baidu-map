@@ -39,7 +39,7 @@ class CardUIHV extends CardBaseUI implements IUI {
         this.pokerEffect.Show(this.cardList[0]);
 
         this.cardList[1].Card = card.ThirdCard;
-        this.cardList[1].Status = card.ThirdCard ? Dto.PokerStatus.Show : Dto.PokerStatus.Flip;
+        this.cardList[1].Status = card.ThirdCard ? Dto.PokerStatus.Show : Dto.PokerStatus.Obverse;
         this.pokerEffect.Show(this.cardList[1]);
 
         this.cardList[2].Card = card.SecondCard;
@@ -57,7 +57,7 @@ class CardUIHV extends CardBaseUI implements IUI {
         this.pokerEffect.FlyIn(this.cardList[0]);
 
         this.cardList[1].Card = card.ThirdCard;
-        this.cardList[1].Status = Dto.PokerStatus.Flip;
+        this.cardList[1].Status = Dto.PokerStatus.Obverse;
         this.pokerEffect.FlyIn(this.cardList[1]);
 
         this.cardList[2].Card = card.SecondCard;
@@ -76,11 +76,23 @@ class CardUIHV extends CardBaseUI implements IUI {
 
         this.cardList[2].Card = card.SecondCard;
         this.pokerEffect.Show(this.cardList[2]);
-        this.cardList[2].Status = Dto.PokerStatus.Show;
+        this.cardList[2].Status = Dto.PokerStatus.Flip;
 
         this.cardList[1].Card = card.ThirdCard;
         this.cardList[1].Status = Dto.PokerStatus.Show;
         this.pokerEffect.Flip(this.cardList[1], [this.cardList[0], this.cardList[1], this.cardList[2]]);
+
+        Laya.timer.once(2000, this, () => {
+            this.cardList[0].Status = Dto.PokerStatus.Fly;
+            this.cardList[1].Status = Dto.PokerStatus.Fly;
+            this.cardList[2].Status = Dto.PokerStatus.Fly;
+
+            Laya.timer.once(2000, this, () => {
+                this.cardList[0].Status = Dto.PokerStatus.End;
+                this.cardList[1].Status = Dto.PokerStatus.End;
+                this.cardList[2].Status = Dto.PokerStatus.End;
+            })
+        })
     }
 
 }

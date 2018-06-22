@@ -22,25 +22,13 @@ var RuleBaseUI = /** @class */ (function () {
         if (isVer) {
             this.ui = new ui.RuleVUI();
             htmlD.style.width = 660;
-            if (GameConfig.RatioType) {
-                this.ui.prompt.scale(GameConfig.LengthShort, 1);
-            }
-            else {
-                this.ui.prompt.scale(1, GameConfig.ShortLength);
-            }
         }
         else {
             this.ui = new ui.RuleHUI();
             htmlD.style.width = 940;
-            if (GameConfig.RatioType) {
-                this.ui.prompt.scale(1, GameConfig.LengthShort);
-            }
-            else {
-                this.ui.prompt.scale(GameConfig.ShortLength, 1);
-            }
         }
         //基础样式
-        this.ui.zOrder = 8;
+        this.ui.zOrder = 7;
         this.ui.cacheAs = "bitmap";
         this.ui.rule.addChild(htmlD);
         this.ui.rule.vScrollBarSkin = "";

@@ -67,6 +67,12 @@ var HistoryUIHV = /** @class */ (function (_super) {
     };
     HistoryUIHV.prototype.GameResult = function (dto) {
         var _this = this;
+        var item = {
+            poker0: { skin: this.GetPokerUrl(dto.FirstCard) },
+            poker1: { skin: this.GetPokerUrl(dto.SecondCard) },
+            poker2: { skin: this.GetPokerUrl(dto.ThirdCard) }
+        };
+        this.listArr.unshift(item);
         Laya.timer.once(2000, this, function () {
             Laya.Tween.to(_this.ui._list, { y: _this.listBoxH }, 2000, Laya.Ease.quadInOut, Laya.Handler.create(_this, function () {
                 _this.ShowPoker(dto);
