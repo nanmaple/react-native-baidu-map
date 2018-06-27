@@ -74,7 +74,7 @@ abstract class NoteRecordBaseUI{
             this.ui = new ui.NoteRecordHUI();
         }
         //基础样式
-        this.ui.zOrder = 7;
+        this.ui.zOrder = 8;
         this.ui.cacheAs = "bitmap";
         this.ui._recordList.visible = false;
         this.ui.noBetData.visible = false;
@@ -93,12 +93,12 @@ abstract class NoteRecordBaseUI{
         }else{
             this.ui.title.skin = "ui/betrecord_EN.png";
         }
-        this.recordWidth = this.ui.recordHome.width;
-        this.listH = this.ui._recordList.height;
 
         if (this.isShow) {
             this.Init();
         }
+        this.recordWidth = this.ui.recordHome.width;
+        this.listH = this.ui._recordList.height;
         //事件绑定
         this.ui.close.on(Laya.Event.CLICK, this, this.CloseNoteRecord);
         this.ui.back.on(Laya.Event.CLICK, this, this.BackNoteRecordList);
@@ -112,7 +112,7 @@ abstract class NoteRecordBaseUI{
      * 设置投注记录数据
      * @param record 投注记录数据
      */
-    abstract AddRecordData(record:Dto.HandlerDto): void;
+    abstract AddRecordData(record:Dto.HandlerDto,time:number): void;
 
     /**
      * 显示投注面板

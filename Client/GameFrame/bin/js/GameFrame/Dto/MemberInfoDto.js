@@ -1,7 +1,7 @@
-var GameDto;
-(function (GameDto) {
+var BaseDto;
+(function (BaseDto) {
     /**
-     * 授权登录信息Dto
+     * 会员信息Dto
      */
     var MemberInfoDto = /** @class */ (function () {
         function MemberInfoDto() {
@@ -20,6 +20,6 @@ var GameDto;
         }
         return MemberInfoDto;
     }());
-    GameDto.MemberInfoDto = MemberInfoDto;
-})(GameDto || (GameDto = {}));
+    BaseDto.MemberInfoDto = MemberInfoDto;
+})(BaseDto || (BaseDto = {}));
 //# sourceMappingURL=MemberInfoDto.js.map

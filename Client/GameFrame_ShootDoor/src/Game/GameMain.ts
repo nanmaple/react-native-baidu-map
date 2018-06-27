@@ -164,11 +164,11 @@ class GameMain extends GameManager {
                 this.GameView.GetNoBetPos(this.BetInfo.NoBetSuceessData);
                 break;
             case Enum.GameViewHandlerEnum.GetBetRecord:
-                this.WebApi.Post(Net.ApiConfig.GetBetRecord,Data,null,(response)=>{
+                this.WebApi.Post(Net.ApiConfig.GetBetRecord,Data.dto,null,(response)=>{
                     if(response.Result == GameEnum.ErrorCode.Success){
                         let dto: Dto.HandlerDto = new Dto.HandlerDto();
                         dto.Data = response.Data;
-                        this.GameView.SetData(GameEnum.GameViewEnum.SetRecord,dto)
+                        this.GameView.SetData(GameEnum.GameViewEnum.SetRecord,{dto,time:Data.time})
                     }
                 },(error)=>{console.log(error)})
                 break;

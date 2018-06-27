@@ -285,7 +285,7 @@
             this.DisabledBetBtn(false);
             //开始缓动
             Laya.Tween.to(flyChip, obj, 700, Laya.Ease.cubicInOut, Laya.Handler.create(this, this.ChipsFlyCallBack, [flyChip, this.betBtnArr[data.Pos], data.Amount], false));
-
+            
         }
         /**
          * 筹码动画回调

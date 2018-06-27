@@ -49,7 +49,7 @@ class LoginView {
 
     private Login(isTourist) {
         //获取Socket Token
-        this.loginService = new Laya.Browser.window.LoginService(Network.Http.WebApi, Utils.Storage, this.LoginSuccess, null, this.LoginError);
+        this.loginService = new Laya.Browser.window.LoginService(Network.WebApi, Utils.Storage, this.LoginSuccess, null, this.LoginError);
         if (isTourist) {
             this.loginService.Login();
         } else {

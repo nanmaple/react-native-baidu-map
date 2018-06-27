@@ -10,15 +10,8 @@ var Bet;
         /**
          * 设置UI类型
         */
-        BetPos.prototype.SetType = function (Type) {
-            this.Type = Type;
-            switch (Type) {
-                case 0:
-                    break;
-                default:
-                    this.ui = new ui.BetBtnVUI();
-                    break;
-            }
+        BetPos.prototype.SetUI = function (ui, Type) {
+            this.ui = ui;
             if (this.ui) {
                 this.ui.on(Laya.Event.CLICK, this, this.onClick);
             }
@@ -64,21 +57,23 @@ var Bet;
             }
         };
         /**
+         * 设置按钮是否禁用
+         */
+        BetPos.prototype.SetStatus = function (disabled) {
+            if (disabled) {
+                this.Status = GameEnum.BetPosStatus.Forbid;
+                this.ui.disabled = true;
+            }
+            else {
+                this.Status = GameEnum.BetPosStatus.Allow;
+                this.ui.disabled = false;
+            }
+        };
+        /**
          * 设置值
          * @param value
          */
         BetPos.prototype.SetValue = function (value) {
-            if (value >= this.MaxLimit) {
-                this.Status = GameEnum.BetPosStatus.Full;
-                this.Value = this.MaxLimit;
-                return;
-            }
-            else if (value == null) {
-                this.Status = GameEnum.BetPosStatus.Forbid;
-            }
-            else {
-                this.Status = GameEnum.BetPosStatus.Allow;
-            }
             this.Value = value;
         };
         /**

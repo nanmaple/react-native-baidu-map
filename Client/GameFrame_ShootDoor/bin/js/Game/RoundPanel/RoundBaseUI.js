@@ -1,5 +1,6 @@
 var RoundBaseUI = /** @class */ (function () {
     function RoundBaseUI() {
+        this.state = Enum.GameStatus.DEFAULT;
     }
     /**
      * 切换横竖屏
@@ -18,6 +19,8 @@ var RoundBaseUI = /** @class */ (function () {
         this.ui.cacheAs = "bitmap";
         var language = new LanguageUtils.Language();
         this.ui.roundLabel.text = language.GetLanguage("Issue");
+        this.SetGameRound(this.round);
+        this.SetGameState(this.state);
         Laya.stage.addChild(this.ui);
     };
     return RoundBaseUI;

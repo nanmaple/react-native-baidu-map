@@ -60,6 +60,8 @@ abstract class HeadBaseUI{
         this.ui.attention.on(Laya.Event.CLICK, this, this.onAttention);
         this.ui.money.on(Laya.Event.CLICK, this, this.OnBalanceHander);
         
+        this.moneyEffect = new NumberGradualChangeEffect(this.ui.score);
+        
         Laya.stage.addChild(this.ui);
         this.GetInfo();
     }

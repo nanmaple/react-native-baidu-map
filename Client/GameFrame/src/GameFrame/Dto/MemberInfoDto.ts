@@ -1,8 +1,8 @@
-namespace GameDto {
+namespace BaseDto {
     /**
-     * 授权登录信息Dto
+     * 会员信息Dto
      */
-    export class MemberInfoDto {
+    export class MemberInfoDto  {
         /**
          * 账号
          */

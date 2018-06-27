@@ -2,15 +2,15 @@
 /// <reference path="./Config.ts"/>
 namespace LanguageUtils {
     export class Language {
-        private CurrentLangue: LanguageType = null;
+        static CurrentLangue: LanguageType = null;
         /**
          * 设置语言
          * @param lang 语言类型
          * @param gameID 游戏ID，默认所有游戏通用语言，设置后为具体某种游戏的语言
          */
-        public SetLanguage(lang: LanguageType, gameID: number = 0): boolean {
+        static Set(lang: LanguageType, gameID: number = 0): boolean {
             let storage: Utils.Storage = new Utils.Storage();
-            let key: string = this.GetLanguageKey(gameID);
+            let key: string = this.GetKey(gameID);
             storage.SetLocalStorage(key, lang);
             this.CurrentLangue = lang;
             return true
@@ -21,20 +21,20 @@ namespace LanguageUtils {
          * @param key 
          * @param gameID 
          */
-        public GetLanguage(key: string, gameID: number = 0): string {
+        static Get(key: string, gameID: number = 0): string {
             if (this.CurrentLangue === null) {
                 let storage: Utils.Storage = new Utils.Storage();
-                let key: string = this.GetLanguageKey(GameID);
+                let key: string = this.GetKey(GameID);
                 let lang: LanguageType = storage.GetLocalStorage(key) as LanguageType;
                 if (!lang) {
                     this.CurrentLangue = DefaultLanguage;
-                }else if(typeof(lang) != "number"){
-                    if(lang == LanguageType[0]){
+                } else if (typeof (lang) != "number") {
+                    if (lang == LanguageType[0]) {
                         this.CurrentLangue = LanguageType.CH;
-                    }else{
+                    } else {
                         this.CurrentLangue = LanguageType.EN;
                     }
-                }else{
+                } else {
                     this.CurrentLangue = lang;
                 }
             }
@@ -43,20 +43,20 @@ namespace LanguageUtils {
         /**
          * 获取游戏语言类型
          */
-        public GetLanguageType():number{
-            let CurrentLangue:number;
+        static GetType(): number {
+            let CurrentLangue: number;
             let storage: Utils.Storage = new Utils.Storage();
-            let key: string = this.GetLanguageKey(GameID);
+            let key: string = this.GetKey(GameID);
             let lang: LanguageType = storage.GetLocalStorage(key) as LanguageType;
             if (!lang) {
                 CurrentLangue = DefaultLanguage;
-            }else if(typeof(lang) != "number"){
-                if(lang == LanguageType[0]){
+            } else if (typeof (lang) != "number") {
+                if (lang == LanguageType[0]) {
                     CurrentLangue = LanguageType.CH;
-                }else{
+                } else {
                     CurrentLangue = LanguageType.EN;
                 }
-            }else{
+            } else {
                 CurrentLangue = lang;
             }
             return CurrentLangue;
@@ -66,7 +66,7 @@ namespace LanguageUtils {
          * 获取游戏语言key，传入gameID,
          * @param gameID 
          */
-        private GetLanguageKey(gameID: number = 0): string {
+        static GetKey(gameID: number = 0): string {
             return `Language-Cache-Key`;
         }
     }

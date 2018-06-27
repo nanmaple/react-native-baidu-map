@@ -1,5 +1,5 @@
-var GameDto;
-(function (GameDto) {
+var BaseDto;
+(function (BaseDto) {
     /**
      * 消息Dto
      */
@@ -8,6 +8,6 @@ var GameDto;
         }
         return MessageDto;
     }());
-    GameDto.MessageDto = MessageDto;
-})(GameDto || (GameDto = {}));
+    BaseDto.MessageDto = MessageDto;
+})(BaseDto || (BaseDto = {}));
 //# sourceMappingURL=MessageDto.js.map

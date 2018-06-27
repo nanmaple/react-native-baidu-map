@@ -1,4 +1,4 @@
-namespace GameEnum {
+namespace BaseEnum {
     
     export enum MainCommand {
         /**

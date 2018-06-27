@@ -6,7 +6,7 @@ namespace Dto{
         /**
          * 类型
          */
-        Type: Enum.ListenUIEnum;
+        Type: Enum.ListenViewEnum;
         /**
          * 值
          */

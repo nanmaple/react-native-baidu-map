@@ -1,4 +1,4 @@
-namespace GameDto {
+namespace BaseDto {
     /**
      * 消息Dto
      */
@@ -11,7 +11,7 @@ namespace GameDto {
         /**
          * 命令枚举
          */
-        public Command: GameEnum.MainCommand
+        public Command: BaseEnum.MainCommand
 
         /**
          * 数据内容

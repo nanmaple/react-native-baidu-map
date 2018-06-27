@@ -1,4 +1,4 @@
-/// <reference path="./Game/GameMain.ts"/>
+/// <reference path="./Game/MainGameLogic.ts"/>
 /// <reference path="./Login.ts"/>
 // 程序入口
 var Main = /** @class */ (function () {
@@ -6,11 +6,11 @@ var Main = /** @class */ (function () {
         this.initState = new InitState();
         if (GameConfig.IsDebug) {
             new LoginView(Laya.Handler.create(this, function () {
-                new GameMain();
+                new MainGameLogic();
             }));
         }
         else {
-            new GameMain();
+            new MainGameLogic();
         }
     }
     return Main;

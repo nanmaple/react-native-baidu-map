@@ -16,12 +16,6 @@ var GameConfig;
     /***************UI设计信息***************/
     GameConfig.DesignLength = 1334; //设计尺寸-长边
     GameConfig.DesignShort = 750; //设计尺寸-短边
-    GameConfig.Ratio = 1; //长边比率
-    GameConfig.LengthRatio = 1; //长边比率
-    GameConfig.ShortRatio = 1; //短边比率
-    GameConfig.LengthShort = 1; //长短边之比
-    GameConfig.ShortLength = 1; //短长边之比
-    GameConfig.RatioType = true; //RatioType true 长的一边比率大，短边被压缩，需要再压缩长边；false 短的一边比率大，
     GameConfig.ScreenMode = 0; //横竖屏类型 ：0 竖屏  1横屏，默认竖屏
     GameConfig.XRatio = 1;
     GameConfig.YRatio = 1;

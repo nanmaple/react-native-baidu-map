@@ -1,5 +1,5 @@
-var GameEnum;
-(function (GameEnum) {
+var BaseEnum;
+(function (BaseEnum) {
     /**
      * Api错误码
      */
@@ -134,6 +134,6 @@ var GameEnum;
         /// 修改会员的父级会员分数失败
         /// </summary>
         ErrorCode[ErrorCode["ModifyParentScoreFailed"] = 3002] = "ModifyParentScoreFailed";
-    })(ErrorCode = GameEnum.ErrorCode || (GameEnum.ErrorCode = {}));
-})(GameEnum || (GameEnum = {}));
+    })(ErrorCode = BaseEnum.ErrorCode || (BaseEnum.ErrorCode = {}));
+})(BaseEnum || (BaseEnum = {}));
 //# sourceMappingURL=ErrorCode.js.map

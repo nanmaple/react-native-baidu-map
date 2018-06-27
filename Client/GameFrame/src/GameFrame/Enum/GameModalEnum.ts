@@ -1,4 +1,4 @@
-namespace GameEnum {
+namespace BaseEnum {
     /**
      * Modal类型枚举
      */

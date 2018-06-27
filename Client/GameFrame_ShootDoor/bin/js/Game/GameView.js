@@ -21,21 +21,6 @@ var GameView = /** @class */ (function (_super) {
      * 横竖屏监听
      */
     GameView.prototype.ResetScreen = function () {
-        var isVer = this.ScreenStatus == ScreenStatus.Ver;
-        if (this.onLoadSuccess && this.onLoginSucess) {
-            this.GameBgUI.ResetScreen(isVer);
-            this.BetUI.ResetScreen(isVer);
-            this.CardUI.ResetScreen(isVer);
-            this.HeadUIHV.ResetScreen(isVer);
-            this.RuleUIHV.ResetScreen(isVer);
-            this.NoteRecordUIHV.ResetScreen(isVer);
-            this.TimeUI.ResetScreen(isVer);
-            this.HistoryUI.ResetScreen(isVer);
-            this.BetMoreUI.ResetScreen(isVer);
-            this.TipsUI.ResetScreen(isVer);
-            this.RoundUI.ResetScreen(isVer);
-            this.FootballUI.ResetScreen(isVer);
-        }
     };
     /**
      * 获取未投注成功的数据
@@ -240,6 +225,14 @@ var GameView = /** @class */ (function (_super) {
      */
     GameView.prototype.OnGameInit = function (data) {
         this.Log(data, "GameInit");
+        //通知round界面
+        this.RoundUI.SetGameRound(data.RoundID);
+        if (data.Status == Enum.GameStatus.DEFAULT) {
+            this.RoundUI.SetGameState(Enum.GameStatus.DEFAULT);
+        }
+        else {
+            this.RoundUI.SetGameState(Enum.GameStatus.BET);
+        }
         if (data) {
             this.BetUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_INIT, Data: data });
             this.CardUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_INIT, Data: data.Cards });
@@ -256,6 +249,9 @@ var GameView = /** @class */ (function (_super) {
      */
     GameView.prototype.OnGameStart = function (data) {
         this.Log(data, "GameStart");
+        //通知round界面
+        this.RoundUI.SetGameRound(data.RoundID);
+        this.RoundUI.SetGameState(Enum.GameStatus.BET);
         if (data && data.Odds) {
             this.BetUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_START, Data: data });
             this.BetMoreUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_START, Data: data });
@@ -294,6 +290,8 @@ var GameView = /** @class */ (function (_super) {
     GameView.prototype.OnGameResult = function (data) {
         var _this = this;
         this.Log(data, "GameResult");
+        //通知round界面
+        this.RoundUI.SetGameState(Enum.GameStatus.END);
         this.BetUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_GAMERESULT, Data: data });
         this.CardUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_GAMERESULT, Data: { FirstCard: data.FirstCard, SecondCard: data.SecondCard, ThirdCard: data.ThirdCard } });
         var historyDto = new Dto.HistoryRoundDto();
@@ -315,7 +313,11 @@ var GameView = /** @class */ (function (_super) {
     GameView.prototype.OnSettleResult = function (data) {
         var _this = this;
         this.Log(data, "SettleResult");
+        //通知round界面
+        this.RoundUI.SetGameState(Enum.GameStatus.SETTLE);
         Laya.timer.once(5000, this, function () {
+            //通知round界面
+            _this.RoundUI.SetGameState(Enum.GameStatus.SETTLEED);
             _this.BetUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_SETTLERESULT, Data: data });
             _this.BetMoreUI.Set({ Type: GameEnum.GameCommand.MSG_GAME_SETTLERESULT, Data: data });
             _this.HeadUIHV.ChangeMoney(data.Balance);

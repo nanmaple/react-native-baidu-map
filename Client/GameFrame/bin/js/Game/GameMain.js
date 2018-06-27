@@ -16,8 +16,6 @@ var GameMain = /** @class */ (function (_super) {
         _this.socketUrl = null;
         return _this;
     }
-    GameMain.prototype.GameMain = function () {
-    };
     /**
     * 侦听Socket连接事件
     */
@@ -62,17 +60,37 @@ var GameMain = /** @class */ (function (_super) {
     };
     ;
     /**
+     * 侦听登出事件
+     */
+    GameMain.prototype.OnLogoutHandler = function () {
+        this.Log("", "OnLogoutHandler");
+    };
+    ;
+    /**
+     * 系统推送（预留）
+     * @param data
+     */
+    GameMain.prototype.OnSystemPushHandler = function (data) {
+        this.Log(data, "OnSystemPushHandler");
+    };
+    ;
+    /**
      * 侦听游戏命令
      * @param data
      */
     GameMain.prototype.OnMessageHandler = function (response) {
         var data = response.Data;
         this.Log(data, "OnMessageHandler");
-        this.GameView.SetData(GameEnum.GameViewEnum.GameData, response);
         switch (response.Command) {
             case GameEnum.GameCommand.MSG_GAME_INIT: //初始化
+                if (data.Status == Enum.GameStatus.BET && !this.Authorization.IsClose) {
+                    this.BetInfo.BetSuccessData = data.TotalBet;
+                }
                 break;
             case GameEnum.GameCommand.MSG_GAME_START: //游戏开始
+                this.BetInfo.BetSuccessData = new Object();
+                this.BetInfo.NoBetSuceessData = new Object();
+                this.BetInfo.BetSocre = 0;
                 break;
             case GameEnum.GameCommand.MSG_GAME_BETRESULT: //投注结果
                 if (data.Success) {
@@ -86,20 +104,17 @@ var GameMain = /** @class */ (function (_super) {
                 this.BetInfo.BetSocre = 0;
                 this.BetInfo.BetingSocre = 0;
                 this.BetInfo.SendingBetData = new Object();
+                var money = this.MemberInfo.Score - (this.BetInfo.BetSocre + this.BetInfo.BetingSocre);
+                this.GameView.SetData(GameEnum.GameViewEnum.ChangMoney, money);
                 break;
             case GameEnum.GameCommand.MSG_GAME_SETTLERESULT: //游戏结算
                 this.BetInfo.BetSuccessData = new Object();
+                this.MemberInfo.Score = response.Data.Balance;
                 break;
             default:
                 break;
         }
-    };
-    ;
-    /**
-     * 侦听登出事件
-     */
-    GameMain.prototype.OnLogoutHandler = function () {
-        this.Log("", "OnLogoutHandler");
+        this.GameView.SetData(GameEnum.GameViewEnum.GameData, response);
     };
     ;
     /**
@@ -108,14 +123,7 @@ var GameMain = /** @class */ (function (_super) {
      */
     GameMain.prototype.OnAckHandler = function (data) {
         this.Log(data, "OnAckHandler");
-    };
-    ;
-    /**
-     * 系统推送（预留）
-     * @param data
-     */
-    GameMain.prototype.OnSystemPushHandler = function (data) {
-        this.Log(data, "OnSystemPushHandler");
+        this.betLogic.BetAck(data, this.BetInfo);
     };
     ;
     /**
@@ -124,7 +132,7 @@ var GameMain = /** @class */ (function (_super) {
      */
     GameMain.prototype.SendHandelr = function (dto) {
         var msgID = dto.MsgID ? dto.MsgID : Utils.Guid.Create();
-        this.Log({ Data: dto.Data, msgID: msgID }, "OnSystemPushHandler");
+        this.Log({ Data: dto.Data, msgID: msgID }, "SendHandelr");
         //组装游戏命令Dto
         var gameDto = new Dto.GameMessageDto();
         gameDto.Command = GameEnum.GameCommand.MSG_GAME_BET;
@@ -135,6 +143,7 @@ var GameMain = /** @class */ (function (_super) {
     /********************* Socket *********************/
     /******************* 界面事件hander *****************/
     GameMain.prototype.Handler = function (Type, Data) {
+        var _this = this;
         switch (Type) {
             case Enum.GameViewHandlerEnum.BetPos:
                 var result = this.Bet(Data);
@@ -143,6 +152,8 @@ var GameMain = /** @class */ (function (_super) {
                     BetPosAmount.Pos = Data.Pos;
                     BetPosAmount.Amount = result.data;
                     this.GameView.SetData(GameEnum.GameViewEnum.BetPos, BetPosAmount);
+                    var money_1 = this.MemberInfo.Score - (this.BetInfo.BetSocre + this.BetInfo.BetingSocre);
+                    this.GameView.SetData(GameEnum.GameViewEnum.ChangMoney, money_1);
                 }
                 else {
                     this.GameView.SetData(GameEnum.GameViewEnum.Alert, result.data);
@@ -153,6 +164,38 @@ var GameMain = /** @class */ (function (_super) {
                 if (betRes) {
                     this.SendHandelr(betRes);
                 }
+                break;
+            case Enum.GameViewHandlerEnum.CancelBet:
+                this.betLogic.RetractBet(this.BetInfo);
+                var money = this.MemberInfo.Score - (this.BetInfo.BetSocre + this.BetInfo.BetingSocre);
+                this.GameView.SetData(GameEnum.GameViewEnum.ChangMoney, money);
+                break;
+            case Enum.GameViewHandlerEnum.GetNoBetSucData:
+                this.GameView.GetNoBetPos(this.BetInfo.NoBetSuceessData);
+                break;
+            case Enum.GameViewHandlerEnum.GetBetRecord:
+                this.WebApi.Post(Net.ApiConfig.GetBetRecord, Data, null, function (response) {
+                    if (response.Result == GameEnum.ErrorCode.Success) {
+                        var dto = new Dto.HandlerDto();
+                        dto.Data = response.Data;
+                        _this.GameView.SetData(GameEnum.GameViewEnum.SetRecord, dto);
+                    }
+                }, function (error) { console.log(error); });
+                break;
+            case Enum.GameViewHandlerEnum.ChangeMoney:
+                var loginService_1 = new Laya.Browser.window.LoginService(Utils.Http, Utils.Storage, function () {
+                    var memberInfo = loginService_1.GetMemberInfoByLocal();
+                    var money = memberInfo.Score - (_this.BetInfo.BetSocre + _this.BetInfo.BetingSocre);
+                    _this.GameView.SetData(GameEnum.GameViewEnum.ChangMoney, money);
+                });
+                //获取会员信息
+                loginService_1.GetMemberInfo(true);
+                break;
+            case Enum.GameViewHandlerEnum.GetMemberInfo:
+                var memberInfo = this.MemberInfo;
+                var isTourists = this.Authorization.IsTourists;
+                this.GameView.SetData(GameEnum.GameViewEnum.GetMemberInfo, { memberInfo: memberInfo, isTourists: isTourists });
+                break;
         }
     };
     return GameMain;

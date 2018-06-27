@@ -10,11 +10,11 @@ namespace MemberManager {
         /**
          * 获取会员信息
          */
-        GetMemberInfo(): GameDto.MemberInfoDto;
+        GetMemberInfo(): BaseDto.MemberInfoDto;
 
         /**
          * 获取授权信息
          */
-        GetAuthorization(): GameDto.AuthorizationDto
+        GetAuthorization(): BaseDto.AuthorizationDto
     }
 }

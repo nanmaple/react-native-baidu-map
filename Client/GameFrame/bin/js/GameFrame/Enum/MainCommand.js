@@ -1,5 +1,5 @@
-var GameEnum;
-(function (GameEnum) {
+var BaseEnum;
+(function (BaseEnum) {
     var MainCommand;
     (function (MainCommand) {
         /**
@@ -26,6 +26,6 @@ var GameEnum;
          * 会员状态已关闭
          */
         MainCommand[MainCommand["MSG_MEMBERCLOSED"] = 6] = "MSG_MEMBERCLOSED";
-    })(MainCommand = GameEnum.MainCommand || (GameEnum.MainCommand = {}));
-})(GameEnum || (GameEnum = {}));
+    })(MainCommand = BaseEnum.MainCommand || (BaseEnum.MainCommand = {}));
+})(BaseEnum || (BaseEnum = {}));
 //# sourceMappingURL=MainCommand.js.map

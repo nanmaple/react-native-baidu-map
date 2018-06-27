@@ -166,10 +166,14 @@ var GameManager = /** @class */ (function () {
                 //修改游戏状态:游戏开始，可投注
                 this.GameStatus = GameEnum.GameStatus.BET;
                 data.Status = this.GameStatus;
+                //同步局号
+                this.GameInfo.RoundID = data.RoundID;
                 break;
             case GameEnum.GameCommand.MSG_GAME_BETRESULT: //投注结果
-                //同步会员分数
-                this.SetMemberScore(data.Balance);
+                if (data.Success) {
+                    //同步会员分数
+                    this.SetMemberScore(data.Balance);
+                }
                 break;
             case GameEnum.GameCommand.MSG_GAME_STOPBET: //游戏停止投注
                 //修改游戏状态:结束
@@ -234,10 +238,15 @@ var GameManager = /** @class */ (function () {
      */
     GameManager.prototype.GameViewHander = function () {
     };
+    /**
+     * 日志
+     * @param msg 日志内容
+     * @param key 日志key值
+     */
     GameManager.prototype.Log = function (msg, key) {
         if (msg === void 0) { msg = ""; }
         if (key === void 0) { key = "log"; }
-        if (GameConfig.IsDebug) {
+        if (GameConfig.OpenLog) {
             // console.log(Date.now().toString(), key + ":", msg);
         }
     };

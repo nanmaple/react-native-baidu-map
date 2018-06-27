@@ -1,4 +1,4 @@
-namespace GameDto {
+namespace BaseDto {
     /**
      * 授权登录信息Dto
      */

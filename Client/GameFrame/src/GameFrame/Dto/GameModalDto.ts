@@ -1,13 +1,13 @@
 /// <reference path="../Enum/GameModalEnum.ts" />
-namespace GameDto {
+namespace BaseDto {
     /**
-     * 消息Dto
+     * Modal弹出传递数据Dto
      */
     export class GameModalDto {
         /**
          * 消息ID
          */
-        public Type: GameEnum.GameModalEnum;
+        public Type: BaseEnum.GameModalEnum;
 
         /**
          * 数据内容

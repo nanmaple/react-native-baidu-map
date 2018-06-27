@@ -11,8 +11,8 @@ const logoImg = [
 export const GameList: any = [
     { imgUrl: logoImg[0], name: "ShotDoor", star: 5, id: 1, complete: true, local: true },
     { imgUrl: logoImg[1], name: "ZhuoQiu", star: 5, id: 201, complete: true, local: false },
-    { imgUrl: logoImg[2], name: "XiaoXiaoLe", star: 5, id: 202, complete: false, local: false },
-    { imgUrl: logoImg[3], name: "FeiBiao", star: 5, id: 203, complete: false, local: false },
-    { imgUrl: logoImg[4], name: "MoTuo", star: 5, id: 204, complete: false, local: false },
+    { imgUrl: logoImg[2], name: "XiaoXiaoLe", star: 5, id: 202, complete: true, local: false },
+    { imgUrl: logoImg[3], name: "FeiBiao", star: 5, id: 203, complete: true, local: false },
+    { imgUrl: logoImg[4], name: "MoTuo", star: 5, id: 204, complete: true, local: false },
     { imgUrl: logoImg[5], name: "50Dragons", star: 5 id: 205, complete: false, local: false },
 ]

@@ -11,32 +11,29 @@ var __extends = (this && this.__extends) || (function () {
 /// <reference path="WebApiBase.ts" />
 var Network;
 (function (Network) {
-    var Http;
-    (function (Http) {
+    /**
+     * WebApi层
+     * 单例 使用WebApi.instance
+     */
+    var WebApi = /** @class */ (function (_super) {
+        __extends(WebApi, _super);
+        function WebApi() {
+            return _super.call(this) || this;
+        }
         /**
-         * WebApi层
-         * 单例 使用WebApi.instance
+         * 单例
          */
-        var WebApi = /** @class */ (function (_super) {
-            __extends(WebApi, _super);
-            function WebApi() {
-                return _super.call(this) || this;
+        WebApi.GetInstance = function () {
+            if (!this.instance) {
+                this.instance = new WebApi();
+                this.instance.InitToken();
             }
-            /**
-             * 单例
-             */
-            WebApi.GetInstance = function () {
-                if (!this.instance) {
-                    this.instance = new WebApi();
-                    this.instance.InitToken();
-                }
-                return this.instance;
-            };
-            WebApi.prototype.Log = function () {
-            };
-            return WebApi;
-        }(WebApiBase));
-        Http.WebApi = WebApi;
-    })(Http = Network.Http || (Network.Http = {}));
+            return this.instance;
+        };
+        WebApi.prototype.Log = function () {
+        };
+        return WebApi;
+    }(WebApiBase));
+    Network.WebApi = WebApi;
 })(Network || (Network = {}));
 //# sourceMappingURL=index.js.map

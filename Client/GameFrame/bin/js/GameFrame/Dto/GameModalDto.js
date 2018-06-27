@@ -1,14 +1,14 @@
 /// <reference path="../Enum/GameModalEnum.ts" />
-var GameDto;
-(function (GameDto) {
+var BaseDto;
+(function (BaseDto) {
     /**
-     * 消息Dto
+     * Modal弹出传递数据Dto
      */
     var GameModalDto = /** @class */ (function () {
         function GameModalDto() {
         }
         return GameModalDto;
     }());
-    GameDto.GameModalDto = GameModalDto;
-})(GameDto || (GameDto = {}));
+    BaseDto.GameModalDto = GameModalDto;
+})(BaseDto || (BaseDto = {}));
 //# sourceMappingURL=GameModalDto.js.map

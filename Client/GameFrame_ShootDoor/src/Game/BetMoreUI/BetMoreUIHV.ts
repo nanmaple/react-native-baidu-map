@@ -119,29 +119,21 @@ class BetMoreUIHV extends BetMoreBaseUI implements IUI{
         //清除上一个注单投注成功的投注信息
         this.lastBetPosMsg = new Object();
         this.cacheData.TotalBet = new Object();
+        this.cacheData.Status = Enum.GameStatus.SETTLEED;
         let language: LanguageUtils.Language = new LanguageUtils.Language();
         this.guessSuccess = false;
-        //总赢数目
-        let win: number = 0;
-        let gameResult: Dto.CardInfoDto = JSON.parse(data.GameResult);
-        let card: number = Utils.Poker.GetNumber(gameResult.ThirdCard);
-        let msg: Array<string> = new Array<string>();
         for (let i in data.SettleResult) {
-            if (data.SettleResult[i] > 0) {
-                for (let j = 1, len = this.betBtnArr.length; j <= len; j++) {
-                    let index:number = j%13 == 0 ? 100 * Math.floor(j/13) + 13 : Math.floor(j/13 + 1) * 100 + j%13;
-                    if(Number(i) == index){
-                        if (data.SettleResult[i] > 100) {
-                            data.SettleResult[i] = Utils.Money.Format(data.SettleResult[i], 0);
-                        }
-                        this.betBtnArr[i].SetValue(data.SettleResult[i]);
-                        this.betBtnArr[i].Refresh();
-                        this.betBtnArr[i].GetUI().gray = false;
+            if(Number(i) > 13){
+                if (data.SettleResult[i] > 0) {
+                    if (data.SettleResult[i] > 100) {
+                        data.SettleResult[i] = Utils.Money.Format(data.SettleResult[i], 0);
                     }
+                    this.betBtnArr[i].SetValue(data.SettleResult[i]);
+                    this.betBtnArr[i].Refresh();
+                    this.betBtnArr[i].GetUI().gray = false;      
+                    this.guessSuccess = true;
                 }
-                this.guessSuccess = true;
             }
-            
         }
         if (!this.guessSuccess) {
             this.ShowMsg(language.GetLanguage("gameFail"));

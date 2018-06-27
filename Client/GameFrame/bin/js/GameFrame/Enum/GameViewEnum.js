@@ -1,5 +1,5 @@
-var GameEnum;
-(function (GameEnum) {
+var BaseEnum;
+(function (BaseEnum) {
     /**
      * 游戏管理向游戏界面管理数据通知枚举
      */
@@ -25,10 +25,6 @@ var GameEnum;
          * 游戏数据分发
          */
         GameViewEnum[GameViewEnum["GameData"] = 4] = "GameData";
-        /**
-         * 投注
-         */
-        GameViewEnum[GameViewEnum["BetPos"] = 5] = "BetPos";
-    })(GameViewEnum = GameEnum.GameViewEnum || (GameEnum.GameViewEnum = {}));
-})(GameEnum || (GameEnum = {}));
+    })(GameViewEnum = BaseEnum.GameViewEnum || (BaseEnum.GameViewEnum = {}));
+})(BaseEnum || (BaseEnum = {}));
 //# sourceMappingURL=GameViewEnum.js.map

@@ -1,5 +1,5 @@
-var GameEnum;
-(function (GameEnum) {
+var BaseEnum;
+(function (BaseEnum) {
     /**
      * Modal类型枚举
      */
@@ -25,6 +25,6 @@ var GameEnum;
          * 会员关闭
          */
         GameModalEnum[GameModalEnum["MemClose"] = 4] = "MemClose";
-    })(GameModalEnum = GameEnum.GameModalEnum || (GameEnum.GameModalEnum = {}));
-})(GameEnum || (GameEnum = {}));
+    })(GameModalEnum = BaseEnum.GameModalEnum || (BaseEnum.GameModalEnum = {}));
+})(BaseEnum || (BaseEnum = {}));
 //# sourceMappingURL=GameModalEnum.js.map

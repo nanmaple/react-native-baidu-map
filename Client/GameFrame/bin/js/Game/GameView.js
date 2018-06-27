@@ -12,45 +12,19 @@ var GameView = /** @class */ (function (_super) {
     __extends(GameView, _super);
     function GameView(Handler) {
         var _this = _super.call(this) || this;
-        _this.Handler = Handler;
+        _this.ChipPrice = 5; //筹码值(默认为5)
+        _this.CtrlHandler = Handler;
         _this.GameLoad();
         return _this;
     }
     /**
      * 横竖屏监听
      */
-    GameView.prototype.ListenScreen = function () {
-        var isVer = this.ScreenStatus == ScreenStatus.Ver;
-        if (this.onLoadSuccess && this.onLoginSucess) {
-            this.GameBgUI.ResetScreen(isVer);
-        }
+    GameView.prototype.ResetScreen = function () {
     };
     /**
-     * UI监听
-     * @param data
-     */
-    GameView.prototype.ListenUI = function (data) {
-        switch (data.Type) {
-            case Enum.ListenUIEnum.GameLoadComplate:
-                this.CheckLoad();
-                break;
-            case Enum.ListenUIEnum.OnGameBgClick:
-                this.ShowAlert(1, "点击关闭");
-                break;
-            case Enum.ListenUIEnum.BetPos:
-                data.Value.Amount = 10;
-                this.Handler.runWith([Enum.GameViewHandlerEnum.BetPos, data.Value]);
-                break;
-            case Enum.ListenUIEnum.ConfirmBet:
-                this.Handler.runWith([Enum.GameViewHandlerEnum.ConfirmBet, null]);
-                break;
-            default:
-                break;
-        }
-    };
-    /**
-     * 启动游戏资源页面，开始加载游戏资源
-     */
+    * 启动游戏资源页面，开始加载游戏资源
+    */
     GameView.prototype.GameLoad = function () {
         var isVer = this.ScreenStatus == ScreenStatus.Ver;
         this.LoadResourceUI = new LoadResourceHV();
@@ -74,16 +48,57 @@ var GameView = /** @class */ (function (_super) {
         }
     };
     /**
+     * 游戏登录完成，检查游戏资源加载状态
+     */
+    GameView.prototype.GameLoginComplete = function () {
+        this.onLoginSucess = true;
+        if (this.onLoadSuccess) {
+            this.LoadResourceUI.Remove();
+            //加载主界面
+            this.GameMainUI();
+        }
+    };
+    /**
      * 加载游戏主界面
      */
     GameView.prototype.GameMainUI = function () {
-        var isVer = this.ScreenStatus == ScreenStatus.Ver;
         this.GameBgUI = new GameBgHV();
-        this.GameBgUI.ResetScreen(isVer);
+        this.GameBgUI.ResetScreen();
         this.AlertUI = new AlertHV();
-        this.AlertUI.ResetScreen(isVer);
+        this.AlertUI.ResetScreen();
         this.LoadingUI = new LoadingHV();
-        this.LoadingUI.ResetScreen(isVer);
+        this.LoadingUI.ResetScreen();
+    };
+    /**
+     * UI监听
+     * @param data
+     */
+    GameView.prototype.ListenUI = function (data) {
+        switch (data.Type) {
+            case Enum.ListenUIEnum.GameLoadComplate:
+                this.CheckLoad();
+                break;
+            case Enum.ListenUIEnum.BetPos:
+                // this.ChipPrice = this.BetUI.GetChipPrice();
+                // data.Value.Amount = this.ChipPrice;
+                // this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.BetPos, data.Value]);
+                break;
+            case Enum.ListenUIEnum.ConfirmBet:
+                // this.BetUI.Confirm();
+                // this.BetMoreUI.Confirm();
+                // this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.ConfirmBet, null]);
+                break;
+            case Enum.ListenUIEnum.CancelBet:
+                // this.BetUI.Cancel();
+                // this.BetMoreUI.Cancel();
+                // this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.CancelBet, null]);
+                break;
+            // case Enum.ListenUIEnum.ShowRule:
+            //     this.RuleUIHV.ShowRule();
+            //     break;
+            default:
+                break;
+        }
     };
     /**
      * 设置分发数据
@@ -107,22 +122,19 @@ var GameView = /** @class */ (function (_super) {
             case GameEnum.GameViewEnum.GameData:
                 this.OnMessageHandler(data);
                 break;
+            case GameEnum.GameViewEnum.ChangMoney:
+                // this.HeadUIHV.ChangeMoney(data);
+                break;
+            case GameEnum.GameViewEnum.GetMemberInfo:
+                // this.HeadUIHV.SetInfo(data.memberInfo,data.isTourists);
+                break;
             case GameEnum.GameViewEnum.BetPos:
-                this.GameBgUI.IsBet(data);
+                break;
+            case GameEnum.GameViewEnum.SetRecord:
+                // this.NoteRecordUIHV.AddRecordData(data);
                 break;
             default:
                 break;
-        }
-    };
-    /**
-     * 游戏登录完成，检查游戏资源加载状态
-     */
-    GameView.prototype.GameLoginComplete = function () {
-        this.onLoginSucess = true;
-        if (this.onLoadSuccess) {
-            this.LoadResourceUI.Remove();
-            //加载主界面
-            this.GameMainUI();
         }
     };
     /**
@@ -153,52 +165,49 @@ var GameView = /** @class */ (function (_super) {
                 this.OnGameOther(data.Data);
                 break;
             default:
+                break;
         }
     };
+    /**
+     * 游戏初始化命令处理
+     * @param data 游戏初始化数据
+     */
     GameView.prototype.OnGameInit = function (data) {
-        // console.log("gameInit:",data)
-        /**测试 */
-        this.GameBgUI.Set({ type: 0, data: data.RoundID });
-        this.GameBgUI.Set({ type: 1, data: data.Status });
-        this.GameBgUI.Set({ type: 2, data: data.Balance });
-        this.GameBgUI.Set({ type: 3, data: data.Cards });
-        this.GameBgUI.Set({ type: 4, data: data.Odds });
-        /**测试 */
+        this.Log(data, "GameInit");
     };
+    /**
+     * 游戏开始命令处理
+     * @param data 游戏开始数据
+     */
     GameView.prototype.OnGameStart = function (data) {
-        // console.log("gameStart:",data)
-        /**测试 */
-        this.GameBgUI.Set({ type: 0, data: data.RoundID });
-        this.GameBgUI.Set({ type: 1, data: data.Status });
-        this.GameBgUI.Set({ type: 3, data: { FirstCard: data.FirstCard, SecondCard: data.SecondCard, ThirdCard: "/" } });
-        this.GameBgUI.Set({ type: 4, data: data.Odds });
-        /**测试 */
+        this.Log(data, "GameStart");
     };
+    /**
+     * 投注结果命令处理
+     * @param data 游戏投注结果
+     */
     GameView.prototype.OnBetResult = function (data) {
-        console.log("BetResult:", data);
-        /**测试 */
-        this.GameBgUI.Set({ type: 2, data: data.Balance });
-        /**测试 */
+        this.Log(data, "BetResult");
     };
+    /**
+     * 停止投注
+     * @param data
+     */
     GameView.prototype.OnStopBet = function (data) {
-        /**测试 */
-        this.GameBgUI.Set({ type: 1, data: data.Status });
-        /**测试 */
     };
+    /**
+     * 游戏结果
+     * @param data 游戏结果数据
+     */
     GameView.prototype.OnGameResult = function (data) {
-        console.log("GameResult:", data);
-        /**测试 */
-        this.GameBgUI.Set({ type: 1, data: data.Status });
-        this.GameBgUI.Set({ type: 3, data: { FirstCard: data.FirstCard, SecondCard: data.SecondCard, ThirdCard: data.ThirdCard } });
-        this.GameBgUI.Set({ type: 5, data: null });
-        /**测试 */
+        this.Log(data, "GameResult");
     };
+    /**
+     * 结算命令
+     * @param data 游戏结算数据
+     */
     GameView.prototype.OnSettleResult = function (data) {
-        console.log("SettleResult:", data);
-        /**测试 */
-        this.GameBgUI.Set({ type: 1, data: data.Status });
-        this.GameBgUI.Set({ type: 2, data: data.Balance });
-        /**测试 */
+        this.Log(data, "SettleResult");
     };
     GameView.prototype.OnGameOther = function (data) {
     };

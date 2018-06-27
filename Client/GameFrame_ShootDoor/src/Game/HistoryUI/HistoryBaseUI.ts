@@ -1,4 +1,3 @@
-/// <reference path="../../GameFrame/GameViewManager/Scale.ts"/>
 abstract class HistoryBaseUI {
     protected ui: ui.HistoryRecordHUI | ui.HistoryRecordVUI;
     protected listBoxH: number = 0;

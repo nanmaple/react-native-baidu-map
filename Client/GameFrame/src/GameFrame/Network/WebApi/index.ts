@@ -1,5 +1,5 @@
 /// <reference path="WebApiBase.ts" />
-namespace Network.Http {
+namespace Network {
     /**
      * WebApi层
      * 单例 使用WebApi.instance

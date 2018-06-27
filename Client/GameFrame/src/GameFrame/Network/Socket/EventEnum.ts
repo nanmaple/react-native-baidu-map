@@ -1,7 +1,7 @@
 /**
  * SocketManager 事件
  */
-namespace Network.Socket.SocketEvent {
+namespace Network.SocketEvent {
     /**
      * Socket连接事件
      */

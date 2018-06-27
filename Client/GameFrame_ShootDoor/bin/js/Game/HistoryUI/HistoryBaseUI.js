@@ -1,4 +1,3 @@
-/// <reference path="../../GameFrame/GameViewManager/Scale.ts"/>
 var HistoryBaseUI = /** @class */ (function () {
     function HistoryBaseUI() {
         this.listBoxH = 0;

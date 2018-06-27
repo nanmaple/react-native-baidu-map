@@ -1,13 +1,14 @@
-/*
-* name;
-*/
-var GameDto;
-(function (GameDto) {
+/// <reference path="../Enum/CheckLoginEnum.ts" />
+var BaseDto;
+(function (BaseDto) {
+    /*
+    * 检测登录返回数据Dto
+    */
     var CheckLoginDto = /** @class */ (function () {
         function CheckLoginDto() {
         }
         return CheckLoginDto;
     }());
-    GameDto.CheckLoginDto = CheckLoginDto;
-})(GameDto || (GameDto = {}));
+    BaseDto.CheckLoginDto = CheckLoginDto;
+})(BaseDto || (BaseDto = {}));
 //# sourceMappingURL=CheckLoginDto.js.map

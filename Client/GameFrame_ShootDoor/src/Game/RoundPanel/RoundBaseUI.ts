@@ -1,5 +1,4 @@
 
-
 abstract class RoundBaseUI {
     protected ui: ui.RoundHUI | ui.RoundVUI;
     protected round:string;
@@ -37,12 +36,12 @@ abstract class RoundBaseUI {
      * 设置游戏期号
      * @param round 期号
      */
-    abstract SetGameRound(round:string);
+    abstract SetGameRound(round:string):void;
 
     /**
      * 设置游戏状态
      * @param state 游戏状态 
      */
-    abstract SetGameState(state:Enum.GameStatus);
+    abstract SetGameState(state:Enum.GameStatus):void;
 
 }

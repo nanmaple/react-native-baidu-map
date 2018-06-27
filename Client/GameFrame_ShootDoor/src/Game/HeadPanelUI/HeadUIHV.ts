@@ -37,7 +37,6 @@ class HeadUIHV extends HeadBaseUI{
                 this.ui.score.text = Utils.Money.Format(0);
             }
         }
-        this.moneyEffect = new NumberGradualChangeEffect(this.ui.score);
     }
 
     public ChangeMoney(money: number): void{

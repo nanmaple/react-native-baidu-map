@@ -1,14 +1,14 @@
-/// <reference path="../../Utils/Http/index.ts" />
+/// <reference path="./Http.ts" />
 abstract class WebApiBase {
     //token存储
     protected header: any = {
         Authorization: ""
     };
     //http
-    protected http: Utils.Http;
+    protected http: Network.Http;
 
     constructor() {
-        this.http = new Utils.Http();
+        this.http = new Network.Http();
     }
 
     /**

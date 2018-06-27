@@ -1,4 +1,3 @@
-/// <reference path="../../GameFrame/GameViewManager/Scale.ts"/>
 var GameBgBaseUI = /** @class */ (function () {
     function GameBgBaseUI() {
     }

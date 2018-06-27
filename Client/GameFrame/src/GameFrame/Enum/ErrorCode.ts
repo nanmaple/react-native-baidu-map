@@ -1,4 +1,4 @@
-namespace GameEnum {
+namespace BaseEnum {
     /**
      * Api错误码
      */

@@ -1,11 +1,11 @@
-/// <reference path="../../Utils/Http/index.ts" />
+/// <reference path="./Http.ts" />
 var WebApiBase = /** @class */ (function () {
     function WebApiBase() {
         //token存储
         this.header = {
             Authorization: ""
         };
-        this.http = new Utils.Http();
+        this.http = new Network.Http();
     }
     /**
      * 初始化充缓存中获取token

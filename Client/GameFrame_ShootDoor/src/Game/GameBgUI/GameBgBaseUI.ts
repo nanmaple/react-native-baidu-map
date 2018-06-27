@@ -1,4 +1,3 @@
-/// <reference path="../../GameFrame/GameViewManager/Scale.ts"/>
 abstract class GameBgBaseUI {
     protected ui: ui.GameBgHUI | ui.GameBgVUI;
     constructor() {

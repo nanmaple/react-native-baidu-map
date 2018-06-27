@@ -21,9 +21,11 @@ var RoundUIHV = /** @class */ (function (_super) {
         return _super.call(this) || this;
     }
     RoundUIHV.prototype.SetGameRound = function (round) {
+        this.round = round;
         this.ui.gameRound.text = round;
     };
     RoundUIHV.prototype.SetGameState = function (state) {
+        this.state = state;
         var language = new LanguageUtils.Language();
         this.ui.gameState.text = language.GetLanguage(BetStatus[state]);
     };

@@ -113,44 +113,41 @@ class BetUIHV extends BetBaseUI implements IUI{
         this.cacheData.TotalBet = new Object();
         this.cacheData.Status = Enum.GameStatus.SETTLEED;
         let language: LanguageUtils.Language = new LanguageUtils.Language();
-            this.guessSuccess = false;
-            //总赢数目
-            let win: number = 0;
-            let gameResult: Dto.CardInfoDto = JSON.parse(data.GameResult);
-            let card: number = Utils.Poker.GetNumber(gameResult.ThirdCard);
-            let msg: Array<string> = new Array<string>();
-            for (let i in data.SettleResult) {
-                if(Number(i) > 0 && Number(i) <= 13){
-                    if (data.SettleResult[i] > 0) {
-                        if (card == 7) {
-                            let pos: Enum.BetPosType = Number(i);
-                            if (Enum.BetPosType.BIG == pos) {
-                                (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
-                                continue;
-                            } else if (Enum.BetPosType.SMALL == pos) {
-                                (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
-                                continue;
-                            } else if (Enum.BetPosType.ODD == pos) {
-                                (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
-                                continue;
-                            } else if (Enum.BetPosType.EVEN == pos) {
-                                (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
-                                continue;
-                            }
+        this.guessSuccess = false;
+        let gameResult: Dto.CardInfoDto = JSON.parse(data.GameResult);
+        let card: number = Utils.Poker.GetNumber(gameResult.ThirdCard);
+        for (let i in data.SettleResult) {
+            if(Number(i) > 0 && Number(i) <= 13){
+                if (data.SettleResult[i] > 0) {
+                    if (card == 7) {
+                        let pos: Enum.BetPosType = Number(i);
+                        if (Enum.BetPosType.BIG == pos) {
+                            (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
+                            continue;
+                        } else if (Enum.BetPosType.SMALL == pos) {
+                            (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
+                            continue;
+                        } else if (Enum.BetPosType.ODD == pos) {
+                            (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
+                            continue;
+                        } else if (Enum.BetPosType.EVEN == pos) {
+                            (this.betBtnArr[Number(i) - 1] as Laya.Button).gray = false;
+                            continue;
                         }
-                        if (data.SettleResult[i] > 100) {
-                            data.SettleResult[i] = Utils.Money.Format(data.SettleResult[i], 0);
-                        }
-                        this.betBtnArr[i].SetValue(data.SettleResult[i]);
-                        this.betBtnArr[i].Refresh();
-                        this.betBtnArr[i].GetUI().gray = false;
-                        this.guessSuccess = true;
                     }
+                    if (data.SettleResult[i] > 100) {
+                        data.SettleResult[i] = Utils.Money.Format(data.SettleResult[i], 0);
+                    }
+                    this.betBtnArr[i].SetValue(data.SettleResult[i]);
+                    this.betBtnArr[i].Refresh();
+                    this.betBtnArr[i].GetUI().gray = false;
+                    this.guessSuccess = true;
                 }
             }
-            if (!this.guessSuccess) {
-                this.ShowMsg(language.GetLanguage("gameFail"));
-            }
+        }
+        if (!this.guessSuccess) {
+            this.ShowMsg(language.GetLanguage("gameFail"));
+        }
     }
     
 }

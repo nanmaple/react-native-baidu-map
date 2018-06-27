@@ -1,4 +1,3 @@
-/// <reference path="../../GameFrame/GameViewManager/Scale.ts"/>
 var CardBaseUI = /** @class */ (function () {
     function CardBaseUI() {
         this.pokerNum = 3;

@@ -4,6 +4,7 @@
 
 class NoteRecordUIHV extends NoteRecordBaseUI{
 
+    private time:number;//时间戳 防止快速打开关闭记录造成的请求数据错误
     constructor(){
         super();
         
@@ -24,7 +25,8 @@ class NoteRecordUIHV extends NoteRecordBaseUI{
         this.ui._recordList.scrollBar.value = this.scrollValue;
     }
 
-    public AddRecordData(record:Dto.HandlerDto):void{
+    public AddRecordData(record:Dto.HandlerDto,time:number):void{
+        if(!this.isShow || time != this.time)return;
         let data: Array<Dto.NoteRecordDto> = new Array<Dto.NoteRecordDto>();
         if(record && record.Data){
             data = record.Data;
@@ -41,8 +43,8 @@ class NoteRecordUIHV extends NoteRecordBaseUI{
         else {
             this.recordPageDto.LastId = data[data.length - 1].Id;
         }
-            this.isLoading = false;
-            this.ui.isLoading.visible = false;
+        this.isLoading = false;
+        this.ui.isLoading.visible = false;
     }
 
     public ShowNoteRecord():void{
@@ -52,11 +54,12 @@ class NoteRecordUIHV extends NoteRecordBaseUI{
 
     public CloseNoteRecord():void{
         this.isShow = false;
-        this.detailShow = false;
         this.ui.visible = false;
         this.listArray = [];
         this.detailListArray = [];
-        this.SetListArray(this.listArray);
+        this.ui.betDetailList.dataSource = [];
+        this.ui._recordList.dataSource = [];
+        this.time = null;
     }
 
     public BackNoteRecordList():void{
@@ -118,12 +121,11 @@ class NoteRecordUIHV extends NoteRecordBaseUI{
      */
     private onRender(cell: Laya.Box, index: number):void{
         //如果索引不再可索引范围，则终止该函数
-        if (index > this.listArray.length) return;
+        if (index >= this.listArray.length) return;
         //获取当前渲染条目的数据
         var data: any = this.listArray[index];
         //获取listBox的高度
         this.listBoxH = cell.height;
-        console.log(this.listArray,index)
         //根据子节点的名字，获取子节点对象。   
         let betTime: Laya.Label = cell.getChildByName("betTime") as Laya.Label;
         let betDate: Laya.Label = cell.getChildByName("betDate") as Laya.Label;
@@ -177,7 +179,8 @@ class NoteRecordUIHV extends NoteRecordBaseUI{
     */
     private OnLoad():void{
         let data: Dto.BroadcastDto = new Dto.BroadcastDto();
-        data.Value = this.recordPageDto;
+        this.time = new Date().getTime();
+        data.Value ={dto:this.recordPageDto,time:this.time};
         data.Type = Enum.ListenUIEnum.GetBetRecord;
         let event = new CustomEvent("GameUI", { detail: data });
         document.dispatchEvent(event);
@@ -187,7 +190,9 @@ class NoteRecordUIHV extends NoteRecordBaseUI{
      * 设置列表数据源
      * @param data 
      */
-    private SetListArray(data: Array<any>):void{
+    private 
+    
+    SetListArray(data: Array<any>):void{
         this.listArray = data;
         this.ui._recordList.dataSource = this.listArray;
         if (!data || data.length == 0) {
@@ -205,7 +210,6 @@ class NoteRecordUIHV extends NoteRecordBaseUI{
     private SetListDetailShow():void{
         if(this.detailShow){
             this.ui.recordBox.x = -this.recordWidth;  
-            this.detailListArray = [];
             this.GoNoteRecordDetail(this.detailData);
         }
         else{
@@ -294,7 +298,7 @@ class NoteRecordUIHV extends NoteRecordBaseUI{
      */
     private onDetailRender(cell: Laya.Box, index: number):void{
         //如果索引不再可索引范围，则终止该函数
-        if (index > this.detailListArray.length) return;
+        if (index >= this.detailListArray.length) return;
         //获取当前渲染条目的数据
         let data: any = this.detailListArray[index];
         //根据子节点的名字，获取子节点对象。   

@@ -1,4 +1,3 @@
-/// <reference path="../../GameFrame/GameViewManager/Scale.ts"/>
 abstract class CardBaseUI {
     protected pokerNum: number = 3;
     protected cardList: Array<Dto.CardDto> = [];

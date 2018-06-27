@@ -1,5 +1,5 @@
-var GameDto;
-(function (GameDto) {
+var BaseDto;
+(function (BaseDto) {
     /**
      * 授权登录信息Dto
      */
@@ -28,6 +28,6 @@ var GameDto;
         }
         return AuthorizationDto;
     }());
-    GameDto.AuthorizationDto = AuthorizationDto;
-})(GameDto || (GameDto = {}));
+    BaseDto.AuthorizationDto = AuthorizationDto;
+})(BaseDto || (BaseDto = {}));
 //# sourceMappingURL=AuthorizationDto.js.map

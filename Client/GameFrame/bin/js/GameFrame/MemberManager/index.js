@@ -9,7 +9,7 @@ var MemberManager;
     var Member = /** @class */ (function () {
         function Member() {
             var _this = this;
-            this.WebApi = Network.Http.WebApi.GetInstance();
+            this.WebApi = Network.WebApi.GetInstance();
             this.loginService = null;
             this.successHandler = null;
             this.failHanlder = null;
@@ -18,10 +18,12 @@ var MemberManager;
              * @param data
              */
             this.GetMemberInfoSuccess = function (data) {
-                _this.successHandler.runWith({ Type: GameEnum.CheckLoginEnum.MemberInfo, Data: data });
+                _this.successHandler.runWith({ Type: BaseEnum.CheckLoginEnum.MemberInfo, Data: data });
+                var authorizationInfo = _this.GetAuthorization();
+                _this.GetSocketToken(authorizationInfo.Token);
                 //微信js签名配置
                 var memberId = _this.GetMemberInfo().MemberId.toString();
-                var wechat = new Laya.Browser.window.Wechat(Utils.Http, null, GameConfig.GetWeChatShareDto(memberId));
+                var wechat = new Laya.Browser.window.Wechat(Network.Http, null, GameConfig.GetWeChatShareDto(memberId));
                 wechat.GetJsSignature();
             };
             /**
@@ -29,10 +31,10 @@ var MemberManager;
              * @param data
              */
             this.GetMemberInfoError = function (data) {
-                _this.failHanlder.runWith({ Type: GameEnum.CheckLoginEnum.MemberInfo, Data: data });
+                _this.failHanlder.runWith({ Type: BaseEnum.CheckLoginEnum.MemberInfo, Data: data });
             };
             //获取Socket Token
-            this.loginService = new Laya.Browser.window.LoginService(Utils.Http, Utils.Storage, this.GetMemberInfoSuccess, null, this.GetMemberInfoError);
+            this.loginService = new Laya.Browser.window.LoginService(Network.Http, Utils.Storage, this.GetMemberInfoSuccess, null, this.GetMemberInfoError);
         }
         Member.prototype.CheckLogin = function (successHandler, failHanlder) {
             this.successHandler = successHandler;
@@ -44,7 +46,6 @@ var MemberManager;
             else {
                 //获取会员信息
                 this.loginService.GetMemberInfo(true);
-                this.GetSocketToken(authorizationInfo.Token);
             }
         };
         /**
@@ -57,20 +58,20 @@ var MemberManager;
             var obj = {
                 GameID: GameConfig.GameID
             };
-            this.WebApi.Post(Net.ApiConfig.LoginGame, obj, {}, function (response) {
-                if (response.Result == GameEnum.ErrorCode.Success) {
-                    _this.successHandler.runWith({ Type: GameEnum.CheckLoginEnum.SocketToken, Data: response.Data });
+            this.WebApi.Post(ApiConfig.LoginGame, obj, {}, function (response) {
+                if (response.Result == BaseEnum.ErrorCode.Success) {
+                    _this.successHandler.runWith({ Type: BaseEnum.CheckLoginEnum.SocketToken, Data: response.Data });
                 }
-                else if (response.Result == GameEnum.ErrorCode.IPLimited) {
+                else if (response.Result == BaseEnum.ErrorCode.IPLimited) {
                     Laya.Browser.window.location.href = "";
                 }
                 else {
                     console.log("获取游戏SocketToken失败", response);
-                    _this.failHanlder.runWith({ Type: GameEnum.CheckLoginEnum.SocketToken, Data: '' });
+                    _this.failHanlder.runWith({ Type: BaseEnum.CheckLoginEnum.SocketToken, Data: '' });
                 }
             }, function (error) {
                 console.log("获取游戏SocketToken失败", error);
-                _this.failHanlder.runWith({ Type: GameEnum.CheckLoginEnum.SocketToken, Data: '' });
+                _this.failHanlder.runWith({ Type: BaseEnum.CheckLoginEnum.SocketToken, Data: '' });
             });
         };
         /**

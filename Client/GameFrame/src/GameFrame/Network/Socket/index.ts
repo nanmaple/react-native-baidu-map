@@ -3,17 +3,17 @@
 /**
  * Socket管理类
  */
-namespace Network.Socket {
+namespace Network {
     /**
      * Socket类
      */
     export class SocketManager extends Laya.EventDispatcher implements ISocketManager {
         //socket对象
-        private socket: Utils.ISocket;
+        private socket: Network.ISocket;
         constructor() {
             super();
-            this.socket = new Utils.Socket();
-            let params: Utils.SocketParam = new Utils.SocketParam();
+            this.socket = new Network.Socket();
+            let params: Network.SocketParam = new Network.SocketParam();
             params.OnConnect = Laya.Handler.create(this, this.OnConnect, null, false);
             params.OnError = Laya.Handler.create(this, this.OnError, null, false);
             params.OnClosed = Laya.Handler.create(this, this.OnClosed, null, false);
@@ -55,9 +55,9 @@ namespace Network.Socket {
          */
         public Send(gameData: any = null, msgID: string): void {
             //组装消息dto
-            let msgDto: GameDto.MessageDto = new GameDto.MessageDto();
+            let msgDto: BaseDto.MessageDto = new BaseDto.MessageDto();
             msgDto.MSGID = msgID;
-            msgDto.Command = GameEnum.MainCommand.MSG_GAME;
+            msgDto.Command = BaseEnum.MainCommand.MSG_GAME;
             msgDto.Data = gameData
             let msg: string = JSON.stringify(msgDto);
             //发送
@@ -69,7 +69,7 @@ namespace Network.Socket {
         */
         private OnConnect(): void {
             //广播上层-连接成功
-            this.event(Network.Socket.SocketEvent.OnConnect);
+            this.event(Network.SocketEvent.OnConnect);
         }
 
         /**
@@ -77,7 +77,7 @@ namespace Network.Socket {
          */
         private OnClosed(message: string): void {
             //广播上层-关闭连接
-            this.event(Network.Socket.SocketEvent.OnClose,message);
+            this.event(Network.SocketEvent.OnClose,message);
         }
 
         /**
@@ -85,7 +85,7 @@ namespace Network.Socket {
          */
         private OnError(message: string): void {
             //广播上层-错误
-            this.event(Network.Socket.SocketEvent.OnError, message);
+            this.event(Network.SocketEvent.OnError, message);
         }
 
         /**
@@ -93,7 +93,7 @@ namespace Network.Socket {
          */
         private OnWillReconnect(): void {
             //广播上层-重连
-            this.event(Network.Socket.SocketEvent.OnWillReconnect);
+            this.event(Network.SocketEvent.OnWillReconnect);
         }
 
         /**
@@ -101,42 +101,42 @@ namespace Network.Socket {
          */
         private OnMessage(message: string): void {
             if (!message) return;
-            let messageDto: GameDto.MessageDto;
+            let messageDto: BaseDto.MessageDto;
             try {
-                messageDto = JSON.parse(message) as GameDto.MessageDto;
+                messageDto = JSON.parse(message) as BaseDto.MessageDto;
             }
             catch (error) {
                 return;
             }
 
             switch (messageDto.Command) {
-                case GameEnum.MainCommand.MSG_ACK:
+                case BaseEnum.MainCommand.MSG_ACK:
                     //广播上层-ACK
-                    this.event(Network.Socket.SocketEvent.OnAck, messageDto.Data);
+                    this.event(Network.SocketEvent.OnAck, messageDto.Data);
                     break;
-                case GameEnum.MainCommand.MSG_GAME:
+                case BaseEnum.MainCommand.MSG_GAME:
                     //广播上层-游戏命令
-                    this.event(Network.Socket.SocketEvent.OnGame, messageDto.Data);
+                    this.event(Network.SocketEvent.OnGame, messageDto.Data);
                     break;
-                case GameEnum.MainCommand.MSG_ERROR:
+                case BaseEnum.MainCommand.MSG_ERROR:
                     //广播上层-错误
-                    this.event(Network.Socket.SocketEvent.OnError, messageDto.Data);
+                    this.event(Network.SocketEvent.OnError, messageDto.Data);
                     break;
-                case GameEnum.MainCommand.MSG_KICKOUT:
+                case BaseEnum.MainCommand.MSG_KICKOUT:
                     //登出，断开连接
                     this.socket.Close();
                     //广播上层-登出
-                    this.event(Network.Socket.SocketEvent.OnLogout);
+                    this.event(Network.SocketEvent.OnLogout);
                     break;
-                case GameEnum.MainCommand.MSG_SYSTEM_PUSH:
+                case BaseEnum.MainCommand.MSG_SYSTEM_PUSH:
                     //系统推送消息
-                    this.event(Network.Socket.SocketEvent.OnSystemPush, messageDto.Data);
+                    this.event(Network.SocketEvent.OnSystemPush, messageDto.Data);
                     break;
-                case GameEnum.MainCommand.MSG_MEMBERCLOSED:
+                case BaseEnum.MainCommand.MSG_MEMBERCLOSED:
                     //断开连接
                     this.socket.Close();
                     //广播上层-会员状态已经关闭
-                    this.event(Network.Socket.SocketEvent.OnMemberClose);
+                    this.event(Network.SocketEvent.OnMemberClose);
                     break;
                 default:
                     break;

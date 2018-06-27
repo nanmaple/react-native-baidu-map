@@ -16,12 +16,24 @@ var ScreenStatus;
     ScreenStatus[ScreenStatus["Ver"] = 0] = "Ver";
     ScreenStatus[ScreenStatus["Hor"] = 1] = "Hor";
 })(ScreenStatus || (ScreenStatus = {}));
+/**
+ * 游戏界面管理抽象类
+ */
 var GameViewManager = /** @class */ (function (_super) {
     __extends(GameViewManager, _super);
     function GameViewManager() {
         var _this = _super.call(this) || this;
-        _this.onLoginSucess = false; //登录是否成功
-        _this.onLoadSuccess = false; //加载资源是否完成
+        /**
+         * 登录是否成功
+         */
+        _this.onLoginSucess = false;
+        /**
+         * 加载资源是否完成
+         */
+        _this.onLoadSuccess = false;
+        /**
+         * 横竖屏状态
+         */
         _this.ScreenStatus = 0;
         //横竖屏监听
         document.addEventListener("ScreeMode", function () {
@@ -34,7 +46,7 @@ var GameViewManager = /** @class */ (function (_super) {
             else {
                 _this.LoadResourceUI.ResetScreen(isVer);
             }
-            _this.ListenScreen();
+            _this.ResetScreen();
         });
         //UI事件监听
         document.addEventListener("GameUI", function (data) {
@@ -42,8 +54,18 @@ var GameViewManager = /** @class */ (function (_super) {
         });
         return _this;
     }
-    GameViewManager.prototype.Log = function () { };
-    ;
+    /**
+     * 日志
+     * @param msg 日志内容
+     * @param key 日志key值
+     */
+    GameViewManager.prototype.Log = function (msg, key) {
+        if (msg === void 0) { msg = ""; }
+        if (key === void 0) { key = "log"; }
+        if (GameConfig.OpenLog) {
+            console.log(Date.now().toString(), key + ":", msg);
+        }
+    };
     /**
      * 显示弹出提示
      * @param type 类型

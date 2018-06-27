@@ -10,9 +10,10 @@ var InitState = /** @class */ (function () {
         // Laya.WorkerLoader.enable = true;
         //设置适配模式
         Laya.stage.scaleMode = Laya.Stage.SCALE_SHOWALL;
-        //设置剧中对齐
+        Laya.stage.screenMode = GameConfig.ScreenMode ? Laya.Stage.SCREEN_HORIZONTAL : Laya.Stage.SCREEN_VERTICAL;
+        //设置居中对齐
         Laya.stage.alignH = Laya.Stage.ALIGN_CENTER;
-        //设置剧中对齐
+        //设置居中对齐
         Laya.stage.alignV = Laya.Stage.ALIGN_MIDDLE;
         //开启锯齿
         Config.isAntialias = true;
@@ -25,7 +26,7 @@ var InitState = /** @class */ (function () {
         // Laya.DebugTool.init();
         //显示FPS
         if (GameConfig.IsDebug) {
-            // Laya.Stat.show(0, 0);
+            Laya.Stat.show(0, 0);
         }
         /***********调试相关**********/
         /***********舞台设置**********/
@@ -45,25 +46,17 @@ var InitState = /** @class */ (function () {
     InitState.prototype.listenerCallBack = function () {
         //判断android或者ios
         if (window.orientation == 0 || window.orientation == 180) {
-            GameConfig.ScreenMode = 0;
-            Laya.stage.size(GameConfig.DesignShort, GameConfig.DesignLength);
-            Laya.stage.screenMode = Laya.Stage.SCREEN_VERTICAL;
+            // GameConfig.ScreenMode = 0;
         }
         else if (window.orientation == 90 || window.orientation == -90) {
-            GameConfig.ScreenMode = 1;
-            Laya.stage.size(GameConfig.DesignLength, GameConfig.DesignShort);
-            Laya.stage.screenMode = Laya.Stage.SCREEN_HORIZONTAL;
+            // GameConfig.ScreenMode = 1;
         }
         else {
             if (Laya.Browser.clientWidth > Laya.Browser.clientHeight) {
-                GameConfig.ScreenMode = 1;
-                Laya.stage.size(GameConfig.DesignLength, GameConfig.DesignShort);
-                Laya.stage.screenMode = Laya.Stage.SCREEN_HORIZONTAL;
+                // GameConfig.ScreenMode = 1;
             }
             else {
-                GameConfig.ScreenMode = 0;
-                Laya.stage.size(GameConfig.DesignShort, GameConfig.DesignLength);
-                Laya.stage.screenMode = Laya.Stage.SCREEN_VERTICAL;
+                // GameConfig.ScreenMode = 0;
             }
         }
         Laya.stage.on(Laya.Event.RESIZE, this, this.VersionSwitch, [GameConfig.ScreenMode]);

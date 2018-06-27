@@ -17,12 +17,11 @@ var LoadingHV = /** @class */ (function (_super) {
      * 显示Connect Server
      */
     LoadingHV.prototype.ShowLoading = function (txt) {
-        var language = new LanguageUtils.Language();
         if (!this.ui) {
             return;
         }
         this.loadingShow = true;
-        this.loadingTxt = language.GetLanguage(txt);
+        this.loadingTxt = LanguageUtils.Language.GetLanguage(txt);
         this.ui.visible = this.loadingShow;
         this.ui.txt.text = this.loadingTxt;
     };
@@ -46,16 +45,16 @@ var LoadingHV = /** @class */ (function (_super) {
                 this.HideLoading();
                 break;
             case GameEnum.GameModalEnum.Open:
-                this.ShowLoading(LanguageUtils.Type.ConnectService);
+                this.ShowLoading("ConnectService");
                 break;
             case GameEnum.GameModalEnum.Msg:
                 this.ShowLoading(data.Data);
                 break;
             case GameEnum.GameModalEnum.LoginOut:
-                this.ShowLoading(LanguageUtils.Type.AccountLoginOut);
+                this.ShowLoading(LanguageUtils.Language.GetLanguage("AccountLoginOut"));
                 break;
             case GameEnum.GameModalEnum.MemClose:
-                this.ShowLoading(LanguageUtils.Type.MemberClosed);
+                this.ShowLoading(LanguageUtils.Language.GetLanguage("MemberClosed"));
                 break;
             default:
                 break;

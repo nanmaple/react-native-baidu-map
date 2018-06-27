@@ -19,10 +19,10 @@ var Bet;
             var alreadyBet = this.BeforeAmount(currentBet, betInfo);
             var pos = currentBet.Pos;
             if (memScore == 0) {
-                return { success: false, data: LanguageUtils.Type.BalanceSmall };
+                return { success: false, data: LanguageUtils.Language.GetLanguage("BalanceSmall") };
             }
-            if (currentBet.Amount < currentBet.MinLimit) {
-                return { success: false, data: LanguageUtils.Type.LowLimit };
+            if (alreadyBet == 0 && currentBet.Amount < currentBet.MinLimit) {
+                return { success: false, data: LanguageUtils.Language.GetLanguage("LowLimit") };
             }
             if (alreadyBet != 0 || memScore >= currentBet.MinLimit) { //------------1
                 if (alreadyBet < currentBet.MaxLimit) { //------------2
@@ -46,11 +46,11 @@ var Bet;
                     return { success: true, data: (currentBet.Amount + alreadyBet) };
                 }
                 else {
-                    return { success: false, data: LanguageUtils.Type.OverLimit };
+                    return { success: false, data: LanguageUtils.Language.GetLanguage("OverLimit") };
                 }
             }
             else {
-                return { success: false, data: LanguageUtils.Type.BalanceSmall };
+                return { success: false, data: LanguageUtils.Language.GetLanguage("BalanceSmall") };
             }
         };
         /**
@@ -74,11 +74,11 @@ var Bet;
             if (betInfo.NoBetSuceessData[pos]) {
                 alreadyBet += betInfo.NoBetSuceessData[pos].Amount;
             }
-            if (betInfo.BetSuccessData[pos]) {
+            if (betInfo.BetSuccessData && betInfo.BetSuccessData[pos]) {
                 alreadyBet += betInfo.BetSuccessData[pos];
             }
             for (var i in betInfo.SendingBetData) {
-                if (betInfo.SendingBetData[i].Data[pos]) {
+                if (JSON.stringify(betInfo.SendingBetData[i]) != "{}" && betInfo.SendingBetData[i].Data[pos]) {
                     alreadyBet += betInfo.SendingBetData[i].Data[pos].Amount;
                 }
             }
@@ -101,7 +101,6 @@ var Bet;
             if (!betInfo.NoBetSuceessData || JSON.stringify(betInfo.NoBetSuceessData) == "{}") {
                 return;
             }
-            console.log(betInfo);
             //确认投注，发送当前注单到服务器   
             var dto = new Dto.HandlerDto();
             dto.MsgID = null;
@@ -118,6 +117,15 @@ var Bet;
             betInfo.BetingSocre += betInfo.BetSocre;
             betInfo.BetSocre = 0;
             betInfo.NoBetSuceessData = new Object();
+        };
+        /**
+         * 投注Ack回调
+         */
+        BetLogic.prototype.BetAck = function (id, betInfo) {
+            if (betInfo.SendingBetData[id]) {
+                betInfo.SendingBetData[id] = new Object();
+                betInfo.BetingSocre = 0;
+            }
         };
         return BetLogic;
     }());

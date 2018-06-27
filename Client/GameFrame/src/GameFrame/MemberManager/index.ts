@@ -7,13 +7,13 @@ namespace MemberManager {
      * 会员信息管理
      */
     export class Member implements IMemberManager {
-        private WebApi: Network.Http.WebApi = Network.Http.WebApi.GetInstance();
+        private WebApi: Network.WebApi = Network.WebApi.GetInstance();
         private loginService: any = null;
         private successHandler: Laya.Handler = null;
         private failHanlder: Laya.Handler = null;
         constructor() {
             //获取Socket Token
-            this.loginService = new Laya.Browser.window.LoginService(Utils.Http, Utils.Storage, this.GetMemberInfoSuccess, null, this.GetMemberInfoError);
+            this.loginService = new Laya.Browser.window.LoginService(Network.Http, Utils.Storage, this.GetMemberInfoSuccess, null, this.GetMemberInfoError);
         }
 
         public CheckLogin(successHandler: Laya.Handler, failHanlder: Laya.Handler) {
@@ -25,8 +25,6 @@ namespace MemberManager {
             } else {
                 //获取会员信息
                 this.loginService.GetMemberInfo(true);
-
-                this.GetSocketToken(authorizationInfo.Token);
             }
         }
 
@@ -35,10 +33,12 @@ namespace MemberManager {
          * @param data 
          */
         private GetMemberInfoSuccess = (data: any) => {
-            this.successHandler.runWith({ Type: GameEnum.CheckLoginEnum.MemberInfo, Data: data });
+            this.successHandler.runWith({ Type: BaseEnum.CheckLoginEnum.MemberInfo, Data: data });
+            let authorizationInfo = this.GetAuthorization();
+            this.GetSocketToken(authorizationInfo.Token);
             //微信js签名配置
             let memberId = this.GetMemberInfo().MemberId.toString();
-            let wechat = new Laya.Browser.window.Wechat(Utils.Http, null, GameConfig.GetWeChatShareDto(memberId));
+            let wechat = new Laya.Browser.window.Wechat(Network.Http, null, GameConfig.GetWeChatShareDto(memberId));
             wechat.GetJsSignature();
         }
 
@@ -47,30 +47,30 @@ namespace MemberManager {
          * @param data 
          */
         private GetMemberInfoError = (data: any) => {
-            this.failHanlder.runWith({ Type: GameEnum.CheckLoginEnum.MemberInfo, Data: data });
+            this.failHanlder.runWith({ Type: BaseEnum.CheckLoginEnum.MemberInfo, Data: data });
         }
 
         /**
          * 通过授权token获取socket Token
          * @param token 
          */
-        public GetSocketToken(token: string) {
+        private GetSocketToken(token: string) {
             this.WebApi.SetToken(token);
             let obj = {
                 GameID: GameConfig.GameID
             }
-            this.WebApi.Post(Net.ApiConfig.LoginGame,obj,{}, (response: any) => {
-                if (response.Result == GameEnum.ErrorCode.Success) {
-                    this.successHandler.runWith({ Type: GameEnum.CheckLoginEnum.SocketToken, Data: response.Data });
-                } else if (response.Result == GameEnum.ErrorCode.IPLimited) {
+            this.WebApi.Post(ApiConfig.LoginGame,obj,{}, (response: any) => {
+                if (response.Result == BaseEnum.ErrorCode.Success) {
+                    this.successHandler.runWith({ Type: BaseEnum.CheckLoginEnum.SocketToken, Data: response.Data });
+                } else if (response.Result == BaseEnum.ErrorCode.IPLimited) {
                     Laya.Browser.window.location.href = "";
                 } else {
                     console.log("获取游戏SocketToken失败", response);
-                    this.failHanlder.runWith({ Type: GameEnum.CheckLoginEnum.SocketToken, Data: '' });
+                    this.failHanlder.runWith({ Type: BaseEnum.CheckLoginEnum.SocketToken, Data: '' });
                 }
             }, (error: any) => {
                 console.log("获取游戏SocketToken失败", error);
-                this.failHanlder.runWith({ Type: GameEnum.CheckLoginEnum.SocketToken, Data: '' });
+                this.failHanlder.runWith({ Type: BaseEnum.CheckLoginEnum.SocketToken, Data: '' });
             });
         }
 
@@ -94,9 +94,9 @@ namespace MemberManager {
         /**
          * 获取会员信息
          */
-        public GetMemberInfo(): GameDto.MemberInfoDto {
+        public GetMemberInfo(): BaseDto.MemberInfoDto {
             //从缓存中获取会员信息
-            let memberInfoDto: GameDto.MemberInfoDto = <GameDto.MemberInfoDto>this.loginService.GetMemberInfoByLocal();
+            let memberInfoDto: BaseDto.MemberInfoDto = <BaseDto.MemberInfoDto>this.loginService.GetMemberInfoByLocal();
             return memberInfoDto;
         };
 
@@ -104,9 +104,9 @@ namespace MemberManager {
         /**
          * 获取授权信息
          */
-        public GetAuthorization(): GameDto.AuthorizationDto {
+        public GetAuthorization(): BaseDto.AuthorizationDto {
             //从缓存中获取授权信息
-            let authorizationDto: GameDto.AuthorizationDto = <GameDto.AuthorizationDto>this.loginService.GetAuthorizationDtoByLocal();
+            let authorizationDto: BaseDto.AuthorizationDto = <BaseDto.AuthorizationDto>this.loginService.GetAuthorizationDtoByLocal();
             return authorizationDto;
         };
 

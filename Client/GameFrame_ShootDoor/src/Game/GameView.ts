@@ -23,21 +23,6 @@ class GameView extends GameViewManager {
      * 横竖屏监听
      */
     public ResetScreen(): void {
-        let isVer = this.ScreenStatus == ScreenStatus.Ver;
-        if (this.onLoadSuccess && this.onLoginSucess) {
-            this.GameBgUI.ResetScreen(isVer);
-            this.BetUI.ResetScreen(isVer);
-            this.CardUI.ResetScreen(isVer);
-            this.HeadUIHV.ResetScreen(isVer);
-            this.RuleUIHV.ResetScreen(isVer);
-            this.NoteRecordUIHV.ResetScreen(isVer);
-            this.TimeUI.ResetScreen(isVer);
-            this.HistoryUI.ResetScreen(isVer);
-            this.BetMoreUI.ResetScreen(isVer);
-            this.TipsUI.ResetScreen(isVer);
-            this.RoundUI.ResetScreen(isVer);
-            this.FootballUI.ResetScreen(isVer);
-        }
     }
     /**
      * 获取未投注成功的数据
@@ -199,7 +184,7 @@ class GameView extends GameViewManager {
                 }
                 break;
             case GameEnum.GameViewEnum.SetRecord:
-                this.NoteRecordUIHV.AddRecordData(data);
+                this.NoteRecordUIHV.AddRecordData(data.dto,data.time);
                 break;
             case GameEnum.GameViewEnum.ChangMoney:
                 this.HeadUIHV.ChangeMoney(data);

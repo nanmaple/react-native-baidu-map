@@ -17,12 +17,6 @@ namespace GameConfig {
     /***************UI设计信息***************/
     export const DesignLength: number = 1334;//设计尺寸-长边
     export const DesignShort: number = 750;//设计尺寸-短边
-    export let Ratio: number = 1;//长边比率
-    export let LengthRatio: number = 1;//长边比率
-    export let ShortRatio: number = 1;//短边比率
-    export let LengthShort: number = 1;//长短边之比
-    export let ShortLength: number = 1;//短长边之比
-    export let RatioType: boolean = true;//RatioType true 长的一边比率大，短边被压缩，需要再压缩长边；false 短的一边比率大，
     export let ScreenMode: number = 0;//横竖屏类型 ：0 竖屏  1横屏，默认竖屏
 
     export let XRatio:number = 1;

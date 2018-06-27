@@ -1,4 +1,4 @@
-namespace Network.Socket {
+namespace Network {
     export interface ISocketManager {
         /**
          * 连接

@@ -52,7 +52,6 @@ var AlertHV = /** @class */ (function (_super) {
      */
     AlertHV.prototype.Show = function (type, txt) {
         if (type === void 0) { type = 0; }
-        var language = new LanguageUtils.Language();
         if (!this.ui) {
             return;
         }
@@ -60,7 +59,7 @@ var AlertHV = /** @class */ (function (_super) {
         this.AlertType(type);
         this.ui.prompt.scale(0, 0);
         this.alertShow = true;
-        this.alertTxt = language.GetLanguage(txt);
+        this.alertTxt = LanguageUtils.Language.GetLanguage(txt);
         this.ui.visible = this.alertShow;
         this.ui.txt.text = this.alertTxt;
         Laya.Tween.to(this.ui.prompt, { scaleX: 1, scaleY: 1 }, 500, Laya.Ease.backOut);

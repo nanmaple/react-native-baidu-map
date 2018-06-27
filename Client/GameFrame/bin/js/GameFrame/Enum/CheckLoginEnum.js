@@ -1,8 +1,8 @@
-/*
-* name;
-*/
-var GameEnum;
-(function (GameEnum) {
+var BaseEnum;
+(function (BaseEnum) {
+    /**
+     * 检测登录返回类型枚举
+     */
     var CheckLoginEnum;
     (function (CheckLoginEnum) {
         /**
@@ -13,6 +13,6 @@ var GameEnum;
          * sockeToken
          */
         CheckLoginEnum[CheckLoginEnum["SocketToken"] = 2] = "SocketToken";
-    })(CheckLoginEnum = GameEnum.CheckLoginEnum || (GameEnum.CheckLoginEnum = {}));
-})(GameEnum || (GameEnum = {}));
+    })(CheckLoginEnum = BaseEnum.CheckLoginEnum || (BaseEnum.CheckLoginEnum = {}));
+})(BaseEnum || (BaseEnum = {}));
 //# sourceMappingURL=CheckLoginEnum.js.map
