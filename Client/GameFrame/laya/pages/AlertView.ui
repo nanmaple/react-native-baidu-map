@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":2,
-    "selecteID":9,
+    "selectedBox":1,
+    "selecteID":10,
     "props":{"width":750,"sceneColor":"#ffffff","height":1334},
     "nodeParent":-1,
     "label":"View",
@@ -78,7 +78,7 @@
                         {
                             "x":45,
                             "type":"Image",
-                            "props":{"y":20,"x":478,"var":"close","skin":"ui/close.png"},
+                            "props":{"y":20,"x":479,"var":"close","skin":"ui/close.png"},
                             "nodeParent":9,
                             "label":"Image(close)",
                             "isDirectory":false,

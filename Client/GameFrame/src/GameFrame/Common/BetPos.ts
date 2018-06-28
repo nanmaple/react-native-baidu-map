@@ -30,7 +30,7 @@ namespace MulBet {
         /** 
          * 设置UI类型
         */
-        public SetUI(ui: any, Type?: number): void {
+        public SetUI(ui: any, type?: number): void {
             this.ui = ui;
             if (this.ui) {
                 this.ui.on(Laya.Event.CLICK, this, this.onClick);
@@ -128,7 +128,7 @@ namespace MulBet {
          * 投注点击事件
          */
         private onClick(): void {
-            let data: Dto.BroadcastDto = new Dto.BroadcastDto();
+            let data: Dto.EventNotificationDto = new Dto.EventNotificationDto();
             data.Value = this.GetValue();
             data.Type = Enum.ListenViewEnum.BetPos;
 

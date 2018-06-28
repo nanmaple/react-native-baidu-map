@@ -15,7 +15,7 @@ var MainGameLogic = /** @class */ (function (_super) {
     function MainGameLogic() {
         var _this = _super.call(this) || this;
         //初始化时创建GameViwLogic,注入Handler
-        _this.gameView = new GameViewLogic(Laya.Handler.create(_this, _this.Handler));
+        _this.gameView = new GameViewLogic(Laya.Handler.create(_this, _this.ViewHandler));
         _this.betLogic = new MulBet.MulBetLogic();
         return _this;
     }
@@ -130,7 +130,7 @@ var MainGameLogic = /** @class */ (function (_super) {
      * 发送消息回调
      * @param dto
      */
-    MainGameLogic.prototype.SendHandelr = function (dto) {
+    MainGameLogic.prototype.SendHandler = function (dto) {
         var msgID = dto.MsgID ? dto.MsgID : Utils.Guid.Create();
         this.Log({ Data: dto.Data, msgID: msgID }, "SendHandelr");
         //组装游戏命令Dto
@@ -142,7 +142,7 @@ var MainGameLogic = /** @class */ (function (_super) {
     };
     /********************* Socket *********************/
     /******************* 界面事件hander *****************/
-    MainGameLogic.prototype.Handler = function (Type, Data) {
+    MainGameLogic.prototype.ViewHandler = function (Type, Data) {
         switch (Type) {
             case Enum.GameViewHandlerEnum.BetPos:
                 var result = this.betLogic.Bet(this.GetBalance(), Data);
@@ -157,6 +157,12 @@ var MainGameLogic = /** @class */ (function (_super) {
                 else {
                     this.gameView.SetData(BaseEnum.GameViewLogicEnum.Alert, result.data);
                 }
+                var requestParams = {
+                    Type: "Get",
+                    Params: {},
+                    Url: "sss",
+                };
+                this.Request(requestParams, function (response) { }, function (error) { });
                 break;
             case Enum.GameViewHandlerEnum.GetMemberInfo:
                 var memberInfo = this.GetMemberInfo();

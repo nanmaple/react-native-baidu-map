@@ -5,11 +5,11 @@ class MainGameLogic extends BaseGameLogic {
      * 投注逻辑
      */
     protected betLogic: MulBet.MulBetLogic;
-    
+
     constructor() {
         super();
         //初始化时创建GameViwLogic,注入Handler
-        this.gameView = new GameViewLogic(Laya.Handler.create(this, this.Handler));
+        this.gameView = new GameViewLogic(Laya.Handler.create(this, this.ViewHandler));
         this.betLogic = new MulBet.MulBetLogic();
     }
 
@@ -123,7 +123,7 @@ class MainGameLogic extends BaseGameLogic {
      * 发送消息回调
      * @param dto 
      */
-    public SendHandelr(dto: Dto.HandlerDto): void {
+    public SendHandler(dto: Dto.HandlerDto): void {
         let msgID: string = dto.MsgID ? dto.MsgID : Utils.Guid.Create();
         this.Log({ Data: dto.Data, msgID: msgID }, "SendHandelr");
         //组装游戏命令Dto
@@ -136,7 +136,7 @@ class MainGameLogic extends BaseGameLogic {
     /********************* Socket *********************/
 
     /******************* 界面事件hander *****************/
-    public Handler(Type: Enum.GameViewHandlerEnum, Data: any): void {
+    public ViewHandler(Type: Enum.GameViewHandlerEnum, Data: any): void {
         switch (Type) {
             case Enum.GameViewHandlerEnum.BetPos:
                 let result = this.betLogic.Bet(this.GetBalance(), Data);
@@ -151,6 +151,12 @@ class MainGameLogic extends BaseGameLogic {
                 } else {
                     this.gameView.SetData(BaseEnum.GameViewLogicEnum.Alert, result.data);
                 }
+                let requestParams: IRequestParams = {
+                    Type: "Get",
+                    Params: {},
+                    Url: "sss",
+                }
+                this.Request(requestParams, (response: any) => { }, (error: any) => { });
                 break;
 
             case Enum.GameViewHandlerEnum.GetMemberInfo:
