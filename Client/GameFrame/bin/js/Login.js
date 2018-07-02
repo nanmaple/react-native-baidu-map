@@ -1,13 +1,13 @@
 var LoginView = /** @class */ (function () {
     function LoginView(successHandler) {
         var _this = this;
+        this.loginView = new Laya.View();
         this.LoginSuccess = function (data) {
             // console.log(data);
-            Laya.stage.removeChild(_this.Account);
-            Laya.stage.removeChild(_this.Password);
-            Laya.stage.removeChild(_this.Button);
+            _this.loginView.removeSelf();
             _this.handler.run();
         };
+        Laya.stage.addChild(this.loginView);
         this.handler = successHandler;
         var skins = [{ url: "res/atlas/comp.atlas", type: Laya.Loader.ATLAS }];
         Laya.loader.load(skins, Laya.Handler.create(this, function () {
@@ -16,6 +16,7 @@ var LoginView = /** @class */ (function () {
             _this.Password = _this.InputCreate(220, 300, 300, 60, "123456");
             _this.Button = _this.ButtonCreate(220, 400, 300, 60, "登录", false);
             _this.ButtonTourist = _this.ButtonCreate(220, 500, 300, 60, "游客登录", true);
+            _this.Button = _this.ButtonCreate(220, 800, 300, 60, "测试UI", false);
         }));
     }
     LoginView.prototype.InputCreate = function (x, y, w, h, text) {
@@ -29,7 +30,7 @@ var LoginView = /** @class */ (function () {
         textInput.height = h; //设置 textInput 的高度。
         textInput.bgColor = "#999";
         textInput.text = text;
-        Laya.stage.addChild(textInput); //将 textInput 添加到显示列表。
+        this.loginView.addChild(textInput); //将 textInput 添加到显示列表。
         return textInput;
     };
     LoginView.prototype.ButtonCreate = function (x, y, w, h, label, isTourist) {
@@ -41,7 +42,7 @@ var LoginView = /** @class */ (function () {
         button.width = w; //设置 textInput 的宽度。
         button.height = h; //设置 textInput 的高度。
         button.skin = 'comp/button.png';
-        Laya.stage.addChild(button); //将 textInput 添加到显示列表。
+        this.loginView.addChild(button); //将 textInput 添加到显示列表。
         button.on(Laya.Event.CLICK, this, this.Login, [isTourist]);
         return button;
     };

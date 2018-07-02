@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html style="background:#000">
+
+<head>
+	<meta charset='utf-8' />
+	<title></title>
+	<meta name='viewport' content='width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no'
+	/>
+	<meta name="renderer" content="webkit" />
+	<meta name='apple-mobile-web-app-capable' content='yes' />
+	<meta name='full-screen' content='true' />
+	<meta name='x5-fullscreen' content='true' />
+	<meta name='360-fullscreen' content='true' />
+	<meta name="laya" screenorientation="landscape" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta http-equiv='expires' content='0' />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<style>
+		html {
+			background: #000;
+		}
+	</style>
+</head>
+
+<body>
+	<!--以下引用了常用类库，如果不使用，可以删除-->
+
+	<!--核心包，封装了显示对象渲染，事件，时间管理，时间轴动画，缓动，消息交互,socket，本地存储，鼠标触摸，声音，加载，颜色滤镜，位图字体等-->
+	<script type="text/javascript" src="libs/laya.core.js"></script>
+	<!--提供了微信小游戏的适配-->
+	<script type="text/javascript" src="libs/laya.wxmini.js"></script>
+	<!--封装了webgl渲染管线，如果使用webgl渲染，可以在初始化时调用Laya.init(1000,800,laya.webgl.WebGL);-->
+	<script type="text/javascript" src="libs/laya.webgl.js"></script>
+	<!--是动画模块，包含了swf动画，骨骼动画等-->
+	<script type="text/javascript" src="libs/laya.ani.js"></script>
+	<!--包含更多webgl滤镜，比如外发光，阴影，模糊以及更多-->
+	<script type="text/javascript" src="libs/laya.filter.js"></script>
+	<!--封装了html动态排版功能-->
+	<script type="text/javascript" src="libs/laya.html.js"></script>
+	<!--粒子类库-->
+	<script type="text/javascript" src="libs/laya.particle.js"></script>
+	<!--提供tileMap解析支持-->
+	<script type="text/javascript" src="libs/laya.tiledmap.js"></script>
+	<!--提供了制作UI的各种组件实现-->
+	<script type="text/javascript" src="libs/laya.ui.js"></script>
+	<!--调试相关功能/发布删除-->
+	<script type="text/javascript" src="libs/laya.debugtool.js"></script>
+	<!-- 物理引擎matter.js -->
+	<!--用户自定义顺序文件添加到这里-->
+	<!--jsfile--Custom-->
+	<!--<script src="//res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>-->
+	<script src="Login.js"></script>
+	<script src="WeChat.js"></script>
+
+	<script src="js/Game/_Config/GameConfig.js"></script>
+	<script src="js/Game/_Config/WebApiConfig.js"></script>
+	<script src="js/Game/_Config/ResourceConfig.js"></script>
+
+	<!--frame-->
+
+	<script src="js/Language/Language.js"></script>
+	<script src="js/Language/EN.js"></script>
+	<script src="js/Language/Config.js"></script>
+	<script src="js/Language/CH.js"></script>
+
+	<script src="js/GameFrame/Utils/Url.js"></script>
+	<script src="js/GameFrame/Utils/Storage.js"></script>
+	<script src="js/GameFrame/Utils/Object.js"></script>
+	<script src="js/GameFrame/Utils/NetworkCheck.js"></script>
+	<script src="js/GameFrame/Utils/Guid.js"></script>
+
+	<script src="js/GameFrame/Enum/MainCommand.js"></script>
+	<script src="js/GameFrame/Enum/GameViewLogicEnum.js"></script>
+	<script src="js/GameFrame/Enum/GameModalEnum.js"></script>
+	<script src="js/GameFrame/Enum/ErrorCode.js"></script>
+	<script src="js/GameFrame/Enum/CheckLoginEnum.js"></script>
+
+	<script src="js/GameFrame/Dto/MessageDto.js"></script>
+	<script src="js/GameFrame/Dto/MemberInfoDto.js"></script>
+	<script src="js/GameFrame/Dto/GameModalDto.js"></script>
+	<script src="js/GameFrame/Dto/CheckLoginDto.js"></script>
+	<script src="js/GameFrame/Dto/AuthorizationDto.js"></script>
+	<script src="js/GameFrame/Dto/IRequestParams.js"></script>
+
+	<script src="js/GameFrame/Network/WebApi/IHttp.js"></script>
+	<script src="js/GameFrame/Network/WebApi/Http.js"></script>
+	<script src="js/GameFrame/Network/WebApi/WebApiBase.js"></script>
+	<script src="js/GameFrame/Network/WebApi/index.js"></script>
+
+	<script src="js/GameFrame/Network/Socket/EventEnum.js"></script>
+	<script src="js/GameFrame/Network/Socket/ISocketManager.js"></script>
+	<script src="js/GameFrame/Network/Socket/ISocket.js"></script>
+	<script src="js/GameFrame/Network/Socket/Socket.js"></script>
+	<script src="js/GameFrame/Network/Socket/index.js"></script>
+
+	<script src="js/GameFrame/BaseGameViewLogic/AlertView/BaseAlertView.js"></script>
+	<script src="js/GameFrame/BaseGameViewLogic/AlertView/index.js"></script>
+	<script src="js/GameFrame/BaseGameViewLogic/LoadingView/BaseLoadingView.js"></script>
+	<script src="js/GameFrame/BaseGameViewLogic/LoadingView/index.js"></script>
+	<script src="js/GameFrame/BaseGameViewLogic/GameLoadView/BaseGameLoadView.js"></script>
+	<script src="js/GameFrame/BaseGameViewLogic/GameLoadView/index.js"></script>
+	<script src="js/GameFrame/BaseGameViewLogic/IView.js"></script>
+	<script src="js/GameFrame/BaseGameViewLogic/index.js"></script>
+
+	<script src="js/GameFrame/MemberManager/IMemberManager.js"></script>
+	<script src="js/GameFrame/MemberManager/index.js"></script>
+
+	<script src="js/GameFrame/BaseGameLogic/index.js"></script>
+
+	<script src="js/GameFrame/Logic/MulBet/MulBetInfoDto.js"></script>
+	<script src="js/GameFrame/Logic/MulBet/MulBetEnum.js"></script>
+	<script src="js/GameFrame/Logic/MulBet/IMulBetLogic.js"></script>
+	<script src="js/GameFrame/Logic/MulBet/MulBetLogic.js"></script>
+
+	<script src="js/GameFrame/Common/ConfigWeChat.js"></script>
+
+	<script src="js/GameFrame/Common/BetPos.js"></script>
+	<!--frame-->
+
+	<script src="js/Utils/Time.js"></script>
+	<script src="js/Utils/Scale.js"></script>
+	<script src="js/Utils/Random.js"></script>
+	<script src="js/Utils/Poker.js"></script>
+	<script src="js/Utils/Physical.js"></script>
+	<script src="js/Utils/Money.js"></script>
+	<script src="js/Utils/Float.js"></script>
+	<script src="js/Utils/BetPos.js"></script>
+	<script src="js/Utils/BackgroundMusic.js"></script>
+	<script src="js/Utils/Version.js"></script>
+
+	<script src="js/Enum/ListenViewEnum.js"></script>
+	<script src="js/Enum/GameViewHandlerEnum.js"></script>
+	<script src="js/Enum/GameViewLogicEnum.js"></script>
+	<script src="js/Enum/GameStatus.js"></script>
+	<script src="js/Enum/GameCommand.js"></script>
+	<script src="js/Enum/Common/BetErrorCode.js"></script>
+
+	<script src="js/Dto/Common/SendDto.js"></script>
+	<script src="js/Dto/Common/SendBetDto.js"></script>
+	<script src="js/Dto/Common/EventNotificationDto.js"></script>
+	<script src="js/Dto/GameCommand/StartGameDto.js"></script>
+	<script src="js/Dto/GameCommand/MessageDto.js"></script>
+	<script src="js/Dto/GameCommand/LimitDto.js"></script>
+	<script src="js/Dto/GameCommand/InitGameDto.js"></script>
+	<script src="js/Dto/GameCommand/HistoryRoundDto.js"></script>
+	<script src="js/Dto/GameCommand/GameResultDto.js"></script>
+	<script src="js/Dto/GameCommand/BetResultDto.js"></script>
+
+	<!--jsfile--Custom-->
+	<!--自定义的js(src文件夹下)文件自动添加到下面jsfile模块标签里面里-->
+	<!--删除标签，ide不会自动添加js文件，请谨慎操作-->
+	<!--jsfile--startTag-->
+	<script src="js/TestView.js"></script>
+	<script src="js/Login.js"></script>
+	<script src="js/Init.js"></script>
+	<script src="js/Game/GameBgView/BaseGameBgView.js"></script>
+	<script src="js/Game/GameBgView/GameBgView.js"></script>
+	<script src="js/Game/GameViewLogic.js"></script>
+	<script src="js/Game/MainGameLogic.js"></script>
+	<script src="js/ui/layaUI.max.all.js"></script>
+	<!--jsfile--endTag-->
+
+	<!--启动类添加到这里-->
+	<!--jsfile--Main-->
+	<script src="js/Main.js"></script>
+	<!--jsfile--Main-->
+</body>
+
+</html>

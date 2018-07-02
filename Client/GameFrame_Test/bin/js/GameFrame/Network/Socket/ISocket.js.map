@@ -1,0 +1,1 @@
+{"version":3,"file":"ISocket.js","sourceRoot":"","sources":["../../../../../src/GameFrame/Network/Socket/ISocket.ts"],"names":[],"mappings":"AAAA,IAAU,OAAO,CAqEhB;AArED,WAAU,OAAO;IACb;;OAEG;IACH;QA8BI,qBAAY,YAAmB;YAAnB,6BAAA,EAAA,mBAAmB;YAC3B,IAAI,CAAC,YAAY,GAAG,YAAY,CAAC;QACrC,CAAC;QACL,kBAAC;IAAD,CAAC,AAjCD,IAiCC;IAjCY,mBAAW,cAiCvB,CAAA;AAgCL,CAAC,EArES,OAAO,KAAP,OAAO,QAqEhB"}

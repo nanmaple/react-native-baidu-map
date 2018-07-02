@@ -1,0 +1,12 @@
+D .
+D comp
+P 1F3929EA button.png
+D ui
+R B602DE64 bg.png
+R 577CD16E bg_alert.png
+R 5C94EABC bg_record.png
+P 5C977BB8 btn_chip.png
+P 97F7108C close.png
+R 3947C27C maskBg.png
+R 577CD16E prompt.png
+R EC3ADF62 tip.png
