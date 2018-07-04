@@ -5,7 +5,7 @@
 class BaseGameBgView {
     protected ui: ui.GameBgViewUI;
     constructor() {
-
+        
     }
 
     /**

@@ -17,8 +17,8 @@ var GameBgView = /** @class */ (function (_super) {
     __extends(GameBgView, _super);
     function GameBgView(eventKey) {
         var _this = _super.call(this) || this;
-        _this.ListenEventKey = "";
-        _this.ListenEventKey = eventKey;
+        _this.listenEventKey = "";
+        _this.listenEventKey = eventKey;
         return _this;
     }
     /**
@@ -43,7 +43,7 @@ var GameBgView = /** @class */ (function (_super) {
         var data = new Dto.EventNotificationDto();
         data.Value = {};
         data.Type = Enum.ListenViewEnum.BetPos;
-        var event = new CustomEvent(this.ListenEventKey, { detail: data });
+        var event = new CustomEvent(this.listenEventKey, { detail: data });
         document.dispatchEvent(event);
     };
     return GameBgView;

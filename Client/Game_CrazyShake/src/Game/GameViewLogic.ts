@@ -3,7 +3,11 @@
 class GameViewLogic extends BaseGameViewLogic {
     //组件Demo
     public GameBgView: GameBgView;
-
+    public HeadPanel:HeadPanel;
+    public FunBalancePanel:FunBalancePanel;
+    public ToyPanel:ToyPanel;
+    public BetNumPanel:BetNumPanel;
+    public BetPanel:BetPanel;
     constructor(Handler: Laya.Handler) {
         super();
         this.CtrlHandler = Handler;
@@ -64,9 +68,18 @@ class GameViewLogic extends BaseGameViewLogic {
         //初始化基本alert,loading组件的界面
         this.alertView.ResetScreen();
         this.loadingView.ResetScreen();
-        //加载其他组件
         this.GameBgView = new GameBgView(this.GameViewEventKey);
         this.GameBgView.ResetScreen();
+        this.HeadPanel=new HeadPanel();
+        this.HeadPanel.ResetScreen();
+        this.FunBalancePanel=new FunBalancePanel();
+        this.FunBalancePanel.ResetScreen();
+        this.ToyPanel=new ToyPanel();
+        this.ToyPanel.ResetScreen();
+        this.BetNumPanel=new BetNumPanel();
+        this.BetNumPanel.ResetScreen();
+        this.BetPanel=new BetPanel();
+        this.BetPanel.ResetScreen();
     }
 
     /**

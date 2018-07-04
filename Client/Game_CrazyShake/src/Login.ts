@@ -4,7 +4,6 @@ class LoginView {
     private Button: Laya.Button;
     private ButtonTourist:Laya.Button;
     private handler: Laya.Handler;
-
     private loginService: any;
     constructor(successHandler: Laya.Handler) {
         this.handler = successHandler;
