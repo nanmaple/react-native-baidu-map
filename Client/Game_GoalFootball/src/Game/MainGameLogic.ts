@@ -5,12 +5,14 @@ class MainGameLogic extends BaseGameLogic {
      * 投注逻辑
      */
     protected betLogic: MulBet.MulBetLogic;
-    
+    /**
+     * 投注信息
+     */
+    protected betInfo: Dto.BetInfoDto = new Dto.BetInfoDto();
     constructor() {
         super();
         //初始化时创建GameViwLogic,注入Handler
-        this.gameView = new GameViewLogic(Laya.Handler.create(this, this.ViewHandler));
-        this.betLogic = new MulBet.MulBetLogic();
+        this.gameView = new GameViewLogic(Laya.Handler.create(this, this.ViewHandler,null,false));
     }
 
     /**
@@ -79,35 +81,22 @@ class MainGameLogic extends BaseGameLogic {
         this.Log(data, "OnMessageHandler");
         switch (response.Command) {
             case Enum.GameCommand.MSG_GAME_INIT://初始化
-                if (data.Status == Enum.GameStatus.BET && !this.IsMemberClose()) {
-                    //初始化，同步服务器的投注成功的数据
-                    this.betLogic.SetBetSuccessData(data.TotalBet);
-                }
-                break;
-            case Enum.GameCommand.MSG_GAME_START: //游戏开始
-                this.betLogic.SetNewRound();
+                this.SetBalance((data as Dto.GameInitDto).Balance);
+                this.betInfo.betAmount = this.betInfo.betAmount ? this.betInfo.betAmount : (data as Dto.GameInitDto).BaseAmounts[0];
+                this.betInfo.MaxBet = (data as Dto.GameInitDto).MaxBet;
+                this.betInfo.MinBet = (data as Dto.GameInitDto).MinBet;
+                this.SetBetTotalAmount();
+                data.BaseAmounts = [10,100,1000,10000,20000,50000,100000,200000,500000];
                 break;
             case Enum.GameCommand.MSG_GAME_BETRESULT://投注结果
-                if (data.Success) {
-                    //同步服务器的投注结果的数据
-                    this.betLogic.SetBetSuccessData(data.TotalBet);
-                }
                 break;
-            case Enum.GameCommand.MSG_GAME_STOPBET://游戏停止投注
-                break
-            case Enum.GameCommand.MSG_GAME_GAMERESULT: //游戏结果
-                this.betLogic.ResetData();
-                break;
-            case Enum.GameCommand.MSG_GAME_SETTLERESULT://游戏结算
-                //游戏结算，重置之前投注数据
-                this.betLogic.SetBetSuccessData();
-                this.SetBalance((response.Data as Dto.GameResultDto).Balance);
-                this.gameView.SetData(Enum.GameViewLogicEnum.ChangMoney, this.GetBalance());
+            case Enum.GameCommand.MSG_GAME_SETTLERESULT://结算结果
+                this.SetBalance((data as Dto.BetResultDto).Balance);
                 break;
             default:
                 break;
         }
-
+        response.Data = data;
         this.gameView.SetData(BaseEnum.GameViewLogicEnum.GameData, response);
     };
 
@@ -117,54 +106,90 @@ class MainGameLogic extends BaseGameLogic {
      */
     public OnAckHandler(data: any): void {
         this.Log(data, "OnAckHandler");
-        this.betLogic.BetAck(data);
+        // this.betLogic.BetAck(data);
     };
     /**
-     * 发送消息回调
+     * 发送消息
      * @param dto 
      */
-    public SendHandler(dto: Dto.HandlerDto): void {
+    public SendData(dto: Dto.HandlerDto): void {
         let msgID: string = dto.MsgID ? dto.MsgID : Utils.Guid.Create();
         this.Log({ Data: dto.Data, msgID: msgID }, "SendHandelr");
         //组装游戏命令Dto
         let gameDto: Dto.GameMessageDto = new Dto.GameMessageDto();
-        gameDto.Command = Enum.GameCommand.MSG_GAME_BET;
+        gameDto.Command = Enum.GameCommand.MSG_GAME_START;
         gameDto.Data = dto.Data;
-        this.betLogic.SetMsgID(msgID);
         this.Send(gameDto, msgID);
+    }
+    /**
+     * 设置总投注额
+     */
+    private SetBetTotalAmount():void{
+        let propAmount:number = this.betInfo.betAmount / 5;
+        this.betInfo.propTotalAmount = 0;
+        for (var index = 0; index < 3; index++) {
+            if(this.betInfo.propStatus[index] == 1){
+                this.betInfo.propTotalAmount += propAmount;
+            }
+        }
+        this.betInfo.betTotalAmount = this.betInfo.betAmount + this.betInfo.propTotalAmount;
+    }
+    /**
+     * 投注处理
+     */
+    private BetPos():void{
+        if(this.betInfo.betTotalAmount > this.GetBalance()){
+            this.gameView.SetData(Enum.GameViewLogicEnum.BetPosError, LanguageUtils.CH.BALANCE_SMALL);
+        }else if(this.betInfo.betTotalAmount < this.betInfo.MinBet){
+            this.gameView.SetData(Enum.GameViewLogicEnum.BetPosError, LanguageUtils.CH.LOW_LIMIT);
+        }else if(this.betInfo.betTotalAmount > this.betInfo.MaxBet){
+            this.gameView.SetData(Enum.GameViewLogicEnum.BetPosError, LanguageUtils.CH.OVER_LIMIT);
+        }else{
+            let gameBet:Dto.GameBetDto = new Dto.GameBetDto();
+            let handlerDto:Dto.HandlerDto = new Dto.HandlerDto();
+            gameBet.Amount = this.betInfo.betAmount;
+            gameBet.Props = this.betInfo.propStatus;
+            handlerDto.Data = gameBet;
+            this.SendData(handlerDto);
+            let balance = this.GetBalance();
+            this.gameView.SetData(Enum.GameViewLogicEnum.ChangMoney, balance - this.betInfo.betTotalAmount);
+        }
     }
     /********************* Socket *********************/
 
     /******************* 界面事件hander *****************/
     public ViewHandler(Type: Enum.GameViewHandlerEnum, Data: any): void {
         switch (Type) {
-            case Enum.GameViewHandlerEnum.BetPos:
-                let result = this.betLogic.Bet(this.GetBalance(), Data);
-                if (result.success) {
-                    let BetPosAmount: MulBet.BetPosAmountDto = new MulBet.BetPosAmountDto();
-                    BetPosAmount.Pos = Data.Pos;
-                    BetPosAmount.Amount = result.data;
-                    this.gameView.SetData(Enum.GameViewLogicEnum.BetPos, BetPosAmount);
-
-                    let money = this.GetBalance() - this.betLogic.GetBetScore();
-                    this.gameView.SetData(Enum.GameViewLogicEnum.ChangMoney, money);
-                } else {
-                    this.gameView.SetData(BaseEnum.GameViewLogicEnum.Alert, result.data);
-                }
-                let requestParams:IRequestParams = {
-                    Type:"Get",
-                    Params:{},
-                    Url:"sss",
-                }
-                this.Request(requestParams,null,null);
+            case Enum.GameViewHandlerEnum.StartSocket:
+                this.StartSocket();
                 break;
-
+            case Enum.GameViewHandlerEnum.BetPos:
+                this.BetPos();
+                break;
+            case Enum.GameViewHandlerEnum.ChooseChip:
+                this.betInfo.betAmount = Data;
+                this.SetBetTotalAmount();
+                this.gameView.SetData(Enum.GameViewLogicEnum.ChooseChip, this.betInfo)
+                break;
+            case Enum.GameViewHandlerEnum.ChooseMaxChip:
+                let maxChip:number = Math.floor(this.GetBalance());
+                this.gameView.SetData(Enum.GameViewLogicEnum.ChooseMaxChip, maxChip)
+                break;
+            case Enum.GameViewHandlerEnum.ChooseProp:
+                this.betInfo.propStatus[Data] = 1;
+                this.SetBetTotalAmount();
+                this.gameView.SetData(Enum.GameViewLogicEnum.ChooseProp, this.betInfo)
+                break;
+            case Enum.GameViewHandlerEnum.GameResult:
+                this.betInfo.propStatus = [0,0,0];
+                this.SetBetTotalAmount();
+                this.gameView.SetData(Enum.GameViewLogicEnum.GameResult, null)
+                break;
             case Enum.GameViewHandlerEnum.GetMemberInfo:
                 let memberInfo = this.GetMemberInfo();
                 let isTourists = this.IsTourist();
                 this.gameView.SetData(Enum.GameViewLogicEnum.GetMemberInfo, { memberInfo, isTourists })
-                break
-
+                break;
         }
     }
 

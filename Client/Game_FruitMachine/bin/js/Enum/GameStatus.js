@@ -7,21 +7,13 @@ var Enum;
          */
         GameStatus[GameStatus["DEFAULT"] = 0] = "DEFAULT";
         /**
-         * 投注状态
+         * 猜大小
          */
-        GameStatus[GameStatus["BET"] = 1] = "BET";
+        GameStatus[GameStatus["GUESS"] = 1] = "GUESS";
         /**
-         * 结束状态
+         * 进行中
          */
-        GameStatus[GameStatus["END"] = 2] = "END";
-        /**
-         * 正在结算状态
-         */
-        GameStatus[GameStatus["SETTLE"] = 3] = "SETTLE";
-        /**
-         * 已结算
-         */
-        GameStatus[GameStatus["SETTLEED"] = 4] = "SETTLEED";
+        GameStatus[GameStatus["EXECUTE"] = 2] = "EXECUTE";
     })(GameStatus = Enum.GameStatus || (Enum.GameStatus = {}));
 })(Enum || (Enum = {}));
 //# sourceMappingURL=GameStatus.js.map

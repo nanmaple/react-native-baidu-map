@@ -28,8 +28,6 @@ var GameViewLogic = /** @class */ (function (_super) {
     * 启动游戏资源页面，开始加载游戏资源
     */
     GameViewLogic.prototype.GameLoad = function () {
-        this.alertView = new AlertView();
-        this.loadingView = new LoadingView();
         this.gameLoadView = new GameLoadView(this.GameViewEventKey);
         this.gameLoadView.ResetScreen();
         //设置版本控制类型为使用文件名映射的方式
@@ -66,20 +64,24 @@ var GameViewLogic = /** @class */ (function (_super) {
      */
     GameViewLogic.prototype.GameMainUI = function () {
         //初始化基本alert,loading组件的界面
+        this.alertView = new AlertView();
         this.alertView.ResetScreen();
+        this.loadingView = new LoadingView();
         this.loadingView.ResetScreen();
+        //初始化其他主机
         this.GameBgView = new GameBgView(this.GameViewEventKey);
         this.GameBgView.ResetScreen();
         this.HeadPanel = new HeadPanel();
         this.HeadPanel.ResetScreen();
         this.FunBalancePanel = new FunBalancePanel();
         this.FunBalancePanel.ResetScreen();
-        this.ToyPanel = new ToyPanel();
+        this.ToyPanel = new ToyPanel(this.GameViewEventKey);
         this.ToyPanel.ResetScreen();
         this.BetNumPanel = new BetNumPanel();
         this.BetNumPanel.ResetScreen();
-        this.BetPanel = new BetPanel();
+        this.BetPanel = new BetPanel(this.GameViewEventKey);
         this.BetPanel.ResetScreen();
+        this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.StartSocket, {}]);
     };
     /**
      * UI监听
@@ -87,26 +89,19 @@ var GameViewLogic = /** @class */ (function (_super) {
      */
     GameViewLogic.prototype.ListenUI = function (data) {
         switch (data.Type) {
+            //基本分发数据类型
             case Enum.ListenViewEnum.GameLoadComplate:
                 this.CheckLoad();
                 break;
-            // case Enum.ListenViewEnum.ShowRule:
-            //     this.RuleUIHV.ShowRule();
-            //     break;
+            //扩展数据分发类型
             case Enum.ListenViewEnum.BetPos:
-                // this.ChipPrice = this.BetUI.GetChipPrice();
-                // data.Value.Amount = this.ChipPrice;
-                // this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.BetPos, data.Value]);
+                var betData = new Dto.GameBetDto();
+                betData.Amount = this.BetNumPanel.getBetNum();
+                betData.BetPos = data.Value;
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.BetPos, betData]);
                 break;
-            case Enum.ListenViewEnum.ConfirmBet:
-                // this.BetUI.Confirm();
-                // this.BetMoreUI.Confirm();
-                // this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.ConfirmBet, null]);
-                break;
-            case Enum.ListenViewEnum.CancelBet:
-                // this.BetUI.Cancel();
-                // this.BetMoreUI.Cancel();
-                // this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.CancelBet, null]);
+            case Enum.ListenViewEnum.AniPlayComplete:
+                this.OnChangeShow(data.Value.Data);
                 break;
             default:
                 break;
@@ -121,7 +116,7 @@ var GameViewLogic = /** @class */ (function (_super) {
         switch (type) {
             //基本分发数据类型
             case BaseEnum.GameViewLogicEnum.Alert:
-                this.ShowAlert(0, data);
+                this.ShowAlert(1, data);
                 break;
             case BaseEnum.GameViewLogicEnum.Error:
                 console.log(data);
@@ -135,14 +130,9 @@ var GameViewLogic = /** @class */ (function (_super) {
             case BaseEnum.GameViewLogicEnum.GameData:
                 this.OnMessageHandler(data);
                 break;
-            //扩展数据分发类型
-            case Enum.GameViewLogicEnum.ChangMoney:
-                break;
-            case Enum.GameViewLogicEnum.GetMemberInfo:
-                break;
-            case Enum.GameViewLogicEnum.BetPos:
-                break;
-            case Enum.GameViewLogicEnum.SetRecord:
+            // 扩展数据分发类型
+            case Enum.GameViewLogicEnum.StartAni:
+                this.OnGameBet(data);
                 break;
             default:
                 break;
@@ -157,23 +147,8 @@ var GameViewLogic = /** @class */ (function (_super) {
             case Enum.GameCommand.MSG_GAME_INIT:
                 this.OnGameInit(data.Data);
                 break;
-            case Enum.GameCommand.MSG_GAME_START:
-                this.OnGameStart(data.Data);
-                break;
-            case Enum.GameCommand.MSG_GAME_BETRESULT:
-                this.OnBetResult(data.Data);
-                break;
-            case Enum.GameCommand.MSG_GAME_STOPBET:
-                this.OnStopBet(data);
-                break;
-            case Enum.GameCommand.MSG_GAME_GAMERESULT:
-                this.OnGameResult(data.Data);
-                break;
             case Enum.GameCommand.MSG_GAME_SETTLERESULT:
-                this.OnSettleResult(data.Data);
-                break;
-            case Enum.GameCommand.MSG_GAME_OTHER:
-                this.OnGameOther(data.Data);
+                this.OnGameSettleResult(data);
                 break;
             default:
                 break;
@@ -186,42 +161,36 @@ var GameViewLogic = /** @class */ (function (_super) {
      */
     GameViewLogic.prototype.OnGameInit = function (data) {
         this.Log(data, "GameInit");
+        this.FunBalancePanel.Set(data, Enum.FunBalancePanel.MSG_GAME_INIT);
+        this.BetNumPanel.Set(data, Enum.BetNumPanel.MSG_GAME_INIT);
+        this.BetPanel.Set(data, Enum.BetPanel.MSG_GAME_INIT);
     };
     /**
-     * 游戏开始命令处理
-     * @param data 游戏开始数据
+     * 投注成功命令处理
      */
-    GameViewLogic.prototype.OnGameStart = function (data) {
-        this.Log(data, "GameStart");
+    GameViewLogic.prototype.OnGameBet = function (data) {
+        this.Log(data, "GameBet");
+        this.ToyPanel.Set(null, Enum.ToyPanel.MSG_GAME_BET);
+        this.FunBalancePanel.Set(data, Enum.FunBalancePanel.MSG_GAME_BET);
+        this.BetPanel.Set(data, Enum.BetPanel.MSG_GAME_BET);
+        this.BetNumPanel.Set(data, Enum.BetNumPanel.MSG_GAME_BET);
     };
     /**
-     * 投注结果命令处理
-     * @param data 游戏投注结果
+     * 收到投注结果命令处理
+     * @param data游戏结果数据
      */
-    GameViewLogic.prototype.OnBetResult = function (data) {
-        this.Log(data, "BetResult");
+    GameViewLogic.prototype.OnGameSettleResult = function (data) {
+        this.Log(data, "GameGetResult");
+        this.ToyPanel.Set(data, Enum.ToyPanel.MSG_GAME_SETTLERESULT);
     };
     /**
-     * 停止投注
-     * @param data
+     * 动画播放完毕后执行
+     * @param data游戏结果数据
      */
-    GameViewLogic.prototype.OnStopBet = function (data) {
-    };
-    /**
-     * 游戏结果
-     * @param data 游戏结果数据
-     */
-    GameViewLogic.prototype.OnGameResult = function (data) {
-        this.Log(data, "GameResult");
-    };
-    /**
-     * 结算命令
-     * @param data 游戏结算数据
-     */
-    GameViewLogic.prototype.OnSettleResult = function (data) {
-        this.Log(data, "SettleResult");
-    };
-    GameViewLogic.prototype.OnGameOther = function (data) {
+    GameViewLogic.prototype.OnChangeShow = function (data) {
+        this.FunBalancePanel.Set(data, Enum.FunBalancePanel.MSG_GAME_AniPlayComplete);
+        this.BetNumPanel.Set(data, Enum.BetNumPanel.MSG_GAME_AniPlayComplete);
+        this.BetPanel.Set(null, Enum.BetPanel.MSG_GAME_AniPlayComplete);
     };
     return GameViewLogic;
 }(BaseGameViewLogic));

@@ -1,7 +1,7 @@
 var Utils;
 (function (Utils) {
     //背景音乐
-    var BackgroundMusic = (function () {
+    var BackgroundMusic = /** @class */ (function () {
         function BackgroundMusic() {
         }
         /**

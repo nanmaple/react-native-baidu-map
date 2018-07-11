@@ -6,21 +6,9 @@ var Enum;
     var GameViewLogicEnum;
     (function (GameViewLogicEnum) {
         /**
-         * 投注
+         * 启动摇骰动画
          */
-        GameViewLogicEnum[GameViewLogicEnum["BetPos"] = 101] = "BetPos";
-        /**
-         * 添加投注记录
-         */
-        GameViewLogicEnum[GameViewLogicEnum["SetRecord"] = 102] = "SetRecord";
-        /**
-         * 改变余额
-         */
-        GameViewLogicEnum[GameViewLogicEnum["ChangMoney"] = 103] = "ChangMoney";
-        /**
-         * 获取用户信息
-         */
-        GameViewLogicEnum[GameViewLogicEnum["GetMemberInfo"] = 104] = "GetMemberInfo";
+        GameViewLogicEnum[GameViewLogicEnum["StartAni"] = 101] = "StartAni";
     })(GameViewLogicEnum = Enum.GameViewLogicEnum || (Enum.GameViewLogicEnum = {}));
 })(Enum || (Enum = {}));
 //# sourceMappingURL=GameViewLogicEnum.js.map

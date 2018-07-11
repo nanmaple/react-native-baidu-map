@@ -1,0 +1,1 @@
+{"version":3,"file":"GameBetDto.js","sourceRoot":"","sources":["../../../../src/Dto/GameCommand/GameBetDto.ts"],"names":[],"mappings":"AAAA,IAAU,GAAG,CAcZ;AAdD,WAAU,GAAG;IACT;;OAEG;IACH;QAAA;YACI;;eAEG;YACH,WAAM,GAAW,CAAC,CAAC;YACnB;;eAEG;YACH,UAAK,GAAe,EAAE,CAAC;QAC3B,CAAC;QAAD,iBAAC;IAAD,CAAC,AATD,IASC;IATY,cAAU,aAStB,CAAA;AACL,CAAC,EAdS,GAAG,KAAH,GAAG,QAcZ"}

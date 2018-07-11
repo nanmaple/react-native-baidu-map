@@ -1,7 +1,7 @@
 var Utils;
 (function (Utils) {
     //投注类型
-    var BetPos = (function () {
+    var BetPos = /** @class */ (function () {
         function BetPos() {
         }
         /**

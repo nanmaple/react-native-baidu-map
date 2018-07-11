@@ -47,16 +47,16 @@ var LoadingView = /** @class */ (function (_super) {
                 this.HideLoading();
                 break;
             case BaseEnum.GameModalEnum.Open:
-                this.ShowLoading(LanguageUtils.Language.Get("ConnectService"));
+                this.ShowLoading("ConnectService");
                 break;
             case BaseEnum.GameModalEnum.Msg:
                 this.ShowLoading(data.Data);
                 break;
             case BaseEnum.GameModalEnum.LoginOut:
-                this.ShowLoading(LanguageUtils.Language.Get("AccountLoginOut"));
+                this.ShowLoading("AccountLoginOut");
                 break;
             case BaseEnum.GameModalEnum.MemClose:
-                this.ShowLoading(LanguageUtils.Language.Get("MemberClosed"));
+                this.ShowLoading("MemberClosed");
                 break;
             default:
                 break;

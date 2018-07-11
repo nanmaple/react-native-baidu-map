@@ -37,6 +37,21 @@ module ui {
 }
 
 module ui {
+    export class CvuresUI extends View {
+
+        public static  uiView:any ={"type":"View","props":{"width":750,"height":1334},"child":[{"type":"Curves","props":{"y":543,"x":273,"points":"6,-16,36,0","lineWidth":1,"lineColor":"#ff0000"}}]};
+        constructor(){ super()}
+        createChildren():void {
+        
+            super.createChildren();
+            this.createView(ui.CvuresUI.uiView);
+
+        }
+
+    }
+}
+
+module ui {
     export class GameBgViewUI extends View {
 
         public static  uiView:any ={"type":"View","props":{"width":750,"height":1334},"child":[{"type":"Image","props":{"y":0,"x":0,"skin":"ui/bg.png"}}]};
@@ -71,7 +86,7 @@ module ui {
     export class LoadingViewUI extends View {
 		public txt:Laya.Label;
 
-        public static  uiView:any ={"type":"View","props":{"width":750,"height":1334},"child":[{"type":"Image","props":{"y":0,"x":0,"width":750,"skin":"ui/maskBg.png","height":1334}},{"type":"Label","props":{"width":242.798828125,"visible":false,"var":"txt","text":"connecting server...","strokeColor":"#d00400","stroke":5,"height":28,"fontSize":28,"color":"#fbff70","centerY":0,"centerX":0,"anchorY":0.5,"anchorX":0.5}}]};
+        public static  uiView:any ={"type":"View","props":{"width":750,"height":1334},"child":[{"type":"Image","props":{"y":0,"x":0,"width":750,"skin":"ui/maskBg.png","height":1334}},{"type":"Label","props":{"width":242.798828125,"visible":true,"var":"txt","strokeColor":"#d00400","stroke":5,"height":28,"fontSize":28,"color":"#fbff70","centerY":0,"centerX":0,"anchorY":0.5,"anchorX":0.5}}]};
         constructor(){ super()}
         createChildren():void {
         

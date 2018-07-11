@@ -1,8 +1,9 @@
-var BaseLoadingView = (function () {
+var BaseLoadingView = /** @class */ (function () {
     function BaseLoadingView() {
-        this.loadingShow = false;
-        this.loadingTxt = null;
+        this.loadingShow = true;
+        this.loadingTxt = LanguageUtils.Language.Get("ConnectService");
     }
+    ;
     /**
      * 重置屏幕
      */

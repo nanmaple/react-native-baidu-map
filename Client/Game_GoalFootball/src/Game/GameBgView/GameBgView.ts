@@ -5,10 +5,10 @@
  * 
  */
 class GameBgView extends BaseGameBgView implements IView {
-    private ListenEventKey: string = ""
+    private listenEventKey: string = ""
     constructor(eventKey: string) {
         super();
-        this.ListenEventKey = eventKey;
+        this.listenEventKey = eventKey;
     }
     /**
      * 类型：公有方法
@@ -32,11 +32,6 @@ class GameBgView extends BaseGameBgView implements IView {
      * 事件key值，通过构造函数时注入
      */
     private EventNotification(): void {
-        let data: Dto.EventNotificationDto = new Dto.EventNotificationDto();
-        data.Value = {};
-        data.Type = Enum.ListenViewEnum.BetPos;
-
-        let event = new CustomEvent(this.ListenEventKey, { detail: data });
-        document.dispatchEvent(event);
+        
     }
 }

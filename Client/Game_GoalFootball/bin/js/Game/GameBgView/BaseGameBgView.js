@@ -2,7 +2,7 @@
  * BaseView主要用于写固定的UI渲染方法和不同功能的UI处理方法,动画
  * 命名规则：BasexxxView
  */
-var BaseGameBgView = (function () {
+var BaseGameBgView = /** @class */ (function () {
     function BaseGameBgView() {
     }
     /**

@@ -3,6 +3,9 @@
 class GameViewLogic extends BaseGameViewLogic {
     //组件Demo
     public GameBgView: GameBgView;
+    public GameAniView: GameAniView;
+    public GameChipsView: GameChipsView;
+    public GameHeadView: GameHeadView;
 
     constructor(Handler: Laya.Handler) {
         super();
@@ -21,8 +24,6 @@ class GameViewLogic extends BaseGameViewLogic {
     * 启动游戏资源页面，开始加载游戏资源
     */
     public GameLoad(): void {
-        this.alertView = new AlertView();
-        this.loadingView = new LoadingView();
         this.gameLoadView = new GameLoadView(this.GameViewEventKey);
         this.gameLoadView.ResetScreen();
         //设置版本控制类型为使用文件名映射的方式
@@ -62,11 +63,21 @@ class GameViewLogic extends BaseGameViewLogic {
      */
     private GameMainUI(): void {
         //初始化基本alert,loading组件的界面
+        this.alertView = new AlertView();
         this.alertView.ResetScreen();
+        this.loadingView = new LoadingView();
         this.loadingView.ResetScreen();
         //加载其他组件
         this.GameBgView = new GameBgView(this.GameViewEventKey);
         this.GameBgView.ResetScreen();
+        this.GameAniView = new GameAniView(this.GameViewEventKey);
+        this.GameAniView.ResetScreen();
+        this.GameChipsView = new GameChipsView(this.GameViewEventKey);
+        this.GameChipsView.ResetScreen();
+        this.GameHeadView = new GameHeadView(this.GameViewEventKey);
+        this.GameHeadView.ResetScreen();
+
+        this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.StartSocket, {}]);
     }
 
     /**
@@ -78,24 +89,20 @@ class GameViewLogic extends BaseGameViewLogic {
             case Enum.ListenViewEnum.GameLoadComplate:
                 this.CheckLoad();
                 break;
-            // case Enum.ListenViewEnum.ShowRule:
-            //     this.RuleUIHV.ShowRule();
-            //     break;
-            case Enum.ListenViewEnum.BetPos:
-                // this.ChipPrice = this.BetUI.GetChipPrice();
-                // data.Value.Amount = this.ChipPrice;
-                // this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.BetPos, data.Value]);
+            case Enum.ListenViewEnum.ShootDoor:
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.BetPos, null]); 
                 break;
-            case Enum.ListenViewEnum.ConfirmBet:
-                // this.BetUI.Confirm();
-                // this.BetMoreUI.Confirm();
-                // this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.ConfirmBet, null]);
+            case Enum.ListenViewEnum.GameResult:
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.GameResult, null]); 
                 break;
-            case Enum.ListenViewEnum.CancelBet:
-                // this.BetUI.Cancel();
-                // this.BetMoreUI.Cancel();
-                // this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.CancelBet, null]);
+            case Enum.ListenViewEnum.ChooseChip:                                                         
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.ChooseChip, data.Value]); 
                 break;
+            case Enum.ListenViewEnum.ChooseMaxChip:                                                         
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.ChooseMaxChip, null]); 
+                break;
+            case Enum.ListenViewEnum.ChooseProp:
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.ChooseProp, data.Value]); 
             default:
                 break;
         }
@@ -126,13 +133,25 @@ class GameViewLogic extends BaseGameViewLogic {
                 break;
             //扩展数据分发类型
             case Enum.GameViewLogicEnum.ChangMoney:
+                this.GameHeadView.Set(data, Enum.GameHeadView.SET_BALANCE);
                 break;
-            case Enum.GameViewLogicEnum.GetMemberInfo:
+            case Enum.GameViewLogicEnum.ChooseChip:
+                this.GameAniView.Set((data as Dto.BetInfoDto).betAmount, Enum.GameAniView.SET_PROPAMOUNT);
+                this.GameChipsView.Set((data as Dto.BetInfoDto).betTotalAmount, Enum.GameChipsView.SET_BETTOTALAMOUNT);
                 break;
-            case Enum.GameViewLogicEnum.BetPos:
+            case Enum.GameViewLogicEnum.ChooseProp:
+                this.GameChipsView.Set((data as Dto.BetInfoDto).betTotalAmount, Enum.GameChipsView.SET_BETTOTALAMOUNT);
                 break;
-            case Enum.GameViewLogicEnum.SetRecord:
+            case Enum.GameViewLogicEnum.ChooseMaxChip:
+                this.GameChipsView.Set(data, Enum.GameChipsView.SET_MAXCHIP);
                 break;
+            case Enum.GameViewLogicEnum.GameResult:
+                this.GameChipsView.Refresh();
+                this.GameHeadView.Refresh();
+                break;
+            case Enum.GameViewLogicEnum.BetPosError:
+                this.ShowAlert(0, data);
+                this.GameChipsView.Set(null, Enum.GameChipsView.BETPOS_ERROR);
             default:
                 break;
         }
@@ -146,23 +165,8 @@ class GameViewLogic extends BaseGameViewLogic {
             case Enum.GameCommand.MSG_GAME_INIT:
                 this.OnGameInit(data.Data);
                 break;
-            case Enum.GameCommand.MSG_GAME_START:
-                this.OnGameStart(data.Data);
-                break;
-            case Enum.GameCommand.MSG_GAME_BETRESULT:
-                this.OnBetResult(data.Data);
-                break;
-            case Enum.GameCommand.MSG_GAME_STOPBET:
-                this.OnStopBet(data);
-                break;
-            case Enum.GameCommand.MSG_GAME_GAMERESULT:
-                this.OnGameResult(data.Data);
-                break;
             case Enum.GameCommand.MSG_GAME_SETTLERESULT:
-                this.OnSettleResult(data.Data);
-                break;
-            case Enum.GameCommand.MSG_GAME_OTHER:
-                this.OnGameOther(data.Data);
+                this.OnGameResult(data.Data);
                 break;
             default:
                 break;
@@ -175,53 +179,24 @@ class GameViewLogic extends BaseGameViewLogic {
      * 游戏初始化命令处理
      * @param data 游戏初始化数据
      */
-    public OnGameInit(data: Dto.InitGameDto): void {
+    public OnGameInit(data: Dto.GameInitDto): void {
         this.Log(data, "GameInit");
-
-    }
-
-    /**
-     * 游戏开始命令处理
-     * @param data 游戏开始数据
-     */
-    public OnGameStart(data: Dto.StartGameDto): void {
-        this.Log(data, "GameStart");
+        console.log(data);
+        this.GameHeadView.Set(data, Enum.GameCommand.MSG_GAME_INIT);
+        this.GameAniView.Set(data, Enum.GameCommand.MSG_GAME_INIT);
+        this.GameChipsView.Set(data, Enum.GameCommand.MSG_GAME_INIT);
     }
 
     /**
      * 投注结果命令处理
      * @param data 游戏投注结果
      */
-    public OnBetResult(data: Dto.BetResultDto): void {
-        this.Log(data, "BetResult");
-
-    }
-
-    /**
-     * 停止投注
-     * @param data 
-     */
-    public OnStopBet(data: any): void {
-
-    }
-
-    /**
-     * 游戏结果
-     * @param data 游戏结果数据
-     */
-    public OnGameResult(data: Dto.EndGameDto): void {
+    public OnGameResult(data: Dto.BetResultDto): void {
         this.Log(data, "GameResult");
+        console.log(data);
+        this.GameHeadView.Set(data, Enum.GameCommand.MSG_GAME_SETTLERESULT);
+        this.GameAniView.Set(data, Enum.GameCommand.MSG_GAME_SETTLERESULT);
+        this.GameChipsView.Set(data, Enum.GameCommand.MSG_GAME_SETTLERESULT);
     }
 
-    /**
-     * 结算命令
-     * @param data 游戏结算数据
-     */
-    public OnSettleResult(data: Dto.GameResultDto): void {
-        this.Log(data, "SettleResult");
-    }
-
-    public OnGameOther(data: any): void {
-
-    }
 }

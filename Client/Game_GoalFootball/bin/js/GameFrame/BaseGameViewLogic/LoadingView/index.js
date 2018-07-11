@@ -10,7 +10,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 /// <reference path="./BaseLoadingView.ts"/>
 /// <reference path="../IView.ts"/>
-var LoadingView = (function (_super) {
+var LoadingView = /** @class */ (function (_super) {
     __extends(LoadingView, _super);
     function LoadingView() {
         return _super.call(this) || this;

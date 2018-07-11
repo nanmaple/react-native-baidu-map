@@ -3,7 +3,7 @@ var BaseDto;
     /**
      * 消息Dto
      */
-    var MessageDto = (function () {
+    var MessageDto = /** @class */ (function () {
         function MessageDto() {
         }
         return MessageDto;

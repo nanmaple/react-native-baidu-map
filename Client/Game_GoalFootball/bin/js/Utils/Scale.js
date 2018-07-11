@@ -1,6 +1,6 @@
 var Utils;
 (function (Utils) {
-    var Scale = (function () {
+    var Scale = /** @class */ (function () {
         function Scale() {
         }
         /**

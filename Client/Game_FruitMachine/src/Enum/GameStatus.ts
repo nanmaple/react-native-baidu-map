@@ -5,20 +5,12 @@ namespace Enum {
          */
         DEFAULT = 0,
         /**
-         * 投注状态
+         * 猜大小
          */
-        BET = 1,
+        GUESS = 1,
         /**
-         * 结束状态
+         * 进行中
          */
-        END = 2,
-        /**
-         * 正在结算状态
-         */
-        SETTLE = 3,
-        /**
-         * 已结算
-         */
-        SETTLEED = 4,
+        EXECUTE = 2,
     }
 }

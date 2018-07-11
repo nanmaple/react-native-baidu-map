@@ -3,7 +3,7 @@ var Dto;
     /**
      * 牌信息
      */
-    var CardInfoDto = (function () {
+    var CardInfoDto = /** @class */ (function () {
         function CardInfoDto() {
         }
         return CardInfoDto;

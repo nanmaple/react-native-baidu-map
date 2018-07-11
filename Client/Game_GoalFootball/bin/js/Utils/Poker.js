@@ -3,7 +3,7 @@ var Utils;
     /**
      * 牌数据转换类
      */
-    var Poker = (function () {
+    var Poker = /** @class */ (function () {
         function Poker() {
         }
         /**

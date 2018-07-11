@@ -1,7 +1,6 @@
 {
     "type":"View",
     "selectedBox":1,
-    "selecteID":7,
     "props":{"width":400,"sceneColor":"#000000","height":500},
     "nodeParent":-1,
     "label":"View",
@@ -24,7 +23,7 @@
             "child":[
                 {
                     "type":"Image",
-                    "props":{"y":273,"x":21,"var":"floor","skin":"ui/floor.png"},
+                    "props":{"y":261,"x":-10,"var":"floor","skin":"ui/floor.png"},
                     "nodeParent":2,
                     "label":"Image(floor)",
                     "isDirectory":false,
@@ -73,7 +72,7 @@
                 },
                 {
                     "type":"Image",
-                    "props":{"y":-470,"x":33,"var":"cap","skin":"ui/cap.png"},
+                    "props":{"y":-470,"x":36,"var":"cap","skin":"ui/cap.png"},
                     "nodeParent":2,
                     "label":"Image(cap)",
                     "isDirectory":false,
@@ -101,7 +100,7 @@
                             }],
                         "x":[
                             {
-                                "value":35,
+                                "value":36,
                                 "tweenMethod":"linearNone",
                                 "tween":true,
                                 "target":7,
@@ -137,7 +136,7 @@
                                 "tween":true,
                                 "target":2,
                                 "key":"rotation",
-                                "index":2
+                                "index":3
                             },
                             {
                                 "value":9,
@@ -145,7 +144,7 @@
                                 "tween":true,
                                 "target":2,
                                 "key":"rotation",
-                                "index":6
+                                "index":9
                             },
                             {
                                 "value":-9,
@@ -153,7 +152,7 @@
                                 "tween":true,
                                 "target":2,
                                 "key":"rotation",
-                                "index":10
+                                "index":15
                             },
                             {
                                 "value":9,
@@ -161,7 +160,7 @@
                                 "tween":true,
                                 "target":2,
                                 "key":"rotation",
-                                "index":14
+                                "index":21
                             },
                             {
                                 "value":-9,
@@ -169,7 +168,7 @@
                                 "tween":true,
                                 "target":2,
                                 "key":"rotation",
-                                "index":18
+                                "index":27
                             },
                             {
                                 "value":9,
@@ -177,7 +176,133 @@
                                 "tween":true,
                                 "target":2,
                                 "key":"rotation",
-                                "index":22
+                                "index":33
+                            },
+                            {
+                                "value":-9,
+                                "tweenMethod":"linearNone",
+                                "tween":true,
+                                "target":2,
+                                "label":null,
+                                "key":"rotation",
+                                "index":39
+                            },
+                            {
+                                "value":9,
+                                "tweenMethod":"linearNone",
+                                "tween":true,
+                                "target":2,
+                                "label":null,
+                                "key":"rotation",
+                                "index":45
+                            },
+                            {
+                                "value":-9,
+                                "tweenMethod":"linearNone",
+                                "tween":true,
+                                "target":2,
+                                "label":null,
+                                "key":"rotation",
+                                "index":51
+                            },
+                            {
+                                "value":9,
+                                "tweenMethod":"linearNone",
+                                "tween":true,
+                                "target":2,
+                                "label":null,
+                                "key":"rotation",
+                                "index":57
+                            },
+                            {
+                                "value":-9,
+                                "tweenMethod":"linearNone",
+                                "tween":true,
+                                "target":2,
+                                "label":null,
+                                "key":"rotation",
+                                "index":63
+                            },
+                            {
+                                "value":9,
+                                "tweenMethod":"linearNone",
+                                "tween":true,
+                                "target":2,
+                                "label":null,
+                                "key":"rotation",
+                                "index":69
+                            },
+                            {
+                                "value":-9,
+                                "tweenMethod":"linearNone",
+                                "tween":true,
+                                "target":2,
+                                "label":null,
+                                "key":"rotation",
+                                "index":75
+                            },
+                            {
+                                "value":9,
+                                "tweenMethod":"linearNone",
+                                "tween":true,
+                                "target":2,
+                                "label":null,
+                                "key":"rotation",
+                                "index":81
+                            },
+                            {
+                                "value":-9,
+                                "tweenMethod":"linearNone",
+                                "tween":true,
+                                "target":2,
+                                "label":null,
+                                "key":"rotation",
+                                "index":87
+                            },
+                            {
+                                "value":9,
+                                "tweenMethod":"linearNone",
+                                "tween":true,
+                                "target":2,
+                                "label":null,
+                                "key":"rotation",
+                                "index":93
+                            },
+                            {
+                                "value":-9,
+                                "tweenMethod":"linearNone",
+                                "tween":true,
+                                "target":2,
+                                "label":null,
+                                "key":"rotation",
+                                "index":99
+                            },
+                            {
+                                "value":9,
+                                "tweenMethod":"linearNone",
+                                "tween":true,
+                                "target":2,
+                                "label":null,
+                                "key":"rotation",
+                                "index":105
+                            },
+                            {
+                                "value":-9,
+                                "tweenMethod":"linearNone",
+                                "tween":true,
+                                "target":2,
+                                "label":null,
+                                "key":"rotation",
+                                "index":111
+                            },
+                            {
+                                "value":9,
+                                "tweenMethod":"linearNone",
+                                "tween":true,
+                                "target":2,
+                                "label":null,
+                                "key":"rotation",
+                                "index":117
                             },
                             {
                                 "value":0,
@@ -185,13 +310,13 @@
                                 "tween":true,
                                 "target":2,
                                 "key":"rotation",
-                                "index":24
+                                "index":120
                             }]
                     }
                 }],
             "name":"ani2",
             "id":2,
-            "frameRate":24,
+            "frameRate":60,
             "action":0
         },
         {
@@ -231,7 +356,7 @@
                                 "tween":true,
                                 "target":7,
                                 "key":"y",
-                                "index":56
+                                "index":64
                             }],
                         "x":[
                             {
@@ -339,18 +464,36 @@
                                 "index":54
                             },
                             {
+                                "value":-9,
+                                "tweenMethod":"linearNone",
+                                "tween":true,
+                                "target":2,
+                                "label":null,
+                                "key":"rotation",
+                                "index":58
+                            },
+                            {
+                                "value":9,
+                                "tweenMethod":"linearNone",
+                                "tween":true,
+                                "target":2,
+                                "label":null,
+                                "key":"rotation",
+                                "index":62
+                            },
+                            {
                                 "value":0,
                                 "tweenMethod":"linearNone",
                                 "tween":true,
                                 "target":2,
                                 "key":"rotation",
-                                "index":56
+                                "index":64
                             }]
                     }
                 }],
             "name":"ani1",
             "id":1,
-            "frameRate":24,
+            "frameRate":60,
             "action":0
         }]
 }

@@ -21,10 +21,10 @@ namespace MulBet {
         public Type: number;//位置的类型 由游戏确定
 
         public ui: any;
-        private ListenEventKey: string = ""
+        private listenEventKey: string = ""
 
         constructor(eventKey: string) {
-            this.ListenEventKey = eventKey;
+            this.listenEventKey = eventKey;
         }
 
         /** 
@@ -132,7 +132,7 @@ namespace MulBet {
             data.Value = this.GetValue();
             data.Type = Enum.ListenViewEnum.BetPos;
 
-            let event = new CustomEvent(this.ListenEventKey, { detail: data });
+            let event = new CustomEvent(this.listenEventKey, { detail: data });
             document.dispatchEvent(event);
 
         }

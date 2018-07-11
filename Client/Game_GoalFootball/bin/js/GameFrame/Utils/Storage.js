@@ -9,7 +9,7 @@ var Utils;
     /**
      * 数据存储
      */
-    var Storage = (function () {
+    var Storage = /** @class */ (function () {
         function Storage() {
         }
         /**

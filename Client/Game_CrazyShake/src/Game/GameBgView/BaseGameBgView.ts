@@ -17,5 +17,6 @@ class BaseGameBgView {
         this.ui.zOrder = 1;
         this.ui.cacheAs = "bitmap";
         Laya.stage.addChild(this.ui);
+        Laya.SoundManager.playMusic("sound/bgSound.wav")
     }
 }

@@ -2,13 +2,13 @@
 var Dto;
 (function (Dto) {
     /**
-     * 游戏命令dto
+     * 游戏投注信息dto
      */
-    var GameMessageDto = /** @class */ (function () {
-        function GameMessageDto() {
+    var GameBetDto = /** @class */ (function () {
+        function GameBetDto() {
         }
-        return GameMessageDto;
+        return GameBetDto;
     }());
-    Dto.GameMessageDto = GameMessageDto;
+    Dto.GameBetDto = GameBetDto;
 })(Dto || (Dto = {}));
 //# sourceMappingURL=MessageDto.js.map

@@ -1,6 +1,6 @@
 var Utils;
 (function (Utils) {
-    var ObjectEx = (function () {
+    var ObjectEx = /** @class */ (function () {
         function ObjectEx() {
         }
         ObjectEx.assign = function () {

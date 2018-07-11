@@ -2,7 +2,7 @@ namespace Utils {
     export class Money {
         static Format(money: any, places?: number, symbol?: string, thousand?: string, decimal?: string) {
             money = money || 0;
-            places = !isNaN(places = Math.abs(places)) ? places : 2;
+            places = !isNaN(places = Math.abs(places)) ? places : 0;
             symbol = symbol !== undefined ? symbol : "";
             thousand = thousand || ",";
             decimal = decimal || ".";

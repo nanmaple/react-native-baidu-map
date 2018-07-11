@@ -1,6 +1,7 @@
 /// <reference path="./BaseAlertView.ts"/>
 /// <reference path="../IView.ts"/>
 class AlertView extends BaseAlertView implements IView {
+    private handler:Laya.Handler;
     constructor() {
         super();
 
@@ -9,20 +10,20 @@ class AlertView extends BaseAlertView implements IView {
     /**
      * 点击确定
      */
-    public OnClickSure(handler?: Laya.Handler): void {
+    public OnClickSure(): void {
         this.Hide();
-        if (typeof handler !== "undefined") {
-            handler.run();
+        if (typeof this.handler !== "undefined") {
+            this.handler.run();
         }
     }
 
     /**
      * 点击取消
      */
-    public OnClickCancel(handler?: Laya.Handler): void {
+    public OnClickCancel(): void {
         this.Hide();
-        if (typeof handler !== "undefined") {
-            handler.run();
+        if (typeof this.handler !== "undefined") {
+            this.handler.run();
         }
     }
 
@@ -56,10 +57,11 @@ class AlertView extends BaseAlertView implements IView {
      * 弹出提示框
      * @param txt 显示内容
      */
-    public Show(type: any = 0, txt: string): void {
+    public Show(type: any = 0, txt: string,handler?:Laya.Handler): void {
         if (!this.ui) {
             return;
         }
+        this.handler = handler;
         this.alertType = type;
         this.AlertType(type);
         this.ui.prompt.scale(0, 0);

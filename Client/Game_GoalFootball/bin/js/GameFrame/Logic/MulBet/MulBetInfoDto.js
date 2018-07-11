@@ -3,7 +3,7 @@ var MulBet;
     /**
      * 投注相关内容
      */
-    var BetDataDto = (function () {
+    var BetDataDto = /** @class */ (function () {
         function BetDataDto() {
             /**
              * 当前投注成功的投注信息
@@ -34,7 +34,7 @@ var MulBet;
     /**
      * 投注提交内容
      */
-    var BetDto = (function () {
+    var BetDto = /** @class */ (function () {
         function BetDto() {
         }
         return BetDto;
@@ -43,7 +43,7 @@ var MulBet;
     /**
      * 投注面板UI到Ctrl传递数据Dto
      */
-    var BetPosValue = (function () {
+    var BetPosValue = /** @class */ (function () {
         function BetPosValue() {
         }
         return BetPosValue;
@@ -52,7 +52,7 @@ var MulBet;
     /**
      * 投注成功后 投注分数及游戏分数
      */
-    var BetResultDto = (function () {
+    var BetResultDto = /** @class */ (function () {
         function BetResultDto() {
         }
         return BetResultDto;
@@ -61,7 +61,7 @@ var MulBet;
     /**
      * 投注位置投注后数据
     */
-    var BetPosAmountDto = (function () {
+    var BetPosAmountDto = /** @class */ (function () {
         function BetPosAmountDto() {
         }
         return BetPosAmountDto;

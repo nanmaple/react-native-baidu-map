@@ -3,7 +3,7 @@ var Utils;
     /**
      * float浮点数加减乘除法运算工具类
      */
-    var Float = (function () {
+    var Float = /** @class */ (function () {
         function Float() {
         }
         /**

@@ -9,6 +9,19 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 /**
+ * 组件Set() 参数类型枚举
+ */
+var Enum;
+(function (Enum) {
+    var BetNumPanel;
+    (function (BetNumPanel) {
+        BetNumPanel[BetNumPanel["EnableButton"] = 10000] = "EnableButton";
+        BetNumPanel[BetNumPanel["MSG_GAME_INIT"] = 10001] = "MSG_GAME_INIT";
+        BetNumPanel[BetNumPanel["MSG_GAME_BET"] = 10002] = "MSG_GAME_BET";
+        BetNumPanel[BetNumPanel["MSG_GAME_AniPlayComplete"] = 10003] = "MSG_GAME_AniPlayComplete";
+    })(BetNumPanel = Enum.BetNumPanel || (Enum.BetNumPanel = {}));
+})(Enum || (Enum = {}));
+/**
  * 投注额面板
  * 功能：增加、减少投注额
  */
@@ -26,9 +39,29 @@ var BetNumPanel = /** @class */ (function (_super) {
     };
     /**
      * 接收上层View或者GameViewLogic的数据,根据数据，进行不同的渲染
-     * @param data
+     * @param data 数据
+     * @param type 枚举类型
      */
-    BetNumPanel.prototype.Set = function (data) {
+    BetNumPanel.prototype.Set = function (data, type) {
+        switch (type) {
+            case Enum.BetNumPanel.MSG_GAME_INIT:
+            case Enum.BetNumPanel.MSG_GAME_AniPlayComplete:
+                var tempMaxBet = Math.floor(data.Balance / 100) * 100;
+                this.maxBetNum = tempMaxBet < data.MaxBet ? tempMaxBet : data.MaxBet;
+                this.EnableButton();
+                break;
+            case Enum.BetNumPanel.MSG_GAME_BET:
+                this.EnableButton(false);
+                break;
+            default:
+                break;
+        }
+    };
+    /**
+     * 获取投注额
+     */
+    BetNumPanel.prototype.getBetNum = function () {
+        return this.currentBetNum;
     };
     return BetNumPanel;
 }(BaseBetNumPanel));

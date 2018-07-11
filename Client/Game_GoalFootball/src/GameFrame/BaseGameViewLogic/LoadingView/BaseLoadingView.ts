@@ -1,8 +1,8 @@
 
 abstract class BaseLoadingView {
     protected ui: ui.LoadingViewUI;
-    protected loadingShow: boolean = false;
-    protected loadingTxt: string = null;
+    protected loadingShow: boolean = true;
+    protected loadingTxt: string = LanguageUtils.Language.Get("ConnectService");;
     constructor() {
 
     }

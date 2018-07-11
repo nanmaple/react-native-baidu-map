@@ -10,7 +10,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 /// <reference path="./BaseAlertView.ts"/>
 /// <reference path="../IView.ts"/>
-var AlertView = (function (_super) {
+var AlertView = /** @class */ (function (_super) {
     __extends(AlertView, _super);
     function AlertView() {
         return _super.call(this) || this;

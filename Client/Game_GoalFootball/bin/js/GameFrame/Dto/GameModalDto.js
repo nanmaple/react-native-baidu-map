@@ -4,7 +4,7 @@ var BaseDto;
     /**
      * Modal弹出传递数据Dto
      */
-    var GameModalDto = (function () {
+    var GameModalDto = /** @class */ (function () {
         function GameModalDto() {
         }
         return GameModalDto;

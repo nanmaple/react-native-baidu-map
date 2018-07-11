@@ -8,7 +8,9 @@ class InitState {
         // Laya.WorkerLoader.workerPath = "libs/worker.js";
         //开启worker线程
         // Laya.WorkerLoader.enable = true;
-
+        //设置抗锯齿
+        Config.isAntialias=true;
+        
         //设置适配模式
         Laya.stage.scaleMode = Laya.Stage.SCALE_SHOWALL;
         Laya.stage.screenMode = GameConfig.ScreenMode ? Laya.Stage.SCREEN_HORIZONTAL : Laya.Stage.SCREEN_VERTICAL;

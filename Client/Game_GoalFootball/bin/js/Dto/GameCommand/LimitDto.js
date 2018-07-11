@@ -3,7 +3,7 @@ var Dto;
     /**
      * 限额
      */
-    var LimitDto = (function () {
+    var LimitDto = /** @class */ (function () {
         function LimitDto() {
         }
         return LimitDto;

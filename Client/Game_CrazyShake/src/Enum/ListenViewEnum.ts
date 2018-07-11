@@ -13,6 +13,8 @@ namespace Enum{
          */
         BetPos = 1,
 
+        AniPlayComplete,
+
         OnGameBgClick,
 
         ConfirmBet,

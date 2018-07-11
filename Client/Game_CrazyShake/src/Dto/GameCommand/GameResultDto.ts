@@ -4,20 +4,24 @@ namespace Dto {
      */
     export class GameResultDto {
         /**
-         * 局号
+         * 新的余额
          */
-        public RoundID: string;
+        public Balance:number;
         /**
-         * 余额
+         * 中奖金额
          */
-        public Balance: number;
+        public WinAmount:number;
         /**
-         *  结算结果 key: 投注位置, value: 输赢金额
+         * 投注状态，投注是否成功
          */
-        public SettleResult: any;
+        public Status:Enum.BetResult;
         /**
-         * 游戏结果(CardInfoDto)
+         * 开奖的位置
          */
-        public GameResult: string
+        public Result:Enum.GameBetType;
+        /**
+         * 骰子的状态Array
+         */
+        public Dices:any;
     }
 }

@@ -22,7 +22,7 @@ var ScreenStatus;
 /**
  * 游戏界面管理抽象类
  */
-var BaseGameViewLogic = (function (_super) {
+var BaseGameViewLogic = /** @class */ (function (_super) {
     __extends(BaseGameViewLogic, _super);
     function BaseGameViewLogic() {
         var _this = _super.call(this) || this;

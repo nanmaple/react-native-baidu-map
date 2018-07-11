@@ -1,4 +1,4 @@
-var LoginView = (function () {
+var LoginView = /** @class */ (function () {
     function LoginView(successHandler) {
         var _this = this;
         this.LoginSuccess = function (data) {

@@ -10,7 +10,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 /// <reference path="../GameFrame/BaseGameViewLogic/index.ts" />
 /// <reference path="./GameBgView/GameBgView.ts" />
-var GameViewLogic = (function (_super) {
+var GameViewLogic = /** @class */ (function (_super) {
     __extends(GameViewLogic, _super);
     function GameViewLogic(Handler) {
         var _this = _super.call(this) || this;
@@ -28,8 +28,6 @@ var GameViewLogic = (function (_super) {
     * 启动游戏资源页面，开始加载游戏资源
     */
     GameViewLogic.prototype.GameLoad = function () {
-        this.alertView = new AlertView();
-        this.loadingView = new LoadingView();
         this.gameLoadView = new GameLoadView(this.GameViewEventKey);
         this.gameLoadView.ResetScreen();
         //设置版本控制类型为使用文件名映射的方式
@@ -66,39 +64,56 @@ var GameViewLogic = (function (_super) {
      */
     GameViewLogic.prototype.GameMainUI = function () {
         //初始化基本alert,loading组件的界面
+        this.alertView = new AlertView();
         this.alertView.ResetScreen();
+        this.loadingView = new LoadingView();
         this.loadingView.ResetScreen();
         //加载其他组件
         this.GameBgView = new GameBgView(this.GameViewEventKey);
         this.GameBgView.ResetScreen();
+        this.GameAniView = new GameAniView(this.GameViewEventKey);
+        this.GameAniView.ResetScreen();
+        this.GameChipsView = new GameChipsView(this.GameViewEventKey);
+        this.GameChipsView.ResetScreen();
+        this.GameHeadView = new GameHeadView(this.GameViewEventKey);
+        this.GameHeadView.ResetScreen();
+        this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.StartSocket, {}]);
     };
     /**
      * UI监听
      * @param data
      */
     GameViewLogic.prototype.ListenUI = function (data) {
+        var betAmount = 0; //投注金额
+        var propAmount = 0; //使用道具金额
         switch (data.Type) {
             case Enum.ListenViewEnum.GameLoadComplate:
                 this.CheckLoad();
                 break;
-            // case Enum.ListenViewEnum.ShowRule:
-            //     this.RuleUIHV.ShowRule();
-            //     break;
-            case Enum.ListenViewEnum.BetPos:
-                // this.ChipPrice = this.BetUI.GetChipPrice();
-                // data.Value.Amount = this.ChipPrice;
-                // this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.BetPos, data.Value]);
+            case Enum.ListenViewEnum.ShootDoor:
+                betAmount = this.GameChipsView.GetBetAmount();
+                propAmount = this.GameAniView.GetPropUseAmount();
+                var balance = this.GameHeadView.GetBalance();
+                var gameBet = new Dto.GameBetDto();
+                gameBet.Amount = betAmount;
+                gameBet.Props = this.GameAniView.GetPropUseStatus();
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.BetPos, gameBet]);
+                this.GameHeadView.SetBalance(balance - betAmount - propAmount);
                 break;
-            case Enum.ListenViewEnum.ConfirmBet:
-                // this.BetUI.Confirm();
-                // this.BetMoreUI.Confirm();
-                // this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.ConfirmBet, null]);
+            case Enum.ListenViewEnum.GameResult:
+                this.GameChipsView.Reset();
+                this.GameHeadView.Refresh();
                 break;
-            case Enum.ListenViewEnum.CancelBet:
-                // this.BetUI.Cancel();
-                // this.BetMoreUI.Cancel();
-                // this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.CancelBet, null]);
+            case Enum.ListenViewEnum.ChooseChip:
+                betAmount = this.GameChipsView.GetBetAmount();
+                this.GameAniView.SetPropAmount(betAmount);
+                propAmount = this.GameAniView.GetPropUseAmount();
+                this.GameChipsView.SetBetTotalAmount(betAmount, propAmount);
                 break;
+            case Enum.ListenViewEnum.ChooseProp:
+                betAmount = this.GameChipsView.GetBetAmount();
+                propAmount = this.GameAniView.GetPropUseAmount();
+                this.GameChipsView.SetBetTotalAmount(betAmount, propAmount);
             default:
                 break;
         }
@@ -131,10 +146,6 @@ var GameViewLogic = (function (_super) {
                 break;
             case Enum.GameViewLogicEnum.GetMemberInfo:
                 break;
-            case Enum.GameViewLogicEnum.BetPos:
-                break;
-            case Enum.GameViewLogicEnum.SetRecord:
-                break;
             default:
                 break;
         }
@@ -148,23 +159,8 @@ var GameViewLogic = (function (_super) {
             case Enum.GameCommand.MSG_GAME_INIT:
                 this.OnGameInit(data.Data);
                 break;
-            case Enum.GameCommand.MSG_GAME_START:
-                this.OnGameStart(data.Data);
-                break;
-            case Enum.GameCommand.MSG_GAME_BETRESULT:
-                this.OnBetResult(data.Data);
-                break;
-            case Enum.GameCommand.MSG_GAME_STOPBET:
-                this.OnStopBet(data);
-                break;
-            case Enum.GameCommand.MSG_GAME_GAMERESULT:
-                this.OnGameResult(data.Data);
-                break;
             case Enum.GameCommand.MSG_GAME_SETTLERESULT:
-                this.OnSettleResult(data.Data);
-                break;
-            case Enum.GameCommand.MSG_GAME_OTHER:
-                this.OnGameOther(data.Data);
+                this.OnGameResult(data.Data);
                 break;
             default:
                 break;
@@ -177,42 +173,21 @@ var GameViewLogic = (function (_super) {
      */
     GameViewLogic.prototype.OnGameInit = function (data) {
         this.Log(data, "GameInit");
-    };
-    /**
-     * 游戏开始命令处理
-     * @param data 游戏开始数据
-     */
-    GameViewLogic.prototype.OnGameStart = function (data) {
-        this.Log(data, "GameStart");
+        console.log(data);
+        this.GameHeadView.Set({ Type: Enum.GameCommand.MSG_GAME_INIT, Data: data });
+        this.GameAniView.Set({ Type: Enum.GameCommand.MSG_GAME_INIT, Data: data });
+        this.GameChipsView.Set({ Type: Enum.GameCommand.MSG_GAME_INIT, Data: data });
     };
     /**
      * 投注结果命令处理
      * @param data 游戏投注结果
      */
-    GameViewLogic.prototype.OnBetResult = function (data) {
-        this.Log(data, "BetResult");
-    };
-    /**
-     * 停止投注
-     * @param data
-     */
-    GameViewLogic.prototype.OnStopBet = function (data) {
-    };
-    /**
-     * 游戏结果
-     * @param data 游戏结果数据
-     */
     GameViewLogic.prototype.OnGameResult = function (data) {
         this.Log(data, "GameResult");
-    };
-    /**
-     * 结算命令
-     * @param data 游戏结算数据
-     */
-    GameViewLogic.prototype.OnSettleResult = function (data) {
-        this.Log(data, "SettleResult");
-    };
-    GameViewLogic.prototype.OnGameOther = function (data) {
+        console.log(data);
+        this.GameHeadView.Set({ Type: Enum.GameCommand.MSG_GAME_SETTLERESULT, Data: data });
+        this.GameAniView.Set({ Type: Enum.GameCommand.MSG_GAME_SETTLERESULT, Data: data });
+        this.GameChipsView.Set({ Type: Enum.GameCommand.MSG_GAME_SETTLERESULT, Data: data });
     };
     return GameViewLogic;
 }(BaseGameViewLogic));

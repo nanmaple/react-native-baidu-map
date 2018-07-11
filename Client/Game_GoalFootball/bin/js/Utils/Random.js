@@ -1,6 +1,6 @@
 var Utils;
 (function (Utils) {
-    var Random = (function () {
+    var Random = /** @class */ (function () {
         function Random() {
         }
         /**

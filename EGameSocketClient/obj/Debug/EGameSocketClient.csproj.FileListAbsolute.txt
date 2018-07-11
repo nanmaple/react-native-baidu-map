@@ -1,0 +1,70 @@
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\EGameSocketClient.exe.config
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\obj\Debug\EGameSocketClient.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\obj\Debug\EGameSocketClient.Form1.resources
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\obj\Debug\EGameSocketClient.Properties.Resources.resources
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\obj\Debug\EGameSocketClient.csproj.GenerateResource.Cache
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\EGameSocketClient.exe
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\EGameSocketClient.pdb
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\QIC.EGame.GameServer.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\QIC.EGame.IService.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\QIC.Infrastructure.Common.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\websocket-sharp.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\QIC.Infrastructure.Net.WebSocket.ISocketManagement.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\log4net.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\QIC.Infrastructure.IOC.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\QIC.Infrastructure.Cache.CacheManagement.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\ServiceStack.Redis.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\Microsoft.Practices.Unity.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\Microsoft.Practices.Unity.Configuration.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\ServiceStack.Interfaces.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\ServiceStack.Common.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\QIC.EGame.GameServer.pdb
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\QIC.EGame.IService.pdb
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\QIC.Infrastructure.Common.xml
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\log4net.xml
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\obj\Debug\EGameSocketClient.exe
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Draft\EGameSocketClient\obj\Debug\EGameSocketClient.pdb
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\EGameSocketClient.exe.config
+C:\Users\Administrator\Desktop\EGameSocketClient\obj\Debug\EGameSocketClient.exe
+C:\Users\Administrator\Desktop\EGameSocketClient\obj\Debug\EGameSocketClient.pdb
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\EGameSocketClient.exe
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\EGameSocketClient.pdb
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\websocket-sharp.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\log4net.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\QIC.Infrastructure.IOC.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\QIC.Infrastructure.Cache.CacheManagement.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\ServiceStack.Redis.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\Microsoft.Practices.Unity.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\Microsoft.Practices.Unity.Configuration.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\ServiceStack.Interfaces.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\ServiceStack.Common.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\QIC.Infrastructure.Common.xml
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\log4net.xml
+C:\Users\Administrator\Desktop\EGameSocketClient\obj\Debug\EGameSocketClient.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\EGameSocketClient\obj\Debug\EGameSocketClient.Form1.resources
+C:\Users\Administrator\Desktop\EGameSocketClient\obj\Debug\EGameSocketClient.Properties.Resources.resources
+C:\Users\Administrator\Desktop\EGameSocketClient\obj\Debug\EGameSocketClient.csproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\QIC.EGame.IGameMachineService.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\QIC.EGame.IGameMachineService.pdb
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\QIC.EGame.GameMachineService.ShootDoor.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\QIC.EGame.GameMachineService.BaseGameMachineService.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\QIC.EGame.BalanceManagement.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\QIC.EGame.DBService.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\QIC.EGame.MemberService.MemberServiceClient.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\QIC.BalanceService.BalanceClient.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\MongoDB.Driver.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\QIC.Infrastructure.DBUtility.SqlServerUtility.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\QIC.Infrastructure.DBUtility.SerializerUtility.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\QIC.EGame.MemberService.IMemberManagement.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\QIC.EGame.MemberService.IMemberDetailsManagement.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\QIC.EGame.MemberService.IThirdPlatformAuth.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\QIC.Infrastructure.WcfFramework.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\MongoDB.Driver.Core.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\MongoDB.Bson.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\DnsClient.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\System.Buffers.dll
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\MongoDB.Bson.xml
+C:\Users\Administrator\Desktop\EGameSocketClient\bin\Debug\Newtonsoft.Json.dll

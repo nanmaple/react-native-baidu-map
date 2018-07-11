@@ -4,7 +4,7 @@ var BaseDto;
     /*
     * 检测登录返回数据Dto
     */
-    var CheckLoginDto = (function () {
+    var CheckLoginDto = /** @class */ (function () {
         function CheckLoginDto() {
         }
         return CheckLoginDto;

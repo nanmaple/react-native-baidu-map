@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":2,
+    "selecteID":4,
     "props":{"width":750,"sceneColor":"#000000","height":266},
     "nodeParent":-1,
     "label":"View",
@@ -15,42 +15,135 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":20,"x":508,"var":"bigBtn","skin":"ui/bigBtn1.png"},
+            "props":{"y":39,"x":508,"var":"bigBtn","skin":"ui/bigBtn1.png"},
             "nodeParent":1,
             "label":"Image(bigBtn)",
-            "isDirectory":false,
+            "isOpen":true,
+            "isDirectory":true,
             "isAniNode":true,
-            "hasChild":false,
+            "hasChild":true,
             "compId":2,
             "child":[
-                ]
+                {
+                    "x":30,
+                    "type":"Text",
+                    "props":{"y":100,"x":68,"var":"bigOdds","text":"猜对×2","fontSize":24,"font":"Helvetica","color":"#ffb017","bold":false},
+                    "nodeParent":2,
+                    "label":"Text(bigOdds)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":8,
+                    "child":[
+                        ],
+                    "$LOCKED":false,
+                    "$HIDDEN":false
+                },
+                {
+                    "x":30,
+                    "type":"Text",
+                    "props":{"y":134,"x":64,"var":"bigRule","text":"11-17点","fontSize":24,"font":"Helvetica","color":"#ffb017","bold":false},
+                    "nodeParent":2,
+                    "label":"Text(bigRule)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":11,
+                    "child":[
+                        ],
+                    "$LOCKED":false,
+                    "$HIDDEN":false
+                }]
         },
         {
             "x":15,
             "type":"Image",
-            "props":{"y":5,"x":264,"var":"jaguarBtn","skin":"ui/jaguarBtn1.png"},
+            "props":{"y":39,"x":264,"var":"jaguarBtn","skin":"ui/jaguarBtn1.png"},
             "nodeParent":1,
             "label":"Image(jaguarBtn)",
-            "isDirectory":false,
+            "isOpen":true,
+            "isDirectory":true,
             "isAniNode":true,
-            "hasChild":false,
+            "hasChild":true,
             "compId":3,
             "child":[
-                ],
+                {
+                    "x":30,
+                    "type":"Text",
+                    "props":{"y":100,"x":68,"var":"jaguarOdds","text":"猜对×2","fontSize":24,"font":"Helvetica","color":"#ffb017","bold":false,"align":"center"},
+                    "nodeParent":3,
+                    "label":"Text(jaguarOdds)",
+                    "isOpen":false,
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":7,
+                    "child":[
+                        ],
+                    "$LOCKED":false,
+                    "$HIDDEN":false
+                },
+                {
+                    "x":30,
+                    "type":"Text",
+                    "props":{"y":134,"x":39,"var":"jaguarRule","text":"3个点数相同","fontSize":24,"font":"Helvetica","color":"#ffb017","bold":false},
+                    "nodeParent":3,
+                    "label":"Text(jaguarRule)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":10,
+                    "child":[
+                        ],
+                    "$LOCKED":false,
+                    "$HIDDEN":false
+                }],
             "$LOCKED":false
         },
         {
             "x":15,
             "type":"Image",
-            "props":{"y":20,"x":19,"var":"littleBtn","skin":"ui/littleBtn1.png"},
+            "props":{"y":38,"x":19,"var":"littleBtn","skin":"ui/littleBtn1.png"},
             "nodeParent":1,
             "label":"Image(littleBtn)",
-            "isDirectory":false,
+            "isOpen":true,
+            "isDirectory":true,
             "isAniNode":true,
-            "hasChild":false,
+            "hasChild":true,
             "compId":4,
             "child":[
-                ]
+                {
+                    "x":30,
+                    "type":"Text",
+                    "props":{"y":100,"x":68,"var":"littleOdds","text":"猜对×2","fontSize":24,"font":"Helvetica","color":"#ffb017","bold":false},
+                    "nodeParent":4,
+                    "label":"Text(littleOdds)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":5,
+                    "child":[
+                        ],
+                    "$LOCKED":false,
+                    "$HIDDEN":false
+                },
+                {
+                    "x":30,
+                    "type":"Text",
+                    "props":{"y":134,"x":69,"var":"littleRule","text":"4-10点","fontSize":24,"font":"Helvetica","color":"#ffb017","bold":false},
+                    "nodeParent":4,
+                    "label":"Text(littleRule)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":9,
+                    "child":[
+                        ],
+                    "$LOCKED":false,
+                    "$HIDDEN":false
+                }],
+            "$LOCKED":false,
+            "$HIDDEN":false
         }],
     "animations":[
         {

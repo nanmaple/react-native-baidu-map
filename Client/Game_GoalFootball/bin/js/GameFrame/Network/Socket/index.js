@@ -18,7 +18,7 @@ var Network;
     /**
      * Socket类
      */
-    var SocketManager = (function (_super) {
+    var SocketManager = /** @class */ (function (_super) {
         __extends(SocketManager, _super);
         function SocketManager() {
             var _this = _super.call(this) || this;

@@ -9,6 +9,18 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 /**
+ * 组件Set() 参数类型枚举
+ */
+var Enum;
+(function (Enum) {
+    var FunBalancePanel;
+    (function (FunBalancePanel) {
+        FunBalancePanel[FunBalancePanel["MSG_GAME_INIT"] = 13000] = "MSG_GAME_INIT";
+        FunBalancePanel[FunBalancePanel["MSG_GAME_BET"] = 13001] = "MSG_GAME_BET";
+        FunBalancePanel[FunBalancePanel["MSG_GAME_AniPlayComplete"] = 13002] = "MSG_GAME_AniPlayComplete";
+    })(FunBalancePanel = Enum.FunBalancePanel || (Enum.FunBalancePanel = {}));
+})(Enum || (Enum = {}));
+/**
  * 功能键、余额、获得分数面板
  */
 var FunBalancePanel = /** @class */ (function (_super) {
@@ -25,9 +37,26 @@ var FunBalancePanel = /** @class */ (function (_super) {
     };
     /**
      * 接收上层View或者GameViewLogic的数据,根据数据，进行不同的渲染
-     * @param data
+     * @param data 游戏投注结果
+     * @param type 枚举类型
      */
-    FunBalancePanel.prototype.Set = function (data) {
+    FunBalancePanel.prototype.Set = function (data, type) {
+        switch (type) {
+            case Enum.FunBalancePanel.MSG_GAME_INIT:
+                this.SetRechargeNum(data.Balance);
+                break;
+            case Enum.FunBalancePanel.MSG_GAME_BET:
+                this.balance = this.balance - data.Amount;
+                this.SetRechargeNum(this.balance);
+                this.SetScore(0);
+                break;
+            case Enum.FunBalancePanel.MSG_GAME_AniPlayComplete:
+                this.SetRechargeNum(data.Balance);
+                this.SetScore(data.WinAmount);
+                break;
+            default:
+                break;
+        }
     };
     return FunBalancePanel;
 }(BaseFunBalancePanel));

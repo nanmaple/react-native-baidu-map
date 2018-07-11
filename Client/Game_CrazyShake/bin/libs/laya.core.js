@@ -13394,7 +13394,7 @@ var Socket=(function(_super){
 			this.close();
 		this._socket && this.cleanSocket();
 		if (!this.protocols || this.protocols.length==0){
-			this._socket=new Browser.window.WebSocket(url);
+ 			this._socket=new Browser.window.WebSocket(url);
 			}else {
 			this._socket=new Browser.window.WebSocket(url,this.protocols);
 		}

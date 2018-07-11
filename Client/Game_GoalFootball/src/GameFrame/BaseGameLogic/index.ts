@@ -8,13 +8,16 @@
 
 /// <reference path="../Utils/NetworkCheck.ts" />
 
+/// <reference path="../Utils/NetworkCheck.ts" />
+
 abstract class BaseGameLogic {
     /********************* 基础 *********************/
     /**
      * 游戏基础信息
      */
-    public GameInfo: any = {
+    public GameInfo: IGameInfo = {
         GameId: 0,
+        SocketUrl: ""
     };
 
     /**
@@ -170,11 +173,9 @@ abstract class BaseGameLogic {
         //同步服务器会员分数
         this.SetBalance(this.memberInfo.Score);
         //生成socket地址
-        let socketUrl = GameConfig.GetSocketUrl(this.memberInfo.MemberId, socketToken);
+        this.GameInfo.SocketUrl = GameConfig.GetSocketUrl(this.memberInfo.MemberId, socketToken);
         //初始socket
         this.InitSocket();
-        //启动连接
-        this.StartSocket(socketUrl);
     }
 
     /**
@@ -195,12 +196,12 @@ abstract class BaseGameLogic {
      * api请求方法，
      * @param requestDto IRequestParams
      */
-    protected Request(requestDto: IRequestParams,successCallback:Function,failCallback:Function):void {
+    protected Request(requestDto: IRequestParams, successCallback: Function, failCallback: Function): void {
         if (requestDto.Type.toLowerCase() == "get") {
             this.webApi.Get(requestDto.Url, requestDto.Params, requestDto.Header, (response: any) => {
                 successCallback(response);
             }, (error: any) => {
-                failCallback( error);
+                failCallback(error);
             })
         } else {
             this.webApi.Post(requestDto.Url, requestDto.Params, requestDto.Header, (response: any) => {
@@ -215,7 +216,7 @@ abstract class BaseGameLogic {
     /**
      * 初始化Socket
      */
-    protected InitSocket():void {
+    protected InitSocket(): void {
         //创建socket
         this.socket = new Network.SocketManager();
         //连接事件侦听
@@ -241,7 +242,7 @@ abstract class BaseGameLogic {
     /**
      * 预处理socket连接
      */
-    private OnPreConnectHandler():void {
+    private OnPreConnectHandler(): void {
         //关闭loading
         let dto: BaseDto.GameModalDto = new BaseDto.GameModalDto();
         dto.Type = BaseEnum.GameModalEnum.Close;
@@ -251,7 +252,7 @@ abstract class BaseGameLogic {
     /**
      * 预处理Socket关闭
      */
-    private OnPreCloseHandler(message: string):void {
+    private OnPreCloseHandler(message: string): void {
         //启动loading
         let dto: BaseDto.GameModalDto = new BaseDto.GameModalDto();
         dto.Type = BaseEnum.GameModalEnum.Open;
@@ -262,7 +263,7 @@ abstract class BaseGameLogic {
     /**
      * 预处理Socket重连
      */
-    private OnPreWillReconnectHandler():void {
+    private OnPreWillReconnectHandler(): void {
         //启动loading
         let dto: BaseDto.GameModalDto = new BaseDto.GameModalDto();
         dto.Type = BaseEnum.GameModalEnum.Open;
@@ -273,7 +274,7 @@ abstract class BaseGameLogic {
     /**
      * 预处理Socket会员关闭
      */
-    private OnPreMemberCloseHandler():void {
+    private OnPreMemberCloseHandler(): void {
         //修改会员关闭状态
         this.authorizationInfo.IsClose = true;
         //停止socket
@@ -290,7 +291,7 @@ abstract class BaseGameLogic {
     /**
      * 预处理Socket会员登出
      */
-    private OnPreLogoutHandler():void {
+    private OnPreLogoutHandler(): void {
         //停止socket
         this.socket.SetNetwork(false);
         this.socket.Close();
@@ -306,8 +307,13 @@ abstract class BaseGameLogic {
      * 启动Socket
      * @param socketUrl Socket连接地址
      */
-    private StartSocket(socketUrl: string) {
-        this.socket.Connect(socketUrl)
+    protected StartSocket() {
+        if (this.GameInfo.SocketUrl) {
+            Laya.timer.clear(this, this.StartSocket);
+            this.socket.Connect(this.GameInfo.SocketUrl);
+        } else {
+            Laya.timer.loop(1000, this, this.StartSocket);
+        }
     }
 
     /**

@@ -4,28 +4,20 @@ namespace Dto {
      */
     export class BetResultDto {
         /**
-         * 局号
-         */
-        public RoundID: string;
-        /**
-         * 成功
-         */
-        public Success: boolean;
-        /**
          * 余额
          */
         public Balance: number;
         /**
-         * 总投注金额{int,number}
+         * 中奖金额，0表示未中奖
          */
-        public TotalBet: any;
+        public WinAmount: number;
         /**
-         * 错误编号
+         * 赔率
          */
-        public ErrorCode: Enum.BetErrorCode;
+        public Odds: any;
         /**
-         * 错误说明
+         * 投注结果状态
          */
-        public Description: string
+        public Status: Enum.BetResultEnum;
     }
 }

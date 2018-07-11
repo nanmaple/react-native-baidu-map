@@ -3,7 +3,7 @@ var Dto;
     /**
      * 游戏结束
      */
-    var EndGameDto = (function () {
+    var EndGameDto = /** @class */ (function () {
         function EndGameDto() {
         }
         return EndGameDto;

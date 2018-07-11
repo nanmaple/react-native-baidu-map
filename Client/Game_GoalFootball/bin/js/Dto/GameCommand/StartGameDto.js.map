@@ -1,1 +1,1 @@
-{"version":3,"file":"StartGameDto.js","sourceRoot":"","sources":["../../../../src/Dto/GameCommand/StartGameDto.ts"],"names":[],"mappings":"AAAA,IAAU,GAAG,CA2BZ;AA3BD,WAAU,GAAG;IACT;QAAA;QAyBA,CAAC;QAAD,mBAAC;IAAD,CAAC,AAzBD,IAyBC;IAzBY,gBAAY,eAyBxB,CAAA;AACL,CAAC,EA3BS,GAAG,KAAH,GAAG,QA2BZ"}
+{"version":3,"file":"StartGameDto.js","sourceRoot":"","sources":["../../../../src/Dto/GameCommand/StartGameDto.ts"],"names":[],"mappings":"AAAA,IAAU,GAAG,CAQZ;AARD,WAAU,GAAG;IACT;QAAA;QAMA,CAAC;QAAD,mBAAC;IAAD,CAAC,AAND,IAMC;IANY,gBAAY,eAMxB,CAAA;AACL,CAAC,EARS,GAAG,KAAH,GAAG,QAQZ"}

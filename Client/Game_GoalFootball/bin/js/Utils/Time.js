@@ -1,7 +1,7 @@
 var Utils;
 (function (Utils) {
     //分割时间
-    var Time = (function () {
+    var Time = /** @class */ (function () {
         function Time() {
         }
         /**

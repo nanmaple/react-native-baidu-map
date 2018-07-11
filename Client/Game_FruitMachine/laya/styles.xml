@@ -1,0 +1,6 @@
+<res>
+   <item name="ui/chip_btn1000.png" type="Button" compress="0" pack="0" quality="80" props="" picType="0" scale="0"/>
+   <item name="ui/chip_btn10000.png" type="Button" compress="0" pack="0" quality="80" props="" picType="0" scale="0"/>
+   <item name="ui/chip_btnAdd.png" type="Button" compress="0" pack="0" quality="80" props="" picType="0" scale="0"/>
+   <item name="ui/chip_btnReduce.png" type="Button" compress="0" pack="0" quality="80" props="" picType="0" scale="0"/>
+</res>

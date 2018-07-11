@@ -3,7 +3,7 @@ var Dto;
     /**
      * 历史局信息
      */
-    var HistoryRoundDto = (function () {
+    var HistoryRoundDto = /** @class */ (function () {
         function HistoryRoundDto() {
         }
         return HistoryRoundDto;

@@ -1,7 +1,7 @@
 var Dto;
 (function (Dto) {
     //发送dto
-    var HandlerDto = (function () {
+    var HandlerDto = /** @class */ (function () {
         function HandlerDto() {
             /**
              * handler数据

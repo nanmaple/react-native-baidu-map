@@ -3,6 +3,8 @@ var InitState = /** @class */ (function () {
         this.event = new Event('ScreeMode');
         this.mode = 0;
         this.layaEvent = new Laya.Event();
+        //设置画布是否透明，只对2D(WebGL)、3D有效
+        Config.isAlpha = true;
         Laya.init(GameConfig.DesignShort, GameConfig.DesignLength, Laya.WebGL);
         //设置Laya提供的worker.js路径
         // Laya.WorkerLoader.workerPath = "libs/worker.js";
@@ -30,7 +32,10 @@ var InitState = /** @class */ (function () {
         }
         /***********调试相关**********/
         /***********舞台设置**********/
-        Laya.stage.bgColor = "#ffffff";
+        //WebGL模式
+        Laya.stage.bgColor = "none";
+        //canvas模式
+        // Laya.stage.bgColor = null;
         /***********舞台设置**********/
     }
     /**

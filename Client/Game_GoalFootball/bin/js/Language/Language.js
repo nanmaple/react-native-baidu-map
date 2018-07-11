@@ -1,7 +1,7 @@
 /// <reference path="./Config.ts"/>
 var LanguageUtils;
 (function (LanguageUtils) {
-    var Language = (function () {
+    var Language = /** @class */ (function () {
         function Language() {
         }
         /**
@@ -78,9 +78,9 @@ var LanguageUtils;
             if (gameID === void 0) { gameID = 0; }
             return "Language-Cache-Key";
         };
+        Language.CurrentLangue = null;
         return Language;
     }());
-    Language.CurrentLangue = null;
     LanguageUtils.Language = Language;
 })(LanguageUtils || (LanguageUtils = {}));
 //# sourceMappingURL=Language.js.map

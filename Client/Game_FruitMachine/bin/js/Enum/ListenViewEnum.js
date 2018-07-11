@@ -10,12 +10,29 @@ var Enum;
          */
         ListenViewEnum[ListenViewEnum["GameLoadComplate"] = 0] = "GameLoadComplate";
         /**
-         * 投注按钮点击
+         * 投注
          */
         ListenViewEnum[ListenViewEnum["BetPos"] = 1] = "BetPos";
-        ListenViewEnum[ListenViewEnum["OnGameBgClick"] = 2] = "OnGameBgClick";
-        ListenViewEnum[ListenViewEnum["ConfirmBet"] = 3] = "ConfirmBet";
-        ListenViewEnum[ListenViewEnum["CancelBet"] = 4] = "CancelBet";
+        /** 开始滚动*/
+        ListenViewEnum[ListenViewEnum["GameStart"] = 2] = "GameStart";
+        /** 收取分数*/
+        ListenViewEnum[ListenViewEnum["GatherFraction"] = 3] = "GatherFraction";
+        /** 结束滚动*/
+        ListenViewEnum[ListenViewEnum["GameEnd"] = 4] = "GameEnd";
+        /** 修改投注基数*/
+        ListenViewEnum[ListenViewEnum["ChangBaseAmount"] = 5] = "ChangBaseAmount";
+        /**添加猜大小分数 */
+        ListenViewEnum[ListenViewEnum["AddGuessSum"] = 6] = "AddGuessSum";
+        /**减小猜大小分数 */
+        ListenViewEnum[ListenViewEnum["ReduceGuessSum"] = 7] = "ReduceGuessSum";
+        /**清除所有投注信息 */
+        ListenViewEnum[ListenViewEnum["ClearBet"] = 8] = "ClearBet";
+        /**猜大小 */
+        ListenViewEnum[ListenViewEnum["GuessSize"] = 9] = "GuessSize";
+        /**全部投注位置+1 */
+        ListenViewEnum[ListenViewEnum["AddAll"] = 10] = "AddAll";
+        /**滚动随机数停止 */
+        ListenViewEnum[ListenViewEnum["RandomEndm"] = 11] = "RandomEndm";
     })(ListenViewEnum = Enum.ListenViewEnum || (Enum.ListenViewEnum = {}));
 })(Enum || (Enum = {}));
 //# sourceMappingURL=ListenViewEnum.js.map

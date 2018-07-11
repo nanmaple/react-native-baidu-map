@@ -15,7 +15,7 @@ var Network;
      * WebApi层
      * 单例 使用WebApi.instance
      */
-    var WebApi = (function (_super) {
+    var WebApi = /** @class */ (function (_super) {
         __extends(WebApi, _super);
         function WebApi() {
             return _super.call(this) || this;

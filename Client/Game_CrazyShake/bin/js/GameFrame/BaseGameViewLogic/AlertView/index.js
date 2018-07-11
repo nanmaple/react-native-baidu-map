@@ -18,19 +18,19 @@ var AlertView = /** @class */ (function (_super) {
     /**
      * 点击确定
      */
-    AlertView.prototype.OnClickSure = function (handler) {
+    AlertView.prototype.OnClickSure = function () {
         this.Hide();
-        if (typeof handler !== "undefined") {
-            handler.run();
+        if (typeof this.handler !== "undefined") {
+            this.handler.run();
         }
     };
     /**
      * 点击取消
      */
-    AlertView.prototype.OnClickCancel = function (handler) {
+    AlertView.prototype.OnClickCancel = function () {
         this.Hide();
-        if (typeof handler !== "undefined") {
-            handler.run();
+        if (typeof this.handler !== "undefined") {
+            this.handler.run();
         }
     };
     /**
@@ -62,11 +62,12 @@ var AlertView = /** @class */ (function (_super) {
      * 弹出提示框
      * @param txt 显示内容
      */
-    AlertView.prototype.Show = function (type, txt) {
+    AlertView.prototype.Show = function (type, txt, handler) {
         if (type === void 0) { type = 0; }
         if (!this.ui) {
             return;
         }
+        this.handler = handler;
         this.alertType = type;
         this.AlertType(type);
         this.ui.prompt.scale(0, 0);

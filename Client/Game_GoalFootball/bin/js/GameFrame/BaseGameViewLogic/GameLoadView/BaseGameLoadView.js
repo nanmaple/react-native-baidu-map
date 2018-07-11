@@ -1,4 +1,4 @@
-var BaseGameLoadView = (function () {
+var BaseGameLoadView = /** @class */ (function () {
     /**
      * 构造函数
      */

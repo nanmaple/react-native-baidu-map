@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":3,
-    "selecteID":7,
+    "selectedBox":1,
+    "selecteID":14,
     "props":{"width":750,"sceneColor":"#000000","height":125},
     "nodeParent":-1,
     "label":"View",
@@ -14,79 +14,53 @@
     "child":[
         {
             "x":15,
-            "type":"Image",
-            "props":{"y":12,"x":47,"var":"maxBtn","skin":"ui/maxBtn1.png"},
+            "type":"Button",
+            "props":{"y":17,"x":39,"var":"maxBtn","stateNum":"2","skin":"ui/btn_max.png"},
             "nodeParent":1,
-            "label":"Image(maxBtn)",
+            "label":"Button(maxBtn)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
-            "compId":2,
+            "compId":11,
             "child":[
                 ]
         },
         {
             "x":15,
-            "type":"Image",
-            "props":{"y":4,"x":199,"skin":"ui/frame2.png"},
+            "type":"Text",
+            "props":{"y":42,"x":383,"width":205,"var":"betNumText","text":"100","height":40,"fontSize":40,"color":"#ffffff","align":"center"},
             "nodeParent":1,
-            "label":"Image",
-            "isOpen":true,
-            "isDirectory":true,
-            "isAniNode":true,
-            "hasChild":true,
-            "compId":3,
-            "child":[
-                {
-                    "x":30,
-                    "type":"Text",
-                    "props":{"y":38,"x":147,"var":"betNumText","text":"100","fontSize":40,"color":"#ffffff"},
-                    "nodeParent":3,
-                    "label":"Text(betNumText)",
-                    "isDirectory":false,
-                    "isAniNode":true,
-                    "hasChild":false,
-                    "compId":7,
-                    "child":[
-                        ]
-                }]
-        },
-        {
-            "x":15,
-            "type":"Image",
-            "props":{"y":15,"x":226,"var":"decreaseBtn","skin":"ui/decreaseBtn1.png"},
-            "nodeParent":1,
-            "label":"Image(decreaseBtn)",
+            "label":"Text(betNumText)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
-            "compId":4,
+            "compId":7,
             "child":[
                 ]
         },
         {
             "x":15,
-            "type":"Image",
-            "props":{"y":15,"x":592,"var":"addBtn","skin":"ui/addBtn1.png"},
+            "type":"Button",
+            "props":{"y":15,"x":256,"var":"decreaseBtn","stateNum":"2","skin":"ui/btn_decrease.png"},
             "nodeParent":1,
-            "label":"Image(addBtn)",
+            "label":"Button(decreaseBtn)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
-            "compId":5,
+            "compId":12,
             "child":[
                 ]
         },
         {
             "x":15,
-            "type":"Image",
-            "props":{"y":4,"x":200,"skin":"ui/frame1.png","height":116},
+            "type":"Button",
+            "props":{"y":15,"x":609,"var":"addBtn","stateNum":"2","skin":"ui/btn_add.png"},
             "nodeParent":1,
-            "label":"Image",
+            "label":"Button(addBtn)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
-            "compId":6,
+            "compId":13,
             "child":[
                 ]
         }],

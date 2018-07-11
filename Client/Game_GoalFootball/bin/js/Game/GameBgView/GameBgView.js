@@ -13,12 +13,12 @@ var __extends = (this && this.__extends) || (function () {
 * 功能：基础的View组件内部的逻辑，控制数据渲染逻辑和处理点击等事件，调用对应Base类功能方法和动画，事件通知上层或者ViewGameLogic
 *
 */
-var GameBgView = (function (_super) {
+var GameBgView = /** @class */ (function (_super) {
     __extends(GameBgView, _super);
     function GameBgView(eventKey) {
         var _this = _super.call(this) || this;
-        _this.ListenEventKey = "";
-        _this.ListenEventKey = eventKey;
+        _this.listenEventKey = "";
+        _this.listenEventKey = eventKey;
         return _this;
     }
     /**
@@ -40,11 +40,6 @@ var GameBgView = (function (_super) {
      * 事件key值，通过构造函数时注入
      */
     GameBgView.prototype.EventNotification = function () {
-        var data = new Dto.EventNotificationDto();
-        data.Value = {};
-        data.Type = Enum.ListenViewEnum.BetPos;
-        var event = new CustomEvent(this.ListenEventKey, { detail: data });
-        document.dispatchEvent(event);
     };
     return GameBgView;
 }(BaseGameBgView));

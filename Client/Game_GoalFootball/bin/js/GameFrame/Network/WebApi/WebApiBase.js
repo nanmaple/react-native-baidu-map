@@ -1,5 +1,5 @@
 /// <reference path="./Http.ts" />
-var WebApiBase = (function () {
+var WebApiBase = /** @class */ (function () {
     function WebApiBase() {
         //token存储
         this.header = {

@@ -4,21 +4,9 @@ namespace Enum {
      */
     export enum GameViewLogicEnum {
         /**
-         * 投注
+         * 启动摇骰动画
          */
-        BetPos = 101,
-        /**
-         * 添加投注记录
-         */
-        SetRecord,
-        /**
-         * 改变余额
-         */
-        ChangMoney,
-        /**
-         * 获取用户信息
-         */
-        GetMemberInfo,
+        StartAni = 101,
 
     }
 }

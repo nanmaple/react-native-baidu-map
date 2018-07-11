@@ -4,7 +4,7 @@ var MulBet;
     /**
      * 多位置投注逻辑
      */
-    var MulBetLogic = (function () {
+    var MulBetLogic = /** @class */ (function () {
         function MulBetLogic() {
             this.betInfo = new MulBet.BetDataDto();
         }
@@ -28,15 +28,15 @@ var MulBet;
             if (alreadyBet == 0 && currentBet.Amount < currentBet.MinLimit) {
                 return { success: false, data: MulBet.BetReult.LowLimit };
             }
-            if (alreadyBet != 0 || memScore >= currentBet.MinLimit) {
-                if (alreadyBet < currentBet.MaxLimit) {
-                    if (currentBet.Amount + alreadyBet > currentBet.MaxLimit) {
+            if (alreadyBet != 0 || memScore >= currentBet.MinLimit) { //------------1
+                if (alreadyBet < currentBet.MaxLimit) { //------------2
+                    if (currentBet.Amount + alreadyBet > currentBet.MaxLimit) { //------------3.1
                         currentBet.Amount = currentBet.MaxLimit - alreadyBet;
                     }
-                    if (memScore < currentBet.Amount) {
+                    if (memScore < currentBet.Amount) { //------------3.2
                         currentBet.Amount = memScore;
                     }
-                    if (this.betInfo.NoBetSuceessData[pos]) {
+                    if (this.betInfo.NoBetSuceessData[pos]) { //------------3.3
                         this.betInfo.NoBetSuceessData[pos].Amount += currentBet.Amount;
                     }
                     else {

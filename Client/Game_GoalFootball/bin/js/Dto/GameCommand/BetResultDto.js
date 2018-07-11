@@ -3,7 +3,7 @@ var Dto;
     /**
      * 投注结果Dto
      */
-    var BetResultDto = (function () {
+    var BetResultDto = /** @class */ (function () {
         function BetResultDto() {
         }
         return BetResultDto;

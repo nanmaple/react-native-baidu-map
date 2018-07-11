@@ -6,7 +6,7 @@ var MemberManager;
     /**
      * 会员信息管理
      */
-    var Member = (function () {
+    var Member = /** @class */ (function () {
         function Member() {
             var _this = this;
             this.WebApi = Network.WebApi.GetInstance();

@@ -1,7 +1,7 @@
 /// <reference path="ISocket.ts"/>
 var Network;
 (function (Network) {
-    var Socket = (function () {
+    var Socket = /** @class */ (function () {
         function Socket() {
             this.isReConnect = true; //是否重连
             this.reConnectTime = 3000;

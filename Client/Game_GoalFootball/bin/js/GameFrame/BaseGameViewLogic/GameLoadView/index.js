@@ -10,7 +10,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 /// <reference path="./BaseGameLoadView.ts"/>
 /// <reference path="../IView.ts"/>
-var GameLoadView = (function (_super) {
+var GameLoadView = /** @class */ (function (_super) {
     __extends(GameLoadView, _super);
     function GameLoadView(eventKey) {
         var _this = _super.call(this) || this;

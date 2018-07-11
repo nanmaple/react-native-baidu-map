@@ -4,6 +4,7 @@
 /// <reference path="../Network/Socket/index.ts" />
 /// <reference path="../Network/WebApi/index.ts" />
 /// <reference path="../Utils/NetworkCheck.ts" />
+/// <reference path="../Utils/NetworkCheck.ts" />
 var BaseGameLogic = /** @class */ (function () {
     /********************* 基础 *********************/
     function BaseGameLogic() {
@@ -13,6 +14,7 @@ var BaseGameLogic = /** @class */ (function () {
          */
         this.GameInfo = {
             GameId: 0,
+            SocketUrl: ""
         };
         /**
          * 会员信息
@@ -143,11 +145,9 @@ var BaseGameLogic = /** @class */ (function () {
         //同步服务器会员分数
         this.SetBalance(this.memberInfo.Score);
         //生成socket地址
-        var socketUrl = GameConfig.GetSocketUrl(this.memberInfo.MemberId, socketToken);
+        this.GameInfo.SocketUrl = GameConfig.GetSocketUrl(this.memberInfo.MemberId, socketToken);
         //初始socket
         this.InitSocket();
-        //启动连接
-        this.StartSocket(socketUrl);
     };
     /**
      * 登录检测失败Handler
@@ -274,8 +274,14 @@ var BaseGameLogic = /** @class */ (function () {
      * 启动Socket
      * @param socketUrl Socket连接地址
      */
-    BaseGameLogic.prototype.StartSocket = function (socketUrl) {
-        this.socket.Connect(socketUrl);
+    BaseGameLogic.prototype.StartSocket = function () {
+        if (this.GameInfo.SocketUrl) {
+            Laya.timer.clear(this, this.StartSocket);
+            this.socket.Connect(this.GameInfo.SocketUrl);
+        }
+        else {
+            Laya.timer.loop(1000, this, this.StartSocket);
+        }
     };
     /**
      * 发送数据

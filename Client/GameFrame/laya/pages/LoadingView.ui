@@ -28,7 +28,7 @@
         {
             "x":15,
             "type":"Label",
-            "props":{"width":242.798828125,"visible":false,"var":"txt","text":"connecting server...","strokeColor":"#d00400","stroke":5,"height":28,"fontSize":28,"color":"#fbff70","centerY":0,"centerX":0,"anchorY":0.5,"anchorX":0.5},
+            "props":{"width":242.798828125,"visible":true,"var":"txt","strokeColor":"#d00400","stroke":5,"height":28,"fontSize":28,"color":"#fbff70","centerY":0,"centerX":0,"anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
             "label":"Label(txt)",
             "isDirectory":false,

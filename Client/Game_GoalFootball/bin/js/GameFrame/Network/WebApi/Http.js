@@ -8,7 +8,7 @@ var Network;
     /**
      * Http类，
      */
-    var Http = (function () {
+    var Http = /** @class */ (function () {
         function Http() {
             this.headers = [
                 "Accept", "application/json",

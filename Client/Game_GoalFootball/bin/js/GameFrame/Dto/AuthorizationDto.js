@@ -3,7 +3,7 @@ var BaseDto;
     /**
      * 授权登录信息Dto
      */
-    var AuthorizationDto = (function () {
+    var AuthorizationDto = /** @class */ (function () {
         function AuthorizationDto() {
             /**
              * Token

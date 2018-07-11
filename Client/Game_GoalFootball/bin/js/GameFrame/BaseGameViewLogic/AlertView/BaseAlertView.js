@@ -7,7 +7,7 @@ var AlertType;
     AlertType[AlertType["OlnySure"] = 1] = "OlnySure";
     AlertType[AlertType["All"] = 2] = "All";
 })(AlertType || (AlertType = {}));
-var BaseAlertView = (function () {
+var BaseAlertView = /** @class */ (function () {
     function BaseAlertView() {
         this.alertShow = false; //是否显示
         this.alertTxt = null; //显示文本内容

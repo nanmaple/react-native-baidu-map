@@ -112,9 +112,9 @@ abstract class BaseGameViewLogic extends Laya.EventDispatcher {
      * @param type 类型
      * @param msg 内容
      */
-    protected ShowAlert(type: AlertType, msg: string): void {
+    protected ShowAlert(type: AlertType, msg: string,handler?:Laya.Handler): void {
         if (this.alertView) {
-            this.alertView.Show(type, msg);
+            this.alertView.Show(type, msg,handler);
         } else {
             alert(msg);
         }

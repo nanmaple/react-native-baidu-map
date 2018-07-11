@@ -1,43 +1,27 @@
 namespace Dto {
     /**
-     * 初始化游戏Dto
+     * 游戏结果Dto
      */
     export class InitGameDto {
-        /**
-         * 限额
-         */
-        public Limit: LimitDto;
         /**
          * 余额
          */
         public Balance: number;
         /**
-         * 历史
+         * 最大投注量
          */
-        public History: Array<HistoryRoundDto>;
+        public MaxBet: number;
         /**
-         * 游戏状态
+         * 最小投注量
          */
-        public Status: Enum.GameStatus;
+        public MinBet: number;
         /**
-         * 局号
+         *  投注位置赔率
          */
-        public RoundID: string;
+        public ResultPosOdds: any;
         /**
-         * 投注时间
+         * 投注基数
          */
-        public BetTime: number;
-        /**
-         * 牌信息
-         */
-        public Cards: CardInfoDto;
-        /**
-         * 赔率{Enum.BetPosType:number}
-         */
-        public Odds: any;
-        /**
-         * 总投注 {Enum.BetPosType:number}
-         */
-        public TotalBet: any
+        public BaseAmounts: any
     }
 }

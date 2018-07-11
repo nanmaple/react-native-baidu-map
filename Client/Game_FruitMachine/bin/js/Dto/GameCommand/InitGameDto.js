@@ -1,7 +1,7 @@
 var Dto;
 (function (Dto) {
     /**
-     * 初始化游戏Dto
+     * 游戏结果Dto
      */
     var InitGameDto = /** @class */ (function () {
         function InitGameDto() {

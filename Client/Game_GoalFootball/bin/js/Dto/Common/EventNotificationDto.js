@@ -3,7 +3,7 @@ var Dto;
     /**
      * 事件通知数据
      */
-    var EventNotificationDto = (function () {
+    var EventNotificationDto = /** @class */ (function () {
         function EventNotificationDto() {
             /**
              * 值

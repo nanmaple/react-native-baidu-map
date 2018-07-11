@@ -1,7 +1,7 @@
 /// <reference path="./Game/MainGameLogic.ts"/>
 /// <reference path="./Login.ts"/>
 // 程序入口
-var Main = (function () {
+var Main = /** @class */ (function () {
     function Main() {
         this.initState = new InitState();
         if (GameConfig.IsDebug) {

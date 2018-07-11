@@ -1,11 +1,11 @@
 var Utils;
 (function (Utils) {
-    var Money = (function () {
+    var Money = /** @class */ (function () {
         function Money() {
         }
         Money.Format = function (money, places, symbol, thousand, decimal) {
             money = money || 0;
-            places = !isNaN(places = Math.abs(places)) ? places : 2;
+            places = !isNaN(places = Math.abs(places)) ? places : 0;
             symbol = symbol !== undefined ? symbol : "";
             thousand = thousand || ",";
             decimal = decimal || ".";

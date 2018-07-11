@@ -3,7 +3,7 @@ var Network;
     /**
      * Socket初始化参数
      */
-    var SocketParam = (function () {
+    var SocketParam = /** @class */ (function () {
         function SocketParam(resetConnect) {
             if (resetConnect === void 0) { resetConnect = true; }
             this.ResetConnect = resetConnect;

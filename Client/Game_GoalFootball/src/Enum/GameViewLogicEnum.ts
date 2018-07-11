@@ -19,6 +19,25 @@ namespace Enum {
          * 获取用户信息
          */
         GetMemberInfo,
-
+        /**
+         * 选择道具
+         */
+        ChooseProp,
+        /**
+         * 选择筹码
+         */
+        ChooseChip,
+        /**
+         * 选择最大筹码
+         */
+        ChooseMaxChip,
+        /**
+         * 游戏结束
+         */
+        GameResult,
+        /**
+         * 投注失败
+         */
+        BetPosError,
     }
 }

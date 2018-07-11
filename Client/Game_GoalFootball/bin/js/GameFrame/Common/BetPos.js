@@ -4,16 +4,16 @@ var MulBet;
     /*
     * 投注位置
     */
-    var BetPos = (function () {
+    var BetPos = /** @class */ (function () {
         function BetPos(eventKey) {
             this.zOrder = 0;
-            this.ListenEventKey = "";
-            this.ListenEventKey = eventKey;
+            this.listenEventKey = "";
+            this.listenEventKey = eventKey;
         }
         /**
          * 设置UI类型
         */
-        BetPos.prototype.SetUI = function (ui, Type) {
+        BetPos.prototype.SetUI = function (ui, type) {
             this.ui = ui;
             if (this.ui) {
                 this.ui.on(Laya.Event.CLICK, this, this.onClick);
@@ -106,7 +106,7 @@ var MulBet;
             var data = new Dto.EventNotificationDto();
             data.Value = this.GetValue();
             data.Type = Enum.ListenViewEnum.BetPos;
-            var event = new CustomEvent(this.ListenEventKey, { detail: data });
+            var event = new CustomEvent(this.listenEventKey, { detail: data });
             document.dispatchEvent(event);
         };
         return BetPos;

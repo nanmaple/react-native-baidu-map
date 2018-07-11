@@ -1,6 +1,6 @@
 var Dto;
 (function (Dto) {
-    var StartGameDto = (function () {
+    var StartGameDto = /** @class */ (function () {
         function StartGameDto() {
         }
         return StartGameDto;

@@ -1,6 +1,6 @@
 var Utils;
 (function (Utils) {
-    var Physical = (function () {
+    var Physical = /** @class */ (function () {
         function Physical() {
         }
         /**

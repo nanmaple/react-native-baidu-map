@@ -1,6 +1,6 @@
 var Utils;
 (function (Utils) {
-    var Version = (function () {
+    var Version = /** @class */ (function () {
         function Version() {
         }
         /**
