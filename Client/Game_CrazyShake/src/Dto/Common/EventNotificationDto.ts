@@ -1,8 +1,9 @@
-namespace Dto{
+/// <reference path='../../Enum/ListenViewEnum.ts'/>
+namespace Dto {
     /**
      * 事件通知数据
      */
-    export class EventNotificationDto{
+    export class EventNotificationDto {
         /**
          * 类型
          */

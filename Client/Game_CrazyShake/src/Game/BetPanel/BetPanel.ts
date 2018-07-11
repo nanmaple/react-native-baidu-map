@@ -2,11 +2,26 @@
  * 组件Set() 参数类型枚举
  */
 namespace Enum {
+    /**
+     * 投注面板参数类型枚举
+     */
     export enum BetPanel {
-        EnableButton = 10000,
-        MSG_GAME_INIT,
+        /**
+         * 游戏初始化
+         */
+        MSG_GAME_INIT= 10000,
+        /**
+         * 游戏投注
+         */
         MSG_GAME_BET,
-        MSG_GAME_AniPlayComplete
+        /**
+         * 动画完成
+         */
+        MSG_GAME_AniPlayComplete,
+        /**
+         * 游戏错误
+         */
+        MSG_GAME_ALERT
     }
 }
 /**
@@ -45,6 +60,9 @@ class BetPanel extends BaseBetPanel implements IView {
             case Enum.BetPanel.MSG_GAME_BET:
                 this.EnableButton(false);
                 break;
+            case Enum.BetPanel.MSG_GAME_ALERT:
+                this.RecoverBtnImg();
+                break;    
             default:
                 break;
         }

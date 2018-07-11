@@ -1,3 +1,5 @@
+/// <reference path='../../Enum/BetResult.ts'/>
+/// <reference path='../../Enum/GameBetType.ts'/>
 namespace Dto {
     /**
      * 游戏结果Dto

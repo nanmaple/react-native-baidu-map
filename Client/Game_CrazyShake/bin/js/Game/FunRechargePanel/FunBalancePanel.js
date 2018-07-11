@@ -46,7 +46,7 @@ var FunBalancePanel = /** @class */ (function (_super) {
                 this.SetRechargeNum(data.Balance);
                 break;
             case Enum.FunBalancePanel.MSG_GAME_BET:
-                this.balance = this.balance - data.Amount;
+                this.balance = data.Balance - data.WinAmount;
                 this.SetRechargeNum(this.balance);
                 this.SetScore(0);
                 break;

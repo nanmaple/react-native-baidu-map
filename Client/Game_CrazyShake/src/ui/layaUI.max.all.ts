@@ -67,28 +67,6 @@ module ui {
 }
 
 module ui {
-    export class FunBalancePanelUI extends View {
-		public balanceNum:Laya.Label;
-		public rankBtn:Laya.Button;
-		public rechargeBtn:Laya.Button;
-		public ruleBtn:Laya.Button;
-		public voiceBtn:Laya.Image;
-		public scoreNum:Laya.Label;
-		public homeBtn:Laya.Button;
-
-        public static  uiView:any ={"type":"View","props":{"width":750,"height":230},"child":[{"type":"Image","props":{"y":21,"x":550,"skin":"ui/balance.png"}},{"type":"Label","props":{"y":26,"x":601,"width":127,"var":"balanceNum","text":"0","height":32,"fontSize":30,"color":"#ffffff","align":"center"}},{"type":"Button","props":{"y":127,"x":653,"var":"rankBtn","stateNum":2,"skin":"ui/btn_rank.png"}},{"type":"Button","props":{"y":127,"x":559,"var":"rechargeBtn","stateNum":2,"skin":"ui/btn_recharge.png"}},{"type":"Button","props":{"y":127,"x":20,"var":"ruleBtn","stateNum":2,"skin":"ui/btn_rule.png"}},{"type":"Image","props":{"y":127,"x":112,"var":"voiceBtn","skin":"ui/voiceOnBtn.png"}},{"type":"Label","props":{"y":163,"x":287,"width":179,"var":"scoreNum","text":"0","height":37,"fontSize":33,"font":"Microsoft YaHei","color":"#eae6e1","bold":false,"align":"center"}},{"type":"Button","props":{"y":12,"x":24,"var":"homeBtn","stateNum":2,"skin":"ui/btn_home.png"}}]};
-        constructor(){ super()}
-        createChildren():void {
-        
-            super.createChildren();
-            this.createView(ui.FunBalancePanelUI.uiView);
-
-        }
-
-    }
-}
-
-module ui {
     export class GameBgViewUI extends View {
 
         public static  uiView:any ={"type":"View","props":{"width":750,"height":1334},"child":[{"type":"Image","props":{"y":0,"x":0,"skin":"ui/bg.png"}}]};
@@ -113,6 +91,28 @@ module ui {
         
             super.createChildren();
             this.createView(ui.GameLoadViewUI.uiView);
+
+        }
+
+    }
+}
+
+module ui {
+    export class HeadPanelUI extends View {
+		public balanceNum:Laya.Label;
+		public rankBtn:Laya.Button;
+		public rechargeBtn:Laya.Button;
+		public ruleBtn:Laya.Button;
+		public voiceBtn:Laya.Image;
+		public scoreNum:Laya.Label;
+		public homeBtn:Laya.Button;
+
+        public static  uiView:any ={"type":"View","props":{"width":750,"height":230},"child":[{"type":"Image","props":{"y":21,"x":550,"skin":"ui/balance.png"}},{"type":"Label","props":{"y":26,"x":601,"width":127,"var":"balanceNum","text":"0","height":32,"fontSize":30,"color":"#ffffff","align":"center"}},{"type":"Button","props":{"y":127,"x":653,"var":"rankBtn","stateNum":2,"skin":"ui/btn_rank.png"}},{"type":"Button","props":{"y":127,"x":559,"var":"rechargeBtn","stateNum":2,"skin":"ui/btn_recharge.png"}},{"type":"Button","props":{"y":127,"x":20,"var":"ruleBtn","stateNum":2,"skin":"ui/btn_rule.png"}},{"type":"Image","props":{"y":127,"x":112,"var":"voiceBtn","skin":"ui/voiceOnBtn.png"}},{"type":"Label","props":{"y":163,"x":287,"width":179,"var":"scoreNum","text":"0","height":37,"fontSize":33,"font":"Microsoft YaHei","color":"#eae6e1","bold":false,"align":"center"}},{"type":"Button","props":{"y":12,"x":24,"var":"homeBtn","stateNum":2,"skin":"ui/btn_home.png"}}]};
+        constructor(){ super()}
+        createChildren():void {
+        
+            super.createChildren();
+            this.createView(ui.HeadPanelUI.uiView);
 
         }
 

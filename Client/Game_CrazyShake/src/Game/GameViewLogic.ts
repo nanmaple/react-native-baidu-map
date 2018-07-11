@@ -4,7 +4,7 @@ class GameViewLogic extends BaseGameViewLogic {
     //组件Demo
     public GameBgView: GameBgView;
     // public HeadPanel: HeadPanel;
-    public FunBalancePanel: FunBalancePanel;
+    public HeadPanel: HeadPanel;
     public ToyPanel: ToyPanel;
     public BetNumPanel: BetNumPanel;
     public BetPanel: BetPanel;
@@ -54,6 +54,9 @@ class GameViewLogic extends BaseGameViewLogic {
         }
     }
 
+    /***************游戏基本逻辑***************/
+
+    /***************游戏方法处理（方法名不变，修改方法内部逻辑）***************/
     /**
      * 加载游戏主界面
      */
@@ -63,13 +66,13 @@ class GameViewLogic extends BaseGameViewLogic {
         this.alertView.ResetScreen();
         this.loadingView = new LoadingView();
         this.loadingView.ResetScreen();
-        //初始化其他主机
+        //初始化其他界面
         this.GameBgView = new GameBgView(this.GameViewEventKey);
         this.GameBgView.ResetScreen();
         // this.HeadPanel = new HeadPanel();
         // this.HeadPanel.ResetScreen();
-        this.FunBalancePanel = new FunBalancePanel();
-        this.FunBalancePanel.ResetScreen();
+        this.HeadPanel = new HeadPanel();
+        this.HeadPanel.ResetScreen();
         this.ToyPanel = new ToyPanel(this.GameViewEventKey);
         this.ToyPanel.ResetScreen();
         this.BetNumPanel = new BetNumPanel();
@@ -114,6 +117,7 @@ class GameViewLogic extends BaseGameViewLogic {
             //基本分发数据类型
             case BaseEnum.GameViewLogicEnum.Alert:
                 this.ShowAlert(1, data);
+                this.BetPanel.Set(null, Enum.BetPanel.MSG_GAME_ALERT)
                 break;
             case BaseEnum.GameViewLogicEnum.Error:
                 console.log(data);
@@ -128,23 +132,23 @@ class GameViewLogic extends BaseGameViewLogic {
                 this.OnMessageHandler(data);
                 break;
             // 扩展数据分发类型
-            // case Enum.GameViewLogicEnum.StartAni:
-            //     this.OnGameBet(data);
-            //     break;
+
             default:
                 break;
         }
     }
+    /***************游戏方法处理***************/
+
     /**
      * 侦听游戏命令
      * @param data 
      */
     private OnMessageHandler(data: any): void {
         switch (data.Command) {
-            case Enum.GameCommand.MSG_GAME_INIT:
+            case Enum.GameCommand.MsgGameInit:
                 this.OnGameInit(data.Data);
                 break;
-            case Enum.GameCommand.MSG_GAME_SETTLERESULT:
+            case Enum.GameCommand.MsgGameSettleResult:
                 this.OnGameBet(data.Data);
                 this.OnGameSettleResult(data);
                 break;
@@ -153,42 +157,43 @@ class GameViewLogic extends BaseGameViewLogic {
         }
     }
 
-    /***************游戏具体逻辑***************/
-
     /**
      * 游戏初始化命令处理
      * @param data 游戏初始化数据
      */
-    public OnGameInit(data:any): void {
+    public OnGameInit(data: any): void {
         this.Log(data, "GameInit");
-        this.FunBalancePanel.Set(data,Enum.FunBalancePanel.MSG_GAME_INIT);
+        this.HeadPanel.Set(data,Enum.HeadPanel.MSG_GAME_INIT);
         this.BetNumPanel.Set(data,Enum.BetNumPanel.MSG_GAME_INIT);
         this.BetPanel.Set(data.PosOdds,Enum.BetPanel.MSG_GAME_INIT);
     }
+
     /**
-     * 投注成功命令处理
+     * 收到投注结果命令初步界面处理
      */
     public OnGameBet(data: any): void {
         this.Log(data, "GameBet");
         this.ToyPanel.Set(null,Enum.ToyPanel.MSG_GAME_BET);
-        this.FunBalancePanel.Set(data,Enum.FunBalancePanel.MSG_GAME_BET);
+        this.HeadPanel.Set(data,Enum.HeadPanel.MSG_GAME_BET);
         this.BetPanel.Set(null,Enum.BetPanel.MSG_GAME_BET);
         this.BetNumPanel.Set(null,Enum.BetNumPanel.MSG_GAME_BET);
     }
+
     /**
-     * 收到投注结果命令处理
+     * 收到投注结果命令后续界面处理
      * @param data游戏结果数据 
      */
     public OnGameSettleResult(data: any): void {
         this.Log(data, "GameGetResult")
-        this.ToyPanel.Set(data,Enum.ToyPanel.MSG_GAME_SETTLERESULT)
+        this.ToyPanel.Set(data, Enum.ToyPanel.MSG_GAME_SETTLERESULT)
     }
+
     /**
      * 动画播放完毕后执行
      * @param data游戏结果数据 
      */
     public OnChangeShow(data: any): void {
-        this.FunBalancePanel.Set(data,Enum.FunBalancePanel.MSG_GAME_AniPlayComplete);
+        this.HeadPanel.Set(data,Enum.HeadPanel.MSG_GAME_AniPlayComplete);
         this.BetNumPanel.Set(data,Enum.BetNumPanel.MSG_GAME_AniPlayComplete)
         this.BetPanel.Set(null,Enum.BetPanel.MSG_GAME_AniPlayComplete);
     }

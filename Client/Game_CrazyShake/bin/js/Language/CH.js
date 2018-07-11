@@ -182,6 +182,10 @@ var LanguageUtils;
         GameTips: "<p style='fontSize:35'>由于您还没有登录，现在是试玩模式，想要体验更多游戏乐趣，请点击左上方</p>" +
             "<p style='fontSize:35;color:red'>&nbsp;'关注'&nbsp;</p>" +
             "<p style='fontSize:35'>按钮，即可登录。</p>",
+        BetNote: "猜对×",
+        LittleRule: "4-10点",
+        JaguarRule: "3个点数相同",
+        BigRule: "11-17点",
     };
 })(LanguageUtils || (LanguageUtils = {}));
 //# sourceMappingURL=CH.js.map

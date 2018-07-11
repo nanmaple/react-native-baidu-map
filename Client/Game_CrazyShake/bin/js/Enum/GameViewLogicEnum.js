@@ -1,7 +1,7 @@
 var Enum;
 (function (Enum) {
     /**
-     * 游戏管理逻辑向游戏界面逻辑数据通知枚举
+     * 游戏逻辑向游戏总界面逻辑通知枚举
      */
     var GameViewLogicEnum;
     (function (GameViewLogicEnum) {

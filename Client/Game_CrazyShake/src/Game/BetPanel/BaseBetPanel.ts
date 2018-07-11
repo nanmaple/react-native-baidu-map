@@ -24,7 +24,7 @@ class BaseBetPanel {
      * 绑定按钮
      */
     protected OnButton() {
-        this.ChangBtnImg();
+        this.OnChangBtnImg();
         this.ui.littleBtn.on(Laya.Event.MOUSE_UP, this, this.EventNotification, [Enum.GameBetType.Little]);
         this.ui.jaguarBtn.on(Laya.Event.MOUSE_UP, this, this.EventNotification, [Enum.GameBetType.Jaguar]);
         this.ui.bigBtn.on(Laya.Event.MOUSE_UP, this, this.EventNotification, [Enum.GameBetType.Big]);
@@ -81,7 +81,7 @@ class BaseBetPanel {
     /**
      * 按钮样式的绑定
      */
-    protected ChangBtnImg(){
+    protected OnChangBtnImg(){
         this.ui.littleBtn.on(Laya.Event.MOUSE_DOWN, this, () => {
             this.ui.littleBtn.skin = "ui/littleBtn2.png";
             this.ui.littleOdds.scale(0.9, 0.9);

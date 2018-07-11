@@ -45,9 +45,13 @@ var BetNumPanel = /** @class */ (function (_super) {
     BetNumPanel.prototype.Set = function (data, type) {
         switch (type) {
             case Enum.BetNumPanel.MSG_GAME_INIT:
-            case Enum.BetNumPanel.MSG_GAME_AniPlayComplete:
+                this.MaxBet = data.MaxBet;
                 var tempMaxBet = Math.floor(data.Balance / 100) * 100;
-                this.maxBetNum = tempMaxBet < data.MaxBet ? tempMaxBet : data.MaxBet;
+                this.maxBetNum = tempMaxBet < this.MaxBet ? tempMaxBet : this.MaxBet;
+                this.EnableButton();
+            case Enum.BetNumPanel.MSG_GAME_AniPlayComplete:
+                var temMaxBet = Math.floor(data.Balance / 100) * 100;
+                this.maxBetNum = temMaxBet < this.MaxBet ? temMaxBet : this.MaxBet;
                 this.EnableButton();
                 break;
             case Enum.BetNumPanel.MSG_GAME_BET:
@@ -60,7 +64,7 @@ var BetNumPanel = /** @class */ (function (_super) {
     /**
      * 获取投注额
      */
-    BetNumPanel.prototype.getBetNum = function () {
+    BetNumPanel.prototype.GetBetNum = function () {
         return this.currentBetNum;
     };
     return BetNumPanel;

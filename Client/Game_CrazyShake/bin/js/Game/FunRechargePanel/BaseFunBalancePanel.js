@@ -6,6 +6,7 @@ var BaseFunBalancePanel = /** @class */ (function () {
     function BaseFunBalancePanel() {
         this.balance = 0;
         this.scoreNum = 0;
+        this.isVoiceOn = true;
     }
     /**
      * 重置屏幕
@@ -13,10 +14,10 @@ var BaseFunBalancePanel = /** @class */ (function () {
     BaseFunBalancePanel.prototype.ResetScreen = function () {
         Laya.stage.removeChild(this.ui);
         this.ui = new ui.FunBalancePanelUI();
-        this.ui.zOrder = 4;
+        this.ui.zOrder = 3;
         this.ui.cacheAs = "bitmap";
         //设置组件位置
-        this.ui.y = 124;
+        this.ui.y = 39;
         this.ui.balanceNum.changeText(this.balance.toString());
         Laya.stage.addChild(this.ui);
         this.OnButton();
@@ -25,11 +26,25 @@ var BaseFunBalancePanel = /** @class */ (function () {
      * 绑定按钮
      */
     BaseFunBalancePanel.prototype.OnButton = function () {
+        var _this = this;
+        this.ui.homeBtn.on(Laya.Event.CLICK, this, function () {
+            window.location.href = "";
+            //返回游戏大厅
+        });
         this.ui.ruleBtn.on(Laya.Event.CLICK, this, function () {
             //弹出游戏规则面板
         });
-        this.ui.voiceBtn.on(Laya.Event.MOUSE_DOWN, this, function () {
-            //关闭游戏声音
+        this.ui.voiceBtn.on(Laya.Event.CLICK, this, function () {
+            if (_this.isVoiceOn) {
+                _this.isVoiceOn = false;
+                Laya.SoundManager.musicMuted = true;
+                _this.ui.voiceBtn.skin = "ui/voiceOffBtn.png";
+            }
+            else {
+                _this.isVoiceOn = true;
+                Laya.SoundManager.musicMuted = false;
+                _this.ui.voiceBtn.skin = "ui/voiceOnBtn.png";
+            }
         });
         this.ui.rechargeBtn.on(Laya.Event.CLICK, this, function () {
             //弹出游戏充值面板

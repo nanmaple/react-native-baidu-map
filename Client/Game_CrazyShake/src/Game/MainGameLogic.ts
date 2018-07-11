@@ -1,16 +1,10 @@
 /// <reference path="../GameFrame/BaseGameLogic/index.ts"/>
 /// <reference path="../GameFrame/Logic/MulBet/MulBetLogic.ts"/>
 class MainGameLogic extends BaseGameLogic {
-    /**
-     * 投注逻辑
-     */
-    protected betLogic: MulBet.MulBetLogic;
-    public testToy: ToyPanel;
     constructor() {
         super();
         //初始化时创建GameViwLogic,注入Handler
         this.gameView = new GameViewLogic(Laya.Handler.create(this, this.ViewHandler, [], false));
-        this.betLogic = new MulBet.MulBetLogic();
     }
 
     /**
@@ -75,7 +69,6 @@ class MainGameLogic extends BaseGameLogic {
      * @param data 
      */
     public OnMessageHandler(response: Dto.GameMessageDto): void {
-        // let data: any = response.Data;
         switch (response.Command) {
             case Enum.GameCommand.MSG_GAME_INIT://初始化
                 this.SetBalance((response.Data as Dto.ClientInitDto).Balance);
@@ -106,7 +99,6 @@ class MainGameLogic extends BaseGameLogic {
      */
     public OnAckHandler(data: any): void {
         this.Log(data, "OnAckHandler");
-        this.betLogic.BetAck(data);
     };
     /**
      * 发送消息回调
@@ -130,12 +122,10 @@ class MainGameLogic extends BaseGameLogic {
             case Enum.GameViewHandlerEnum.BetPos:
                 if (100 <= data.Amount && data.Amount <= this.GetBalance()) {
                     this.SendBet(data);
-                    // this.gameView.SetData(Enum.GameViewLogicEnum.StartAni, data)
                 }
                 else {
                     this.gameView.SetData(BaseEnum.GameViewLogicEnum.Alert, LanguageUtils.Language.Get("BALANCE_SMALL"))
-                }
-
+                };
                 break;
         }
     }

@@ -30,28 +30,12 @@ class BaseToyPanel {
         }))
     }
 
+   
     /**
      * 开奖
-     * @param data骰子图片Array 
+     * @param data 游戏结果
      */
-    public Lottery(data: any): void {
-
-        if (this.ui.ani2.isPlaying) {
-            this.ui.ani2.stop();
-            let aniIndex = this.ui.ani2.index;
-            this.ui.ani2.play(aniIndex, false);
-            this.OnAniComplete(data);
-        }
-        else {
-            this.OnAniComplete(data);
-        }
-
-    }
-    /**
-     * 监听ani2动画播放是否完成
-     * @param data 
-     */
-    public OnAniComplete(data: any) {
+    public Lottery(data: any) {
         this.ui.ani2.on(Laya.Event.COMPLETE, this, () => {
             this.ui.ani2.stop();
             this.ChangeDice(data.Data.Dices);

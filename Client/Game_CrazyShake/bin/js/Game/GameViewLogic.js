@@ -30,12 +30,7 @@ var GameViewLogic = /** @class */ (function (_super) {
     GameViewLogic.prototype.GameLoad = function () {
         this.gameLoadView = new GameLoadView(this.GameViewEventKey);
         this.gameLoadView.ResetScreen();
-        //设置版本控制类型为使用文件名映射的方式
-        // Laya.ResourceVersion.type = Laya.ResourceVersion.FILENAME_VERSION;
-        //加载版本信息文件
-        // Laya.ResourceVersion.enable("version.json", Laya.Handler.create(this, ()=>{
         this.gameLoadView.StartLoad(GameResourceConfig.LoadResourcesConfig);
-        // },null,false)); 
     };
     /**
      * 游戏资源加载完成，检查登录状态
@@ -71,8 +66,8 @@ var GameViewLogic = /** @class */ (function (_super) {
         //初始化其他主机
         this.GameBgView = new GameBgView(this.GameViewEventKey);
         this.GameBgView.ResetScreen();
-        this.HeadPanel = new HeadPanel();
-        this.HeadPanel.ResetScreen();
+        // this.HeadPanel = new HeadPanel();
+        // this.HeadPanel.ResetScreen();
         this.FunBalancePanel = new FunBalancePanel();
         this.FunBalancePanel.ResetScreen();
         this.ToyPanel = new ToyPanel(this.GameViewEventKey);
@@ -96,7 +91,7 @@ var GameViewLogic = /** @class */ (function (_super) {
             //扩展数据分发类型
             case Enum.ListenViewEnum.BetPos:
                 var betData = new Dto.GameBetDto();
-                betData.Amount = this.BetNumPanel.getBetNum();
+                betData.Amount = this.BetNumPanel.GetBetNum();
                 betData.BetPos = data.Value;
                 this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.BetPos, betData]);
                 break;
@@ -131,9 +126,6 @@ var GameViewLogic = /** @class */ (function (_super) {
                 this.OnMessageHandler(data);
                 break;
             // 扩展数据分发类型
-            case Enum.GameViewLogicEnum.StartAni:
-                this.OnGameBet(data);
-                break;
             default:
                 break;
         }
@@ -148,6 +140,7 @@ var GameViewLogic = /** @class */ (function (_super) {
                 this.OnGameInit(data.Data);
                 break;
             case Enum.GameCommand.MSG_GAME_SETTLERESULT:
+                this.OnGameBet(data.Data);
                 this.OnGameSettleResult(data);
                 break;
             default:
@@ -163,20 +156,20 @@ var GameViewLogic = /** @class */ (function (_super) {
         this.Log(data, "GameInit");
         this.FunBalancePanel.Set(data, Enum.FunBalancePanel.MSG_GAME_INIT);
         this.BetNumPanel.Set(data, Enum.BetNumPanel.MSG_GAME_INIT);
-        this.BetPanel.Set(data, Enum.BetPanel.MSG_GAME_INIT);
+        this.BetPanel.Set(data.PosOdds, Enum.BetPanel.MSG_GAME_INIT);
     };
     /**
-     * 投注成功命令处理
+     * 收到投注结果命令初步界面处理
      */
     GameViewLogic.prototype.OnGameBet = function (data) {
         this.Log(data, "GameBet");
         this.ToyPanel.Set(null, Enum.ToyPanel.MSG_GAME_BET);
         this.FunBalancePanel.Set(data, Enum.FunBalancePanel.MSG_GAME_BET);
-        this.BetPanel.Set(data, Enum.BetPanel.MSG_GAME_BET);
-        this.BetNumPanel.Set(data, Enum.BetNumPanel.MSG_GAME_BET);
+        this.BetPanel.Set(null, Enum.BetPanel.MSG_GAME_BET);
+        this.BetNumPanel.Set(null, Enum.BetNumPanel.MSG_GAME_BET);
     };
     /**
-     * 收到投注结果命令处理
+     * 收到投注结果命令后续界面处理
      * @param data游戏结果数据
      */
     GameViewLogic.prototype.OnGameSettleResult = function (data) {

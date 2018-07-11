@@ -2,9 +2,21 @@
  * 组件Set() 参数类型枚举
  */
 namespace Enum {
-    export enum FunBalancePanel {
+    /**
+     * 功能键余额面板参数类型枚举
+     */
+    export enum HeadPanel {
+        /**
+         * 游戏初始化
+         */
         MSG_GAME_INIT = 13000,
+        /**
+         * 游戏投注
+         */
         MSG_GAME_BET,
+        /**
+         * 动画完成
+         */
         MSG_GAME_AniPlayComplete,
     }
 }
@@ -12,7 +24,7 @@ namespace Enum {
 /**
  * 功能键、余额、获得分数面板
  */
-class FunBalancePanel extends BaseFunBalancePanel implements IView {
+class HeadPanel extends BaseHeadPanel implements IView {
     constructor() {
         super();
     }
@@ -32,15 +44,15 @@ class FunBalancePanel extends BaseFunBalancePanel implements IView {
      */
     public Set(data: any, type?: any): void {
         switch (type) {
-            case Enum.FunBalancePanel.MSG_GAME_INIT:
+            case Enum.HeadPanel.MSG_GAME_INIT:
                 this.SetRechargeNum(data.Balance);
                 break;
-            case Enum.FunBalancePanel.MSG_GAME_BET:
+            case Enum.HeadPanel.MSG_GAME_BET:
                 this.balance = data.Balance - data.WinAmount;
                 this.SetRechargeNum(this.balance);
                 this.SetScore(0);
                 break;
-            case Enum.FunBalancePanel.MSG_GAME_AniPlayComplete:
+            case Enum.HeadPanel.MSG_GAME_AniPlayComplete:
                 this.SetRechargeNum(data.Balance);
                 this.SetScore(data.WinAmount);
                 break;

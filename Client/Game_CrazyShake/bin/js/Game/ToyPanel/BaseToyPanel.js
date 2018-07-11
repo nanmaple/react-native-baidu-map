@@ -10,8 +10,8 @@ var BaseToyPanel = /** @class */ (function () {
         this.ui = new ui.ToyPanelUI();
         this.ui.zOrder = 2;
         //设置组件位置
-        this.ui.x = 175;
-        this.ui.y = 370;
+        this.ui.x = 183;
+        this.ui.y = 360;
         Laya.stage.addChild(this.ui);
     };
     /**
@@ -19,35 +19,27 @@ var BaseToyPanel = /** @class */ (function () {
      */
     BaseToyPanel.prototype.startRock = function () {
         var _this = this;
-        Laya.Tween.to(this.ui.cap, { y: 17 }, 1200, Laya.Ease.linearIn, Laya.Handler.create(this, function () { _this.ui.ani2.play(0, true); }));
+        Laya.timer.once(400, this, function () { Laya.SoundManager.playSound("sound/duangSound.mp3"); });
+        Laya.Tween.to(this.ui.cap, { y: 17 }, 500, Laya.Ease.linearIn, Laya.Handler.create(this, function () {
+            Laya.timer.once(250, _this, function () {
+                Laya.SoundManager.playSound("sound/rockDiceSound.mp3");
+                _this.ui.ani2.play(0, true);
+            });
+        }));
     };
     /**
      * 开奖
-     * @param data骰子图片Array
+     * @param data 游戏结果
      */
-    BaseToyPanel.prototype.lottery = function (data) {
-        if (this.ui.ani2.isPlaying) {
-            this.ui.ani2.stop();
-            var aniIndex = this.ui.ani2.index;
-            this.ui.ani2.play(aniIndex, false);
-            this.OnAniComplete(data);
-        }
-        else {
-            this.OnAniComplete(data);
-        }
-    };
-    /**
-     * 监听ani2动画播放是否完成
-     * @param data
-     */
-    BaseToyPanel.prototype.OnAniComplete = function (data) {
+    BaseToyPanel.prototype.Lottery = function (data) {
         var _this = this;
         this.ui.ani2.on(Laya.Event.COMPLETE, this, function () {
             _this.ui.ani2.stop();
-            _this.changeDice(data.Data.Dices);
-            Laya.Tween.to(_this.ui.cap, { y: -470 }, 1200, Laya.Ease.linearIn, Laya.Handler.create(_this, function () {
+            _this.ChangeDice(data.Data.Dices);
+            Laya.timer.once(570, _this, function () { Laya.SoundManager.playSound("sound/upCoverSound.mp3"); });
+            Laya.Tween.to(_this.ui.cap, { y: -470 }, 500, Laya.Ease.linearIn, Laya.Handler.create(_this, function () {
                 _this.EventNotification(data);
-            }, data));
+            }, data), 700);
         }, data);
     };
     /**
@@ -65,7 +57,7 @@ var BaseToyPanel = /** @class */ (function () {
      * 改变骰子图片
      * @param data骰子编号Array
      */
-    BaseToyPanel.prototype.changeDice = function (data) {
+    BaseToyPanel.prototype.ChangeDice = function (data) {
         this.ui.dice1.skin = "ui/point" + data[0] + ".png";
         this.ui.dice2.skin = "ui/point" + data[1] + ".png";
         this.ui.dice3.skin = "ui/point" + data[2] + ".png";

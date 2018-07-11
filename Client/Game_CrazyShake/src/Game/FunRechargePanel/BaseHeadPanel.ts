@@ -2,8 +2,8 @@
  * 功能键和余额基类
  * 
  */
-class BaseFunBalancePanel {
-    protected ui: ui.FunBalancePanelUI;
+class BaseHeadPanel {
+    protected ui: ui.HeadPanelUI;
     protected balance: number = 0;
     protected scoreNum: number = 0;
     protected isVoiceOn: boolean = true;
@@ -16,7 +16,7 @@ class BaseFunBalancePanel {
      */
     public ResetScreen() {
         Laya.stage.removeChild(this.ui);
-        this.ui = new ui.FunBalancePanelUI();
+        this.ui = new ui.HeadPanelUI();
         this.ui.zOrder = 3;
         this.ui.cacheAs = "bitmap";
         //设置组件位置

@@ -44,7 +44,7 @@ var ToyPanel = /** @class */ (function (_super) {
                 this.startRock();
                 break;
             case Enum.ToyPanel.MSG_GAME_SETTLERESULT:
-                this.lottery(data);
+                this.Lottery(data);
                 break;
             default:
                 break;

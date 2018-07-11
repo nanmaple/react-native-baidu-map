@@ -1,23 +1,18 @@
-/*
-* name;
-*/
+
 namespace Enum {
+    /**
+     * 游戏总界面逻辑向游戏逻辑通知枚举
+     */
     export enum GameViewHandlerEnum {
         /**
          * 启动socket
          */
         StartSocket = 0,
+        /**********扩展***********/
         /** 
          * 投注操作
         */
         BetPos,
-
-        ConfirmBet,
-
-        CancelBet,
-
-        GetNoBetSucData,
-
         /** 
          * 获取投注记录
         */
@@ -26,9 +21,5 @@ namespace Enum {
          * 获取最新余额
          */
         ChangeMoney,
-        /**
-         * 获取用户信息
-         */
-        GetMemberInfo,
     }
 }

@@ -2,8 +2,17 @@
  * 组件Set() 参数类型枚举
  */
 namespace Enum {
+    /**
+     * 骰子面板参数类型枚举
+     */
     export enum ToyPanel {
+        /**
+         * 游戏投注
+         */
         MSG_GAME_BET,
+        /**
+         * 获得结果
+         */
         MSG_GAME_SETTLERESULT,
     }
 }

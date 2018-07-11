@@ -46,10 +46,12 @@ var BetPanel = /** @class */ (function (_super) {
     BetPanel.prototype.Set = function (data, type) {
         switch (type) {
             case Enum.BetPanel.MSG_GAME_AniPlayComplete:
+                this.RecoverBtnImg();
                 this.EnableButton();
                 break;
             case Enum.BetPanel.MSG_GAME_INIT:
                 //按键附上赔率信息
+                this.NotePosOdds(data);
                 this.EnableButton();
                 break;
             case Enum.BetPanel.MSG_GAME_BET:

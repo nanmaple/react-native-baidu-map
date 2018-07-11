@@ -138,7 +138,7 @@ var MainGameLogic = /** @class */ (function (_super) {
             case Enum.GameViewHandlerEnum.BetPos:
                 if (100 <= data.Amount && data.Amount <= this.GetBalance()) {
                     this.SendBet(data);
-                    this.gameView.SetData(Enum.GameViewLogicEnum.StartAni, data);
+                    // this.gameView.SetData(Enum.GameViewLogicEnum.StartAni, data)
                 }
                 else {
                     this.gameView.SetData(BaseEnum.GameViewLogicEnum.Alert, LanguageUtils.Language.Get("BALANCE_SMALL"));
