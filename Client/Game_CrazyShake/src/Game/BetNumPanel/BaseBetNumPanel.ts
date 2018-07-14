@@ -9,7 +9,7 @@ class BaseBetNumPanel {
     /**
      * 重置屏幕
      */
-    public ResetScreen() {
+    public ResetScreen() :void{
         Laya.stage.removeChild(this.ui);
         this.ui = new ui.BetNumPanelUI();
         this.ui.zOrder = 4;
@@ -25,7 +25,7 @@ class BaseBetNumPanel {
     /**
      * 绑定按钮
      */
-    private OnButton() {
+    private OnButton() :void{
         //最大投注
         this.ui.maxBtn.on(Laya.Event.CLICK, this, () => {
             Laya.SoundManager.playSound("sound/btnSound.mp3");
@@ -53,7 +53,7 @@ class BaseBetNumPanel {
      * 启用按钮
      * @param isEnabled 
      */
-    public EnableButton(isEnabled: boolean = true) {
+    public EnableButton(isEnabled: boolean = true) :void{
         this.ui.maxBtn.mouseEnabled = isEnabled;
         this.ui.decreaseBtn.mouseEnabled = isEnabled;
         this.ui.addBtn.mouseEnabled = isEnabled;

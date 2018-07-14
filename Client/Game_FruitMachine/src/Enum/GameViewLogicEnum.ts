@@ -11,14 +11,6 @@ namespace Enum {
          * 添加投注记录
          */
         SetRecord,
-        /**
-         * 改变余额
-         */
-        ChangMoney,
-        /**
-         * 获取用户信息
-         */
-        GetMemberInfo,
 
         /**
          * 修改投注基数

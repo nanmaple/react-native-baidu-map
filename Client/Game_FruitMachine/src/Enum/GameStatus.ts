@@ -3,14 +3,14 @@ namespace Enum {
         /**
          * 默认
          */
-        DEFAULT = 0,
+        Default = 0,
         /**
          * 猜大小
          */
-        GUESS = 1,
+        Guess = 1,
         /**
          * 进行中
          */
-        EXECUTE = 2,
+        Execute = 2,
     }
 }

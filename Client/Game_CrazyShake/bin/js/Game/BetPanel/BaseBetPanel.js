@@ -25,17 +25,16 @@ var BaseBetPanel = /** @class */ (function () {
         this.ui.littleBtn.on(Laya.Event.MOUSE_UP, this, this.EventNotification, [Enum.GameBetType.Little]);
         this.ui.jaguarBtn.on(Laya.Event.MOUSE_UP, this, this.EventNotification, [Enum.GameBetType.Jaguar]);
         this.ui.bigBtn.on(Laya.Event.MOUSE_UP, this, this.EventNotification, [Enum.GameBetType.Big]);
-        console.log(Enum.GameBetType.Jaguar);
     };
     /**
      * 投注点击事件
      * @param value
      */
     BaseBetPanel.prototype.EventNotification = function (value) {
+        this.EnableButton(false);
         Laya.SoundManager.playSound("sound/betSound.mp3");
         var dto = new Dto.EventNotificationDto();
         dto.Type = Enum.ListenViewEnum.BetPos;
-        // dto.Type = Enum.ListenViewEnum.TestBet;
         dto.Value = value;
         var event = new CustomEvent(this.listenEventKey, { detail: dto });
         document.dispatchEvent(event);

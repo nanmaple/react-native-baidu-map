@@ -34,18 +34,6 @@ var GameBgView = /** @class */ (function (_super) {
      */
     GameBgView.prototype.Set = function (data) {
     };
-    /**
-     * 类型：私有方法
-     * 通过事件，向上通知
-     * 事件key值，通过构造函数时注入
-     */
-    GameBgView.prototype.EventNotification = function () {
-        var data = new Dto.EventNotificationDto();
-        data.Value = {};
-        data.Type = Enum.ListenViewEnum.BetPos;
-        var event = new CustomEvent(this.listenEventKey, { detail: data });
-        document.dispatchEvent(event);
-    };
     return GameBgView;
 }(BaseGameBgView));
 //# sourceMappingURL=GameBgView.js.map

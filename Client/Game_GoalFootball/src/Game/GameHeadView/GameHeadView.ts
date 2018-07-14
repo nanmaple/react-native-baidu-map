@@ -9,7 +9,7 @@ namespace Enum{
         /**
          * 设置用户余额
          */
-        SET_BALANCE = 10000,
+        SetBalance = 10000,
          
     }
 }
@@ -34,13 +34,13 @@ class GameHeadView extends BaseGameHeadView implements IView {
      */
     public Set(data: any, type?:any): void {
         switch (type) {
-            case Enum.GameCommand.MSG_GAME_INIT:
+            case Enum.GameCommand.MsgGameInit:
                 this.GameInit(data); 
                 break;
-            case Enum.GameCommand.MSG_GAME_SETTLERESULT:
+            case Enum.GameCommand.MsgGameSettleResult:
                 this.GameResult(data);
                 break;
-            case Enum.GameHeadView.SET_BALANCE:
+            case Enum.GameHeadView.SetBalance:
                 this.SetBalance(data);
             default:
                 break;

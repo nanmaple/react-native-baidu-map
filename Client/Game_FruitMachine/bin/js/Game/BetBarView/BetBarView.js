@@ -13,17 +13,21 @@ var Enum;
     var BetBarView;
     (function (BetBarView) {
         /**设置投注个数 */
-        BetBarView[BetBarView["SET_BET"] = 10000] = "SET_BET";
+        BetBarView[BetBarView["SetBet"] = 10000] = "SetBet";
         /**全部加1 */
-        BetBarView[BetBarView["ADD_ALL"] = 10001] = "ADD_ALL";
+        BetBarView[BetBarView["AddAll"] = 10001] = "AddAll";
         /**清除全部 */
-        BetBarView[BetBarView["CLEAR_ALL"] = 10002] = "CLEAR_ALL";
+        BetBarView[BetBarView["ClearAll"] = 10002] = "ClearAll";
+        /**改变游戏状态 */
+        BetBarView[BetBarView["ChangGameStatus"] = 10003] = "ChangGameStatus";
     })(BetBarView = Enum.BetBarView || (Enum.BetBarView = {}));
 })(Enum || (Enum = {}));
 var BetBarView = /** @class */ (function (_super) {
     __extends(BetBarView, _super);
     function BetBarView(eventKey) {
         var _this = _super.call(this) || this;
+        /**游戏状态 */
+        _this.gameStatus = Enum.GameStatus.Default;
         _this.ListenEventKey = eventKey;
         return _this;
     }
@@ -38,14 +42,17 @@ var BetBarView = /** @class */ (function (_super) {
      */
     BetBarView.prototype.Set = function (data, type) {
         switch (type) {
-            case Enum.BetBarView.SET_BET:
+            case Enum.BetBarView.SetBet:
                 this.SetBet(data);
                 break;
-            case Enum.BetBarView.ADD_ALL:
+            case Enum.BetBarView.AddAll:
                 this.AddAll();
                 break;
-            case Enum.BetBarView.CLEAR_ALL:
+            case Enum.BetBarView.ClearAll:
                 this.ClearAll();
+                break;
+            case Enum.BetBarView.ChangGameStatus:
+                this.gameStatus = data;
                 break;
         }
     };
@@ -74,7 +81,11 @@ var BetBarView = /** @class */ (function (_super) {
      * 点击事件触发函数
      * @param position 投注位置
      */
-    BetBarView.prototype.OnBetClick = function (position) {
+    BetBarView.prototype.OnBetClick = function (position, sound) {
+        if (this.gameStatus != Enum.GameStatus.Default)
+            return;
+        if (sound)
+            SoundManage.PlaySound(SoundConfig.SounRes.Bet);
         var data = new Dto.EventNotificationDto();
         data.Value = position;
         data.Type = Enum.ListenViewEnum.BetPos;

@@ -1,10 +1,6 @@
-/*
-* name;
-*/
+/**筹码面板基类 */
 var BaseChipView = /** @class */ (function () {
     function BaseChipView() {
-        /**当前筹码 */
-        this.currChip = 100;
         /**循环标记 */
         this.loopMark = false;
         /**更改状态 加/减 */
@@ -25,8 +21,8 @@ var BaseChipView = /** @class */ (function () {
      * 初始化事件绑定
     */
     BaseChipView.prototype.Init = function () {
-        this.ui.btnThousand.on(Laya.Event.CLICK, this, this.OnSetChip, [1000]);
-        this.ui.btnTenThousand.on(Laya.Event.CLICK, this, this.OnSetChip, [10000]);
+        this.ui.btnleft.on(Laya.Event.CLICK, this, this.OnSetChip, [this.smallFast]);
+        this.ui.btnright.on(Laya.Event.CLICK, this, this.OnSetChip, [this.bigFast]);
         this.ui.improve.on(Laya.Event.MOUSE_DOWN, this, this.OnMouseDown, [true]);
         this.ui.improve.on(Laya.Event.MOUSE_UP, this, this.OnMouseUp);
         this.ui.improve.on(Laya.Event.MOUSE_OUT, this, this.OnMouseUp);

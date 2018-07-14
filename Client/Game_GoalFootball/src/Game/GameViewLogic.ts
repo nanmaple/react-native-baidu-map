@@ -6,6 +6,8 @@ class GameViewLogic extends BaseGameViewLogic {
     public GameAniView: GameAniView;
     public GameChipsView: GameChipsView;
     public GameHeadView: GameHeadView;
+    public GameResAlertView: GameResAlertView;
+    public GameRuleView: GameRuleView;
 
     constructor(Handler: Laya.Handler) {
         super();
@@ -76,6 +78,10 @@ class GameViewLogic extends BaseGameViewLogic {
         this.GameChipsView.ResetScreen();
         this.GameHeadView = new GameHeadView(this.GameViewEventKey);
         this.GameHeadView.ResetScreen();
+        this.GameResAlertView = new GameResAlertView(this.GameViewEventKey);
+        this.GameResAlertView.ResetScreen();
+        this.GameRuleView = new GameRuleView(this.GameViewEventKey);
+        this.GameRuleView.ResetScreen();
 
         this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.StartSocket, {}]);
     }
@@ -103,6 +109,13 @@ class GameViewLogic extends BaseGameViewLogic {
                 break;
             case Enum.ListenViewEnum.ChooseProp:
                 this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.ChooseProp, data.Value]); 
+                break;
+            case Enum.ListenViewEnum.GetBalance:
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.GetBalance, null]); 
+                break;
+            case Enum.ListenViewEnum.OpenRule:
+                this.GameRuleView.Set(true);
+                break;
             default:
                 break;
         }
@@ -131,27 +144,31 @@ class GameViewLogic extends BaseGameViewLogic {
             case BaseEnum.GameViewLogicEnum.GameData:
                 this.OnMessageHandler(data);
                 break;
+            case BaseEnum.GameViewLogicEnum.Balance:
+                this.GameHeadView.Set(data, Enum.GameHeadView.SetBalance);
+                break;
             //扩展数据分发类型
             case Enum.GameViewLogicEnum.ChangMoney:
-                this.GameHeadView.Set(data, Enum.GameHeadView.SET_BALANCE);
+                this.GameHeadView.Set(data, Enum.GameHeadView.SetBalance);
                 break;
             case Enum.GameViewLogicEnum.ChooseChip:
-                this.GameAniView.Set((data as Dto.BetInfoDto).betAmount, Enum.GameAniView.SET_PROPAMOUNT);
-                this.GameChipsView.Set((data as Dto.BetInfoDto).betTotalAmount, Enum.GameChipsView.SET_BETTOTALAMOUNT);
+                this.GameAniView.Set((data as Dto.BetInfoDto).betAmount, Enum.GameAniView.SetPropAmount);
+                this.GameChipsView.Set((data as Dto.BetInfoDto).betTotalAmount, Enum.GameChipsView.SetBetTotalAmount);
                 break;
             case Enum.GameViewLogicEnum.ChooseProp:
-                this.GameChipsView.Set((data as Dto.BetInfoDto).betTotalAmount, Enum.GameChipsView.SET_BETTOTALAMOUNT);
+                this.GameChipsView.Set((data as Dto.BetInfoDto).betTotalAmount, Enum.GameChipsView.SetBetTotalAmount);
                 break;
             case Enum.GameViewLogicEnum.ChooseMaxChip:
-                this.GameChipsView.Set(data, Enum.GameChipsView.SET_MAXCHIP);
+                this.GameChipsView.Set(data, Enum.GameChipsView.SetMaxChip);
                 break;
             case Enum.GameViewLogicEnum.GameResult:
                 this.GameChipsView.Refresh();
                 this.GameHeadView.Refresh();
+                this.GameResAlertView.Refresh();
                 break;
             case Enum.GameViewLogicEnum.BetPosError:
                 this.ShowAlert(0, data);
-                this.GameChipsView.Set(null, Enum.GameChipsView.BETPOS_ERROR);
+                this.GameChipsView.Set(null, Enum.GameChipsView.BetPosError);
             default:
                 break;
         }
@@ -162,10 +179,10 @@ class GameViewLogic extends BaseGameViewLogic {
      */
     private OnMessageHandler(data: Dto.GameMessageDto): void {
         switch (data.Command) {
-            case Enum.GameCommand.MSG_GAME_INIT:
+            case Enum.GameCommand.MsgGameInit:
                 this.OnGameInit(data.Data);
                 break;
-            case Enum.GameCommand.MSG_GAME_SETTLERESULT:
+            case Enum.GameCommand.MsgGameSettleResult:
                 this.OnGameResult(data.Data);
                 break;
             default:
@@ -182,9 +199,9 @@ class GameViewLogic extends BaseGameViewLogic {
     public OnGameInit(data: Dto.GameInitDto): void {
         this.Log(data, "GameInit");
         console.log(data);
-        this.GameHeadView.Set(data, Enum.GameCommand.MSG_GAME_INIT);
-        this.GameAniView.Set(data, Enum.GameCommand.MSG_GAME_INIT);
-        this.GameChipsView.Set(data, Enum.GameCommand.MSG_GAME_INIT);
+        this.GameHeadView.Set(data, Enum.GameCommand.MsgGameInit);
+        this.GameAniView.Set(data, Enum.GameCommand.MsgGameInit);
+        this.GameChipsView.Set(data, Enum.GameCommand.MsgGameInit);
     }
 
     /**
@@ -194,9 +211,10 @@ class GameViewLogic extends BaseGameViewLogic {
     public OnGameResult(data: Dto.BetResultDto): void {
         this.Log(data, "GameResult");
         console.log(data);
-        this.GameHeadView.Set(data, Enum.GameCommand.MSG_GAME_SETTLERESULT);
-        this.GameAniView.Set(data, Enum.GameCommand.MSG_GAME_SETTLERESULT);
-        this.GameChipsView.Set(data, Enum.GameCommand.MSG_GAME_SETTLERESULT);
+        this.GameHeadView.Set(data, Enum.GameCommand.MsgGameSettleResult);
+        this.GameAniView.Set(data, Enum.GameCommand.MsgGameSettleResult);
+        this.GameChipsView.Set(data, Enum.GameCommand.MsgGameSettleResult);
+        this.GameResAlertView.Set(data, Enum.GameCommand.MsgGameSettleResult);
     }
 
 }

@@ -13,11 +13,12 @@ var Enum;
     var InternalView;
     (function (InternalView) {
         /**设置当前投注额 */
-        InternalView[InternalView["SET_CURRENT_BET"] = 10000] = "SET_CURRENT_BET";
+        InternalView[InternalView["SetCurrentBet"] = 10000] = "SetCurrentBet";
         /**开始随机数动画 */
-        InternalView[InternalView["RANDOM_ANIMATED"] = 10001] = "RANDOM_ANIMATED";
+        InternalView[InternalView["RandomAnimated"] = 10001] = "RandomAnimated";
     })(InternalView = Enum.InternalView || (Enum.InternalView = {}));
 })(Enum || (Enum = {}));
+/**中心信息面板类 */
 var InternalView = /** @class */ (function (_super) {
     __extends(InternalView, _super);
     function InternalView(eventKey) {
@@ -39,10 +40,10 @@ var InternalView = /** @class */ (function (_super) {
      */
     InternalView.prototype.Set = function (data, type) {
         switch (type) {
-            case Enum.InternalView.SET_CURRENT_BET:
+            case Enum.InternalView.SetCurrentBet:
                 this.ui.curBet.text = data;
                 break;
-            case Enum.InternalView.RANDOM_ANIMATED:
+            case Enum.InternalView.RandomAnimated:
                 this.Roll(data);
                 break;
         }
@@ -73,9 +74,6 @@ var InternalView = /** @class */ (function (_super) {
             number = '0' + number;
         this.ui.random.text = number + '';
         if (this.currCount >= this.count + this.resNumber) {
-            // Laya.timer.clear(this,this.LoopCallBack);
-            // this.currCount = 0;
-            // this.endCallback && this.endCallback();
             this.RollEnd();
         }
     };

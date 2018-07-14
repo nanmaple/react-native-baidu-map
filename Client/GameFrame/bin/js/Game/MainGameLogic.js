@@ -9,7 +9,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 /// <reference path="../GameFrame/BaseGameLogic/index.ts"/>
-/// <reference path="../GameFrame/Logic/MulBet/MulBetLogic.ts"/>
+/// <reference path="../BetLogic/MulBet/MulBetLogic.ts"/>
 var MainGameLogic = /** @class */ (function (_super) {
     __extends(MainGameLogic, _super);
     function MainGameLogic() {
@@ -19,6 +19,17 @@ var MainGameLogic = /** @class */ (function (_super) {
         _this.betLogic = new MulBet.MulBetLogic();
         return _this;
     }
+    /**
+ * 登录完成
+ */
+    MainGameLogic.prototype.LoginComplete = function () {
+        // let memberInfo: BaseDto.MemberInfoDto = this.GetMemberInfo();
+        // //启用微信分享
+        // WeChatModule.InitWeChat(memberInfo.MemberId);
+        // //获取授权地址
+        // WeChatModule.GetWeChatUrl(Utils.GetQuery("parentid"),true);
+        this.GetBalanceByService();
+    };
     /**
     * 侦听Socket连接事件
     */

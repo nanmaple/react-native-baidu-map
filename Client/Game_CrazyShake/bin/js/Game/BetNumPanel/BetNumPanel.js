@@ -8,17 +8,21 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-/**
- * 组件Set() 参数类型枚举
- */
 var Enum;
 (function (Enum) {
+    /**
+     * 投注额面板参数类型枚举
+     */
     var BetNumPanel;
     (function (BetNumPanel) {
-        BetNumPanel[BetNumPanel["EnableButton"] = 10000] = "EnableButton";
-        BetNumPanel[BetNumPanel["MSG_GAME_INIT"] = 10001] = "MSG_GAME_INIT";
-        BetNumPanel[BetNumPanel["MSG_GAME_BET"] = 10002] = "MSG_GAME_BET";
-        BetNumPanel[BetNumPanel["MSG_GAME_AniPlayComplete"] = 10003] = "MSG_GAME_AniPlayComplete";
+        /**
+         * 游戏初始化
+         */
+        BetNumPanel[BetNumPanel["GameInit"] = 15000] = "GameInit";
+        /**
+         * 收到游戏结果
+         */
+        BetNumPanel[BetNumPanel["GameSettleResult"] = 15001] = "GameSettleResult";
     })(BetNumPanel = Enum.BetNumPanel || (Enum.BetNumPanel = {}));
 })(Enum || (Enum = {}));
 /**
@@ -36,6 +40,7 @@ var BetNumPanel = /** @class */ (function (_super) {
  * 一般用于，当数据改变后，渲染需要延迟进行的情况
  */
     BetNumPanel.prototype.Refresh = function () {
+        this.EnableButton();
     };
     /**
      * 接收上层View或者GameViewLogic的数据,根据数据，进行不同的渲染
@@ -44,18 +49,15 @@ var BetNumPanel = /** @class */ (function (_super) {
      */
     BetNumPanel.prototype.Set = function (data, type) {
         switch (type) {
-            case Enum.BetNumPanel.MSG_GAME_INIT:
+            case Enum.BetNumPanel.GameInit:
+                this.EnableButton();
                 this.MaxBet = data.MaxBet;
-                var tempMaxBet = Math.floor(data.Balance / 100) * 100;
-                this.maxBetNum = tempMaxBet < this.MaxBet ? tempMaxBet : this.MaxBet;
-                this.EnableButton();
-            case Enum.BetNumPanel.MSG_GAME_AniPlayComplete:
-                var temMaxBet = Math.floor(data.Balance / 100) * 100;
-                this.maxBetNum = temMaxBet < this.MaxBet ? temMaxBet : this.MaxBet;
-                this.EnableButton();
+                var initMaxBet = Math.floor(data.Balance / 100) * 100;
+                this.maxBetNum = initMaxBet < this.MaxBet ? initMaxBet : this.MaxBet;
                 break;
-            case Enum.BetNumPanel.MSG_GAME_BET:
-                this.EnableButton(false);
+            case Enum.BetNumPanel.GameSettleResult:
+                var comMaxBet = Math.floor(data.Balance / 100) * 100;
+                this.maxBetNum = comMaxBet < this.MaxBet ? comMaxBet : this.MaxBet;
                 break;
             default:
                 break;

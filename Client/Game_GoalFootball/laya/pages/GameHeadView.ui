@@ -2,8 +2,8 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":1,
-    "props":{"width":750,"top":0,"sceneColor":"#080808","left":0,"height":80},
+    "selecteID":3,
+    "props":{"width":750,"top":0,"sceneColor":"#ffffff","left":0,"height":200},
     "nodeParent":-1,
     "label":"View",
     "isOpen":true,
@@ -14,14 +14,103 @@
     "child":[
         {
             "x":15,
-            "type":"Label",
-            "props":{"width":200,"var":"balance","text":"0","right":20,"fontSize":30,"color":"#ffffff","centerY":0,"align":"center"},
+            "type":"Image",
+            "props":{"x":120,"var":"voice","skin":"ui/header/voice_open.png","bottom":0},
             "nodeParent":1,
-            "label":"Label(balance)",
+            "label":"Image(voice)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
-            "compId":2,
+            "compId":3,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"y":0,"x":0,"var":"head_bg","skin":"ui/header/head_bg.png"},
+            "nodeParent":1,
+            "label":"Image(head_bg)",
+            "isOpen":true,
+            "isDirectory":true,
+            "isAniNode":true,
+            "hasChild":true,
+            "compId":4,
+            "child":[
+                {
+                    "x":30,
+                    "type":"Image",
+                    "props":{"y":16,"width":55,"var":"home","skin":"ui/header/home_bg.png","left":30,"height":55},
+                    "nodeParent":4,
+                    "label":"Image(home)",
+                    "isOpen":false,
+                    "isDirectory":true,
+                    "isAniNode":true,
+                    "hasChild":true,
+                    "compId":5,
+                    "child":[
+                        {
+                            "type":"Image",
+                            "props":{"y":0,"x":0,"width":55,"skin":"ui/header/home.png","height":55},
+                            "nodeParent":5,
+                            "label":"Image",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":6,
+                            "child":[
+                                ]
+                        }]
+                },
+                {
+                    "x":30,
+                    "type":"Image",
+                    "props":{"y":22,"x":556,"skin":"ui/header/balance.png"},
+                    "nodeParent":4,
+                    "label":"Image",
+                    "isOpen":false,
+                    "isDirectory":true,
+                    "isAniNode":true,
+                    "hasChild":true,
+                    "compId":7,
+                    "child":[
+                        {
+                            "type":"Label",
+                            "props":{"y":0,"x":50,"width":125,"var":"balance","valign":"middle","text":"0","height":40,"fontSize":30,"color":"#ffffff","align":"center"},
+                            "nodeParent":7,
+                            "label":"Label(balance)",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":2,
+                            "child":[
+                                ]
+                        }]
+                }]
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"var":"rank","skin":"ui/header/rank.png","right":20,"bottom":0},
+            "nodeParent":1,
+            "label":"Image(rank)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":8,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"var":"rule","skin":"ui/header/rule.png","left":20,"bottom":0},
+            "nodeParent":1,
+            "label":"Image(rule)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":9,
             "child":[
                 ]
         }],

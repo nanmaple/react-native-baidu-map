@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":1,
+    "selecteID":29,
     "props":{"width":750,"visible":false,"sceneColor":"#fff","height":1334},
     "nodeParent":-1,
     "label":"View",
@@ -27,29 +27,42 @@
         },
         {
             "x":15,
-            "type":"Image",
-            "props":{"y":85,"x":18,"skin":"ui/rule_bg.png"},
+            "type":"Box",
+            "props":{"y":666,"x":375,"width":714,"var":"ruleBox","height":1163,"anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
-            "label":"Image",
-            "isDirectory":false,
+            "label":"Box(ruleBox)",
+            "isOpen":true,
+            "isDirectory":true,
             "isAniNode":true,
-            "hasChild":false,
-            "compId":3,
+            "hasChild":true,
+            "compId":5,
             "child":[
-                ]
-        },
-        {
-            "x":15,
-            "type":"Button",
-            "props":{"y":142,"x":628,"width":84,"var":"btnClose","stateNum":"1","skin":"ui/btn_close.png","height":84},
-            "nodeParent":1,
-            "label":"Button(btnClose)",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":4,
-            "child":[
-                ]
+                {
+                    "x":30,
+                    "type":"Image",
+                    "props":{"skin":"ui/rule_bg.png"},
+                    "nodeParent":5,
+                    "label":"Image",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":3,
+                    "child":[
+                        ]
+                },
+                {
+                    "x":30,
+                    "type":"Button",
+                    "props":{"y":48,"x":614,"width":84,"var":"btnClose","stateNum":"1","skin":"ui/btn_close.png","height":84},
+                    "nodeParent":5,
+                    "label":"Button(btnClose)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":4,
+                    "child":[
+                        ]
+                }]
         }],
     "animations":[
         {

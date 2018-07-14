@@ -23,7 +23,7 @@ var BaseBetBarView = /** @class */ (function () {
         this.lenght = this.ui.numChildren - 1; //减去上面的倍数条
         for (var i = 0; i < this.lenght; i++) {
             var bet = this.ui.getChildAt(i).getChildByName('betBtutton');
-            bet.on(Laya.Event.CLICK, this, this.OnBetClick, [i]);
+            bet.on(Laya.Event.CLICK, this, this.OnBetClick, [i, true]);
         }
     };
     return BaseBetBarView;

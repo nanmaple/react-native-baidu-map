@@ -31,7 +31,7 @@ function Wechat(http, handler, option) {
 * 获取微信配置信息
 * @param url
 */
-Wechat.prototype.GetJsSignature = function () {
+Wechat.prototype.GetJsSignature = function (callback) {
     var _this = this;
     this.GetAppID().then(function (appid) {
         try {
@@ -45,6 +45,9 @@ Wechat.prototype.GetJsSignature = function () {
                 var Data = res.Data, Result = res.Result;
                 if (Result == 1) {
                     wechat.Init(appid, Data);
+                    if(typeof callback==="function"){
+                        callback(appid);
+                    }
                 }
                 else if (_this.GetJsSignatureTimes <= 4) {
                     _this.GetJsSignatureTimes++;

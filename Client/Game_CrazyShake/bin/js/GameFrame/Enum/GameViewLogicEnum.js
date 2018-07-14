@@ -25,6 +25,10 @@ var BaseEnum;
          * 游戏数据分发
          */
         GameViewLogicEnum[GameViewLogicEnum["GameData"] = 4] = "GameData";
+        /**
+         * 余额
+         */
+        GameViewLogicEnum[GameViewLogicEnum["Balance"] = 5] = "Balance";
     })(GameViewLogicEnum = BaseEnum.GameViewLogicEnum || (BaseEnum.GameViewLogicEnum = {}));
 })(BaseEnum || (BaseEnum = {}));
 //# sourceMappingURL=GameViewLogicEnum.js.map

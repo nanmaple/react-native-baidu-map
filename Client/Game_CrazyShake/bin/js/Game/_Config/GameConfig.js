@@ -17,17 +17,14 @@ var GameConfig;
     GameConfig.DesignLength = 1334; //设计尺寸-长边
     GameConfig.DesignShort = 750; //设计尺寸-短边
     GameConfig.ScreenMode = 0; //横竖屏类型 ：0 竖屏  1横屏，默认竖屏
+    /*************配置微信分享信息*************/
+    GameConfig.WeChatShareMsg = {
+        Title: "NB.ShootDoor",
+        Desc: "ShootDoor is a easy and exciting H5 game that simulated goal of soccer by poker,Please try it now!",
+        ImgUrl: "http://" + GameConfig.Domain + "/logo.jpg",
+        Link: ""
+    };
     /***************配置信息方法***************/
-    /****************微信AppId****************/
-    GameConfig.AppId = null;
-    /**
-     * 设置APPID
-     * @param id
-     */
-    function SetAppID(id) {
-        this.AppId = id;
-    }
-    GameConfig.SetAppID = SetAppID;
     /**
      * 获取游戏token方法
      * @param memberId 会员ID
@@ -37,39 +34,6 @@ var GameConfig;
         return GameConfig.SocketUrl + "?GameId=" + this.GameID + "&MemberId=" + memberId + "&Device=" + this.DeviceType + "&DeviceId=" + this.DeviceId + "&Token=" + token;
     }
     GameConfig.GetSocketUrl = GetSocketUrl;
-    /**
-     * 获取微信地址方法
-     * @param parentID 是否为授权地址
-     * @param isAuthorize 是否为授权地址
-     */
-    function GetWeChatUrl(parentID, isAuthorize) {
-        if (isAuthorize === void 0) { isAuthorize = true; }
-        var sharGameUrl = "http://" + this.Domain + "?gameid=" + this.GameID + "&parentid=" + parentID;
-        if (isAuthorize) {
-            sharGameUrl = encodeURIComponent(sharGameUrl);
-            return "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + this.AppId + "&redirect_uri=" + sharGameUrl + "&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
-        }
-        else {
-            return sharGameUrl;
-        }
-    }
-    GameConfig.GetWeChatUrl = GetWeChatUrl;
-    /**
-     * 获取分享信息
-     * @param parentID 父级ID
-     * @param isAuthorize 是否为授权地址
-     */
-    function GetWeChatShareDto(parentID) {
-        var dto = {
-            Title: "NB.ShootDoor",
-            Desc: "ShootDoor is a easy and exciting H5 game that simulated goal of soccer by poker,Please try it now!",
-            ImgUrl: "http://" + this.Domain + "/logo.jpg",
-            Link: ""
-        };
-        dto.Link = GetWeChatUrl(parentID, false);
-        return dto;
-    }
-    GameConfig.GetWeChatShareDto = GetWeChatShareDto;
     /**
      * 获取大厅跳转地址
      * @param parentID

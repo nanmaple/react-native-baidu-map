@@ -1,10 +1,8 @@
-/*
-* name;
-*/
 /**最大最小缓速距离 */
 const slow = {max:10,min:7};
 const defaultSpeed = 21;
 const gameResult = {0:[6,11,17,23],1:[1,13],2:12,3:[7,19],4:18,5:[2,14],6:24,7:8,8:9,9:20,10:21,11:16,12:15,13:4,14:3,15:5,16:[10,22]}
+/**轮盘面板基类 */
 abstract class BaseRouletteView{
     protected ui: ui.RouletteViewUI;
     protected ListenEventKey:string;

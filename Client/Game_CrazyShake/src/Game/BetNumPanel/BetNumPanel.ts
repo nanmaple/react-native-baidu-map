@@ -1,12 +1,16 @@
-/**
- * 组件Set() 参数类型枚举
- */
 namespace Enum {
+    /**
+     * 投注额面板参数类型枚举
+     */
     export enum BetNumPanel {
-        EnableButton = 10000,
-        MSG_GAME_INIT,
-        MSG_GAME_BET,
-        MSG_GAME_AniPlayComplete,
+        /**
+         * 游戏初始化
+         */
+        GameInit = 15000,
+        /**
+         * 收到游戏结果
+         */
+        GameSettleResult,
     }
 }
 
@@ -15,7 +19,7 @@ namespace Enum {
  * 功能：增加、减少投注额
  */
 class BetNumPanel extends BaseBetNumPanel implements IView {
-    private MaxBet:number
+    private MaxBet: number
     constructor() {
         super();
     }
@@ -25,7 +29,7 @@ class BetNumPanel extends BaseBetNumPanel implements IView {
  * 一般用于，当数据改变后，渲染需要延迟进行的情况
  */
     public Refresh(): void {
-
+        this.EnableButton();
     }
 
     /**
@@ -35,18 +39,15 @@ class BetNumPanel extends BaseBetNumPanel implements IView {
      */
     public Set(data: any, type?: any): void {
         switch (type) {
-            case Enum.BetNumPanel.MSG_GAME_INIT:
-                this.MaxBet=data.MaxBet;
-                let tempMaxBet=Math.floor(data.Balance / 100) * 100;
-                this.maxBetNum = tempMaxBet<this.MaxBet?tempMaxBet:this.MaxBet;
+            case Enum.BetNumPanel.GameInit:
                 this.EnableButton();
-            case Enum.BetNumPanel.MSG_GAME_AniPlayComplete:
-                let temMaxBet=Math.floor(data.Balance / 100) * 100;
-                this.maxBetNum = temMaxBet<this.MaxBet?temMaxBet:this.MaxBet;
-                this.EnableButton();
+                this.MaxBet = data.MaxBet;
+                let initMaxBet = Math.floor(data.Balance / 100) * 100;
+                this.maxBetNum = initMaxBet < this.MaxBet ? initMaxBet : this.MaxBet;
                 break;
-            case Enum.BetNumPanel.MSG_GAME_BET:
-                this.EnableButton(false);
+            case Enum.BetNumPanel.GameSettleResult:
+                let comMaxBet = Math.floor(data.Balance / 100) * 100;
+                this.maxBetNum = comMaxBet < this.MaxBet ? comMaxBet : this.MaxBet;
                 break;
             default:
                 break;
@@ -54,12 +55,10 @@ class BetNumPanel extends BaseBetNumPanel implements IView {
 
     }
 
-
-
     /**
      * 获取投注额
      */
-    public GetBetNum() {
-        return this.currentBetNum
+    public GetBetNum(): number {
+        return this.currentBetNum;
     }
 }

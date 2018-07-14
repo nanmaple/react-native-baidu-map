@@ -8,6 +8,16 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var Enum;
+(function (Enum) {
+    var GameAniView;
+    (function (GameAniView) {
+        /**
+         * 设置道具金额
+         */
+        GameAniView[GameAniView["SetPropAmount"] = 10000] = "SetPropAmount";
+    })(GameAniView = Enum.GameAniView || (Enum.GameAniView = {}));
+})(Enum || (Enum = {}));
 var GameAniView = /** @class */ (function (_super) {
     __extends(GameAniView, _super);
     function GameAniView(eventKey) {
@@ -26,16 +36,29 @@ var GameAniView = /** @class */ (function (_super) {
      * 接收上层View或者GameViewLogic的数据,根据数据，进行不同的渲染
      * @param data
      */
-    GameAniView.prototype.Set = function (data) {
-        switch (data.Type) {
-            case Enum.GameCommand.MSG_GAME_INIT:
-                this.GameInit(data.Data);
+    GameAniView.prototype.Set = function (data, type) {
+        switch (type) {
+            case Enum.GameCommand.MsgGameInit:
+                this.GameInit(data);
                 break;
-            case Enum.GameCommand.MSG_GAME_SETTLERESULT:
-                this.GameResult(data.Data);
+            case Enum.GameCommand.MsgGameSettleResult:
+                this.GameResult(data);
+                break;
+            case Enum.GameAniView.SetPropAmount:
+                this.SetPropAmount(data);
                 break;
             default:
                 break;
+        }
+    };
+    /**
+     * 设置道具金额
+     * @param amount
+     */
+    GameAniView.prototype.SetPropAmount = function (money) {
+        var amount = money / 5;
+        for (var index = 0; index < 3; index++) {
+            this.propBoxArr[index].money.text = amount;
         }
     };
     /**
@@ -52,10 +75,11 @@ var GameAniView = /** @class */ (function (_super) {
             // 在标签start后开始执行
             if (data == "start") {
                 _this.DefenderStartJump();
+                _this.GetFootballEndPos();
+                Laya.timer.once(750, _this, _this.SetGuardAnimation, [_this.guardAniType]);
                 _this.ui.football.play(0, false);
                 Laya.timer.frameLoop(1, _this, _this.StartCurvesMove, [0.002, _this.ui.football, _this.initPos, _this.centPos, _this.endPos,
                     Laya.Handler.create(_this, _this.EndCurvesMove, null, false)]); //主控制  0.001自己调整(运动快慢)
-                console.log("goal:" + _this.isGoal, "defense:" + _this.isDefense);
             }
         });
     };
@@ -64,7 +88,13 @@ var GameAniView = /** @class */ (function (_super) {
      * @param data
      */
     GameAniView.prototype.GameInit = function (data) {
-        this.SetPropAmount(data.BaseAmounts[0]);
+        if (this.isInitProp) {
+            return;
+        }
+        else {
+            this.SetPropAmount(data.BaseAmounts[0]);
+            this.isInitProp = true;
+        }
     };
     /**
      * 投注结果
@@ -73,9 +103,8 @@ var GameAniView = /** @class */ (function (_super) {
     GameAniView.prototype.GameResult = function (data) {
         if (data.Status == Enum.BetResultEnum.Success) {
             this.ShootDoor(data.Odds);
-        }
-        else {
-            this.Reset();
+            this.ui.disabled = true;
+            this.ui.gray = false;
         }
     };
     /**

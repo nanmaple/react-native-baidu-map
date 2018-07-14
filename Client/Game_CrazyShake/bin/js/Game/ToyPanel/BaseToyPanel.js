@@ -13,11 +13,12 @@ var BaseToyPanel = /** @class */ (function () {
         this.ui.x = 183;
         this.ui.y = 360;
         Laya.stage.addChild(this.ui);
+        this.ui.ani2.on(Laya.Event.COMPLETE, this, this.Lottery);
     };
     /**
      * 开始摇盅
      */
-    BaseToyPanel.prototype.startRock = function () {
+    BaseToyPanel.prototype.StartRock = function () {
         var _this = this;
         Laya.timer.once(400, this, function () { Laya.SoundManager.playSound("sound/duangSound.mp3"); });
         Laya.Tween.to(this.ui.cap, { y: 17 }, 500, Laya.Ease.linearIn, Laya.Handler.create(this, function () {
@@ -31,25 +32,23 @@ var BaseToyPanel = /** @class */ (function () {
      * 开奖
      * @param data 游戏结果
      */
-    BaseToyPanel.prototype.Lottery = function (data) {
+    BaseToyPanel.prototype.Lottery = function () {
         var _this = this;
-        this.ui.ani2.on(Laya.Event.COMPLETE, this, function () {
-            _this.ui.ani2.stop();
-            _this.ChangeDice(data.Data.Dices);
-            Laya.timer.once(570, _this, function () { Laya.SoundManager.playSound("sound/upCoverSound.mp3"); });
-            Laya.Tween.to(_this.ui.cap, { y: -470 }, 500, Laya.Ease.linearIn, Laya.Handler.create(_this, function () {
-                _this.EventNotification(data);
-            }, data), 700);
-        }, data);
+        this.ui.ani2.stop();
+        this.ChangeDice(this.dices);
+        Laya.timer.once(570, this, function () { Laya.SoundManager.playSound("sound/upCoverSound.mp3"); });
+        Laya.Tween.to(this.ui.cap, { y: -470 }, 500, Laya.Ease.linearIn, Laya.Handler.create(this, function () {
+            _this.EventNotification();
+        }), 700);
     };
     /**
      * 通知动画播放完成
      * @param value
      */
-    BaseToyPanel.prototype.EventNotification = function (value) {
+    BaseToyPanel.prototype.EventNotification = function () {
         var dto = new Dto.EventNotificationDto();
         dto.Type = Enum.ListenViewEnum.AniPlayComplete;
-        dto.Value = value;
+        dto.Value = null;
         var event = new CustomEvent(this.listenEventKey, { detail: dto });
         document.dispatchEvent(event);
     };

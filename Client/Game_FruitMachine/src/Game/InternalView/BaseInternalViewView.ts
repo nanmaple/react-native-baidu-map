@@ -1,6 +1,4 @@
-/*
-* name;
-*/
+/**中心信息面板基类 */
 abstract class BaseInternalView{
     protected ui: ui.InternalViewUI;
     protected ListenEventKey:string;
@@ -14,7 +12,7 @@ abstract class BaseInternalView{
     public ResetScreen() {
         Laya.stage.removeChild(this.ui);
         this.ui = new ui.InternalViewUI();
-        this.ui.zOrder = 1;
+        this.ui.zOrder = 2;
         // this.ui.cacheAs = "bitmap";
         Laya.stage.addChild(this.ui);
     }

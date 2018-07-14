@@ -1,11 +1,12 @@
 namespace Enum{
     export enum InternalView{
         /**设置当前投注额 */
-        SET_CURRENT_BET = 10000,
+        SetCurrentBet = 10000,
         /**开始随机数动画 */
-        RANDOM_ANIMATED,
+        RandomAnimated,
     }
 }
+/**中心信息面板类 */
 class InternalView extends BaseInternalView implements IView{
 
     private bigNumber:number = 14;//大小区分值为偶数
@@ -33,10 +34,10 @@ class InternalView extends BaseInternalView implements IView{
      */
     public Set(data:any,type:any):void{
         switch(type){
-            case Enum.InternalView.SET_CURRENT_BET:
+            case Enum.InternalView.SetCurrentBet:
                 this.ui.curBet.text = data;
                 break;
-            case Enum.InternalView.RANDOM_ANIMATED:
+            case Enum.InternalView.RandomAnimated:
                 this.Roll(data);
                 break;
         }
@@ -71,9 +72,6 @@ class InternalView extends BaseInternalView implements IView{
         this.ui.random.text = number + '';
 
         if(this.currCount >= this.count+this.resNumber){
-            // Laya.timer.clear(this,this.LoopCallBack);
-            // this.currCount = 0;
-            // this.endCallback && this.endCallback();
             this.RollEnd();
         }
     }

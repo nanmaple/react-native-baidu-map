@@ -26,17 +26,5 @@ class GameBgView extends BaseGameBgView implements IView {
     public Set(data: any): void {
     }
 
-    /**
-     * 类型：私有方法
-     * 通过事件，向上通知
-     * 事件key值，通过构造函数时注入
-     */
-    private EventNotification(): void {
-        let data: Dto.EventNotificationDto = new Dto.EventNotificationDto();
-        data.Value = {};
-        data.Type = Enum.ListenViewEnum.BetPos;
 
-        let event = new CustomEvent(this.listenEventKey, { detail: data });
-        document.dispatchEvent(event);
-    }
 }

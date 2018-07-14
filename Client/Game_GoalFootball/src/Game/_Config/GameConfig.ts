@@ -31,7 +31,14 @@ namespace GameConfig {
     export function SetAppID(id: any) {
         this.AppId = id;
     }
+    /*************配置微信分享信息*************/
 
+    export const WeChatShareMsg: any = {
+        Title: "NB.ShootDoor",
+        Desc: "ShootDoor is a easy and exciting H5 game that simulated goal of soccer by poker,Please try it now!",
+        ImgUrl: `http://${Domain}/logo.jpg`,
+        Link: ""
+    }
     /**
      * 获取游戏token方法
      * @param memberId 会员ID

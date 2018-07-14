@@ -1,3 +1,4 @@
+/// <reference path='../../Enum/ListenViewEnum.ts'/>
 var Dto;
 (function (Dto) {
     /**

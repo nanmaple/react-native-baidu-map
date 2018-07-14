@@ -3,7 +3,7 @@ namespace Enum{
         /**
          * 设置道具金额
          */
-        SET_PROPAMOUNT = 10000,
+        SetPropAmount = 10000,
          
     }
 }
@@ -27,13 +27,13 @@ class GameAniView extends BaseGameAniView implements IView {
      */
     public Set(data: any, type?:any): void {
         switch (type) {
-            case Enum.GameCommand.MSG_GAME_INIT:
+            case Enum.GameCommand.MsgGameInit:
                 this.GameInit(data); 
                 break;
-            case Enum.GameCommand.MSG_GAME_SETTLERESULT:
+            case Enum.GameCommand.MsgGameSettleResult:
                 this.GameResult(data);
                 break;
-            case Enum.GameAniView.SET_PROPAMOUNT:
+            case Enum.GameAniView.SetPropAmount:
                 this.SetPropAmount(data);
                 break;
             default:
@@ -58,15 +58,16 @@ class GameAniView extends BaseGameAniView implements IView {
         this.IsSucDefense();
         this.isGoal = odds == 0 ? false : true;
         this.ui.player.play(0,false,"play");
-        Effect.CurvesEffect.Hide();
+        Effect.CurvesEffect.Hide();   
         this.ui.player.on(Laya.Event.LABEL,this,(data)=>{
             // 在标签start后开始执行
             if(data == "start"){
                 this.DefenderStartJump();
+                this.GetFootballEndPos();
+                Laya.timer.once(750, this, this.SetGuardAnimation, [this.guardAniType]);
                 this.ui.football.play(0,false);
                 Laya.timer.frameLoop(1, this, this.StartCurvesMove, [0.002, this.ui.football, this.initPos, this.centPos, this.endPos,
                 Laya.Handler.create(this,this.EndCurvesMove,null,false)])//主控制  0.001自己调整(运动快慢)
-                console.log("goal:"+ this.isGoal,"defense:"+this.isDefense);
             }
         })  
     }
@@ -90,6 +91,8 @@ class GameAniView extends BaseGameAniView implements IView {
     private GameResult(data:Dto.BetResultDto):void{
         if(data.Status == Enum.BetResultEnum.Success){
             this.ShootDoor(data.Odds);
+            this.ui.disabled = true;
+            this.ui.gray = false;
         }
     }
     

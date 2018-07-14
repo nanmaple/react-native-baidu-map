@@ -14,6 +14,14 @@ abstract class BaseGameChipsView {
      */
     protected noSelectChipSkin:any = "ui/chip/btn_noselect.png";
     /**
+     * 射门默认的皮肤
+     */
+    protected shootDoorSkin:any = "ui/chip/btn_shoor.png";
+    /**
+     * 射门按下的皮肤
+     */
+    protected noShootDoorSkin:any = "ui/chip/btn_shoor_n.png";
+    /**
      * 投注金额(不包含道具金额)
      */
     protected betAmount:number = null;
@@ -41,6 +49,7 @@ abstract class BaseGameChipsView {
         this.ui.btn_left.on(Laya.Event.CLICK, this, this.PreviousPage);
         this.ui.btn_right.on(Laya.Event.CLICK, this, this.NextPage);
         this.ui.btn_max.on(Laya.Event.CLICK, this, this.ChooseMaxChip);
+        this.ui.btn_max.label = LanguageUtils.Language.Get("MaxChip");
         Laya.stage.addChild(this.ui);
         this.Init();
     }
@@ -57,6 +66,11 @@ abstract class BaseGameChipsView {
      * @param disabled 
      */
     protected DisabledShootBtn(disabled:boolean):void{
+        if(disabled){
+            this.ui.btn_shoor.skin = this.noShootDoorSkin;
+        }else{
+            this.ui.btn_shoor.skin = this.shootDoorSkin;
+        }
         this.ui.btn_shoor.disabled = disabled;
         this.ui.btn_shoor.gray = false;
     }

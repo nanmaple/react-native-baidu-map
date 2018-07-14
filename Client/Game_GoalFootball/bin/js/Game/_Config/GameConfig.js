@@ -29,6 +29,13 @@ var GameConfig;
         this.AppId = id;
     }
     GameConfig.SetAppID = SetAppID;
+    /*************配置微信分享信息*************/
+    GameConfig.WeChatShareMsg = {
+        Title: "NB.ShootDoor",
+        Desc: "ShootDoor is a easy and exciting H5 game that simulated goal of soccer by poker,Please try it now!",
+        ImgUrl: "http://" + GameConfig.Domain + "/logo.jpg",
+        Link: ""
+    };
     /**
      * 获取游戏token方法
      * @param memberId 会员ID

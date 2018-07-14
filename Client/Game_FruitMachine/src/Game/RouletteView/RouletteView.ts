@@ -1,9 +1,5 @@
-/*
-* name;
-*/
-class RouletteView extends BaseRouletteView implements IView{
-
-    
+/**轮盘类面板*/
+class RouletteView extends BaseRouletteView implements IView{  
     constructor(eventKey:string){
         super(eventKey);
 

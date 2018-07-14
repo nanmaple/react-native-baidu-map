@@ -6,9 +6,9 @@ var Enum;
     var GameViewLogicEnum;
     (function (GameViewLogicEnum) {
         /**
-         * 启动摇骰动画
+         * 刷新按钮
          */
-        GameViewLogicEnum[GameViewLogicEnum["StartAni"] = 101] = "StartAni";
+        GameViewLogicEnum[GameViewLogicEnum["MsgGameRefreshBtn"] = 6000] = "MsgGameRefreshBtn";
     })(GameViewLogicEnum = Enum.GameViewLogicEnum || (Enum.GameViewLogicEnum = {}));
 })(Enum || (Enum = {}));
 //# sourceMappingURL=GameViewLogicEnum.js.map

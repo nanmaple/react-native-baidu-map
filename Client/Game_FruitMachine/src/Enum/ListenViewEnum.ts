@@ -43,6 +43,17 @@ namespace Enum{
         /**滚动随机数停止 */
         RandomEndm,
 
+        /**
+         * 获取最新余额
+         */
+        GetBalance,
+
+        /**打开规则面板 */
+        ShowRule,
+
+        /**静音设置 */
+        SetMute,
+
 
     }
 }

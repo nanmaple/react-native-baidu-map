@@ -1,9 +1,14 @@
 D .
 R 1300416A Box1.prefab
-R 84947D06 Image1.prefab
 R A19C3500 Image2.prefab
 D comp
 P 1F3929EA button.png
+D sound
+R 0F5A13DD bet.mp3
+R 1E01CCA0 bet.ogg
+R 17C8D1FF button.mp3
+R 46C2DC21 button.wav
+R C80BE32E gameBg.mp3
 D ui
 P 351F171F AuraEnd_1.png
 P EE434553 AuraEnd_2.png
@@ -43,6 +48,9 @@ P 3387A186 head_balance.png
 P 53D6FD96 head_gain.png
 P 95F900AD head_home.png
 P 68A55DC1 head_logo.png
+P DFC99626 head_muted.png
+P 9F5483D4 head_rule.png
+P 5D26FB93 head_sound.png
 P 464B30C9 icon_apple.png
 P B9F5EDA3 icon_bar120.png
 P 220413F9 icon_bar25.png

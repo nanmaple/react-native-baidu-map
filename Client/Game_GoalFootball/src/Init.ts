@@ -8,8 +8,9 @@ class InitState {
         // Laya.WorkerLoader.workerPath = "libs/worker.js";
         //开启worker线程
         // Laya.WorkerLoader.enable = true;
-        //设置抗锯齿
-        Config.isAntialias=true;
+
+        //是否开启多点触控
+        Laya.MouseManager.multiTouchEnabled = false;
         
         //设置适配模式
         Laya.stage.scaleMode = Laya.Stage.SCALE_SHOWALL;
@@ -32,7 +33,7 @@ class InitState {
         // Laya.DebugTool.init();
         //显示FPS
         if (GameConfig.IsDebug) {
-            Laya.Stat.show(0, 0);
+            // Laya.Stat.show(0, 0);
         }
         /***********调试相关**********/
 

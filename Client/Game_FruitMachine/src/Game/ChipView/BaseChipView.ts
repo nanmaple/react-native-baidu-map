@@ -1,17 +1,22 @@
+/**筹码面板基类 */
 abstract class BaseChipView{
     protected ui: ui.ChipViewUI;
     protected ListenEventKey:string;
 
     /**当前筹码 */
-    protected currChip:number = 100;
+    protected currChip:number ;
     /**循环标记 */
     protected loopMark:boolean = false;
     /**更改状态 加/减 */
     protected type:boolean = true;
     /**最大筹码 */
-    protected maxChip:number = 100000;
+    protected maxChip:number ;
     /**基础筹码 */
-    protected baseChip:number = 100;
+    protected baseChip:number ;
+    /**快捷修改基数小 */
+    protected smallFast:number ;
+    /**快捷修改基数大 */
+    protected bigFast:number ;
 
     constructor(){
     }
@@ -32,8 +37,8 @@ abstract class BaseChipView{
      * 初始化事件绑定
     */
     private Init():void{
-        this.ui.btnThousand.on(Laya.Event.CLICK,this,this.OnSetChip,[1000]);
-        this.ui.btnTenThousand.on(Laya.Event.CLICK,this,this.OnSetChip,[10000]);
+        this.ui.btnleft.on(Laya.Event.CLICK,this,this.OnSetChip,[this.smallFast]);
+        this.ui.btnright.on(Laya.Event.CLICK,this,this.OnSetChip,[this.bigFast]);
 
         this.ui.improve.on(Laya.Event.MOUSE_DOWN,this,this.OnMouseDown,[true]);
         this.ui.improve.on(Laya.Event.MOUSE_UP,this,this.OnMouseUp);

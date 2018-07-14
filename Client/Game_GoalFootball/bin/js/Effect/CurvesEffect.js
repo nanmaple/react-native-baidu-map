@@ -18,7 +18,8 @@ var Effect;
             }
             this.line = new Laya.Sprite();
             this.line.zOrder = 2;
-            this.line.graphics.drawCurves(0, 0, [initPos.X - 50, initPos.Y,
+            this.line.graphics.drawCurves(0, 0, [
+                initPos.X - 50, initPos.Y,
                 centPos.X - 20, centPos.Y,
                 endPos.X - 10, endPos.Y + 30,
                 endPos.X - 30, endPos.Y + 30,
@@ -31,7 +32,7 @@ var Effect;
                 endPos.X + 10, endPos.Y + 30,
                 centPos.X + 20, centPos.Y,
                 initPos.X + 50, initPos.Y,
-            ], "#f6f5d2", 5);
+            ], "#faff89", 5);
             Laya.stage.addChild(this.line);
         };
         /**

@@ -5,15 +5,15 @@ var Enum;
         /**
          * 默认
          */
-        GameStatus[GameStatus["DEFAULT"] = 0] = "DEFAULT";
+        GameStatus[GameStatus["Default"] = 0] = "Default";
         /**
          * 猜大小
          */
-        GameStatus[GameStatus["GUESS"] = 1] = "GUESS";
+        GameStatus[GameStatus["Guess"] = 1] = "Guess";
         /**
          * 进行中
          */
-        GameStatus[GameStatus["EXECUTE"] = 2] = "EXECUTE";
+        GameStatus[GameStatus["Execute"] = 2] = "Execute";
     })(GameStatus = Enum.GameStatus || (Enum.GameStatus = {}));
 })(Enum || (Enum = {}));
 //# sourceMappingURL=GameStatus.js.map

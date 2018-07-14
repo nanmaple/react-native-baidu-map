@@ -51,9 +51,13 @@ var BaseGameAniView = /** @class */ (function () {
          */
         this.propAutoAniArr = ["bomb_wait", "beer_wait", "bikini_wait"];
         /**
-         * 道具使用状态（0,1）
+         * 是否已初始化道具
          */
-        this.propStatusArr = [0, 0, 0];
+        this.isInitProp = false;
+        /**
+         * 是否按下鼠标
+         */
+        this.isMouseDown = false;
     }
     /**
      * 重置屏幕
@@ -65,6 +69,7 @@ var BaseGameAniView = /** @class */ (function () {
         Laya.stage.addChild(this.ui);
         this.ui.on(Laya.Event.MOUSE_MOVE, this, this.OnMouseMove);
         this.ui.on(Laya.Event.MOUSE_DOWN, this, this.OnMouseDown);
+        this.ui.on(Laya.Event.MOUSE_UP, this, this.OnMouseUp);
         this.Init();
     };
     /**
@@ -82,14 +87,21 @@ var BaseGameAniView = /** @class */ (function () {
      * 初始化道具
      */
     BaseGameAniView.prototype.InitProp = function () {
-        for (var index = 0; index < 3; index++) {
+        var _this = this;
+        var _loop_1 = function (index) {
             var propBox = new ui.PropBtnViewUI();
-            propBox.on(Laya.Event.CLICK, this, this.TakeProp, [index]);
-            propBox.prop.autoAnimation = this.propAutoAniArr[index];
+            propBox.on(Laya.Event.CLICK, this_1, this_1.TakeProp, [index]);
+            propBox.prop.loadAnimation("PropAni.ani", Laya.Handler.create(this_1, function () {
+                propBox.prop.play(0, true, _this.propAutoAniArr[index]);
+            }, null, false));
             propBox.money.text = "0";
             propBox.y = (propBox.height + 10) * index;
-            this.ui.propBox.addChild(propBox);
-            this.propBoxArr.push(propBox);
+            this_1.ui.propBox.addChild(propBox);
+            this_1.propBoxArr.push(propBox);
+        };
+        var this_1 = this;
+        for (var index = 0; index < 3; index++) {
+            _loop_1(index);
         }
     };
     /**
@@ -101,38 +113,9 @@ var BaseGameAniView = /** @class */ (function () {
         this.propBoxArr[index].gray = false;
         this.propBoxArr[index].select.visible = true;
         this.propBoxArr[index].prop.stop();
-        this.propStatusArr[index] = 1;
         var endPos = this.defenderArr[index].localToGlobal(new Laya.Point(0, 0));
         Effect.PropChooseEffect.ChooseProp(index, endPos, Laya.Handler.create(this, this.ClearDefender, null, false));
-        this.EventNotification(Enum.ListenViewEnum.ChooseProp);
-    };
-    /**
-     * 设置道具金额
-     * @param amount
-     */
-    BaseGameAniView.prototype.SetPropAmount = function (money) {
-        var amount = money / 5;
-        for (var index = 0; index < 3; index++) {
-            this.propBoxArr[index].money.text = amount;
-        }
-    };
-    /**
-     * 获取道具使用的总金额
-     */
-    BaseGameAniView.prototype.GetPropUseAmount = function () {
-        var amount = 0;
-        for (var i = 0; i < 3; i++) {
-            if (this.propBoxArr[i].select.visible) {
-                amount += Number(this.propBoxArr[i].money.text);
-            }
-        }
-        return amount;
-    };
-    /**
-     * 获取道具使用的状态
-     */
-    BaseGameAniView.prototype.GetPropUseStatus = function () {
-        return this.propStatusArr;
+        this.EventNotification(Enum.ListenViewEnum.ChooseProp, index);
     };
     /**
      * 重置道具
@@ -142,7 +125,6 @@ var BaseGameAniView = /** @class */ (function () {
             this.propBoxArr[index].disabled = false;
             this.propBoxArr[index].select.visible = false;
             this.propBoxArr[index].prop.play(0, true);
-            this.propStatusArr[index] = 0;
         }
     };
     /**
@@ -151,11 +133,20 @@ var BaseGameAniView = /** @class */ (function () {
     BaseGameAniView.prototype.OnMouseDown = function () {
         this.relativeX = Laya.stage.mouseX - this.endPos.X;
         this.relativeY = Laya.stage.mouseY - this.endPos.Y;
+        this.isMouseDown = true;
+    };
+    /**
+     * 鼠标移开
+     */
+    BaseGameAniView.prototype.OnMouseUp = function () {
+        this.isMouseDown = false;
     };
     /**
      * 鼠标移动
      */
     BaseGameAniView.prototype.OnMouseMove = function () {
+        if (!this.isMouseDown)
+            return;
         var endX = Laya.stage.mouseX - this.relativeX;
         var endY = Laya.stage.mouseY - this.relativeY;
         if (endX < this.ui.goal.x) {
@@ -187,15 +178,20 @@ var BaseGameAniView = /** @class */ (function () {
         this.ui.defender.removeChildren();
         var randData = [0, 1, 2, 3, 4];
         var randPos = Utils.RandomSort.GetRandData(randData);
-        for (var i = 0; i < 3; i++) {
+        var _loop_2 = function (i) {
             var defender = new Laya.Animation();
-            defender.loadAnimation("DefenderAni.ani");
-            this.ui.defender.addChild(defender);
+            defender.loadAnimation("DefenderAni.ani", Laya.Handler.create(this_2, function () {
+                defender.play(0, true, "defender" + i + "_wait");
+            }, null, false));
+            this_2.ui.defender.addChild(defender);
             defender.name = "defender" + i;
-            defender.play(0, true, "defender" + i + "_wait");
             defender.size(85, 225);
             defender.x = (defender.width + 10) * randPos[i] + 10;
-            this.defenderArr.push(defender);
+            this_2.defenderArr.push(defender);
+        };
+        var this_2 = this;
+        for (var i = 0; i < 3; i++) {
+            _loop_2(i);
         }
     };
     /**
@@ -205,7 +201,7 @@ var BaseGameAniView = /** @class */ (function () {
         for (var i = 0; i < this.ui.defender.numChildren; i++) {
             var defender = this.ui.defender.getChildAt(i);
             var range = this.endPos.X - this.ui.defender.x - defender.x;
-            if (range > 20 && range < 60) {
+            if (range > 25 && range < 50) {
                 this.isDefense = true;
                 break;
             }
@@ -232,8 +228,8 @@ var BaseGameAniView = /** @class */ (function () {
     BaseGameAniView.prototype.Reset = function () {
         this.DefenderRandomPos();
         Effect.CurvesEffect.Show();
+        this.ui.goalkeeper.scaleX = 1;
         this.ui.goalkeeper.play(0, true, "guard_wait");
-        this.ui.goalkeeper.pos(320, 330);
         this.ui.football.gotoAndStop(0);
         this.ui.player.gotoAndStop(0);
         this.ui.football.pos(Laya.stage.width / 2, 930);
@@ -241,6 +237,7 @@ var BaseGameAniView = /** @class */ (function () {
         this.counts = 0;
         this.isDefense = false;
         this.isGoal = false;
+        this.ui.disabled = false;
         this.ResetProp();
         this.GameAniResult();
     };
@@ -268,8 +265,6 @@ var BaseGameAniView = /** @class */ (function () {
     BaseGameAniView.prototype.EndCurvesMove = function () {
         var _this = this;
         var easeAni = this.isGoal ? Laya.Ease.bounceOut : Laya.Ease.quadOut;
-        this.GetFootballEndPos();
-        this.SetGuardAnimation(this.guardAniType);
         Laya.Tween.to(this.ui.football, { x: this.footballEndPos.X, y: this.footballEndPos.Y }, 1000, easeAni, Laya.Handler.create(this, function () {
             _this.Reset();
         }, null, false));
@@ -280,13 +275,13 @@ var BaseGameAniView = /** @class */ (function () {
      */
     BaseGameAniView.prototype.GetFootballEndPos = function () {
         if (this.isGoal) {
-            var type = Enum.GuardAniTypeEnum[Math.floor(1 + Math.random() * 5)];
+            var type = Enum.GuardAniTypeEnum[Math.floor(2 + Math.random() * 4)];
             this.guardAniType = Enum.GuardAniTypeEnum[type];
-            this.footballEndPos = { X: this.ui.football.x, Y: this.ui.goal.y + this.ui.goal.height };
+            this.footballEndPos = { X: this.endPos.X, Y: this.ui.goal.y + this.ui.goal.height };
         }
         else if (!this.isGoal && this.isDefense) {
             this.guardAniType = Enum.GuardAniTypeEnum.Default;
-            if (this.ui.football.x <= Laya.stage.width / 2) {
+            if (this.endPos.X <= Laya.stage.width / 2) {
                 this.footballEndPos = { X: -Laya.stage.width / 2, Y: this.ui.goal.y + this.ui.goal.height + Math.random() * 350 };
             }
             else {
@@ -294,19 +289,19 @@ var BaseGameAniView = /** @class */ (function () {
             }
         }
         else {
-            if (this.ui.football.x < this.ui.goal.x + (this.ui.goal.width - this.ui.goalkeeper.width) / 2 && this.ui.football.y <= this.ui.goal.y + this.ui.goal.height / 2) {
+            if (this.endPos.X < this.ui.goal.x + (this.ui.goal.width - this.ui.goalkeeper.width) / 2 && this.endPos.Y <= this.ui.goal.y + this.ui.goal.height / 2) {
                 this.guardAniType = Enum.GuardAniTypeEnum.GuardLt;
                 this.footballEndPos = { X: -Laya.stage.width / 2, Y: this.ui.goal.y + Math.random() * this.ui.goal.height / 2 };
             }
-            else if (this.ui.football.x < this.ui.goal.x + (this.ui.goal.width - this.ui.goalkeeper.width) / 2 && this.ui.football.y > this.ui.goal.y + this.ui.goal.height / 2) {
+            else if (this.endPos.X < this.ui.goal.x + (this.ui.goal.width - this.ui.goalkeeper.width) / 2 && this.endPos.Y > this.ui.goal.y + this.ui.goal.height / 2) {
                 this.guardAniType = Enum.GuardAniTypeEnum.GuardLb;
                 this.footballEndPos = { X: -Laya.stage.width / 2, Y: this.ui.goal.y + (1 + Math.random()) * this.ui.goal.height / 2 };
             }
-            else if (this.ui.football.x > this.ui.goal.x + (this.ui.goal.width + this.ui.goalkeeper.width) / 2 && this.ui.football.y <= this.ui.goal.y + this.ui.goal.height / 2) {
+            else if (this.endPos.X > this.ui.goal.x + (this.ui.goal.width + this.ui.goalkeeper.width) / 2 && this.endPos.Y <= this.ui.goal.y + this.ui.goal.height / 2) {
                 this.guardAniType = Enum.GuardAniTypeEnum.GuardRt;
                 this.footballEndPos = { X: Laya.stage.width * 3 / 2, Y: this.ui.goal.y + Math.random() * this.ui.goal.height / 2 };
             }
-            else if (this.ui.football.x > this.ui.goal.x + (this.ui.goal.width + this.ui.goalkeeper.width) / 2 && this.ui.football.y > this.ui.goal.y + this.ui.goal.height / 2) {
+            else if (this.endPos.X > this.ui.goal.x + (this.ui.goal.width + this.ui.goalkeeper.width) / 2 && this.endPos.Y > this.ui.goal.y + this.ui.goal.height / 2) {
                 this.guardAniType = Enum.GuardAniTypeEnum.GuardRb;
                 this.footballEndPos = { X: Laya.stage.width * 3 / 2, Y: this.ui.goal.y + (1 + Math.random()) * this.ui.goal.height / 2 };
             }
@@ -325,15 +320,17 @@ var BaseGameAniView = /** @class */ (function () {
             case Enum.GuardAniTypeEnum.Default:
                 break;
             case Enum.GuardAniTypeEnum.GuardLt:
+                this.ui.goalkeeper.scaleX = -1;
+                this.ui.goalkeeper.play(0, false, "guard_rt");
                 break;
             case Enum.GuardAniTypeEnum.GuardLb:
+                this.ui.goalkeeper.scaleX = -1;
+                this.ui.goalkeeper.play(0, false, "guard_rb");
                 break;
             case Enum.GuardAniTypeEnum.GuardRt:
-                this.ui.goalkeeper.x = this.isGoal ? this.ui.goalkeeper.x : this.endPos.X - 200;
                 this.ui.goalkeeper.play(0, false, "guard_rt");
                 break;
             case Enum.GuardAniTypeEnum.GuardRb:
-                this.ui.goalkeeper.x = this.isGoal ? this.ui.goalkeeper.x : this.endPos.X - 200;
                 this.ui.goalkeeper.play(0, false, "guard_rb");
                 break;
             case Enum.GuardAniTypeEnum.GuardTop:

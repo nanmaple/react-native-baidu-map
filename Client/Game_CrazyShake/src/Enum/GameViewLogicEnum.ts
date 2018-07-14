@@ -4,8 +4,8 @@ namespace Enum {
      */
     export enum GameViewLogicEnum {
         /**
-         * 启动摇骰动画
+         * 刷新按钮
          */
-        StartAni = 101,
+        MsgGameRefreshBtn=6000,
     }
 }

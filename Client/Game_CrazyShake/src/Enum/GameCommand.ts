@@ -26,11 +26,11 @@ namespace Enum {
         /**
          * 游戏结果
          */
-        MsgGameGameResult = 6,
+        MsgGameResult = 6,
         /**
          * 结算结果
          */
-        MsgGameSettleResult = 7,
+        MsgGameSettleResult=7,
         /**
          * 其他命令（需要游戏逻辑自己解析下层命令）
          */

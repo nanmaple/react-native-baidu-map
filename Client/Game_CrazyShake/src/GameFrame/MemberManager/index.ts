@@ -21,7 +21,7 @@ namespace MemberManager {
          * @param successHandler 成功回调
          * @param failHanlder 失败回调
          */
-        public CheckLogin(successHandler: Laya.Handler, failHandler: Laya.Handler):void {
+        public CheckLogin(successHandler: Laya.Handler, failHandler: Laya.Handler): void {
             this.successHandler = successHandler;
             this.failHanlder = failHandler;
             let authorizationInfo = this.GetAuthorization();
@@ -37,21 +37,17 @@ namespace MemberManager {
          * 获取用户信息成功
          * @param data 
          */
-        private GetMemberInfoSuccess = (data: any):void => {
+        private GetMemberInfoSuccess = (data: any): void => {
             this.successHandler.runWith({ Type: BaseEnum.CheckLoginEnum.MemberInfo, Data: data });
             let authorizationInfo = this.GetAuthorization();
             this.GetSocketToken(authorizationInfo.Token);
-            //微信js签名配置
-            let memberId = this.GetMemberInfo().MemberId.toString();
-            let wechat = new Laya.Browser.window.Wechat(Network.Http, null, GameConfig.GetWeChatShareDto(memberId));
-            wechat.GetJsSignature();
         }
 
         /**
          * 获取用户信息失败
          * @param data 
          */
-        private GetMemberInfoError = (data: any):void => {
+        private GetMemberInfoError = (data: any): void => {
             this.failHanlder.runWith({ Type: BaseEnum.CheckLoginEnum.MemberInfo, Data: data });
         }
 
@@ -59,12 +55,12 @@ namespace MemberManager {
          * 通过授权token获取socket Token
          * @param token 
          */
-        private GetSocketToken(token: string):void {
+        private GetSocketToken(token: string): void {
             this.WebApi.SetToken(token);
             let obj = {
                 GameID: GameConfig.GameID
             }
-            this.WebApi.Post(ApiConfig.LoginGame,obj,{}, (response: any) => {
+            this.WebApi.Post(ApiConfig.LoginGame, obj, {}, (response: any) => {
                 if (response.Result == BaseEnum.ErrorCode.Success) {
                     this.successHandler.runWith({ Type: BaseEnum.CheckLoginEnum.SocketToken, Data: response.Data });
                 } else if (response.Result == BaseEnum.ErrorCode.IPLimited) {
@@ -103,6 +99,16 @@ namespace MemberManager {
             //从缓存中获取会员信息
             let memberInfoDto: BaseDto.MemberInfoDto = <BaseDto.MemberInfoDto>this.loginService.GetMemberInfoByLocal();
             return memberInfoDto;
+        };
+
+        /**
+         * 获取会员信息
+         */
+        public GetMemberScore(handler: Laya.Handler): void {
+            //从缓存中获取会员信息
+            this.loginService.GetMemberScore((memberInfoDto: BaseDto.MemberInfoDto) => {
+                handler.runWith(memberInfoDto);
+            });
         };
 
 

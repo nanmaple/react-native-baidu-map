@@ -27,6 +27,7 @@ P 4ACD6949 btn_voice.png
 P E91B5701 cap.png
 P 60053BEA clip_number.png
 P 97F7108C close.png
+P AA99E94A closeBtn.png
 P 76C6964B floor.png
 P E06BD979 jaguarBtn1.png
 P DE9337CF jaguarBtn2.png
@@ -41,6 +42,7 @@ P 77CA0B78 point4.png
 P 36FD57DB point5.png
 P 8E69DE05 point6.png
 R 577CD16E prompt.png
+R B8385C84 rule.png
 R EC3ADF62 tip.png
 P BB945F0F voiceOffBtn.png
 P F9DF90BB voiceOnBtn.png

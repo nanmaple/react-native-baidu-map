@@ -18,19 +18,17 @@ namespace GameConfig {
     export const DesignLength: number = 1334;//设计尺寸-长边
     export const DesignShort: number = 750;//设计尺寸-短边
     export let ScreenMode: number = 0;//横竖屏类型 ：0 竖屏  1横屏，默认竖屏
+	
+    /*************配置微信分享信息*************/
 
-    /***************配置信息方法***************/
-
-    /****************微信AppId****************/
-    export let AppId: any = null;
-    /**
-     * 设置APPID
-     * @param id 
-     */
-    export function SetAppID(id: any) {
-        this.AppId = id;
+    export const WeChatShareMsg: any = {
+        Title: "NB.ShootDoor",
+        Desc: "ShootDoor is a easy and exciting H5 game that simulated goal of soccer by poker,Please try it now!",
+        ImgUrl: `http://${Domain}/logo.jpg`,
+        Link: ""
     }
-
+    
+    /***************配置信息方法***************/
     /**
      * 获取游戏token方法
      * @param memberId 会员ID
@@ -40,36 +38,6 @@ namespace GameConfig {
         return `${SocketUrl}?GameId=${this.GameID}&MemberId=${memberId}&Device=${this.DeviceType}&DeviceId=${this.DeviceId}&Token=${token}`;
     }
 
-    /**
-     * 获取微信地址方法
-     * @param parentID 是否为授权地址
-     * @param isAuthorize 是否为授权地址
-     */
-    export function GetWeChatUrl(parentID: string, isAuthorize: boolean = true) {
-        let sharGameUrl = `http://${this.Domain}?gameid=${this.GameID}&parentid=${parentID}`;
-        if (isAuthorize) {
-            sharGameUrl = encodeURIComponent(sharGameUrl);
-            return `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${this.AppId}&redirect_uri=${sharGameUrl}&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`;
-        } else {
-            return sharGameUrl;
-        }
-    }
-
-    /**
-     * 获取分享信息
-     * @param parentID 父级ID 
-     * @param isAuthorize 是否为授权地址
-     */
-    export function GetWeChatShareDto(parentID: string) {
-        let dto: any = {
-            Title: "NB.ShootDoor",
-            Desc: "ShootDoor is a easy and exciting H5 game that simulated goal of soccer by poker,Please try it now!",
-            ImgUrl: `http://${this.Domain}/logo.jpg`,
-            Link: ""
-        }
-        dto.Link = GetWeChatUrl(parentID, false);
-        return dto;
-    }
     /**
      * 获取大厅跳转地址
      * @param parentID 

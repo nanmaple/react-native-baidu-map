@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":10,
-    "selecteID":24,
+    "selectedBox":3,
+    "selecteID":10,
     "props":{"width":750,"sceneColor":"#fbfbfb","height":350,"bottom":0},
     "nodeParent":-1,
     "label":"View",
@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":30,"x":520,"var":"btn_shoor","stateNum":"1","skin":"ui/chip/btn_shoor.png"},
+            "props":{"x":520,"var":"btn_shoor","stateNum":"1","skin":"ui/chip/btn_shoor.png","bottom":170},
             "nodeParent":1,
             "label":"Button(btn_shoor)",
             "isDirectory":false,
@@ -28,18 +28,19 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":100,"x":20,"width":400,"skin":"ui/coin_bg.png","height":40},
+            "props":{"y":130,"x":170,"width":300,"skin":"ui/chip/total_bg.png","sizeGrid":"15,30,15,22","height":50},
             "nodeParent":1,
             "label":"Image",
-            "isOpen":false,
+            "isOpen":true,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
             "compId":4,
             "child":[
                 {
+                    "x":30,
                     "type":"Label",
-                    "props":{"x":70,"width":100,"var":"total","valign":"middle","text":"总投:","fontSize":30,"color":"#ffffff","centerY":0,"align":"center"},
+                    "props":{"x":0,"width":100,"var":"total","valign":"middle","text":"总投:","fontSize":30,"color":"#ffffff","centerY":0,"align":"center"},
                     "nodeParent":4,
                     "label":"Label(total)",
                     "isDirectory":false,
@@ -50,8 +51,9 @@
                         ]
                 },
                 {
+                    "x":30,
                     "type":"Label",
-                    "props":{"x":170,"width":200,"var":"money","text":"0","fontSize":30,"color":"#ffffff","centerY":0},
+                    "props":{"x":100,"width":200,"var":"money","text":"0","fontSize":30,"color":"#ffffff","centerY":0},
                     "nodeParent":4,
                     "label":"Label(money)",
                     "isDirectory":false,
@@ -65,7 +67,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":150,"x":0,"width":750,"var":"chipBg","skin":"ui/maskBg.png","left":0,"height":200,"bottom":0},
+            "props":{"width":750,"var":"chipBg","left":0,"height":150,"bottom":0},
             "nodeParent":1,
             "label":"Image(chipBg)",
             "isOpen":true,
@@ -77,20 +79,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"var":"btn_max","skin":"ui/chip/btn_max.png","right":70,"centerY":0},
-                    "nodeParent":3,
-                    "label":"Image(btn_max)",
-                    "isDirectory":false,
-                    "isAniNode":true,
-                    "hasChild":false,
-                    "compId":7,
-                    "child":[
-                        ]
-                },
-                {
-                    "x":30,
-                    "type":"Image",
-                    "props":{"y":-10,"var":"btn_left","skin":"ui/chip/btn_left.png","left":10,"centerY":0},
+                    "props":{"var":"btn_left","skin":"ui/chip/btn_left.png","left":10,"centerY":0},
                     "nodeParent":3,
                     "label":"Image(btn_left)",
                     "isDirectory":false,
@@ -103,7 +92,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"var":"btn_right","skin":"ui/chip/btn_right.png","right":10,"centerY":0},
+                    "props":{"var":"btn_right","skin":"ui/chip/btn_right.png","right":150,"centerY":0},
                     "nodeParent":3,
                     "label":"Image(btn_right)",
                     "isDirectory":false,
@@ -116,7 +105,7 @@
                 {
                     "x":30,
                     "type":"Panel",
-                    "props":{"x":70,"width":464,"var":"chipPanel","height":130,"centerY":0},
+                    "props":{"x":55,"width":512,"var":"chipPanel","height":134,"centerY":0},
                     "nodeParent":3,
                     "label":"Panel(chipPanel)",
                     "isOpen":true,
@@ -128,7 +117,7 @@
                         {
                             "x":45,
                             "type":"Box",
-                            "props":{"x":0,"width":0,"var":"chipBox","height":122,"centerY":0},
+                            "props":{"x":0,"width":0,"var":"chipBox","height":134,"centerY":0},
                             "nodeParent":10,
                             "label":"Box(chipBox)",
                             "isOpen":true,
@@ -139,6 +128,19 @@
                             "child":[
                                 ]
                         }]
+                },
+                {
+                    "x":30,
+                    "type":"Button",
+                    "props":{"var":"btn_max","stateNum":"1","skin":"ui/chip/btn_max.png","right":20,"labelSize":40,"labelFont":"SimSun","labelColors":"#333","labelBold":true,"label":"最大","centerY":0},
+                    "nodeParent":3,
+                    "label":"Button(btn_max)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":26,
+                    "child":[
+                        ]
                 }]
         }],
     "animations":[

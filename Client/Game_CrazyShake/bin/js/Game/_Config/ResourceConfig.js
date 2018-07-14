@@ -10,6 +10,7 @@ var GameResourceConfig;
         { url: "ui/maskBg.png", type: Laya.Loader.IMAGE },
         { url: "ui/tip.png", type: Laya.Loader.IMAGE },
         { url: "ui/prompt.png", type: Laya.Loader.IMAGE },
+        { url: "ui/rule.png", type: Laya.Loader.IMAGE },
         { url: "sound/betSound.mp3", type: Laya.Loader.SOUND },
         { url: "sound/btnSound.mp3", type: Laya.Loader.SOUND },
         { url: "sound/rockDiceSound.mp3", type: Laya.Loader.SOUND },

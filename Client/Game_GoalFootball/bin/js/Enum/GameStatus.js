@@ -5,23 +5,23 @@ var Enum;
         /**
          * 默认
          */
-        GameStatus[GameStatus["DEFAULT"] = 0] = "DEFAULT";
+        GameStatus[GameStatus["Default"] = 0] = "Default";
         /**
          * 投注状态
          */
-        GameStatus[GameStatus["BET"] = 1] = "BET";
+        GameStatus[GameStatus["Bet"] = 1] = "Bet";
         /**
          * 结束状态
          */
-        GameStatus[GameStatus["END"] = 2] = "END";
+        GameStatus[GameStatus["End"] = 2] = "End";
         /**
          * 正在结算状态
          */
-        GameStatus[GameStatus["SETTLE"] = 3] = "SETTLE";
+        GameStatus[GameStatus["Settle"] = 3] = "Settle";
         /**
          * 已结算
          */
-        GameStatus[GameStatus["SETTLEED"] = 4] = "SETTLEED";
+        GameStatus[GameStatus["Settled"] = 4] = "Settled";
     })(GameStatus = Enum.GameStatus || (Enum.GameStatus = {}));
 })(Enum || (Enum = {}));
 //# sourceMappingURL=GameStatus.js.map

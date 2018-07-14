@@ -1,7 +1,4 @@
-/**
- * BaseView主要用于写固定的UI渲染方法和不同功能的UI处理方法,动画
- * 命名规则：BasexxxView
- */
+/**操作面板基类 */
 abstract class BaseOperateView {
     protected ui: ui.OperateViewUI;
     protected ListenEventKey:string;
@@ -16,7 +13,7 @@ abstract class BaseOperateView {
     public ResetScreen() {
         Laya.stage.removeChild(this.ui);
         this.ui = new ui.OperateViewUI();
-        this.ui.zOrder = 20;
+        this.ui.zOrder = 2;
         this.ui.cacheAs = "bitmap";
         Laya.stage.addChild(this.ui);
         this.Init();

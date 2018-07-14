@@ -18,6 +18,14 @@ var Enum;
          * 动画播放完成
          */
         ListenViewEnum[ListenViewEnum["AniPlayComplete"] = 2] = "AniPlayComplete";
+        /**
+         * 关闭规则
+         */
+        ListenViewEnum[ListenViewEnum["CloseRule"] = 3] = "CloseRule";
+        /**
+         * 打开游戏规则
+         */
+        ListenViewEnum[ListenViewEnum["OpenRule"] = 4] = "OpenRule";
     })(ListenViewEnum = Enum.ListenViewEnum || (Enum.ListenViewEnum = {}));
 })(Enum || (Enum = {}));
 //# sourceMappingURL=ListenViewEnum.js.map

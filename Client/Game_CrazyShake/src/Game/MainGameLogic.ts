@@ -1,12 +1,30 @@
 /// <reference path="../GameFrame/BaseGameLogic/index.ts"/>
-/// <reference path="../GameFrame/Logic/MulBet/MulBetLogic.ts"/>
 class MainGameLogic extends BaseGameLogic {
     constructor() {
         super();
         //初始化时创建GameViwLogic,注入Handler
         this.gameView = new GameViewLogic(Laya.Handler.create(this, this.ViewHandler, [], false));
     }
+    /**
+     * 登录完成
+     */
+    public LoginComplete() {
+        // let memberInfo: BaseDto.MemberInfoDto = this.GetMemberInfo();
+        // //启用微信分享
+        // WeChatModule.InitWeChat(memberInfo.MemberId);
+        // //获取授权地址
+        // WeChatModule.GetWeChatUrl(Utils.GetQuery("parentid"),true);
+    }
 
+    /**
+     * 从服务器获取分数成功
+     * @param balance 余额
+     */
+    public GetBalanceComplete(balance:number):void {
+        //通知余额
+        this.gameView.SetData(BaseEnum.GameViewLogicEnum.Balance, balance);
+    }
+	
     /**
     * 侦听Socket连接事件
     */
@@ -70,18 +88,12 @@ class MainGameLogic extends BaseGameLogic {
      */
     public OnMessageHandler(response: Dto.GameMessageDto): void {
         switch (response.Command) {
-            case Enum.GameCommand.MSG_GAME_INIT://初始化
+            case Enum.GameCommand.MsgGameInit://初始化
                 this.SetBalance((response.Data as Dto.ClientInitDto).Balance);
                 break;
-            case Enum.GameCommand.MSG_GAME_START: //游戏开始
+            case Enum.GameCommand.MsgGameStart: //游戏开始
                 break;
-            case Enum.GameCommand.MSG_GAME_BETRESULT://投注结果
-                break;
-            case Enum.GameCommand.MSG_GAME_STOPBET://游戏停止投注
-                break
-            case Enum.GameCommand.MSG_GAME_GAMERESULT: //游戏结果
-                break;
-            case Enum.GameCommand.MSG_GAME_SETTLERESULT://游戏结算
+            case Enum.GameCommand.MsgGameSettleResult://游戏结算
                 if (response.Data.Status != Enum.BetResult.Success) {
                     return this.gameView.SetData(BaseEnum.GameViewLogicEnum.Alert, LanguageUtils.Language.Get(Enum.BetResult[response.Data.Status]));
                 }
@@ -108,7 +120,7 @@ class MainGameLogic extends BaseGameLogic {
         this.Log({ Data: dto }, "SendHandelr");
         //组装游戏命令Dto
         let gameDto: Dto.GameMessageDto = new Dto.GameMessageDto();
-        gameDto.Command = Enum.GameCommand.MSG_GAME_START;
+        gameDto.Command = Enum.GameCommand.MsgGameStart;
         gameDto.Data = dto;
         this.Send(gameDto);
     }
@@ -125,6 +137,7 @@ class MainGameLogic extends BaseGameLogic {
                 }
                 else {
                     this.gameView.SetData(BaseEnum.GameViewLogicEnum.Alert, LanguageUtils.Language.Get("BALANCE_SMALL"))
+                    this.gameView.SetData(Enum.GameViewLogicEnum.MsgGameRefreshBtn,null);
                 };
                 break;
         }

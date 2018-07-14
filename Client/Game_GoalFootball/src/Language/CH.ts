@@ -142,10 +142,9 @@ namespace LanguageUtils {
         /// 正在连接
         /// </summary>
         ConnectService: "Connect Service...",
-        /// <summary>
-        /// 低于最小投注限额
-        /// </summary>
-        LOW_LIMIT: "低于最小投注限额",
+
+        /************************************/
+
         /**
          * 成功
          */
@@ -171,127 +170,51 @@ namespace LanguageUtils {
          */
         NOTBET_STATUS: "不在投注状态",
         /**
-         * 超过投注限额
+         * 低于最小投注限额
+         */
+        LOW_LIMIT: "低于最小投注限额",
+        /**
+         * 超过最大投注限额
          */
         OVER_LIMIT: "超过最大投注限额",
-        //投注信息提示
-        betSuccess: "投注成功",
-        betFail: "投注失败",
-        gameSuccess: "有猜中哦",
-        gameFail: "很遗憾，再接再厉",
 
+        //投注结果信息提示
+        /**
+         * 球进了
+         */
+        GameSuccess: "干得漂亮!",
+        /**
+         * 奖励金
+         */
+        GameReward: ", 恭喜你获得奖励金 ",
+        /**
+         * 奖励倍数
+         */
+        GameMultiple: "倍",
+        /**
+         * 未进球
+         */
+        GameFail: "很遗憾，差一点点，再接再厉哦!",
+
+        /**
+         * 选择最大筹码
+         */
+        MaxChip: "最大",
 
         //游戏规则内容
-        GameRule:"<p style='fontSize:30;font-weight:bold'>游戏简介</p>"+"<br/>"+
-        "<p style='fontSize:25'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;射龙门属于智力小游戏，玩家可以通过扑克牌出现的概率来选择下注位置，从而得到相应的分数作为奖励。</p>"+"<br/>"+
-        "<p style='fontSize:25'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每一局游戏开始时，系统从52张牌中随机抽取三张牌，第一张作为左门柱，第二张作为球，第三张作为右门柱。玩家猜球牌的位置，猜中位置得到相应赔率的分数奖励。</p>"+"<br/>"+
-        "<p style='fontSize:30;font-weight:bold'>玩法说明</p>"+"<br/>"+
-        "<p style='fontSize:25'>1.游戏下注时间为30秒。</p>"+"<br/>"+
-        "<p style='fontSize:25'>2.扑克点数，“A”为1点，“J”为11点，“Q”为12点，“K”为13点，其它按扑克牌面数字作为点数。</p>"+"<br/>"+
-        "<p style='fontSize:25'>3.大小、单双、红黑为固定赔率1.97，其它玩法根据概率动态生成赔率，此赔率包含本金。</p>"+"<br/>"+
-        "<p style='fontSize:25'>4.玩家自行选择下注位置进行下注。</p>"+"<br/>"+
-        "<p style='fontSize:25'>5.大小单双在第二张牌点数为7时，结果为和，退还大小单双位置的所有投注金额。</p>"+"<br/>"+
-        "<p style='fontSize:30;font-weight:bold'>输赢说明</p>"+"<br/>"+
-        "<p style='fontSize:28;font-weight:bold'>射进</p>"+"<br/>"+
-        "<p style='fontSize:25'>球的点数在左门柱和右门柱点数之间（不包含左门柱和右门柱，不论顺序）算赢，其它算输， 例如：</p>"+"<br/>"+
-        "<p style='fontSize:25'>左门柱3点，右门柱6点，球点数为4、5算赢，其它算输</p>"+"<br/>"+
-        "<p style='fontSize:25'>左门柱6点，右门柱3点，球点数为4、5算赢，其它算输</p>"+"<br/>"+
-        "<p style='fontSize:28;font-weight:bold'>射偏</p>"+"<br/>"+
-        "<p style='fontSize:25'>球的点数在左门柱和右门柱点数之外（不包含左门柱和右门柱，不论顺序）算赢，其它算输， 例如：</p>"+"<br/>"+
-        "<p style='fontSize:25'>左门柱3点，右门柱6点，球点数为1（A）、2、7、8、9、10、11（J）、12（Q）、13（K）算赢，其它算输</p>"+"<br/>"+
-        "<p style='fontSize:25'>左门柱6点，右门柱3点，球点数为1（A）、2、7、8、9、10、11（J）、12（Q）、13（K）算赢，其它算输</p>"+"<br/>"+
-        "<p style='fontSize:28;font-weight:bold'>左偏</p>"+"<br/>"+
-        "<p style='fontSize:25'>在射偏的规则之上，球的点数要在左门柱点数之外（和大小顺序有关）算赢，其它算输， 例如：</p>"+"<br/>"+
-        "<p style='fontSize:25'>左门柱3点，右门柱6点，球点数为1（A）、2算赢，其它算输</p>"+"<br/>"+
-        "<p style='fontSize:25'>左门柱6点，右门柱3点，球点数为7、8、9、10、11（J）、12（Q）、13（K）算赢，其它算输</p>"+"<br/>"+
-        "<p style='fontSize:28;font-weight:bold'>右偏</p>"+"<br/>"+
-        "<p style='fontSize:25'>在射偏的规则之上，球的点数要在右门柱点数之外（和大小顺序有关）算赢，其它算输， 例如：</p>"+"<br/>"+
-        "<p style='fontSize:25'>左门柱3点，右门柱6点，球点数为7、8、9、10、11（J）、12（Q）、13（K）算赢，其它算输</p>"+"<br/>"+
-        "<p style='fontSize:25'>左门柱6点，右门柱3点，球点数为1（A）、2算赢，其它算输</p>"+"<br/>"+
-        "<p style='fontSize:28;font-weight:bold'>撞柱</p>"+"<br/>"+
-        "<p style='fontSize:25'>球点数等于左门柱点数或者右门柱点数（不论顺序）算赢，其它算输， 例如：</p>"+"<br/>"+
-        "<p style='fontSize:25'>左门柱3点，右门柱6点，球点数为3、6算赢，其它算输</p>"+"<br/>"+
-        "<p style='fontSize:25'>左门柱6点，右门柱3点，球点数为3、6算赢，其它算输</p>"+"<br/>"+
-        "<p style='fontSize:28;font-weight:bold'>左撞柱</p>"+"<br/>"+
-        "<p style='fontSize:25'>在撞柱的规则之上，球点数等于左门柱点数算赢，其它算输， 例如：</p>"+"<br/>"+
-        "<p style='fontSize:25'>左门柱3点，右门柱6点，球点数为3算赢，其它算输</p>"+"<br/>"+
-        "<p style='fontSize:25'>左门柱6点，右门柱3点，球点数为6算赢，其它算输</p>"+"<br/>"+
-        "<p style='fontSize:28;font-weight:bold'>右撞柱</p>"+"<br/>"+
-        "<p style='fontSize:25'>在撞柱的规则之上，球点数等于右门柱点数算赢，其它算输， 例如：</p>"+"<br/>"+
-        "<p style='fontSize:25'>左门柱3点，右门柱6点，球点数为6算赢，其它算输</p>"+"<br/>"+
-        "<p style='fontSize:25'>左门柱6点，右门柱3点，球点数为3算赢，其它算输</p>"+"<br/>"+
-        "<p style='fontSize:28;font-weight:bold'>大小</p>"+"<br/>"+
-        "<p style='fontSize:25'>球的点数为1（A）、2、3、4、5、6小赢，点数为8、9、10、11（J）、12（Q）、13（K）大赢，7为和（退还大小位置所下注的金额）</p>"+"<br/>"+
-        "<p style='fontSize:28;font-weight:bold'>单双</p>"+"<br/>"+
-        "<p style='fontSize:25'>球的点数为1（A）、3、5、9、11（J）、13（K）单赢，点数为2、4、6、8、10、12（Q）双赢，7为和（退还单双位置所下注的金额）</p>"+"<br/>"+
-        "<p style='fontSize:28;font-weight:bold'>红黑</p>"+"<br/>"+
-        "<p style='fontSize:25'>球的花色为红桃、方块红赢，花色为黑桃、梅花黑赢</p>",
+        GameRuleFirst: "1.左右点击切换选择数值按钮或直接点击“Max”按钮，确认射门使用的投注金额。",
+        GameRuleSecond: "2.可以使用道具。一种道具减少一名防守队员。",
+        GameRuleThird: "3.上下左右滑动黄色路径，调整最佳射门角度，事半功倍。",
+        GameRuleFour: "4.点击“射门”，临门一脚。",
 
-        //游戏记录面板显示
-        /**
-         * 时间
-         */
-        Time: "时间",
-        /**
-         * 局号
-         */
-        Round: "局号",
-        /**
-         * 输赢
-         */
-        WinLose: "输赢",
-        /**
-         * 赢
-         */
-        Win: "赢",
-        /**
-         * 输
-         */
-        Lose: "输",
-        /**
-         * 投注详情如下
-         */
-        BetDetails: "投注详情如下：",
-        /**
-         * 暂无投注记录
-         */
-        NoBetRecord: "暂无投注记录",
-        /**
-         * 加载中
-         */
-        IsLoading: "加载中...",
+        GameTotalRule:"<p style='fontSize:30;font-weight:bold'>游戏简介</p>"+"<br/>",
+
 
         //游戏关注提示内容
         GameTips:"<p style='fontSize:35'>由于您还没有登录，现在是试玩模式，想要体验更多游戏乐趣，请点击左上方</p>"+
         "<p style='fontSize:35;color:red'>&nbsp;'关注'&nbsp;</p>"+
         "<p style='fontSize:35'>按钮，即可登录。</p>",
 
-
-        //局号面板投注状态信息（BetStatus）
-        /**
-         * 期号
-         */
-        Issue: "期号:",
-        /**
-         * 等待开始
-         */
-        WaitStart: "等待开始",
-        /**
-         * 正在投注
-         */        
-        Betting: "正在投注",
-        /**
-         * 停止投注
-         */
-        EndBet: "停止投注",
-        /**
-         * 正在结算
-         */
-        Settling: "正在结算",
-        /**
-         * 已结算
-         */
-        HaveSettled: "已结算",
 
     }
 }

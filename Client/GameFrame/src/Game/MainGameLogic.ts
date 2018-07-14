@@ -1,5 +1,5 @@
 /// <reference path="../GameFrame/BaseGameLogic/index.ts"/>
-/// <reference path="../GameFrame/Logic/MulBet/MulBetLogic.ts"/>
+/// <reference path="../BetLogic/MulBet/MulBetLogic.ts"/>
 class MainGameLogic extends BaseGameLogic {
     /**
      * 投注逻辑
@@ -11,6 +11,28 @@ class MainGameLogic extends BaseGameLogic {
         //初始化时创建GameViwLogic,注入Handler
         this.gameView = new GameViewLogic(Laya.Handler.create(this, this.ViewHandler));
         this.betLogic = new MulBet.MulBetLogic();
+    }
+	
+    /**
+     * 登录完成
+     */
+    public LoginComplete() {
+        // let memberInfo: BaseDto.MemberInfoDto = this.GetMemberInfo();
+        // //启用微信分享
+        // WeChatModule.InitWeChat(memberInfo.MemberId);
+        // //获取授权地址
+        // WeChatModule.GetWeChatUrl(Utils.GetQuery("parentid"),true);
+        // //从服务器获取余额
+        // this.GetBalanceByService();
+    }
+	
+    /**
+     * 从服务器获取分数成功
+     * @param balance 余额
+     */
+    public GetBalanceComplate(balance:number):void {
+        //通知余额
+        this.gameView.SetData(BaseEnum.GameViewLogicEnum.Balance, balance);
     }
 
     /**

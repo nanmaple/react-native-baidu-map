@@ -141,6 +141,21 @@ var LanguageUtils;
         /// 低于最小投注限额
         /// </summary>
         LOW_LIMIT: "低于最小投注限额",
+        /************************************/
+        /**账户余额不足 */
+        InsufficientBalance: '余额不足',
+        /**超出最大投注总额 */
+        OverLimit: '超出最大投注限制',
+        /**socket参数错误 */
+        ParmeterError: '参数错误',
+        /**清除所有投注 */
+        ClearBet: '清除',
+        /**所有投注位置+1 */
+        AddAll: '全部+1',
+        /**开始本轮游戏 */
+        GameStart: '开始',
+        /**收取获得分数 */
+        GatherScore: '收分',
     };
 })(LanguageUtils || (LanguageUtils = {}));
 //# sourceMappingURL=CH.js.map

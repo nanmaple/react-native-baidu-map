@@ -13,6 +13,16 @@ var __extends = (this && this.__extends) || (function () {
 * 功能：基础的View组件内部的逻辑，控制数据渲染逻辑和处理点击等事件，调用对应Base类功能方法和动画，事件通知上层或者ViewGameLogic
 *
 */
+var Enum;
+(function (Enum) {
+    var GameHeadView;
+    (function (GameHeadView) {
+        /**
+         * 设置用户余额
+         */
+        GameHeadView[GameHeadView["SetBalance"] = 10000] = "SetBalance";
+    })(GameHeadView = Enum.GameHeadView || (Enum.GameHeadView = {}));
+})(Enum || (Enum = {}));
 var GameHeadView = /** @class */ (function (_super) {
     __extends(GameHeadView, _super);
     function GameHeadView(eventKey) {
@@ -27,24 +37,32 @@ var GameHeadView = /** @class */ (function (_super) {
      * 一般用于，当数据改变后，渲染需要延迟进行的情况
      */
     GameHeadView.prototype.Refresh = function () {
-        // this.ui.balance.text = String(this.balance);
-        this.moneyEffect.start(this.balance);
+        this.SetBalance(this.balance);
     };
     /**
      * 接收上层View或者GameViewLogic的数据,根据数据，进行不同的渲染
      * @param data
      */
-    GameHeadView.prototype.Set = function (data) {
-        switch (data.Type) {
-            case Enum.GameCommand.MSG_GAME_INIT:
-                this.GameInit(data.Data);
+    GameHeadView.prototype.Set = function (data, type) {
+        switch (type) {
+            case Enum.GameCommand.MsgGameInit:
+                this.GameInit(data);
                 break;
-            case Enum.GameCommand.MSG_GAME_SETTLERESULT:
-                this.GameResult(data.Data);
+            case Enum.GameCommand.MsgGameSettleResult:
+                this.GameResult(data);
                 break;
+            case Enum.GameHeadView.SetBalance:
+                this.SetBalance(data);
             default:
                 break;
         }
+    };
+    /**
+     * 设置用户余额
+     * @param balance
+     */
+    GameHeadView.prototype.SetBalance = function (balance) {
+        this.moneyEffect.start(balance);
     };
     /**
      * 游戏初始化
@@ -53,7 +71,6 @@ var GameHeadView = /** @class */ (function (_super) {
     GameHeadView.prototype.GameInit = function (data) {
         this.balance = data.Balance;
         this.ui.balance.text = Utils.Money.Format(this.balance);
-        // this.moneyEffect.start(this.balance);
     };
     /**
      * 投注结果

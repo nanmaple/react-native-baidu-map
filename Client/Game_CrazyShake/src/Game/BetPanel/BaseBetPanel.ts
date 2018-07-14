@@ -8,7 +8,7 @@ class BaseBetPanel {
     /**
      * 重置屏幕
      */
-    public ResetScreen() {
+    public ResetScreen() :void{
         Laya.stage.removeChild(this.ui);
         this.ui = new ui.BetPanelUI();
         this.ui.zOrder = 5;
@@ -23,22 +23,21 @@ class BaseBetPanel {
     /**
      * 绑定按钮
      */
-    protected OnButton() {
+    protected OnButton() :void{
         this.OnChangBtnImg();
         this.ui.littleBtn.on(Laya.Event.MOUSE_UP, this, this.EventNotification, [Enum.GameBetType.Little]);
         this.ui.jaguarBtn.on(Laya.Event.MOUSE_UP, this, this.EventNotification, [Enum.GameBetType.Jaguar]);
         this.ui.bigBtn.on(Laya.Event.MOUSE_UP, this, this.EventNotification, [Enum.GameBetType.Big]);
-        console.log(Enum.GameBetType.Jaguar);
     }
     /**
      * 投注点击事件
      * @param value 
      */
-    protected EventNotification(value: number) {
+    protected EventNotification(value: number) :void{
+        this.EnableButton(false);
         Laya.SoundManager.playSound("sound/betSound.mp3");
         let dto: Dto.EventNotificationDto = new Dto.EventNotificationDto();
         dto.Type = Enum.ListenViewEnum.BetPos;
-        // dto.Type = Enum.ListenViewEnum.TestBet;
         dto.Value = value;
         let event = new CustomEvent(this.listenEventKey, { detail: dto })
         document.dispatchEvent(event);
@@ -47,7 +46,7 @@ class BaseBetPanel {
     /**
      * 启用按钮
      */
-    protected EnableButton(isEnabled: boolean = true) {
+    protected EnableButton(isEnabled: boolean = true) :void{
         this.ui.littleBtn.mouseEnabled = isEnabled;
         this.ui.jaguarBtn.mouseEnabled = isEnabled;
         this.ui.bigBtn.mouseEnabled = isEnabled;
@@ -56,7 +55,7 @@ class BaseBetPanel {
      * 投注按钮文字渲染(根据语言类型)
      * @param data 赔率
      */
-    protected NotePosOdds(data: any) {
+    protected NotePosOdds(data: any) :void{
         this.ui.littleOdds.changeText(LanguageUtils.Language.Get("BetNote") + data[Enum.GameBetType.Little].toString());
         this.ui.littleRule.changeText(LanguageUtils.Language.Get("LittleRule"));
         this.ui.jaguarOdds.changeText(LanguageUtils.Language.Get("BetNote") + data[Enum.GameBetType.Jaguar].toString());
@@ -67,7 +66,7 @@ class BaseBetPanel {
     /**
      * 按钮样式复原
      */
-    protected RecoverBtnImg() {
+    protected RecoverBtnImg() :void{
         this.ui.littleBtn.skin = "ui/littleBtn1.png";
         this.ui.jaguarBtn.skin = "ui/jaguarBtn1.png";
         this.ui.bigBtn.skin = "ui/bigBtn1.png";
@@ -81,7 +80,7 @@ class BaseBetPanel {
     /**
      * 按钮样式的绑定
      */
-    protected OnChangBtnImg(){
+    protected OnChangBtnImg():void{
         this.ui.littleBtn.on(Laya.Event.MOUSE_DOWN, this, () => {
             this.ui.littleBtn.skin = "ui/littleBtn2.png";
             this.ui.littleOdds.scale(0.9, 0.9);

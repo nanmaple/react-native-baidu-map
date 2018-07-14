@@ -8,10 +8,13 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+/**操作面板类 */
 var OperateView = /** @class */ (function (_super) {
     __extends(OperateView, _super);
     function OperateView(eventKey) {
         var _this = _super.call(this) || this;
+        /**游戏状态 */
+        _this.gameStatus = Enum.GameStatus.Default;
         _this.ListenEventKey = eventKey;
         return _this;
     }
@@ -34,7 +37,7 @@ var OperateView = /** @class */ (function (_super) {
     OperateView.prototype.ChangGameStatus = function (data) {
         this.gameStatus = data;
         switch (data) {
-            case Enum.GameStatus.DEFAULT:
+            case Enum.GameStatus.Default:
                 this.ui.addChip.disabled = true;
                 this.ui.reduceChip.disabled = true;
                 this.ui.clearOrSmall.disabled = false;
@@ -44,14 +47,14 @@ var OperateView = /** @class */ (function (_super) {
                 this.ui.addAllOrBig.skin = 'ui/btn_addAll.png';
                 this.ui.startOrGather.skin = 'ui/btn_start.png';
                 break;
-            case Enum.GameStatus.EXECUTE:
+            case Enum.GameStatus.Execute:
                 this.ui.addChip.disabled = true;
                 this.ui.reduceChip.disabled = true;
                 this.ui.startOrGather.disabled = true;
                 this.ui.clearOrSmall.disabled = true;
                 this.ui.addAllOrBig.disabled = true;
                 break;
-            case Enum.GameStatus.GUESS:
+            case Enum.GameStatus.Guess:
                 this.ui.addChip.disabled = false;
                 this.ui.reduceChip.disabled = false;
                 this.ui.clearOrSmall.disabled = false;
@@ -79,7 +82,7 @@ var OperateView = /** @class */ (function (_super) {
      * 开始游戏或收获分数
     */
     OperateView.prototype.OnStartOrGather = function () {
-        if (this.gameStatus == Enum.GameStatus.DEFAULT) {
+        if (this.gameStatus == Enum.GameStatus.Default) {
             this.EventNotification(Enum.ListenViewEnum.GameStart);
         }
         else {
@@ -90,7 +93,7 @@ var OperateView = /** @class */ (function (_super) {
      * 清空投注或选择大小为小
     */
     OperateView.prototype.OnClearOrSmall = function () {
-        if (this.gameStatus == Enum.GameStatus.DEFAULT) {
+        if (this.gameStatus == Enum.GameStatus.Default) {
             this.EventNotification(Enum.ListenViewEnum.ClearBet);
         }
         else {
@@ -101,7 +104,7 @@ var OperateView = /** @class */ (function (_super) {
      * 全部位置+1或选择大小为大
     */
     OperateView.prototype.OnAddAllOrBig = function () {
-        if (this.gameStatus == Enum.GameStatus.DEFAULT) {
+        if (this.gameStatus == Enum.GameStatus.Default) {
             this.EventNotification(Enum.ListenViewEnum.AddAll);
         }
         else {
@@ -114,6 +117,7 @@ var OperateView = /** @class */ (function (_super) {
      */
     OperateView.prototype.EventNotification = function (type, value) {
         if (value === void 0) { value = ''; }
+        SoundManage.PlaySound(SoundConfig.SounRes.Button);
         var data = new Dto.EventNotificationDto();
         data.Value = value;
         data.Type = type;

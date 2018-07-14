@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Animation",
-            "props":{"y":0,"x":20,"var":"prop","source":"PropAni.ani","autoAnimation":"bomb_wait"},
+            "props":{"y":0,"x":20,"var":"prop","source":"PropAni.ani"},
             "nodeParent":1,
             "label":"Animation(prop)",
             "isDirectory":false,
@@ -28,7 +28,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":130,"width":120,"skin":"ui/coin_bg.png","name":"iconBg","height":27,"centerX":0,"bottom":0},
+            "props":{"y":130,"width":120,"skin":"ui/prop/coin_bg.png","name":"iconBg","height":27,"centerX":0,"bottom":0},
             "nodeParent":1,
             "label":"Image(iconBg)",
             "isOpen":true,

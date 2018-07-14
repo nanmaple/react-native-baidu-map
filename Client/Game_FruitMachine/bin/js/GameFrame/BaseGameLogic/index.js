@@ -101,6 +101,18 @@ var BaseGameLogic = /** @class */ (function () {
         return this.memberInfo.Score;
     };
     /**
+     * 获取会员余额
+     */
+    BaseGameLogic.prototype.GetBalanceByService = function () {
+        var _this = this;
+        this.memberManager.GetMemberScore(Laya.Handler.create(this, function (response) {
+            //同步服务器会员分数
+            _this.SetBalance(response.Score);
+            //获取余额完成
+            _this.GetBalanceComplete(response.Score);
+        }, [], false));
+    };
+    /**
      * 账号是否关闭
      */
     BaseGameLogic.prototype.IsMemberClose = function () {
@@ -139,6 +151,7 @@ var BaseGameLogic = /** @class */ (function () {
     BaseGameLogic.prototype.LoginSuccess = function (socketToken) {
         //通知总UI数据处理完成，渲染页面
         this.gameView.SetData(BaseEnum.GameViewLogicEnum.LoginComplete, '');
+        this.LoginComplete();
         //获取用户缓存
         this.memberInfo = this.memberManager.GetMemberInfo();
         this.authorizationInfo = this.memberManager.GetAuthorization();

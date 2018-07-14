@@ -3,22 +3,22 @@ namespace Enum {
         /**
          * 默认
          */
-        DEFAULT = 0,
+        Default = 0,
         /**
          * 投注状态
          */
-        BET = 1,
+        Bet = 1,
         /**
          * 结束状态
          */
-        END = 2,
+        End = 2,
         /**
          * 正在结算状态
          */
-        SETTLE = 3,
+        Settle = 3,
         /**
          * 已结算
          */
-        SETTLEED = 4,
+        Settled = 4,
     }
 }

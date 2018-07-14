@@ -8,17 +8,13 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-/**
- * 组件Set() 参数类型枚举
- */
 var Enum;
 (function (Enum) {
+    /**
+     * 投注面板参数类型枚举
+     */
     var BetPanel;
     (function (BetPanel) {
-        BetPanel[BetPanel["EnableButton"] = 10000] = "EnableButton";
-        BetPanel[BetPanel["MSG_GAME_INIT"] = 10001] = "MSG_GAME_INIT";
-        BetPanel[BetPanel["MSG_GAME_BET"] = 10002] = "MSG_GAME_BET";
-        BetPanel[BetPanel["MSG_GAME_AniPlayComplete"] = 10003] = "MSG_GAME_AniPlayComplete";
     })(BetPanel = Enum.BetPanel || (Enum.BetPanel = {}));
 })(Enum || (Enum = {}));
 /**
@@ -34,32 +30,18 @@ var BetPanel = /** @class */ (function (_super) {
  * 刷新方法，根据将组件内部的数据，处理逻辑后，将数据渲染到界面
  * 一般用于，当数据改变后，渲染需要延迟进行的情况
  */
-    BetPanel.prototype.Refresh = function (isEnabled) {
-        if (isEnabled === void 0) { isEnabled = true; }
-        this.EnableButton(isEnabled);
+    BetPanel.prototype.Refresh = function () {
+        this.RecoverBtnImg();
+        this.EnableButton();
     };
     /**
      * 接收上层View或者GameViewLogic的数据,根据数据，进行不同的渲染
      * @param data
-     * @param type 枚举类型
      */
-    BetPanel.prototype.Set = function (data, type) {
-        switch (type) {
-            case Enum.BetPanel.MSG_GAME_AniPlayComplete:
-                this.RecoverBtnImg();
-                this.EnableButton();
-                break;
-            case Enum.BetPanel.MSG_GAME_INIT:
-                //按键附上赔率信息
-                this.NotePosOdds(data);
-                this.EnableButton();
-                break;
-            case Enum.BetPanel.MSG_GAME_BET:
-                this.EnableButton(false);
-                break;
-            default:
-                break;
-        }
+    BetPanel.prototype.Set = function (data) {
+        //按键附上赔率信息
+        this.NotePosOdds(data);
+        this.EnableButton();
     };
     return BetPanel;
 }(BaseBetPanel));

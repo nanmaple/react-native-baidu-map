@@ -1,11 +1,18 @@
+/**@todo:测试模块 */
+namespace SoundConfig{
+    export const SounRes = {
+        /**游戏背景音乐*/
+        GameBg : 'sound/gameBg.mp3',
+        /**按钮音效 */
+        Button: 'sound/button.mp3',
+        /**投注音效 */
+        Bet: 'sound/bet.mp3'
+    }
+}
+
 class SoundManage{
     /**静音 */
     static muted:boolean = false;
-    // private musicMuted:boolean = false;
-    // private soundMuted:boolean = false;
-    /**音量 0-1 */
-    // private musicVolume:number = 1;
-    // private soundVolume:number = 1;
 
     constructor(){
 
@@ -36,20 +43,5 @@ class SoundManage{
     static SetMute(value:boolean):void{
         Laya.SoundManager.muted = value;
         this.muted = value;
-        // Laya.SoundManager.musicMuted = value;
-        // this.musicMuted = value;
-        // Laya.SoundManager.soundMuted = value;
-        // this.soundMuted = value;
     }
-
-    /**
-     * 修改音量
-     * @param value 0-1
-     */
-    // static SetVolume(value:number):void{
-    //     Laya.SoundManager.musicVolume = value;
-    //     this.musicVolume = value
-    //     Laya.SoundManager.soundVolume = value;
-    //     this.soundVolume = value
-    // }
 }

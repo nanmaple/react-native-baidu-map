@@ -23,6 +23,10 @@ namespace BaseEnum {
          * 游戏数据分发
          */
         GameData=4,
+        /**
+         * 余额
+         */
+        Balance=5
 
     }
 }

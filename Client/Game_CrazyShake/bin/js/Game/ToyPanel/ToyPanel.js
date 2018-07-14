@@ -13,10 +13,11 @@ var __extends = (this && this.__extends) || (function () {
  */
 var Enum;
 (function (Enum) {
+    /**
+     * 骰子面板参数类型枚举
+     */
     var ToyPanel;
     (function (ToyPanel) {
-        ToyPanel[ToyPanel["MSG_GAME_BET"] = 0] = "MSG_GAME_BET";
-        ToyPanel[ToyPanel["MSG_GAME_SETTLERESULT"] = 1] = "MSG_GAME_SETTLERESULT";
     })(ToyPanel = Enum.ToyPanel || (Enum.ToyPanel = {}));
 })(Enum || (Enum = {}));
 /**
@@ -38,19 +39,9 @@ var ToyPanel = /** @class */ (function (_super) {
      * 接收上层View或者GameViewLogic的数据,根据数据，进行不同的渲染
      * @param data
      */
-    ToyPanel.prototype.Set = function (data, type) {
-        switch (type) {
-            case Enum.ToyPanel.MSG_GAME_BET:
-                this.startRock();
-                break;
-            case Enum.ToyPanel.MSG_GAME_SETTLERESULT:
-                this.Lottery(data);
-                break;
-            default:
-                break;
-        }
-    };
-    ToyPanel.prototype.open = function (handler) {
+    ToyPanel.prototype.Set = function (data) {
+        this.dices = data.Data.Dices;
+        this.StartRock();
     };
     return ToyPanel;
 }(BaseToyPanel));

@@ -3,15 +3,15 @@ namespace Enum{
         /**
          * 设置投注总金额
          */
-        SET_BETTOTALAMOUNT = 10000,
+        SetBetTotalAmount = 10000,
         /**
          * 投注失败
          */
-        BETPOS_ERROR,
+        BetPosError,
         /**
          * 选择最大筹码
          */
-        SET_MAXCHIP,
+        SetMaxChip,
     }
 }
 class GameChipsView extends BaseGameChipsView implements IView {
@@ -34,19 +34,19 @@ class GameChipsView extends BaseGameChipsView implements IView {
      */
     public Set(data: any, type?:any): void {
         switch (type) {
-            case Enum.GameCommand.MSG_GAME_INIT:
+            case Enum.GameCommand.MsgGameInit:
                 this.GameInit(data); 
                 break;
-            case Enum.GameCommand.MSG_GAME_SETTLERESULT:
+            case Enum.GameCommand.MsgGameSettleResult:
                 this.GameResult(data);
                 break;
-            case Enum.GameChipsView.SET_BETTOTALAMOUNT:
+            case Enum.GameChipsView.SetBetTotalAmount:
                 this.SetBetTotalAmount(data);
                 break;
-            case Enum.GameChipsView.BETPOS_ERROR:
+            case Enum.GameChipsView.BetPosError:
                 this.DisabledShootBtn(false);
                 break;
-            case Enum.GameChipsView.SET_MAXCHIP:
+            case Enum.GameChipsView.SetMaxChip:
                 this.SetMaxChip(data);
                 break;
             default:
@@ -105,10 +105,18 @@ class GameChipsView extends BaseGameChipsView implements IView {
      * 设置最大筹码
      */
     private SetMaxChip(money:any):void{
-        for (var index = 0; index < this.chipsArr.length; index++) {
-            if(money < Utils.Money.TransforK(this.chipsArr[index].chip.label)){
-                this.ChooseChip(index - 1);
-                this.MaxChipPage(index - 1);
+        let index:number = 0;
+        for (var i = 0; i < this.chipsArr.length; i++) {
+            if(money < Utils.Money.TransforK(this.chipsArr[i].chip.label)){
+                index = (i - 1) <= 0 ? 0 : i - 1;  
+                this.ChooseChip(index);
+                this.MaxChipPage(index);
+                break;
+            }
+            else if(money >= Utils.Money.TransforK(this.chipsArr[this.chipsArr.length - 1].chip.label)){
+                index = this.chipsArr.length - 1;
+                this.ChooseChip(index);
+                this.MaxChipPage(index);
                 break;
             }
         }

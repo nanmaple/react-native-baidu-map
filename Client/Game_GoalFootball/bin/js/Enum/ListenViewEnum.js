@@ -26,9 +26,21 @@ var Enum;
          */
         ListenViewEnum[ListenViewEnum["ChooseChip"] = 4] = "ChooseChip";
         /**
+         * 选择最大筹码
+         */
+        ListenViewEnum[ListenViewEnum["ChooseMaxChip"] = 5] = "ChooseMaxChip";
+        /**
          * 选择道具
          */
-        ListenViewEnum[ListenViewEnum["ChooseProp"] = 5] = "ChooseProp";
+        ListenViewEnum[ListenViewEnum["ChooseProp"] = 6] = "ChooseProp";
+        /**
+         * 获取余额
+         */
+        ListenViewEnum[ListenViewEnum["GetBalance"] = 7] = "GetBalance";
+        /**
+         * 打开规则面板
+         */
+        ListenViewEnum[ListenViewEnum["OpenRule"] = 8] = "OpenRule";
     })(ListenViewEnum = Enum.ListenViewEnum || (Enum.ListenViewEnum = {}));
 })(Enum || (Enum = {}));
 //# sourceMappingURL=ListenViewEnum.js.map

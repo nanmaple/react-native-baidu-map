@@ -33,6 +33,14 @@ var Enum;
         ListenViewEnum[ListenViewEnum["AddAll"] = 10] = "AddAll";
         /**滚动随机数停止 */
         ListenViewEnum[ListenViewEnum["RandomEndm"] = 11] = "RandomEndm";
+        /**
+         * 获取最新余额
+         */
+        ListenViewEnum[ListenViewEnum["GetBalance"] = 12] = "GetBalance";
+        /**打开规则面板 */
+        ListenViewEnum[ListenViewEnum["ShowRule"] = 13] = "ShowRule";
+        /**静音设置 */
+        ListenViewEnum[ListenViewEnum["SetMute"] = 14] = "SetMute";
     })(ListenViewEnum = Enum.ListenViewEnum || (Enum.ListenViewEnum = {}));
 })(Enum || (Enum = {}));
 //# sourceMappingURL=ListenViewEnum.js.map

@@ -16,5 +16,13 @@ namespace Enum {
          * 动画播放完成
          */
         AniPlayComplete,
+        /**
+         * 关闭规则
+         */
+        CloseRule,
+        /**
+         * 打开游戏规则
+         */
+        OpenRule,
     }
 }

@@ -32,7 +32,7 @@ var GameBgView = /** @class */ (function (_super) {
      * 接收上层View或者GameViewLogic的数据,根据数据，进行不同的渲染
      * @param data
      */
-    GameBgView.prototype.Set = function (data) {
+    GameBgView.prototype.Set = function (data, type) {
     };
     /**
      * 类型：私有方法

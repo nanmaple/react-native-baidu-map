@@ -31,5 +31,13 @@ namespace Enum{
          * 选择道具
          */
         ChooseProp,
+        /**
+         * 获取余额
+         */
+        GetBalance,
+        /**
+         * 打开规则面板
+         */
+        OpenRule,
     }
 }

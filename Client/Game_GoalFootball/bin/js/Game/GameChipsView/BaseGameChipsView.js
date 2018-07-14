@@ -4,7 +4,7 @@ var BaseGameChipsView = /** @class */ (function () {
         /**
          * 筹码数组
          */
-        this.chipsArr = [];
+        this.chipsArr = null;
         /**
          * 选中的筹码皮肤
          */
@@ -14,9 +14,25 @@ var BaseGameChipsView = /** @class */ (function () {
          */
         this.noSelectChipSkin = "ui/chip/btn_noselect.png";
         /**
+         * 射门默认的皮肤
+         */
+        this.shootDoorSkin = "ui/chip/btn_shoor.png";
+        /**
+         * 射门按下的皮肤
+         */
+        this.noShootDoorSkin = "ui/chip/btn_shoor_n.png";
+        /**
          * 投注金额(不包含道具金额)
          */
         this.betAmount = null;
+        /**
+         * 筹码总页数
+         */
+        this.pageNum = 1;
+        /**
+         * 当前筹码页
+         */
+        this.pageNow = 1;
     }
     /**
      * 重置屏幕
@@ -30,6 +46,7 @@ var BaseGameChipsView = /** @class */ (function () {
         this.ui.btn_left.on(Laya.Event.CLICK, this, this.PreviousPage);
         this.ui.btn_right.on(Laya.Event.CLICK, this, this.NextPage);
         this.ui.btn_max.on(Laya.Event.CLICK, this, this.ChooseMaxChip);
+        this.ui.btn_max.label = LanguageUtils.Language.Get("MaxChip");
         Laya.stage.addChild(this.ui);
         this.Init();
     };
@@ -39,66 +56,58 @@ var BaseGameChipsView = /** @class */ (function () {
      */
     BaseGameChipsView.prototype.Init = function () {
         this.DisabledShootBtn(true);
-        this.ui.chipPanel.hScrollBarSkin = "";
-    };
-    /**
-     * 选择投注筹码
-     * @param index
-     */
-    BaseGameChipsView.prototype.ChooseChip = function (index) {
-        this.betAmount = Number(this.chipsArr[index].chip.label);
-        for (var i = 0; i < this.chipsArr.length; i++) {
-            this.chipsArr[i].chip.skin = this.noSelectChipSkin;
-            if (index == i) {
-                this.chipsArr[i].chip.skin = this.selectChipSkin;
-            }
-        }
-        this.EventNotification(Enum.ListenViewEnum.ChooseChip);
-    };
-    /**
-     * 设置投注总金额
-     * @param betAmount 投注金额
-     * @param propAmount 道具金额
-     */
-    BaseGameChipsView.prototype.SetBetTotalAmount = function (betAmount, propAmount) {
-        var total = betAmount + propAmount;
-        this.ui.money.text = total.toString();
-    };
-    /**
-     * 获取投注金额
-     */
-    BaseGameChipsView.prototype.GetBetAmount = function () {
-        return this.betAmount;
-    };
-    /**
-     * 重置
-     */
-    BaseGameChipsView.prototype.Reset = function () {
-        this.DisabledShootBtn(false);
-        this.SetBetTotalAmount(this.betAmount, 0);
     };
     /**
      * 是否禁用射门按钮
      * @param disabled
      */
     BaseGameChipsView.prototype.DisabledShootBtn = function (disabled) {
+        if (disabled) {
+            this.ui.btn_shoor.skin = this.noShootDoorSkin;
+        }
+        else {
+            this.ui.btn_shoor.skin = this.shootDoorSkin;
+        }
         this.ui.btn_shoor.disabled = disabled;
         this.ui.btn_shoor.gray = false;
     };
     /**
-     * 上一页
+     * 跳转到上一页
      */
     BaseGameChipsView.prototype.PreviousPage = function () {
+        if (this.pageNow <= 1) {
+            return;
+        }
+        else {
+            this.pageNow--;
+            Laya.Tween.to(this.ui.chipBox, { x: -this.ui.chipPanel.width * (this.pageNow - 1) }, 500, Laya.Ease.circInOut);
+        }
     };
     /**
-     * 下一页
+     * 跳转到下一页
      */
     BaseGameChipsView.prototype.NextPage = function () {
+        if (this.pageNow >= this.pageNum) {
+            return;
+        }
+        else {
+            this.pageNow++;
+            Laya.Tween.to(this.ui.chipBox, { x: -this.ui.chipPanel.width * (this.pageNow - 1) }, 500, Laya.Ease.circInOut);
+        }
+    };
+    /**
+     * 跳转到最大筹码页
+     * @param index
+     */
+    BaseGameChipsView.prototype.MaxChipPage = function (index) {
+        this.pageNow = Math.ceil((index + 1) / 4);
+        Laya.Tween.to(this.ui.chipBox, { x: -this.ui.chipPanel.width * (this.pageNow - 1) }, 500, Laya.Ease.circInOut);
     };
     /**
      * 选择最大筹码
      */
     BaseGameChipsView.prototype.ChooseMaxChip = function () {
+        this.EventNotification(Enum.ListenViewEnum.ChooseMaxChip);
     };
     return BaseGameChipsView;
 }());

@@ -6,14 +6,6 @@ namespace Enum {
      * 骰子面板参数类型枚举
      */
     export enum ToyPanel {
-        /**
-         * 游戏投注
-         */
-        MSG_GAME_BET,
-        /**
-         * 获得结果
-         */
-        MSG_GAME_SETTLERESULT,
     }
 }
 /**
@@ -36,18 +28,8 @@ class ToyPanel extends BaseToyPanel implements IView {
      * 接收上层View或者GameViewLogic的数据,根据数据，进行不同的渲染
      * @param data 
      */
-    public Set(data: any, type?: any): void {
-        switch (type) {
-            case Enum.ToyPanel.MSG_GAME_BET:
-                this.startRock();
-                break;
-            case Enum.ToyPanel.MSG_GAME_SETTLERESULT:
-                this.Lottery(data);
-                break;
-            default:
-                break;
-        }
-    }
-    public open(handler: Laya.Handler) {
+    public Set(data: any): void {
+        this.dices = data.Data.Dices;
+        this.StartRock();
     }
 }

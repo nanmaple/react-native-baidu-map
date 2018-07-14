@@ -5,18 +5,18 @@
 class BaseGameBgView {
     protected ui: ui.GameBgViewUI;
     constructor() {
-        
+        Laya.SoundManager.playMusic("sound/bgSound.wav");
     }
 
     /**
      * 重置屏幕
      */
-    public ResetScreen() {
+    public ResetScreen() :void{
         Laya.stage.removeChild(this.ui);
         this.ui = new ui.GameBgViewUI();
         this.ui.zOrder = 1;
         this.ui.cacheAs = "bitmap";
         Laya.stage.addChild(this.ui);
-        Laya.SoundManager.playMusic("sound/bgSound.wav")
+        
     }
 }

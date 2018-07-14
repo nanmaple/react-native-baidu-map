@@ -1,6 +1,7 @@
+/**操作面板类 */
 class OperateView extends BaseOperateView implements IView {
     /**游戏状态 */
-    private gameStatus:Enum.GameStatus = Enum.GameStatus.DEFAULT;
+    private gameStatus:Enum.GameStatus = Enum.GameStatus.Default;
 
     constructor(eventKey:string) {
         super();
@@ -28,7 +29,7 @@ class OperateView extends BaseOperateView implements IView {
     private ChangGameStatus(data:Enum.GameStatus):void{
         this.gameStatus = data;
         switch (data) {
-            case Enum.GameStatus.DEFAULT:
+            case Enum.GameStatus.Default:
                 this.ui.addChip.disabled = true;
                 this.ui.reduceChip.disabled = true;
                 this.ui.clearOrSmall.disabled = false;
@@ -38,14 +39,14 @@ class OperateView extends BaseOperateView implements IView {
                 this.ui.addAllOrBig.skin = 'ui/btn_addAll.png';
                 this.ui.startOrGather.skin = 'ui/btn_start.png';
                 break;
-            case Enum.GameStatus.EXECUTE:
+            case Enum.GameStatus.Execute:
                 this.ui.addChip.disabled = true;
                 this.ui.reduceChip.disabled = true;
                 this.ui.startOrGather.disabled = true;
                 this.ui.clearOrSmall.disabled = true;
                 this.ui.addAllOrBig.disabled = true;
                 break;
-            case Enum.GameStatus.GUESS:
+            case Enum.GameStatus.Guess:
                 this.ui.addChip.disabled = false;
                 this.ui.reduceChip.disabled = false;
                 this.ui.clearOrSmall.disabled = false;
@@ -77,7 +78,7 @@ class OperateView extends BaseOperateView implements IView {
      * 开始游戏或收获分数
     */
     public OnStartOrGather():void{
-        if(this.gameStatus == Enum.GameStatus.DEFAULT){
+        if(this.gameStatus == Enum.GameStatus.Default){
             this.EventNotification(Enum.ListenViewEnum.GameStart);
         }else{
             this.EventNotification(Enum.ListenViewEnum.GatherFraction);
@@ -88,7 +89,7 @@ class OperateView extends BaseOperateView implements IView {
      * 清空投注或选择大小为小
     */
     public OnClearOrSmall():void{
-        if(this.gameStatus == Enum.GameStatus.DEFAULT){
+        if(this.gameStatus == Enum.GameStatus.Default){
             this.EventNotification(Enum.ListenViewEnum.ClearBet);
         }else{
             this.EventNotification(Enum.ListenViewEnum.GuessSize,0);
@@ -99,7 +100,7 @@ class OperateView extends BaseOperateView implements IView {
      * 全部位置+1或选择大小为大
     */
     public OnAddAllOrBig():void{
-        if(this.gameStatus == Enum.GameStatus.DEFAULT){
+        if(this.gameStatus == Enum.GameStatus.Default){
             this.EventNotification(Enum.ListenViewEnum.AddAll);
         }else{
             this.EventNotification(Enum.ListenViewEnum.GuessSize,1);
@@ -111,6 +112,7 @@ class OperateView extends BaseOperateView implements IView {
      * @param type 事件类型
      */
     private EventNotification(type:Enum.ListenViewEnum,value:any = ''):void{
+        SoundManage.PlaySound(SoundConfig.SounRes.Button);
         let data: Dto.EventNotificationDto = new Dto.EventNotificationDto();
         data.Value = value;
         data.Type = type;

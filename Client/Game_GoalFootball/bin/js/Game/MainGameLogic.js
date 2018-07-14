@@ -9,15 +9,36 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 /// <reference path="../GameFrame/BaseGameLogic/index.ts"/>
-/// <reference path="../GameFrame/Logic/MulBet/MulBetLogic.ts"/>
 var MainGameLogic = /** @class */ (function (_super) {
     __extends(MainGameLogic, _super);
     function MainGameLogic() {
         var _this = _super.call(this) || this;
+        /**
+         * 投注信息
+         */
+        _this.betInfo = new Dto.BetInfoDto();
         //初始化时创建GameViwLogic,注入Handler
         _this.gameView = new GameViewLogic(Laya.Handler.create(_this, _this.ViewHandler, null, false));
         return _this;
     }
+    /**
+     * 登录完成
+     */
+    MainGameLogic.prototype.LoginComplete = function () {
+        // let memberInfo: BaseDto.MemberInfoDto = this.GetMemberInfo();
+        // // //启用微信分享
+        // WeChatModule.InitWeChat(memberInfo.MemberId);
+        // // //获取授权地址
+        // WeChatModule.GetWeChatUrl(Utils.GetQuery("parentid"),true);
+    };
+    /**
+     * 从服务器获取分数成功
+     * @param balance 余额
+     */
+    MainGameLogic.prototype.GetBalanceComplete = function (balance) {
+        //通知余额
+        this.gameView.SetData(BaseEnum.GameViewLogicEnum.Balance, balance);
+    };
     /**
     * 侦听Socket连接事件
     */
@@ -84,18 +105,20 @@ var MainGameLogic = /** @class */ (function (_super) {
         var data = response.Data;
         this.Log(data, "OnMessageHandler");
         switch (response.Command) {
-            case Enum.GameCommand.MSG_GAME_INIT: //初始化
-                this.SetBalance(response.Data.Balance);
+            case Enum.GameCommand.MsgGameInit: //初始化
+                this.SetBalance(data.Balance);
+                this.betInfo.betAmount = this.betInfo.betAmount ? this.betInfo.betAmount : data.BaseAmounts[0];
+                this.betInfo.MaxBet = data.MaxBet;
+                this.betInfo.MinBet = data.MinBet;
+                this.SetBetTotalAmount();
                 break;
-            case Enum.GameCommand.MSG_GAME_BETRESULT: //投注结果
-                break;
-            case Enum.GameCommand.MSG_GAME_GAMERESULT: //结算结果
-                this.SetBalance(response.Data.Balance);
-                this.gameView.SetData(Enum.GameViewLogicEnum.ChangMoney, this.GetBalance());
+            case Enum.GameCommand.MsgGameSettleResult: //结算结果
+                this.SetBalance(data.Balance);
                 break;
             default:
                 break;
         }
+        response.Data = data;
         this.gameView.SetData(BaseEnum.GameViewLogicEnum.GameData, response);
     };
     ;
@@ -105,7 +128,6 @@ var MainGameLogic = /** @class */ (function (_super) {
      */
     MainGameLogic.prototype.OnAckHandler = function (data) {
         this.Log(data, "OnAckHandler");
-        // this.betLogic.BetAck(data);
     };
     ;
     /**
@@ -117,9 +139,46 @@ var MainGameLogic = /** @class */ (function (_super) {
         this.Log({ Data: dto.Data, msgID: msgID }, "SendHandelr");
         //组装游戏命令Dto
         var gameDto = new Dto.GameMessageDto();
-        gameDto.Command = Enum.GameCommand.MSG_GAME_START;
+        gameDto.Command = Enum.GameCommand.MsgGameStart;
         gameDto.Data = dto.Data;
         this.Send(gameDto, msgID);
+    };
+    /**
+     * 设置总投注额
+     */
+    MainGameLogic.prototype.SetBetTotalAmount = function () {
+        var propAmount = this.betInfo.betAmount / 5;
+        this.betInfo.propTotalAmount = 0;
+        for (var index = 0; index < 3; index++) {
+            if (this.betInfo.propStatus[index] == 1) {
+                this.betInfo.propTotalAmount += propAmount;
+            }
+        }
+        this.betInfo.betTotalAmount = this.betInfo.betAmount + this.betInfo.propTotalAmount;
+    };
+    /**
+     * 投注处理
+     */
+    MainGameLogic.prototype.BetPos = function () {
+        if (this.betInfo.betTotalAmount > this.GetBalance()) {
+            this.gameView.SetData(Enum.GameViewLogicEnum.BetPosError, "BALANCE_SMALL");
+        }
+        else if (this.betInfo.betTotalAmount < this.betInfo.MinBet) {
+            this.gameView.SetData(Enum.GameViewLogicEnum.BetPosError, "LOW_LIMIT");
+        }
+        else if (this.betInfo.betTotalAmount > this.betInfo.MaxBet) {
+            this.gameView.SetData(Enum.GameViewLogicEnum.BetPosError, "OVER_LIMIT");
+        }
+        else {
+            var gameBet = new Dto.GameBetDto();
+            var handlerDto = new Dto.HandlerDto();
+            gameBet.Amount = this.betInfo.betAmount;
+            gameBet.Props = this.betInfo.propStatus;
+            handlerDto.Data = gameBet;
+            this.SendData(handlerDto);
+            var balance = this.GetBalance();
+            this.gameView.SetData(Enum.GameViewLogicEnum.ChangMoney, balance - this.betInfo.betTotalAmount);
+        }
     };
     /********************* Socket *********************/
     /******************* 界面事件hander *****************/
@@ -129,14 +188,29 @@ var MainGameLogic = /** @class */ (function (_super) {
                 this.StartSocket();
                 break;
             case Enum.GameViewHandlerEnum.BetPos:
-                var dto = new Dto.HandlerDto();
-                dto.Data = Data;
-                this.SendData(dto);
+                this.BetPos();
                 break;
-            case Enum.GameViewHandlerEnum.GetMemberInfo:
-                var memberInfo = this.GetMemberInfo();
-                var isTourists = this.IsTourist();
-                this.gameView.SetData(Enum.GameViewLogicEnum.GetMemberInfo, { memberInfo: memberInfo, isTourists: isTourists });
+            case Enum.GameViewHandlerEnum.ChooseChip:
+                this.betInfo.betAmount = Data;
+                this.SetBetTotalAmount();
+                this.gameView.SetData(Enum.GameViewLogicEnum.ChooseChip, this.betInfo);
+                break;
+            case Enum.GameViewHandlerEnum.ChooseMaxChip:
+                var maxChip = Math.floor(this.GetBalance());
+                this.gameView.SetData(Enum.GameViewLogicEnum.ChooseMaxChip, maxChip);
+                break;
+            case Enum.GameViewHandlerEnum.ChooseProp:
+                this.betInfo.propStatus[Data] = 1;
+                this.SetBetTotalAmount();
+                this.gameView.SetData(Enum.GameViewLogicEnum.ChooseProp, this.betInfo);
+                break;
+            case Enum.GameViewHandlerEnum.GameResult:
+                this.betInfo.propStatus = [0, 0, 0];
+                this.SetBetTotalAmount();
+                this.gameView.SetData(Enum.GameViewLogicEnum.GameResult, null);
+                break;
+            case Enum.GameViewHandlerEnum.GetBalance:
+                this.GetBalanceByService();
                 break;
         }
     };

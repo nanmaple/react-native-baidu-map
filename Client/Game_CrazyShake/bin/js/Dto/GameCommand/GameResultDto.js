@@ -1,3 +1,5 @@
+/// <reference path='../../Enum/BetResult.ts'/>
+/// <reference path='../../Enum/GameBetType.ts'/>
 var Dto;
 (function (Dto) {
     /**

@@ -87,9 +87,9 @@ var BaseGameViewLogic = /** @class */ (function (_super) {
      * @param type 类型
      * @param msg 内容
      */
-    BaseGameViewLogic.prototype.ShowAlert = function (type, msg) {
+    BaseGameViewLogic.prototype.ShowAlert = function (type, msg, handler) {
         if (this.alertView) {
-            this.alertView.Show(type, msg);
+            this.alertView.Show(type, msg, handler);
         }
         else {
             alert(msg);

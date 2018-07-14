@@ -9,16 +9,32 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 /// <reference path="../GameFrame/BaseGameLogic/index.ts"/>
-/// <reference path="../GameFrame/Logic/MulBet/MulBetLogic.ts"/>
 var MainGameLogic = /** @class */ (function (_super) {
     __extends(MainGameLogic, _super);
     function MainGameLogic() {
         var _this = _super.call(this) || this;
         //初始化时创建GameViwLogic,注入Handler
         _this.gameView = new GameViewLogic(Laya.Handler.create(_this, _this.ViewHandler, [], false));
-        _this.betLogic = new MulBet.MulBetLogic();
         return _this;
     }
+    /**
+     * 登录完成
+     */
+    MainGameLogic.prototype.LoginComplete = function () {
+        // let memberInfo: BaseDto.MemberInfoDto = this.GetMemberInfo();
+        // //启用微信分享
+        // WeChatModule.InitWeChat(memberInfo.MemberId);
+        // //获取授权地址
+        // WeChatModule.GetWeChatUrl(Utils.GetQuery("parentid"),true);
+    };
+    /**
+     * 从服务器获取分数成功
+     * @param balance 余额
+     */
+    MainGameLogic.prototype.GetBalanceComplete = function (balance) {
+        //通知余额
+        this.gameView.SetData(BaseEnum.GameViewLogicEnum.Balance, balance);
+    };
     /**
     * 侦听Socket连接事件
     */
@@ -82,20 +98,13 @@ var MainGameLogic = /** @class */ (function (_super) {
      * @param data
      */
     MainGameLogic.prototype.OnMessageHandler = function (response) {
-        // let data: any = response.Data;
         switch (response.Command) {
-            case Enum.GameCommand.MSG_GAME_INIT: //初始化
+            case Enum.GameCommand.MsgGameInit: //初始化
                 this.SetBalance(response.Data.Balance);
                 break;
-            case Enum.GameCommand.MSG_GAME_START: //游戏开始
+            case Enum.GameCommand.MsgGameStart: //游戏开始
                 break;
-            case Enum.GameCommand.MSG_GAME_BETRESULT: //投注结果
-                break;
-            case Enum.GameCommand.MSG_GAME_STOPBET: //游戏停止投注
-                break;
-            case Enum.GameCommand.MSG_GAME_GAMERESULT: //游戏结果
-                break;
-            case Enum.GameCommand.MSG_GAME_SETTLERESULT: //游戏结算
+            case Enum.GameCommand.MsgGameSettleResult: //游戏结算
                 if (response.Data.Status != Enum.BetResult.Success) {
                     return this.gameView.SetData(BaseEnum.GameViewLogicEnum.Alert, LanguageUtils.Language.Get(Enum.BetResult[response.Data.Status]));
                 }
@@ -113,7 +122,6 @@ var MainGameLogic = /** @class */ (function (_super) {
      */
     MainGameLogic.prototype.OnAckHandler = function (data) {
         this.Log(data, "OnAckHandler");
-        this.betLogic.BetAck(data);
     };
     ;
     /**
@@ -124,7 +132,7 @@ var MainGameLogic = /** @class */ (function (_super) {
         this.Log({ Data: dto }, "SendHandelr");
         //组装游戏命令Dto
         var gameDto = new Dto.GameMessageDto();
-        gameDto.Command = Enum.GameCommand.MSG_GAME_START;
+        gameDto.Command = Enum.GameCommand.MsgGameStart;
         gameDto.Data = dto;
         this.Send(gameDto);
     };
@@ -138,11 +146,12 @@ var MainGameLogic = /** @class */ (function (_super) {
             case Enum.GameViewHandlerEnum.BetPos:
                 if (100 <= data.Amount && data.Amount <= this.GetBalance()) {
                     this.SendBet(data);
-                    // this.gameView.SetData(Enum.GameViewLogicEnum.StartAni, data)
                 }
                 else {
                     this.gameView.SetData(BaseEnum.GameViewLogicEnum.Alert, LanguageUtils.Language.Get("BALANCE_SMALL"));
+                    this.gameView.SetData(Enum.GameViewLogicEnum.MsgGameRefreshBtn, null);
                 }
+                ;
                 break;
         }
     };

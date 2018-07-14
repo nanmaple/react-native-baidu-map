@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":5,
-    "selecteID":12,
+    "selectedBox":8,
+    "selecteID":15,
     "props":{"width":750,"top":958,"sceneColor":"#000000","height":190},
     "nodeParent":-1,
     "label":"View",
@@ -27,28 +27,54 @@
                 {
                     "x":30,
                     "type":"Button",
-                    "props":{"y":47,"x":110,"width":147,"var":"btnThousand","stateNum":"1","skin":"ui/chip_btn1000.png","height":68},
+                    "props":{"y":47,"x":110,"width":147,"var":"btnleft","stateNum":"1","skin":"ui/chip_btn1000.png","height":68},
                     "nodeParent":2,
-                    "label":"Button(btnThousand)",
-                    "isDirectory":false,
+                    "label":"Button(btnleft)",
+                    "isOpen":true,
+                    "isDirectory":true,
                     "isAniNode":true,
-                    "hasChild":false,
+                    "hasChild":true,
                     "compId":7,
                     "child":[
-                        ]
+                        {
+                            "x":45,
+                            "type":"Label",
+                            "props":{"y":21,"x":49,"width":82,"var":"leftLable","height":25,"fontSize":25,"color":"#ffffff","bold":true,"align":"center"},
+                            "nodeParent":7,
+                            "label":"Label(leftLable)",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":13,
+                            "child":[
+                                ]
+                        }]
                 },
                 {
                     "x":30,
                     "type":"Button",
-                    "props":{"y":47,"x":276,"width":147,"var":"btnTenThousand","stateNum":"1","skin":"ui/chip_btn10000.png","height":68},
+                    "props":{"y":47,"x":276,"width":147,"var":"btnright","stateNum":"1","skin":"ui/chip_btn10000.png","height":68},
                     "nodeParent":2,
-                    "label":"Button(btnTenThousand)",
-                    "isDirectory":false,
+                    "label":"Button(btnright)",
+                    "isOpen":true,
+                    "isDirectory":true,
                     "isAniNode":true,
-                    "hasChild":false,
+                    "hasChild":true,
                     "compId":8,
                     "child":[
-                        ]
+                        {
+                            "x":45,
+                            "type":"Label",
+                            "props":{"y":21,"x":49,"width":82,"var":"rightLable","height":25,"fontSize":25,"color":"#ffffff","bold":true,"align":"center"},
+                            "nodeParent":8,
+                            "label":"Label(rightLable)",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":15,
+                            "child":[
+                                ]
+                        }]
                 },
                 {
                     "x":30,

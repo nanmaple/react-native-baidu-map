@@ -12,10 +12,6 @@ namespace Enum {
         */
         BetPos,
         /**
-         * 获取最新余额
-         */
-        ChangeMoney,
-        /**
          * 获取用户信息
          */
         GetMemberInfo,
@@ -35,5 +31,9 @@ namespace Enum {
          * 游戏结束
          */
         GameResult,
+        /**
+         * 获取余额
+         */
+        GetBalance
     }
 }

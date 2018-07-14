@@ -126,6 +126,24 @@ abstract class BaseGameLogic {
     }
 
     /**
+     * 获取会员余额
+     */
+    protected GetBalanceByService() {
+        this.memberManager.GetMemberScore(Laya.Handler.create(this, (response: any) => {
+            //同步服务器会员分数
+            this.SetBalance(response.Score);
+            //获取余额完成
+            this.GetBalanceComplete(response.Score);
+        }, [], false));
+    }
+
+    /**
+     * 从服务器获取分数成功
+     * @param balance 余额
+     */
+    abstract GetBalanceComplete(balance: number);
+
+    /**
      * 账号是否关闭
      */
     protected IsMemberClose() {
@@ -167,6 +185,7 @@ abstract class BaseGameLogic {
     private LoginSuccess(socketToken: string): void {
         //通知总UI数据处理完成，渲染页面
         this.gameView.SetData(BaseEnum.GameViewLogicEnum.LoginComplete, '');
+        this.LoginComplete();
         //获取用户缓存
         this.memberInfo = this.memberManager.GetMemberInfo();
         this.authorizationInfo = this.memberManager.GetAuthorization();
@@ -177,6 +196,11 @@ abstract class BaseGameLogic {
         //初始socket
         this.InitSocket();
     }
+
+    /**
+     * 登录完成
+     */
+    abstract LoginComplete(): void;
 
     /**
      * 登录检测失败Handler

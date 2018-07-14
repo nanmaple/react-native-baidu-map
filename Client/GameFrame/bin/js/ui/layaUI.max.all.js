@@ -42,6 +42,21 @@ var ui;
     ui.BetBtnUI = BetBtnUI;
 })(ui || (ui = {}));
 (function (ui) {
+    var CvuresUI = /** @class */ (function (_super) {
+        __extends(CvuresUI, _super);
+        function CvuresUI() {
+            return _super.call(this) || this;
+        }
+        CvuresUI.prototype.createChildren = function () {
+            _super.prototype.createChildren.call(this);
+            this.createView(ui.CvuresUI.uiView);
+        };
+        CvuresUI.uiView = { "type": "View", "props": { "width": 750, "height": 1334 }, "child": [{ "type": "Curves", "props": { "y": 543, "x": 273, "points": "6,-16,36,0", "lineWidth": 1, "lineColor": "#ff0000" } }] };
+        return CvuresUI;
+    }(View));
+    ui.CvuresUI = CvuresUI;
+})(ui || (ui = {}));
+(function (ui) {
     var GameBgViewUI = /** @class */ (function (_super) {
         __extends(GameBgViewUI, _super);
         function GameBgViewUI() {
@@ -81,7 +96,7 @@ var ui;
             _super.prototype.createChildren.call(this);
             this.createView(ui.LoadingViewUI.uiView);
         };
-        LoadingViewUI.uiView = { "type": "View", "props": { "width": 750, "height": 1334 }, "child": [{ "type": "Image", "props": { "y": 0, "x": 0, "width": 750, "skin": "ui/maskBg.png", "height": 1334 } }, { "type": "Label", "props": { "width": 242.798828125, "visible": false, "var": "txt", "text": "connecting server...", "strokeColor": "#d00400", "stroke": 5, "height": 28, "fontSize": 28, "color": "#fbff70", "centerY": 0, "centerX": 0, "anchorY": 0.5, "anchorX": 0.5 } }] };
+        LoadingViewUI.uiView = { "type": "View", "props": { "width": 750, "height": 1334 }, "child": [{ "type": "Image", "props": { "y": 0, "x": 0, "width": 750, "skin": "ui/maskBg.png", "height": 1334 } }, { "type": "Label", "props": { "width": 242.798828125, "visible": true, "var": "txt", "strokeColor": "#d00400", "stroke": 5, "height": 28, "fontSize": 28, "color": "#fbff70", "centerY": 0, "centerX": 0, "anchorY": 0.5, "anchorX": 0.5 } }] };
         return LoadingViewUI;
     }(View));
     ui.LoadingViewUI = LoadingViewUI;

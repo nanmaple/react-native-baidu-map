@@ -10,6 +10,8 @@ var GameResourceConfig;
         { url: "ui/maskBg.png", type: Laya.Loader.IMAGE },
         { url: "ui/tip.png", type: Laya.Loader.IMAGE },
         { url: "ui/prompt.png", type: Laya.Loader.IMAGE },
+        { url: "sound/bet.mp3", type: Laya.Loader.SOUND },
+        { url: "sound/button.mp3", type: Laya.Loader.SOUND },
     ];
 })(GameResourceConfig || (GameResourceConfig = {}));
 //# sourceMappingURL=ResourceConfig.js.map

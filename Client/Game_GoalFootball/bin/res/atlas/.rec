@@ -1,22 +1,24 @@
 D .
 D comp
 P 1F3929EA button.png
+D sound
 D ui
+R 577CD16E alert.png
 R CD5B1FCB bg.jpg
-R 577CD16E bg_alert.png
-P 74A23375 btn.png
 P 97F7108C close.png
-P 33A169D6 coin_bg.png
-P C7A39D13 football.png
+P 25CFF298 failTip.png
+P 7E668BD4 football.png
 R 3947C27C maskBg.png
-R 577CD16E prompt.png
+P DFF8B093 successTip.png
 D ui/chip
 P 7DB4F9EE btn_left.png
-P 4B88DE3A btn_max.png
-P 363E2A91 btn_noselect.png
+P 98F8013F btn_max.png
+P 27E13600 btn_noselect.png
 P 3D732357 btn_right.png
-P 7579FF2D btn_select.png
-P 74A23375 btn_shoor.png
+P F9E04156 btn_select.png
+P C7723215 btn_shoor.png
+P A81DF8E5 btn_shoor_n.png
+P 8F90D64C total_bg.png
 D ui/defender
 P FA680F43 defender1_1.png
 P 561FE068 defender1_2.png
@@ -49,6 +51,15 @@ P 43178C49 goalieTop_2.png
 P 7A7DB005 goalieTop_3.png
 P C86DE5D3 goalieWait_1.png
 P 71C34636 goalieWait_2.png
+D ui/header
+P 42F666A1 balance.png
+R 38395FFF head_bg.png
+P 2F772C2C home.png
+P 62E62552 home_bg.png
+P 709ECD31 rank.png
+P 1907EF07 rule.png
+P A4A46CF6 voice_close.png
+P 54C1CFF6 voice_open.png
 D ui/player
 P C583CDAB player_1.png
 P 00FDD200 player_10.png
@@ -80,6 +91,7 @@ P 2E0CF389 blast_4.png
 P 2433E970 blast_5.png
 P 058F1140 blast_6.png
 P B7D3A9C0 bomb.png
+P 33A169D6 coin_bg.png
 P 5B3E497E confuse.png
 P 3E18231A dizzy_1.png
 P D3A6165B dizzy_2.png
@@ -88,3 +100,13 @@ P DEA6503A dizzy_4.png
 P A76E65F4 dizzy_5.png
 P F261B543 dizzy_6.png
 P 0F68FAE9 select.png
+D ui/rule
+P E6D76FDF btn_close.png
+P 217A518D btn_noselect.png
+P 94EEAD60 btn_select.png
+R 112A6DA6 rule_bg.png
+P 5446AB89 rule_title.png
+P 46D6D9F5 ruleImg_1.png
+P 7097C3B3 ruleImg_2.png
+P 0FD244FE ruleImg_3.png
+P A63F39D3 ruleImg_4.png

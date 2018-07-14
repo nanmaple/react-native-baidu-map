@@ -1,14 +1,17 @@
 namespace Enum{
     export enum ChipView{
         /**设置投注个数 */
-        SET_BASE_AMOUNT = 10000,
+        SetBaseAmonut = 10000,
         /**改变游戏状态 */
-        CHANG_GAME_STATUS,
+        ChangGameStatus,
+        /**游戏初始化设置 */
+        Init,
     }
 }
+/**筹码面板类 */
 class ChipView extends BaseChipView implements IView{
     /**游戏状态 */
-    private gameStatus:Enum.GameStatus = Enum.GameStatus.DEFAULT;
+    private gameStatus:Enum.GameStatus = Enum.GameStatus.Default;
 
     constructor(eventKey:string) {
         super();
@@ -27,14 +30,28 @@ class ChipView extends BaseChipView implements IView{
      */
     public Set(data:any,type?:any):void{
         switch(type){
-            case Enum.ChipView.SET_BASE_AMOUNT:
+            case Enum.ChipView.SetBaseAmonut:
                 this.currChip = data;
                 this.ui.currChip.text = data;
                 break;
-            case Enum.ChipView.CHANG_GAME_STATUS:
+            case Enum.ChipView.ChangGameStatus:
                 this.gameStatus = data;
                 break;
+            case Enum.ChipView.Init:
+                this.InitSetting(data);
+                break;
         }
+    }
+
+    private InitSetting(data:any):void{
+        this.baseChip = data[0];
+        this.ui.currChip.text = data[0];
+        
+        this.smallFast = data[1];
+        this.ui.leftLable.text = data[1];
+
+        this.bigFast = data[2];
+        this.ui.rightLable.text = data[2];
     }
 
      /**
@@ -42,7 +59,7 @@ class ChipView extends BaseChipView implements IView{
      * @param type 添加或减去
      */
     public OnMouseDown(type:boolean):void{
-        if(this.gameStatus != Enum.GameStatus.DEFAULT) return;
+        if(this.gameStatus != Enum.GameStatus.Default) return;
         this.loopMark = true;
         this.type = type;
         if(type){
@@ -97,7 +114,7 @@ class ChipView extends BaseChipView implements IView{
      * 鼠标移出或抬起结束加减注
      */
     public OnMouseUp():void{
-        if(!this.loopMark || this.gameStatus != Enum.GameStatus.DEFAULT) return;
+        if(!this.loopMark || this.gameStatus != Enum.GameStatus.Default) return;
         this.loopMark = false;
 
         Laya.timer.clear(this,this.DelayCallback);
@@ -111,10 +128,11 @@ class ChipView extends BaseChipView implements IView{
      * @param value 筹码额
      */
     public OnSetChip(value:number):void{
-        if(this.gameStatus != Enum.GameStatus.DEFAULT) return;
+        if(this.gameStatus != Enum.GameStatus.Default || !value) return;
+        SoundManage.PlaySound(SoundConfig.SounRes.Button);
         this.currChip = value;
         let data: Dto.EventNotificationDto = new Dto.EventNotificationDto();
-        data.Value = {BaseAmount:this.baseChip,Value:value};
+        data.Value = this.currChip;
         data.Type = Enum.ListenViewEnum.ChangBaseAmount;
 
         let event = new CustomEvent(this.ListenEventKey, { detail: data });

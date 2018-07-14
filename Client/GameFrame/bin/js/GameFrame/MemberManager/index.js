@@ -21,10 +21,6 @@ var MemberManager;
                 _this.successHandler.runWith({ Type: BaseEnum.CheckLoginEnum.MemberInfo, Data: data });
                 var authorizationInfo = _this.GetAuthorization();
                 _this.GetSocketToken(authorizationInfo.Token);
-                //微信js签名配置
-                var memberId = _this.GetMemberInfo().MemberId.toString();
-                var wechat = new Laya.Browser.window.Wechat(Network.Http, null, GameConfig.GetWeChatShareDto(memberId));
-                wechat.GetJsSignature();
             };
             /**
              * 获取用户信息失败
@@ -101,6 +97,16 @@ var MemberManager;
             //从缓存中获取会员信息
             var memberInfoDto = this.loginService.GetMemberInfoByLocal();
             return memberInfoDto;
+        };
+        ;
+        /**
+         * 获取会员信息
+         */
+        Member.prototype.GetMemberScore = function (handler) {
+            //从缓存中获取会员信息
+            this.loginService.GetMemberScore(function (memberInfoDto) {
+                handler.runWith(memberInfoDto);
+            });
         };
         ;
         /**

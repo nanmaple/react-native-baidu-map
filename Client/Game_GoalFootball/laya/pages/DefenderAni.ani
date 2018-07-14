@@ -1,4 +1,5 @@
 {
+    "x":0,
     "type":"View",
     "selectedBox":1,
     "props":{"sceneWidth":750,"sceneHeight":1334,"sceneColor":"#ffffff"},
@@ -11,6 +12,7 @@
     "compId":1,
     "child":[
         {
+            "x":15,
             "type":"GraphicNode",
             "props":{},
             "nodeParent":1,
@@ -23,6 +25,7 @@
                 ]
         },
         {
+            "x":15,
             "type":"GraphicNode",
             "props":{},
             "nodeParent":1,
@@ -143,7 +146,7 @@
                                 "index":30
                             },
                             {
-                                "value":-10,
+                                "value":-20,
                                 "tweenMethod":"linearNone",
                                 "tween":true,
                                 "target":5,
@@ -254,7 +257,7 @@
                                 "index":30
                             },
                             {
-                                "value":-10,
+                                "value":-20,
                                 "tweenMethod":"linearNone",
                                 "tween":true,
                                 "target":5,
@@ -365,7 +368,7 @@
                                 "index":30
                             },
                             {
-                                "value":-10,
+                                "value":-20,
                                 "tweenMethod":"linearNone",
                                 "tween":true,
                                 "target":5,
