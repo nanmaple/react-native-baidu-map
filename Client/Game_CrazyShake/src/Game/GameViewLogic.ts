@@ -8,7 +8,7 @@ class GameViewLogic extends BaseGameViewLogic {
     public ToyPanel: ToyPanel;
     public BetNumPanel: BetNumPanel;
     public BetPanel: BetPanel;
-    public RulePanel:RulePanel;
+    public RulePanel: RulePanel;
     constructor(Handler: Laya.Handler) {
         super();
         this.CtrlHandler = Handler;
@@ -20,11 +20,12 @@ class GameViewLogic extends BaseGameViewLogic {
      * 横竖屏监听
      */
     public ResetScreen(): void {
+
     }
 
     /**
-    * 启动游戏资源页面，开始加载游戏资源
-    */
+     * 启动游戏资源页面，开始加载游戏资源
+     */
     public GameLoad(): void {
         this.gameLoadView = new GameLoadView(this.GameViewEventKey);
         this.gameLoadView.ResetScreen();
@@ -79,7 +80,7 @@ class GameViewLogic extends BaseGameViewLogic {
         this.BetPanel = new BetPanel(this.GameViewEventKey);
         this.BetPanel.ResetScreen();
         this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.StartSocket, {}]);
-        this.RulePanel=new RulePanel(this.GameViewEventKey);
+        this.RulePanel = new RulePanel(this.GameViewEventKey);
         this.RulePanel.ResetScreen();
     }
 

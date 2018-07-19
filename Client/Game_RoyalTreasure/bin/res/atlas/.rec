@@ -1,0 +1,45 @@
+D .
+D comp
+P 1F3929EA button.png
+D ui
+P F36D8DA5 autoDigWord.png
+P 145A0165 balanceBg.png
+P DC1C0C8E balanceMark.png
+P 670B0347 betNumBg.png
+R E6BDA5EB bg.jpg
+R 577CD16E bg_alert.png
+R 5C94EABC bg_record.png
+P 550C1ECA blackDiamond.png
+P 235C68E5 btn_add.png
+P 4E0F44FE btn_autoDig.png
+P 8D85F51A btn_decrease.png
+P BD1E107F btn_recharge.png
+P 3A9E4B83 car.png
+P 97F7108C close.png
+P 98044097 crown.png
+P 3FAA837F diamondTypeBtn.png
+R 517DB5A9 footer.png
+P BB6D03DC goldHammer.png
+P 7DC63BF2 hammer.png
+P 24D92835 hammerBg.png
+R AA211E3F header.png
+P DF17EDC7 homeBtn.png
+P F6C24E0A leftGold.png
+P 5958F3C6 lightOff.png
+P 43928C19 lightOn.png
+R 008A41CD load.jpg
+R 3947C27C maskBg.png
+P F818E407 maxBtn.png
+R 0305E3DB mine1.png
+P C4386E70 mine2.png
+P 937F953D mine3.png
+P FD7B5DD0 mine4.png
+P 450CF53A mine5.png
+P 9C06D645 mine6.png
+R 6713AC7E new.png
+R 577CD16E prompt.png
+P 4785E4CE redDiamond.png
+P C0F516B3 rightGold.png
+P 8A4F1EBF semicircle.png
+P 7D2C9B54 star.png
+R EC3ADF62 tip.png

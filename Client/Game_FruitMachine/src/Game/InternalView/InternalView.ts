@@ -58,17 +58,9 @@ class InternalView extends BaseInternalView implements IView{
      */
     private LoopCallBack():void{
         this.currCount++;
-        
+        //显示数值
         let number:any = this.currCount%this.bigNumber;
         number = number ? number : this.bigNumber;
-        //图片显示数值的情况
-        // let one = number%10;
-        // let ten = Math.floor(number/10);
-        // this.ui.onesPlace.index = one;
-        // this.ui.tensPlace.index = ten;
-
-        //文字显示数值的情况
-        if(number<10) number = '0' + number;
         this.ui.random.text = number + '';
 
         if(this.currCount >= this.count+this.resNumber){

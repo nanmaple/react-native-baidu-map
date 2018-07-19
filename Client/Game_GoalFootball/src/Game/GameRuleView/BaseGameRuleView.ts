@@ -45,6 +45,11 @@ abstract class BaseGameRuleView {
         this.ui.rule_2.text = LanguageUtils.Language.Get("GameRuleSecond");
         this.ui.rule_3.text = LanguageUtils.Language.Get("GameRuleThird");
         this.ui.rule_4.text = LanguageUtils.Language.Get("GameRuleFour");
+        let htmlD: Laya.HTMLDivElement = new Laya.HTMLDivElement();
+        htmlD.innerHTML = LanguageUtils.Language.Get("GameTotalRule");
+        htmlD.style.lineHeight = 40;
+        htmlD.style.width = 480;
+        this.ui.ruleTotal.addChild(htmlD);
         this.ui.rulePanel.hScrollBarSkin = "";
         this.ui.rulePanel.hScrollBar.elasticBackTime = 300;
         this.ui.rulePanel.hScrollBar.elasticDistance = 50;
@@ -61,6 +66,7 @@ abstract class BaseGameRuleView {
      * 隐藏规则面板
      */
     private HideRule(): void {
+        Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
         Effect.AlertEffect.Hide(this.ui.prompt, Laya.Handler.create(this, () => {
             this.isShow = false;
             this.ui.visible = this.isShow;

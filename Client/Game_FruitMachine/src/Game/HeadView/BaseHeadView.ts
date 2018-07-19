@@ -22,7 +22,7 @@ abstract class BaseHeadView{
         this.ui = new ui.HeadViewUI();
         this.effect = new Effect.NumberGradualChangeEffect(this.ui.balance);
         this.ui.zOrder = 2;
-        // this.ui.cacheAs = "bitmap";
+        this.ui.cacheAs = "bitmap";
         Laya.stage.addChild(this.ui);
         this.Init();
     }
@@ -33,6 +33,8 @@ abstract class BaseHeadView{
         this.ui.balanceBox.on(Laya.Event.CLICK,this,this.OnRefreshBalance);
         this.ui.btnSound.on(Laya.Event.CLICK,this,this.OnSetMute);
         this.ui.btnRule.on(Laya.Event.CLICK,this,this.OnShowRule);
+        this.ui.btnPay.on(Laya.Event.CLICK,this,this.OnPay);
+        this.ui.btnRecord.on(Laya.Event.CLICK,this,this.OnShowRecord);
     }
 
     /**返回首页 */
@@ -46,5 +48,11 @@ abstract class BaseHeadView{
 
     /**打开规则面板 */
     abstract OnShowRule():void;
+
+    /**打开记录面板 */
+    abstract OnShowRecord():void;
+
+    /**跳转支付 */
+    abstract OnPay():void;
     
 }

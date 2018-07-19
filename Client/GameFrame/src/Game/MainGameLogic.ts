@@ -30,7 +30,7 @@ class MainGameLogic extends BaseGameLogic {
      * 从服务器获取分数成功
      * @param balance 余额
      */
-    public GetBalanceComplate(balance:number):void {
+    public GetBalanceComplete(balance:number):void {
         //通知余额
         this.gameView.SetData(BaseEnum.GameViewLogicEnum.Balance, balance);
     }
@@ -100,27 +100,27 @@ class MainGameLogic extends BaseGameLogic {
         let data: any = response.Data;
         this.Log(data, "OnMessageHandler");
         switch (response.Command) {
-            case Enum.GameCommand.MSG_GAME_INIT://初始化
-                if (data.Status == Enum.GameStatus.BET && !this.IsMemberClose()) {
+            case Enum.GameCommand.MsgGameInit://初始化
+                if (data.Status == Enum.GameStatus.Bet && !this.IsMemberClose()) {
                     //初始化，同步服务器的投注成功的数据
                     this.betLogic.SetBetSuccessData(data.TotalBet);
                 }
                 break;
-            case Enum.GameCommand.MSG_GAME_START: //游戏开始
+            case Enum.GameCommand.MsgGameStart: //游戏开始
                 this.betLogic.SetNewRound();
                 break;
-            case Enum.GameCommand.MSG_GAME_BETRESULT://投注结果
+            case Enum.GameCommand.MsgGameBetResult://投注结果
                 if (data.Success) {
                     //同步服务器的投注结果的数据
                     this.betLogic.SetBetSuccessData(data.TotalBet);
                 }
                 break;
-            case Enum.GameCommand.MSG_GAME_STOPBET://游戏停止投注
+            case Enum.GameCommand.MsgGameStopBet://游戏停止投注
                 break
-            case Enum.GameCommand.MSG_GAME_GAMERESULT: //游戏结果
+            case Enum.GameCommand.MsgGameResult: //游戏结果
                 this.betLogic.ResetData();
                 break;
-            case Enum.GameCommand.MSG_GAME_SETTLERESULT://游戏结算
+            case Enum.GameCommand.MsgGameSettleResult://游戏结算
                 //游戏结算，重置之前投注数据
                 this.betLogic.SetBetSuccessData();
                 this.SetBalance((response.Data as Dto.GameResultDto).Balance);
@@ -150,7 +150,7 @@ class MainGameLogic extends BaseGameLogic {
         this.Log({ Data: dto.Data, msgID: msgID }, "SendHandelr");
         //组装游戏命令Dto
         let gameDto: Dto.GameMessageDto = new Dto.GameMessageDto();
-        gameDto.Command = Enum.GameCommand.MSG_GAME_BET;
+        gameDto.Command = Enum.GameCommand.MsgGameBet;
         gameDto.Data = dto.Data;
         this.betLogic.SetMsgID(msgID);
         this.Send(gameDto, msgID);
@@ -160,33 +160,14 @@ class MainGameLogic extends BaseGameLogic {
     /******************* 界面事件hander *****************/
     public ViewHandler(Type: Enum.GameViewHandlerEnum, Data: any): void {
         switch (Type) {
-            case Enum.GameViewHandlerEnum.BetPos:
-                let result = this.betLogic.Bet(this.GetBalance(), Data);
-                if (result.success) {
-                    let BetPosAmount: MulBet.BetPosAmountDto = new MulBet.BetPosAmountDto();
-                    BetPosAmount.Pos = Data.Pos;
-                    BetPosAmount.Amount = result.data;
-                    this.gameView.SetData(Enum.GameViewLogicEnum.BetPos, BetPosAmount);
-
-                    let money = this.GetBalance() - this.betLogic.GetBetScore();
-                    this.gameView.SetData(Enum.GameViewLogicEnum.ChangMoney, money);
-                } else {
-                    this.gameView.SetData(BaseEnum.GameViewLogicEnum.Alert, result.data);
-                }
-                let requestParams: IRequestParams = {
-                    Type: "Get",
-                    Params: {},
-                    Url: "sss",
-                }
-                this.Request(requestParams, (response: any) => { }, (error: any) => { });
+            case Enum.GameViewHandlerEnum.StartSocket:
+                this.StartSocket();
                 break;
-
-            case Enum.GameViewHandlerEnum.GetMemberInfo:
-                let memberInfo = this.GetMemberInfo();
-                let isTourists = this.IsTourist();
-                this.gameView.SetData(Enum.GameViewLogicEnum.GetMemberInfo, { memberInfo, isTourists })
-                break
-
+            case Enum.GameViewHandlerEnum.BetPos:
+                break;
+            case Enum.GameViewHandlerEnum.GetBalance:
+                this.GetBalanceByService();
+                break;
         }
     }
 

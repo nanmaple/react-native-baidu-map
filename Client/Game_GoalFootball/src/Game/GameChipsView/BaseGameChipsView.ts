@@ -6,22 +6,6 @@ abstract class BaseGameChipsView {
      */
     protected chipsArr:Array<ui.ChipBtnViewUI> = null;
     /**
-     * 选中的筹码皮肤
-     */
-    protected selectChipSkin:any = "ui/chip/btn_select.png";
-    /**
-     * 未选中的筹码皮肤
-     */
-    protected noSelectChipSkin:any = "ui/chip/btn_noselect.png";
-    /**
-     * 射门默认的皮肤
-     */
-    protected shootDoorSkin:any = "ui/chip/btn_shoor.png";
-    /**
-     * 射门按下的皮肤
-     */
-    protected noShootDoorSkin:any = "ui/chip/btn_shoor_n.png";
-    /**
      * 投注金额(不包含道具金额)
      */
     protected betAmount:number = null;
@@ -49,7 +33,6 @@ abstract class BaseGameChipsView {
         this.ui.btn_left.on(Laya.Event.CLICK, this, this.PreviousPage);
         this.ui.btn_right.on(Laya.Event.CLICK, this, this.NextPage);
         this.ui.btn_max.on(Laya.Event.CLICK, this, this.ChooseMaxChip);
-        this.ui.btn_max.label = LanguageUtils.Language.Get("MaxChip");
         Laya.stage.addChild(this.ui);
         this.Init();
     }
@@ -59,6 +42,7 @@ abstract class BaseGameChipsView {
      */
     private Init():void{
         this.DisabledShootBtn(true);
+        this.ui.btn_max.label = LanguageUtils.Language.Get("MaxChip");
     }
     
     /**
@@ -67,9 +51,9 @@ abstract class BaseGameChipsView {
      */
     protected DisabledShootBtn(disabled:boolean):void{
         if(disabled){
-            this.ui.btn_shoor.skin = this.noShootDoorSkin;
+            this.ui.btn_shoor.skin = LanguageUtils.Language.Get("NoShootDoorSkin");
         }else{
-            this.ui.btn_shoor.skin = this.shootDoorSkin;
+            this.ui.btn_shoor.skin = LanguageUtils.Language.Get("ShootDoorSkin");
         }
         this.ui.btn_shoor.disabled = disabled;
         this.ui.btn_shoor.gray = false;
@@ -81,6 +65,7 @@ abstract class BaseGameChipsView {
         if(this.pageNow <= 1){
             return
         }else{
+            Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
             this.pageNow--;
             Laya.Tween.to(this.ui.chipBox, {x:-this.ui.chipPanel.width * (this.pageNow - 1)},500,Laya.Ease.circInOut);
         }
@@ -92,6 +77,7 @@ abstract class BaseGameChipsView {
         if(this.pageNow >= this.pageNum){
             return
         }else{
+            Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
             this.pageNow++;
             Laya.Tween.to(this.ui.chipBox, {x:-this.ui.chipPanel.width * (this.pageNow - 1)},500,Laya.Ease.circInOut);
         }

@@ -42,11 +42,14 @@ abstract class BaseGameHeadView {
         this.ui.voice.on(Laya.Event.CLICK, this, this.SetVoice);
         this.ui.rule.on(Laya.Event.CLICK, this, this.OpenRule);
         this.ui.home.on(Laya.Event.CLICK, this, this.BackHome);
+        this.ui.record.on(Laya.Event.CLICK, this, this.OpenRecord);
+        this.ui.title.skin = LanguageUtils.Language.Get("HeadTitleSkin");
     }
     /**
      * 获取最新余额
      */
     private GetBalance():void{
+        Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
         this.EventNotification(Enum.ListenViewEnum.GetBalance);
     }
     /**
@@ -67,13 +70,21 @@ abstract class BaseGameHeadView {
      * 打开规则面板
      */
     private OpenRule():void{
+        Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
         this.EventNotification(Enum.ListenViewEnum.OpenRule);
+    }
+    /**
+     * 打开游戏记录
+     */
+    private OpenRecord():void{
+        Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
     }
     /**
      * 返回首页
      */
     private BackHome():void{
-
+        Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
+        Laya.Browser.window.location.href = "";
     }
     /**
      * 事件广播

@@ -8,11 +8,13 @@ namespace Enum{
         ClearAll,
         /**改变游戏状态 */
         ChangGameStatus,
+        /**游戏结束 */
+        GameEnd,
     }
 }
 class BetBarView extends BaseBetBarView implements IView{
     /**游戏状态 */
-    private gameStatus:Enum.GameStatus = Enum.GameStatus.Default;
+    private gameStatus:Enum.GameStatus = Enum.GameStatus.WaitInit;
     
     constructor(eventKey: string) {
         super();
@@ -44,6 +46,9 @@ class BetBarView extends BaseBetBarView implements IView{
             case Enum.BetBarView.ChangGameStatus:
                 this.gameStatus = data;
                 break;
+            case Enum.BetBarView.GameEnd:
+                this.GameEnd(data);
+                break;
         }
     }
 
@@ -71,7 +76,22 @@ class BetBarView extends BaseBetBarView implements IView{
         }
     }
 
-    
+    /**
+     * 游戏结束
+     * @param result 结果对象
+     */
+    private GameEnd(result:Dto.GameResultDto):void{
+        if(result.WinAmount != 0 ){
+            let pos = betpos[result.Result];
+            if(pos != betpos[16]){
+                Laya.SoundManager.playSound(SoundConfig.SounRes.WinPos[pos],1,Laya.Handler.create(this,()=>{
+                    Laya.SoundManager.playSound(SoundConfig.SounRes.Win);
+                }));
+                return;
+            }
+            Laya.SoundManager.playSound(SoundConfig.SounRes.Loss);
+        }
+    }
 
     /**
      * 点击事件触发函数
@@ -79,7 +99,7 @@ class BetBarView extends BaseBetBarView implements IView{
      */
     public OnBetClick(position:number,sound?:boolean):void{
         if(this.gameStatus != Enum.GameStatus.Default) return;
-        if(sound) SoundManage.PlaySound(SoundConfig.SounRes.Bet);
+        if(sound) Laya.SoundManager.playSound(SoundConfig.SounRes.Bet[position]);
         let data: Dto.EventNotificationDto = new Dto.EventNotificationDto();
         data.Value = position;
         data.Type = Enum.ListenViewEnum.BetPos;

@@ -3,24 +3,21 @@ namespace OnceBet {
      * 投注相关内容
      */
     export class BetDataDto {
-        /**
-         * 当前总投注信息
-         */
+        /*** 当前总投注信息*/
         public BetSuccessData: any = new Object();
-        /**
-         * 当前投注的总数
-         */
+        /**当前投注的总数 */
         public BetNumber: number = 0;
 
-        /**
-         * 当前投注基数
-         */
-        public BaseAmount: number;
+        /** 投注基数*/
+        // public BaseAmount: number;
+
+        /** 当前投注基数*/
+        public CurrBaseAmount: number;
 
         /**最大基数 */
-        public MaxBase:number;
+        // public MaxBase:number;
 
-        /**上一次投注位置、个数信息 */
+        /**上一次投注位置、个数信息 data, number*/ 
         public LastBet:any = new Object();
 
         /**单个位置最大投注数 */

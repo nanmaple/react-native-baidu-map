@@ -2,8 +2,8 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":3,
-    "props":{"width":750,"top":0,"sceneColor":"#ffffff","left":0,"height":200},
+    "selecteID":1,
+    "props":{"width":750,"top":5,"sceneColor":"#ffffff","left":0,"height":200},
     "nodeParent":-1,
     "label":"View",
     "isOpen":true,
@@ -28,7 +28,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":0,"x":0,"var":"head_bg","skin":"ui/header/head_bg.png"},
+            "props":{"y":0,"x":0,"width":750,"var":"head_bg","skin":"ui/header/head_bg.png","height":75},
             "nodeParent":1,
             "label":"Image(head_bg)",
             "isOpen":true,
@@ -40,7 +40,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":16,"width":55,"var":"home","skin":"ui/header/home_bg.png","left":30,"height":55},
+                    "props":{"width":55,"var":"home","skin":"ui/header/home_bg.png","left":30,"height":55,"centerY":0},
                     "nodeParent":4,
                     "label":"Image(home)",
                     "isOpen":false,
@@ -65,7 +65,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":22,"x":556,"skin":"ui/header/balance.png"},
+                    "props":{"x":556,"skin":"ui/header/balance.png","centerY":0},
                     "nodeParent":4,
                     "label":"Image",
                     "isOpen":false,
@@ -86,14 +86,27 @@
                             "child":[
                                 ]
                         }]
+                },
+                {
+                    "x":30,
+                    "type":"Image",
+                    "props":{"y":-5,"var":"title","skin":"ui/header/head_tit.png","centerX":0},
+                    "nodeParent":4,
+                    "label":"Image(title)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":10,
+                    "child":[
+                        ]
                 }]
         },
         {
             "x":15,
             "type":"Image",
-            "props":{"var":"rank","skin":"ui/header/rank.png","right":20,"bottom":0},
+            "props":{"var":"record","skin":"ui/header/record.png","right":20,"bottom":0},
             "nodeParent":1,
-            "label":"Image(rank)",
+            "label":"Image(record)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,

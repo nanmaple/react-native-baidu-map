@@ -62,6 +62,7 @@ class GameAniView extends BaseGameAniView implements IView {
         this.ui.player.on(Laya.Event.LABEL,this,(data)=>{
             // 在标签start后开始执行
             if(data == "start"){
+                Utils.BackgroundMusic.PlaySounds("sound/play.mp3");
                 this.DefenderStartJump();
                 this.GetFootballEndPos();
                 Laya.timer.once(750, this, this.SetGuardAnimation, [this.guardAniType]);

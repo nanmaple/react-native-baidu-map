@@ -1,9 +1,9 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":1,
-    "selecteID":1,
-    "props":{"width":400,"top":250,"sceneColor":"#000000","left":175,"height":400},
+    "selectedBox":6,
+    "selecteID":9,
+    "props":{"width":400,"top":580,"sceneColor":"#000000","left":175,"height":130},
     "nodeParent":-1,
     "label":"View",
     "isOpen":true,
@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":165,"x":165,"skin":"ui/mid_random.png"},
+            "props":{"y":0,"x":167,"skin":"ui/mid_random.png"},
             "nodeParent":1,
             "label":"Image",
             "isOpen":true,
@@ -27,7 +27,7 @@
                 {
                     "x":30,
                     "type":"Label",
-                    "props":{"y":19,"x":10,"width":48,"var":"random","valign":"middle","text":"00","height":30,"fontSize":30,"color":"#0aea0a","bold":true,"align":"center"},
+                    "props":{"y":15,"x":9,"width":48,"var":"random","valign":"middle","text":"0","height":30,"fontSize":30,"color":"#10ff9e","bold":true,"align":"center"},
                     "nodeParent":8,
                     "label":"Label(random)",
                     "isDirectory":false,
@@ -41,7 +41,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":295,"x":22,"width":356,"skin":"ui/mid_bet.png","height":46},
+            "props":{"y":70,"x":22,"width":356,"skin":"ui/mid_bet.png"},
             "nodeParent":1,
             "label":"Image",
             "isOpen":true,
@@ -53,13 +53,26 @@
                 {
                     "x":30,
                     "type":"Label",
-                    "props":{"y":13,"x":128,"width":100,"var":"curBet","valign":"middle","text":"0","height":20,"fontSize":20,"color":"#fff","bold":true,"align":"center"},
+                    "props":{"y":16,"x":165,"width":120,"var":"curBet","valign":"middle","text":"0","height":25,"fontSize":25,"color":"#fff","align":"center"},
                     "nodeParent":6,
                     "label":"Label(curBet)",
                     "isDirectory":false,
                     "isAniNode":true,
                     "hasChild":false,
                     "compId":7,
+                    "child":[
+                        ]
+                },
+                {
+                    "x":30,
+                    "type":"Label",
+                    "props":{"y":12,"x":20,"var":"currentbet","text":"当前投币：","fontSize":25,"font":"Microsoft YaHei","color":"#fff800","bold":true},
+                    "nodeParent":6,
+                    "label":"Label(currentbet)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":9,
                     "child":[
                         ]
                 }]

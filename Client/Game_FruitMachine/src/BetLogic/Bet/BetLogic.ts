@@ -17,14 +17,14 @@ namespace OnceBet {
          * @param positon 本次投注位置
          */
         public Bet(memScore: number, positon: number): any {
-            memScore -= this.betInfo.BetNumber * this.betInfo.BaseAmount;
-            if(memScore < this.betInfo.BaseAmount){
+            memScore -= this.betInfo.BetNumber * this.betInfo.CurrBaseAmount;
+            if(memScore < this.betInfo.CurrBaseAmount){
                  return { success: false, data: 'InsufficientBalance' }
             }
  
             let pos = this.betInfo.BetSuccessData[positon];
             if(pos){
-                if(pos >= this.betInfo.MaxBetNum || pos * this.betInfo.BaseAmount > this.betInfo.MaxBet){
+                if(pos >= this.betInfo.MaxBetNum || pos * this.betInfo.CurrBaseAmount > this.betInfo.MaxBet){
                     return { success: false, data: 'OverLimit'}
                 }
                 this.betInfo.BetSuccessData[positon] += 1;
@@ -42,8 +42,9 @@ namespace OnceBet {
          * @param MinBet 
          */
         public SetBetLimit(BaseAmounts:any,MaxBet:number,MinBet:number):void{
-            this.betInfo.BaseAmount = BaseAmounts[0];
-            this.betInfo.MaxBase = BaseAmounts[2];
+            // this.betInfo.BaseAmount = BaseAmounts[0];
+            this.betInfo.CurrBaseAmount = BaseAmounts[0];
+            // this.betInfo.MaxBase = BaseAmounts[2];
             this.betInfo.MaxBet = MaxBet;
             this.betInfo.MinBet = MinBet;
         }
@@ -61,7 +62,7 @@ namespace OnceBet {
          */
         public GetBetInfo(): BetDto {
             let dto = new BetDto();
-            dto.BaseAmount = this.betInfo.BaseAmount;
+            dto.BaseAmount = this.betInfo.CurrBaseAmount;
             dto.BetInfos = this.betInfo.BetSuccessData;
             return dto;
         }
@@ -70,7 +71,7 @@ namespace OnceBet {
          * 获取当前局投注总分数
          */
         public GetBetScore(): number {
-            let sum = this.betInfo.BaseAmount * this.betInfo.BetNumber;
+            let sum = this.betInfo.CurrBaseAmount * this.betInfo.BetNumber;
             return sum;
         }
 
@@ -78,19 +79,8 @@ namespace OnceBet {
          * 修改投注基数
          * @param data 
          */
-        public ChangBaseAmount(memScore: number,data:number):number{
-            if(data>this.betInfo.MaxBase) data = this.betInfo.MaxBase;
-            
-            let all = data*this.betInfo.BetNumber;
-            if(all > memScore){
-                let chip = Math.floor(memScore/this.betInfo.BetNumber/data)*data;
-                if(chip == 0) chip = data;
-                this.betInfo.BaseAmount = chip;
-                return chip;
-            }
-            
-            this.betInfo.BaseAmount = data;
-            return data;
+        public ChangBaseAmount(memScore: number,data:number):void{
+            this.betInfo.CurrBaseAmount = data;
         }
     }
 

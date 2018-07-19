@@ -5,7 +5,7 @@
 class BaseGameBgView {
     protected ui: ui.GameBgViewUI;
     constructor() {
-        Laya.SoundManager.playMusic("sound/bgSound.wav");
+        Laya.SoundManager.playMusic("sound/bgSound.mp3");
     }
 
     /**

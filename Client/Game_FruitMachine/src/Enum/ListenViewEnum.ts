@@ -50,10 +50,5 @@ namespace Enum{
 
         /**打开规则面板 */
         ShowRule,
-
-        /**静音设置 */
-        SetMute,
-
-
     }
 }

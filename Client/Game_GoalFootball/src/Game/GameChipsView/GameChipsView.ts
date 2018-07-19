@@ -77,14 +77,14 @@ class GameChipsView extends BaseGameChipsView implements IView {
                 let chipBtn:ui.ChipBtnViewUI = new ui.ChipBtnViewUI();
                 chipBtn.on(Laya.Event.CLICK, this, this.ChooseChip, [index]);  
                 chipBtn.x = (chipBtn.width + 10) * index;
-                chipBtn.chip.skin = this.noSelectChipSkin;
+                chipBtn.chip.skin = LanguageUtils.Language.Get("NoSelectChipSkin");
                 chipBtn.chip.label = Utils.Money.TransforK(data[index]);
                 this.ui.chipBox.addChild(chipBtn);
                 this.chipsArr.push(chipBtn);
             }
             this.ui.chipBox.width = data.length * (this.chipsArr[0].width + 10);
             this.pageNum = Math.ceil(this.ui.chipBox.width / this.ui.chipPanel.width);
-            this.chipsArr[0].chip.skin = this.selectChipSkin;
+            this.chipsArr[0].chip.skin = LanguageUtils.Language.Get("SelectChipSkin");
         }
     }
     /**
@@ -92,11 +92,12 @@ class GameChipsView extends BaseGameChipsView implements IView {
      * @param index 
      */
     private ChooseChip(index:number):void{
+        Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
         this.betAmount = Utils.Money.TransforK(this.chipsArr[index].chip.label);
         for (var i = 0; i < this.chipsArr.length; i++) {
-            this.chipsArr[i].chip.skin = this.noSelectChipSkin;
+            this.chipsArr[i].chip.skin = LanguageUtils.Language.Get("NoSelectChipSkin");
             if(index == i){
-                this.chipsArr[i].chip.skin = this.selectChipSkin;
+                this.chipsArr[i].chip.skin = LanguageUtils.Language.Get("SelectChipSkin");
             }
         }
         this.EventNotification(Enum.ListenViewEnum.ChooseChip, this.betAmount);
@@ -143,6 +144,7 @@ class GameChipsView extends BaseGameChipsView implements IView {
      * 事件key值，通过构造函数时注入
      */
     public ShootDoor(): void {
+        Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
         this.DisabledShootBtn(true);
         this.EventNotification(Enum.ListenViewEnum.ShootDoor);
     }

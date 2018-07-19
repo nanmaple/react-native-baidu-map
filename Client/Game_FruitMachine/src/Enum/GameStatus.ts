@@ -12,5 +12,9 @@ namespace Enum {
          * 进行中
          */
         Execute = 2,
+
+        /**等待初始化 */
+
+        WaitInit = 3,
     }
 }

@@ -2,8 +2,8 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":12,
-    "props":{"width":750,"sceneColor":"#000000","height":180},
+    "selecteID":13,
+    "props":{"width":750,"sceneColor":"#fff","height":400},
     "nodeParent":-1,
     "label":"View",
     "isOpen":true,
@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":114,"x":365,"var":"balanceBox","stateNum":"1","skin":"ui/head_balance.png","right":50,"bottom":0},
+            "props":{"y":37,"var":"balanceBox","stateNum":"1","skin":"ui/head_balance.png","right":15},
             "nodeParent":1,
             "label":"Button(balanceBox)",
             "isOpen":true,
@@ -27,7 +27,7 @@
                 {
                     "x":30,
                     "type":"Label",
-                    "props":{"y":18,"x":14,"width":321,"var":"balance","valign":"middle","text":"0","height":30,"fontSize":30,"color":"#fff","bold":true,"align":"center"},
+                    "props":{"y":5,"x":51,"width":124,"var":"balance","valign":"middle","text":"0","height":30,"fontSize":30,"color":"#4f7781","bold":false,"align":"center"},
                     "nodeParent":10,
                     "label":"Label(balance)",
                     "isDirectory":false,
@@ -41,7 +41,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"skin":"ui/head_gain.png","left":50,"bottom":0},
+            "props":{"skin":"ui/head_gain.png","left":242,"bottom":37},
             "nodeParent":1,
             "label":"Image",
             "isOpen":true,
@@ -53,7 +53,7 @@
                 {
                     "x":30,
                     "type":"Label",
-                    "props":{"y":19,"x":15,"width":265,"var":"gain","valign":"middle","text":"0","height":30,"fontSize":30,"color":"#fff","bold":true,"align":"center"},
+                    "props":{"y":8,"x":43,"width":180,"var":"gain","valign":"middle","text":"0","height":30,"fontSize":30,"color":"#fff","bold":false,"align":"center"},
                     "nodeParent":3,
                     "label":"Label(gain)",
                     "isDirectory":false,
@@ -62,12 +62,25 @@
                     "compId":8,
                     "child":[
                         ]
+                },
+                {
+                    "x":30,
+                    "type":"Image",
+                    "props":{"y":3,"x":0,"skin":"ui/head_gainLogo.png"},
+                    "nodeParent":3,
+                    "label":"Image",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":17,
+                    "child":[
+                        ]
                 }]
         },
         {
             "x":15,
             "type":"Image",
-            "props":{"y":29,"x":202,"skin":"ui/head_logo.png"},
+            "props":{"y":15,"x":203,"skin":"ui/head_logo.png"},
             "nodeParent":1,
             "label":"Image",
             "isDirectory":false,
@@ -80,20 +93,47 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":16,"x":116,"var":"goHome","stateNum":"1","skin":"ui/head_home.png"},
+            "props":{"y":15,"x":0,"var":"goHome","stateNum":"1","skin":"ui/head_home_1.png"},
             "nodeParent":1,
             "label":"Button(goHome)",
-            "isDirectory":false,
+            "isOpen":true,
+            "isDirectory":true,
             "isAniNode":true,
-            "hasChild":false,
+            "hasChild":true,
             "compId":9,
             "child":[
-                ]
+                {
+                    "x":30,
+                    "type":"Image",
+                    "props":{"y":10,"x":16,"skin":"ui/head_home_2.png"},
+                    "nodeParent":9,
+                    "label":"Image",
+                    "isOpen":true,
+                    "isDirectory":true,
+                    "isAniNode":true,
+                    "hasChild":true,
+                    "compId":15,
+                    "child":[
+                        {
+                            "x":45,
+                            "type":"Image",
+                            "props":{"y":2,"x":2,"skin":"ui/head_home_3.png"},
+                            "nodeParent":15,
+                            "label":"Image",
+                            "isOpen":true,
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":16,
+                            "child":[
+                                ]
+                        }]
+                }]
         },
         {
             "x":15,
             "type":"Button",
-            "props":{"y":38,"x":571,"var":"btnSound","stateNum":"1","skin":"ui/head_sound.png"},
+            "props":{"y":115,"x":110,"var":"btnSound","stateNum":"1","skin":"ui/head_sound.png"},
             "nodeParent":1,
             "label":"Button(btnSound)",
             "isDirectory":false,
@@ -106,13 +146,39 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":33,"x":652,"var":"btnRule","stateNum":"1","skin":"ui/head_rule.png"},
+            "props":{"y":115,"x":15,"var":"btnRule","stateNum":"1","skin":"ui/head_rule.png"},
             "nodeParent":1,
             "label":"Button(btnRule)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
             "compId":12,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Button",
+            "props":{"y":115,"var":"btnPay","stateNum":"1","skin":"ui/head_pay.png","right":110},
+            "nodeParent":1,
+            "label":"Button(btnPay)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":13,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Button",
+            "props":{"y":115,"var":"btnRecord","stateNum":"1","skin":"ui/head_record.png","right":15},
+            "nodeParent":1,
+            "label":"Button(btnRecord)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":14,
             "child":[
                 ]
         }],

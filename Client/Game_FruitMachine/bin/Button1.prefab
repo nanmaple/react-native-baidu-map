@@ -1,0 +1,24 @@
+{
+    "x":0,
+    "type":"Button",
+    "selectedBox":1,
+    "selecteID":1,
+    "props":{"y":0,"x":0,"width":100,"stateNum":"1","skin":"comp/btn_3.png","presetID":1,"preset":"laya/assets/Button1.prefab","labelSize":30,"labelPadding":"0","labelBold":true,"labelAlign":"center","label":"1","height":50},
+    "nodeParent":-1,
+    "label":"Button(Button1)",
+    "isDirectory":false,
+    "isAniNode":true,
+    "hasChild":false,
+    "compId":1,
+    "child":[
+        ],
+    "animations":[
+        {
+            "nodes":[
+                ],
+            "name":"ani1",
+            "id":1,
+            "frameRate":24,
+            "action":0
+        }]
+}

@@ -2,6 +2,17 @@ D .
 D comp
 P 1F3929EA button.png
 D sound
+R 42077285 bgsound.mp3
+R 822A891B bomb.mp3
+R F4FDA340 bottles.mp3
+R D96C523F bra.mp3
+R F21B12A5 btn.mp3
+R AC0A31EA explode.mp3
+R B9C5A629 goal.mp3
+R 1AC2BF97 miss.mp3
+R F57C2ED7 play.mp3
+R 5F10A72D pound.mp3
+R 495D9EBD seduce.mp3
 D ui
 R 577CD16E alert.png
 R CD5B1FCB bg.jpg
@@ -53,10 +64,13 @@ P C86DE5D3 goalieWait_1.png
 P 71C34636 goalieWait_2.png
 D ui/header
 P 42F666A1 balance.png
-R 38395FFF head_bg.png
+R BD6607A0 head_bg.png
+P 99A38279 head_tit.png
 P 2F772C2C home.png
 P 62E62552 home_bg.png
 P 709ECD31 rank.png
+P 9CF1FDC2 recharge.png
+P A41279E9 record.png
 P 1907EF07 rule.png
 P A4A46CF6 voice_close.png
 P 54C1CFF6 voice_open.png

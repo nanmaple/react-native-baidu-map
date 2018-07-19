@@ -379,32 +379,40 @@ namespace LanguageUtils {
          */
         HaveSettled: "Settled",
 
+        /*********游戏结算结果*********/
+       /**
+         * 余额不足，投注失败
+         */
+        InsufficientBalance :"Insufficient Balance",
+        /**
+         * 投注总金额超过额度限制
+         */
+        OverLimit :"Over Limit",
+        /**
+         * 参数错误
+         */
+        ParameterError:"Parameter Error",
 
-        //游戏结果进球提示
+        /***********按钮信息***********/
         /**
-         * 球进啦
+         * 投注按钮的信息
          */
-        ShootIn: "Shoot In",
+        BetNote:"Win",
         /**
-         * 左边射偏啦
+         * 投注小的信息
          */
-        ShootLeft: "Shoot Left",
+        LittleRule:"4-10point",
         /**
-         * 右边射偏啦
+         * 投注豹子的信息
          */
-        ShootRight: "Shoot Right",
+        JaguarRule:"3 same dice",
         /**
-         * 撞柱啦
+         * 投注大的信息
          */
-        ShootGoalPost: "Shoot GoalPost",
+        BigRule:"11-17point",
         /**
-         * 左边撞柱啦
+         * 最大按钮的信息
          */
-        ShootLeftGoalPost: "Shoot Left GoalPost",
-        /**
-         * 右边撞柱啦
-         */
-        ShootRightGoalPost: "Shoot Right GoalPost",
-
+        MaxBtnNote:"Max",
     }
 }

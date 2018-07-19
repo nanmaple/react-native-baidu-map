@@ -11,17 +11,14 @@ namespace Enum {
          * 添加投注记录
          */
         SetRecord,
-
-        /**
-         * 修改投注基数
-         */
-        ChangBaseAmount,
         /**修改游戏状态 */
         ChangGameStatus,
         /**修改当前投注分数 */
         ChangeCurrBet,
         /**本次滚动结束 */
-        // GameEnd,
+        GameEnd,
+        /**清理投注记录 */
+        ClearBet,
 
 
 

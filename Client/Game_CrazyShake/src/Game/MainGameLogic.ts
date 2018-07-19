@@ -20,11 +20,11 @@ class MainGameLogic extends BaseGameLogic {
      * 从服务器获取分数成功
      * @param balance 余额
      */
-    public GetBalanceComplete(balance:number):void {
+    public GetBalanceComplete(balance: number): void {
         //通知余额
         this.gameView.SetData(BaseEnum.GameViewLogicEnum.Balance, balance);
     }
-	
+
     /**
     * 侦听Socket连接事件
     */
@@ -137,7 +137,7 @@ class MainGameLogic extends BaseGameLogic {
                 }
                 else {
                     this.gameView.SetData(BaseEnum.GameViewLogicEnum.Alert, LanguageUtils.Language.Get("BALANCE_SMALL"))
-                    this.gameView.SetData(Enum.GameViewLogicEnum.MsgGameRefreshBtn,null);
+                    this.gameView.SetData(Enum.GameViewLogicEnum.MsgGameRefreshBtn, null);
                 };
                 break;
         }

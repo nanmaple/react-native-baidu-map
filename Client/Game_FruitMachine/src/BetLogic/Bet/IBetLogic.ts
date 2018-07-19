@@ -22,7 +22,7 @@ namespace OnceBet {
          * 修改投注基数
          * @param data 
          */
-        ChangBaseAmount(memScore: number,data:number):number;
+        ChangBaseAmount(memScore: number,data:number):void;
 
          /**
          * 获取当前局投注总分数

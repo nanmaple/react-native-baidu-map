@@ -84,6 +84,11 @@ class GameViewLogic extends BaseGameViewLogic {
         this.GameRuleView.ResetScreen();
 
         this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.StartSocket, {}]);
+
+        Laya.loader.load(GameResourceConfig.LoadResSoundConfig,Laya.Handler.create(this,()=>{
+            Utils.BackgroundMusic.PlayMusic("sound/bgsound.mp3");
+        },null,false));
+
     }
 
     /**

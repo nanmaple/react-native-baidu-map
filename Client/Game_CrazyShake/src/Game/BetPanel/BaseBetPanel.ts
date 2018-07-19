@@ -72,10 +72,10 @@ class BaseBetPanel {
         this.ui.bigBtn.skin = "ui/bigBtn1.png";
         this.ui.littleOdds.scale(1, 1);
         this.ui.jaguarOdds.scale(1, 1);
-        this.ui.bigOdds.scale(1, 1)
+        this.ui.bigOdds.scale(1, 1);
         this.ui.littleRule.scale(1, 1);
         this.ui.jaguarRule.scale(1, 1);
-        this.ui.jaguarRule.scale(1, 1)
+        this.ui.jaguarRule.scale(1, 1);
     }
     /**
      * 按钮样式的绑定
@@ -99,4 +99,5 @@ class BaseBetPanel {
             this.ui.bigRule.scale(0.9, 0.9)
         });
     }
+    
 }

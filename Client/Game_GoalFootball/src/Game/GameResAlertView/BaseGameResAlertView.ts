@@ -20,6 +20,10 @@ abstract class BaseGameResAlertView {
      * 成功进球提示皮肤
      */
     protected sucTipSkin:string = "ui/successTip.png";
+    /**
+     * 游戏结果播放音效
+     */
+    protected resultSound:string = null;
     constructor() {
 
     }
@@ -33,8 +37,6 @@ abstract class BaseGameResAlertView {
         this.ui.zOrder = 6;
         this.ui.cacheAs = "bitmap";
         Laya.stage.addChild(this.ui);
-        // this.ui.close.on(Laya.Event.CLICK, this, this.Hide);
-        // this.ui.sure.on(Laya.Event.CLICK, this, this.Hide);
         this.ui.on(Laya.Event.CLICK, this, ()=>{
             return;
         })

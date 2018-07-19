@@ -58,6 +58,10 @@ abstract class BaseGameAniView {
      * 是否按下鼠标
      */
     protected isMouseDown:boolean = false;
+    /**
+     * 道具使用音效
+     */
+    protected propSoundArr:Array<string> = ["sound/bomb.mp3","sound/bottles.mp3","sound/bra.mp3"];
     constructor() {
 
     }
@@ -106,6 +110,7 @@ abstract class BaseGameAniView {
      * @param index 
      */
     private TakeProp(index:number):void{
+        Utils.BackgroundMusic.PlaySounds(this.propSoundArr[index]);
         this.propBoxArr[index].disabled = true;
         this.propBoxArr[index].gray = false;
         this.propBoxArr[index].select.visible = true;

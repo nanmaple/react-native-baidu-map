@@ -25,7 +25,7 @@ class BaseHeadPanel {
         this.ui.balanceNum.changeText(this.balance.toString());
         Laya.stage.addChild(this.ui);
         this.OnButton();
-
+        this.ChangeSlogan();
     }
     /**
      * 绑定按钮
@@ -88,5 +88,9 @@ class BaseHeadPanel {
         data.Type = Enum.ListenViewEnum.OpenRule;
         let event = new CustomEvent(this.listenEventKey, { detail: data });
         document.dispatchEvent(event);
+    }
+
+    private ChangeSlogan():void{
+        
     }
 }

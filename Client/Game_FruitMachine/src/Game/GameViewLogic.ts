@@ -1,7 +1,6 @@
 /// <reference path="../GameFrame/BaseGameViewLogic/index.ts" />
 /// <reference path="./OperateView/OperateView.ts" />
 /// <reference path="./RouletteView/RouletteView.ts" />
-/// <reference path="./ChipView/ChipView.ts" />
 /// <reference path="./BetBarView/BetBarView.ts" />
 /// <reference path="./HeadView/HeadView.ts" />
 /// <reference path="./InternalView/InternalView.ts" />
@@ -9,7 +8,6 @@ class GameViewLogic extends BaseGameViewLogic {
     //组件Demo
     public OperateView: OperateView;
     public RouletteView: RouletteView;
-    public ChipView: ChipView;
     public BetBarView: BetBarView;
     public HeadView: HeadView;
     public InternalView: InternalView;
@@ -80,8 +78,6 @@ class GameViewLogic extends BaseGameViewLogic {
         this.OperateView.ResetScreen();
         this.RouletteView = new RouletteView(this.GameViewEventKey);
         this.RouletteView.ResetScreen();
-        this.ChipView = new ChipView(this.GameViewEventKey);
-        this.ChipView.ResetScreen();
         this.BetBarView = new BetBarView(this.GameViewEventKey);
         this.BetBarView.ResetScreen();
         this.HeadView = new HeadView(this.GameViewEventKey);
@@ -91,7 +87,7 @@ class GameViewLogic extends BaseGameViewLogic {
         this.RuleView = new RuleView();
         this.RuleView.ResetScreen();
 
-        // SoundManage.PlayMusic(SoundConfig.SounRes.GameBg);
+        Laya.SoundManager.playMusic(SoundConfig.SounRes.GameBg);
 
         this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.StartSocket, {}]);
     }
@@ -199,15 +195,18 @@ class GameViewLogic extends BaseGameViewLogic {
             case Enum.GameViewLogicEnum.BetSuccess:
                 this.BetBarView.Set(data, Enum.BetBarView.SetBet);
                 break;
-            //修改投注基数
-            case Enum.GameViewLogicEnum.ChangBaseAmount:
-                this.ChipView.Set(data, Enum.ChipView.SetBaseAmonut);
-                break;
             //修改游戏状态
             case Enum.GameViewLogicEnum.ChangGameStatus:
-                this.OperateView.Set(data);
                 this.BetBarView.Set(data, Enum.BetBarView.ChangGameStatus);
-                this.ChipView.Set(data, Enum.ChipView.ChangGameStatus);
+                this.OperateView.Set(data, Enum.OperateView.ChangGameStatus);
+                break;
+            //本次滚动结束
+            case Enum.GameViewLogicEnum.GameEnd:
+                this.BetBarView.Set(data,Enum.BetBarView.GameEnd);
+                break;
+                //清理投注记录
+            case Enum.GameViewLogicEnum.ClearBet:
+                this.BetBarView.Set(data,Enum.BetBarView.ClearAll);
                 break;
             default:
                 break;
@@ -252,8 +251,9 @@ class GameViewLogic extends BaseGameViewLogic {
         let dto = new Dto.AmountDto;
         dto.balance = data.Balance;
         this.HeadView.Set(dto, Enum.HeadView.Init);
-
-        this.ChipView.Set(data.BaseAmounts,Enum.ChipView.Init);
+        this.OperateView.Set(data.BaseAmounts,Enum.OperateView.Init);
+        this.OperateView.Set(Enum.GameStatus.Default,Enum.OperateView.ChangGameStatus);
+        this.BetBarView.Set(Enum.GameStatus.Default, Enum.BetBarView.ChangGameStatus);
     }
 
     /**
@@ -274,9 +274,8 @@ class GameViewLogic extends BaseGameViewLogic {
             }
         } else {
             this.ShowAlert(0, Enum.BetResultCode[data.Status]);
-            this.OperateView.Set(Enum.GameStatus.Default);
+            this.OperateView.Set(Enum.GameStatus.Default,Enum.OperateView.ChangGameStatus);
             this.BetBarView.Set(Enum.GameStatus.Default, Enum.BetBarView.ChangGameStatus);
-            this.ChipView.Set(Enum.GameStatus.Default, Enum.ChipView.ChangGameStatus);
         }
 
     }

@@ -145,25 +145,25 @@ var GameViewLogic = /** @class */ (function (_super) {
      */
     GameViewLogic.prototype.OnMessageHandler = function (data) {
         switch (data.Command) {
-            case Enum.GameCommand.MSG_GAME_INIT:
+            case Enum.GameCommand.MsgGameInit:
                 this.OnGameInit(data.Data);
                 break;
-            case Enum.GameCommand.MSG_GAME_START:
+            case Enum.GameCommand.MsgGameStart:
                 this.OnGameStart(data.Data);
                 break;
-            case Enum.GameCommand.MSG_GAME_BETRESULT:
+            case Enum.GameCommand.MsgGameBetResult:
                 this.OnBetResult(data.Data);
                 break;
-            case Enum.GameCommand.MSG_GAME_STOPBET:
+            case Enum.GameCommand.MsgGameStopBet:
                 this.OnStopBet(data);
                 break;
-            case Enum.GameCommand.MSG_GAME_GAMERESULT:
+            case Enum.GameCommand.MsgGameResult:
                 this.OnGameResult(data.Data);
                 break;
-            case Enum.GameCommand.MSG_GAME_SETTLERESULT:
+            case Enum.GameCommand.MsgGameSettleResult:
                 this.OnSettleResult(data.Data);
                 break;
-            case Enum.GameCommand.MSG_GAME_OTHER:
+            case Enum.GameCommand.MsgGameOther:
                 this.OnGameOther(data.Data);
                 break;
             default:

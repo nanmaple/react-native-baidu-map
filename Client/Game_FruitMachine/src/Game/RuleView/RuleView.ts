@@ -29,7 +29,7 @@ class RuleView extends BaseRuleView implements IView{
      * 关闭规则栏
     */
     public OnCloseRule():void{
-        SoundManage.PlaySound(SoundConfig.SounRes.Button);
+        Laya.SoundManager.playSound(SoundConfig.SounRes.Button);
         Laya.Tween.to(this.ui.ruleBox, { scaleX: 0, scaleY: 0 }, 300, Laya.Ease.backIn, Laya.Handler.create(this, () => {
             this.ui.visible = false;
         }, null, false));

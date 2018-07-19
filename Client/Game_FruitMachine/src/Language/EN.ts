@@ -148,6 +148,28 @@ namespace LanguageUtils {
         
         /************************************/
        
+        /**账户余额不足 */
+        InsufficientBalance: '余额不足',
 
+        /**超出最大投注总额 */
+        OverLimit: '超出最大投注限制',
+
+        /**socket参数错误 */
+        ParmeterError: '参数错误',
+
+        //-------------操作部分--------------
+
+        /**清除所有投注 */
+        ClearBet: 'clear',
+
+        /**所有投注位置+1 */
+        AddAll: 'All+1',
+
+        /**开始本轮游戏 */
+        GameStart: 'Start',
+
+        //-------------中间--------------
+
+        CurrentCoin: 'Current Coin:'
     }
 }

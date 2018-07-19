@@ -2,6 +2,7 @@ D .
 D comp
 P 1F3929EA button.png
 D sound
+R DC79D208 bgSound.mp3
 R 25055D8C btnSound.mp3
 R 363BF0AE click.mp3
 R ED62A018 diceSound.mp3
@@ -11,7 +12,7 @@ R 0EF4E15A upCover.mp3
 R FC3B8BFE winSound.mp3
 D ui
 P 458FDFE4 balance.png
-R 93309EB6 bg.png
+R 570739E1 bg.png
 R 577CD16E bg_alert.png
 R 5C94EABC bg_record.png
 P 4CAB6935 bigBtn1.png
@@ -42,7 +43,9 @@ P 77CA0B78 point4.png
 P 36FD57DB point5.png
 P 8E69DE05 point6.png
 R 577CD16E prompt.png
-R B8385C84 rule.png
+R 6674C3E1 ruleBg.png
+P 37D79B54 ruleLogo.png
+P C58A395B ruleWord.png
 R EC3ADF62 tip.png
 P BB945F0F voiceOffBtn.png
 P F9DF90BB voiceOnBtn.png

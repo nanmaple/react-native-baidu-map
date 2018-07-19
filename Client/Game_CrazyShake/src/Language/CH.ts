@@ -1,10 +1,5 @@
 namespace LanguageUtils {
     export const CH = {
-
-        /// <summary>
-        /// 系统错误
-        /// </summary>
-        SystemError: "系统错误",
         /// <summary>
         /// 操作成功
         /// </summary>
@@ -69,7 +64,7 @@ namespace LanguageUtils {
         /// 解析的payload会员ID无效
         /// </summary>
         MemberIdInvalid: "解析的payload会员ID无效",
-       
+
 
         // 会员信息操作
         /// <summary>
@@ -189,6 +184,7 @@ namespace LanguageUtils {
         GameTips:"<p style='fontSize:35'>由于您还没有登录，现在是试玩模式，想要体验更多游戏乐趣，请点击左上方</p>"+
         "<p style='fontSize:35;color:red'>&nbsp;'关注'&nbsp;</p>"+
         "<p style='fontSize:35'>按钮，即可登录。</p>",
+        /***********游戏按钮注释********* */
         /**
          * 投注按钮信息
          */
@@ -205,6 +201,20 @@ namespace LanguageUtils {
          * 投注大的信息
          */
         BigRule:"11-17点",
-        
+        /**
+         * 最大按钮信息
+         */
+        MaxBtnNote:"最大",
+
+        /************游戏结算结果***********/
+
+        /**
+         * 余额不足
+         */
+        InsufficientBalance :"余额不足",
+        /**
+         * 投注总金额超过额度限制
+         */
+        OverLimit:"投注金额超过限制",
     }
 }

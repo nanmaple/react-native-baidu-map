@@ -3,29 +3,25 @@
 */
 namespace Enum {
     export enum GameViewHandlerEnum {
-        
+        /**
+         * 启动socket
+         */
+        StartSocket = 0,
         /** 
          * 投注操作
         */
-        BetPos = 0,
-
-        ConfirmBet = 1,
-
-        CancelBet = 2,
-
-        GetNoBetSucData = 3,
-
-        /** 
-         * 获取投注记录
-        */
-        GetBetRecord = 4,
-        /**
-         * 获取最新余额
-         */
-        ChangeMoney = 5,
+        BetPos,
         /**
          * 获取用户信息
          */
-        GetMemberInfo = 6,
+        GetMemberInfo,
+        /**
+         * 游戏结束
+         */
+        GameResult,
+        /**
+         * 获取余额
+         */
+        GetBalance
     }
 }

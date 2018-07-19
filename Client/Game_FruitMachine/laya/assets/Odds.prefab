@@ -1,0 +1,24 @@
+{
+    "x":0,
+    "type":"Label",
+    "selectedBox":1,
+    "selecteID":1,
+    "props":{"y":0,"x":0,"width":40,"text":"20","presetID":1,"preset":"laya/assets/Odds.prefab","fontSize":20,"color":"#999","bold":true,"align":"center"},
+    "nodeParent":-1,
+    "label":"Label(Odds)",
+    "isDirectory":false,
+    "isAniNode":true,
+    "hasChild":false,
+    "compId":1,
+    "child":[
+        ],
+    "animations":[
+        {
+            "nodes":[
+                ],
+            "name":"ani1",
+            "id":1,
+            "frameRate":24,
+            "action":0
+        }]
+}

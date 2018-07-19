@@ -20,12 +20,16 @@ class BaseBetNumPanel {
         this.OnButton();
         // 禁用按钮
         this.EnableButton(false);
+        
+
     }
 
     /**
      * 绑定按钮
      */
     private OnButton() :void{
+        //根据语言切换最大按钮信息
+        // this.ui.maxBtn.skin=LanguageUtils.Language.Get("MaxBtnNote");
         //最大投注
         this.ui.maxBtn.on(Laya.Event.CLICK, this, () => {
             Laya.SoundManager.playSound("sound/btnSound.mp3");

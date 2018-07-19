@@ -158,6 +158,8 @@ namespace LanguageUtils {
         /**socket参数错误 */
         ParmeterError: '参数错误',
 
+        //-------------操作部分--------------
+
         /**清除所有投注 */
         ClearBet: '清除',
 
@@ -167,10 +169,8 @@ namespace LanguageUtils {
         /**开始本轮游戏 */
         GameStart: '开始',
 
-        /**收取获得分数 */
-        GatherScore: '收分',
+        //-------------中间--------------
 
-        
-
+        CurrentCoin: '当前投币：'
     }
 }

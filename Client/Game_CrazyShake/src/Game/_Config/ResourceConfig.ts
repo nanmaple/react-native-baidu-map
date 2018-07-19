@@ -17,6 +17,6 @@ namespace GameResourceConfig {
         { url: "sound/failSound.wav", type: Laya.Loader.SOUND },
         { url: "sound/upCoverSound.mp3", type: Laya.Loader.SOUND },
         { url: "sound/winSound.mp3", type: Laya.Loader.SOUND },
-        { url: "sound/bgSound.wav", type: Laya.Loader.SOUND },
+        { url: "sound/bgSound.mp3", type: Laya.Loader.SOUND },
     ]
 }

@@ -21,8 +21,6 @@ class GameViewLogic extends BaseGameViewLogic {
     * 启动游戏资源页面，开始加载游戏资源
     */
     public GameLoad(): void {
-        this.alertView = new AlertView();
-        this.loadingView = new LoadingView();
         this.gameLoadView = new GameLoadView(this.GameViewEventKey);
         this.gameLoadView.ResetScreen();
         //设置版本控制类型为使用文件名映射的方式
@@ -62,11 +60,15 @@ class GameViewLogic extends BaseGameViewLogic {
      */
     private GameMainUI(): void {
         //初始化基本alert,loading组件的界面
+        this.alertView = new AlertView();
         this.alertView.ResetScreen();
+        this.loadingView = new LoadingView();
         this.loadingView.ResetScreen();
         //加载其他组件
         this.GameBgView = new GameBgView(this.GameViewEventKey);
         this.GameBgView.ResetScreen();
+
+        this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.StartSocket, {}]);
     }
 
     /**
@@ -78,23 +80,10 @@ class GameViewLogic extends BaseGameViewLogic {
             case Enum.ListenViewEnum.GameLoadComplate:
                 this.CheckLoad();
                 break;
-            // case Enum.ListenViewEnum.ShowRule:
-            //     this.RuleUIHV.ShowRule();
-            //     break;
             case Enum.ListenViewEnum.BetPos:
-                // this.ChipPrice = this.BetUI.GetChipPrice();
-                // data.Value.Amount = this.ChipPrice;
-                // this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.BetPos, data.Value]);
                 break;
-            case Enum.ListenViewEnum.ConfirmBet:
-                // this.BetUI.Confirm();
-                // this.BetMoreUI.Confirm();
-                // this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.ConfirmBet, null]);
-                break;
-            case Enum.ListenViewEnum.CancelBet:
-                // this.BetUI.Cancel();
-                // this.BetMoreUI.Cancel();
-                // this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.CancelBet, null]);
+            case Enum.ListenViewEnum.GetBalance:
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.GetBalance, null]); 
                 break;
             default:
                 break;
@@ -124,6 +113,8 @@ class GameViewLogic extends BaseGameViewLogic {
             case BaseEnum.GameViewLogicEnum.GameData:
                 this.OnMessageHandler(data);
                 break;
+            case BaseEnum.GameViewLogicEnum.Balance:
+                break;
             //扩展数据分发类型
             case Enum.GameViewLogicEnum.ChangMoney:
                 break;
@@ -143,25 +134,25 @@ class GameViewLogic extends BaseGameViewLogic {
      */
     private OnMessageHandler(data: Dto.GameMessageDto): void {
         switch (data.Command) {
-            case Enum.GameCommand.MSG_GAME_INIT:
+            case Enum.GameCommand.MsgGameInit:
                 this.OnGameInit(data.Data);
                 break;
-            case Enum.GameCommand.MSG_GAME_START:
+            case Enum.GameCommand.MsgGameStart:
                 this.OnGameStart(data.Data);
                 break;
-            case Enum.GameCommand.MSG_GAME_BETRESULT:
+            case Enum.GameCommand.MsgGameBetResult:
                 this.OnBetResult(data.Data);
                 break;
-            case Enum.GameCommand.MSG_GAME_STOPBET:
+            case Enum.GameCommand.MsgGameStopBet:
                 this.OnStopBet(data);
                 break;
-            case Enum.GameCommand.MSG_GAME_GAMERESULT:
+            case Enum.GameCommand.MsgGameResult:
                 this.OnGameResult(data.Data);
                 break;
-            case Enum.GameCommand.MSG_GAME_SETTLERESULT:
+            case Enum.GameCommand.MsgGameSettleResult:
                 this.OnSettleResult(data.Data);
                 break;
-            case Enum.GameCommand.MSG_GAME_OTHER:
+            case Enum.GameCommand.MsgGameOther:
                 this.OnGameOther(data.Data);
                 break;
             default:

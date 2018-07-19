@@ -39,26 +39,25 @@ class GameResAlertView extends BaseGameResAlertView implements IView {
     private GameResult(data:Dto.BetResultDto):void{
         this.isShow = true;
         if(data.WinAmount == 0){
+            this.resultSound = "sound/miss.mp3";
             this.ui.prompt.skin = this.failTipSkin;
+            this.ui.result.visible = false;
         }else{
+            this.resultSound = "sound/goal.mp3";
             this.ui.prompt.skin = this.sucTipSkin;
+            this.ui.result.visible = true;
+            this.ui.result.text = "x" + data.Odds + "  +" + data.WinAmount;
         }
-        // if(data.WinAmount == 0){
-        //     this.resultTxt = LanguageUtils.Language.Get("GameFail");
-        // }else{
-        //     this.resultTxt = LanguageUtils.Language.Get("GameSuccess") + 
-        //     data.Odds + LanguageUtils.Language.Get("GameMultiple") +
-        //     LanguageUtils.Language.Get("GameReward") + data.WinAmount;
-        // }
     }
     /**
      * 显示提示框
      */
     private Show():void{
+        Utils.BackgroundMusic.PlaySounds(this.resultSound);
         this.ui.visible = this.isShow;
         this.ui.prompt.scale(0, 0);
         Effect.AlertEffect.Show(this.ui.prompt, null);
-        Laya.timer.once(1000,this,this.Hide);
+        Laya.timer.once(2000,this,this.Hide);
     }
     /**
      * 类型：私有方法

@@ -16,4 +16,17 @@ namespace GameResourceConfig {
         { url: "ui/header/head_bg.png", type: Laya.Loader.IMAGE },
         { url: "ui/rule/rule_bg.png", type: Laya.Loader.IMAGE },
     ]
+    export const LoadResSoundConfig: Array<any> = [
+        { url: "sound/bgsound.mp3", type: Laya.Loader.SOUND },
+        { url: "sound/bomb.mp3", type: Laya.Loader.SOUND },
+        { url: "sound/bottles.mp3", type: Laya.Loader.SOUND },
+        { url: "sound/bra.mp3", type: Laya.Loader.SOUND },
+        { url: "sound/btn.mp3", type: Laya.Loader.SOUND },
+        { url: "sound/explode.mp3", type: Laya.Loader.SOUND },
+        { url: "sound/goal.mp3", type: Laya.Loader.SOUND },
+        { url: "sound/miss.mp3", type: Laya.Loader.SOUND },
+        { url: "sound/play.mp3", type: Laya.Loader.SOUND },
+        { url: "sound/pound.mp3", type: Laya.Loader.SOUND },
+        { url: "sound/seduce.mp3", type: Laya.Loader.SOUND },  
+    ]
 }

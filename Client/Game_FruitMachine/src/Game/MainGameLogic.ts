@@ -9,6 +9,7 @@ class MainGameLogic extends BaseGameLogic {
     private winAmount: number = 0;
     /**最大可竞猜分数 */
     private maxGuessAmount: number = 0;
+    private roundResult:Dto.GameResultDto;
 
     constructor() {
         super();
@@ -121,6 +122,8 @@ class MainGameLogic extends BaseGameLogic {
                     this.SetBalance((response.Data as Dto.GameResultDto).Balance);
                     this.winAmount = (response.Data as Dto.GameResultDto).WinAmount;
                     this.maxGuessAmount = this.winAmount * 2;
+                    this.betLogic.ClearBet();
+                    this.roundResult = response.Data;
                 }
                 break;
             default:
@@ -185,9 +188,7 @@ class MainGameLogic extends BaseGameLogic {
                 break;
             /**收获分数 */
             case Enum.GameViewHandlerEnum.GatherFraction:
-                this.winAmount = 0;
-                this.gameView.SetData(Enum.GameViewLogicEnum.ChangGameStatus, Enum.GameStatus.Default);
-                this.ChangeMoney();
+                this.Gather();
                 break;
             /**添加猜大小金额 */
             case Enum.GameViewHandlerEnum.AddGuessSum:
@@ -243,7 +244,6 @@ class MainGameLogic extends BaseGameLogic {
      */
     private ChangBaseAmount(data: number): void {
         let baseAmount = this.betLogic.ChangBaseAmount(this.GetBalance(), data);
-        this.gameView.SetData(Enum.GameViewLogicEnum.ChangBaseAmount, baseAmount);
         this.ChangeCurrBet();
     }
     /**
@@ -264,12 +264,22 @@ class MainGameLogic extends BaseGameLogic {
     private GameStart(): void {
         let BetScore = this.betLogic.GetBetScore();
         if (BetScore == 0) return;
+        if(BetScore > this.GetBalance()){
+            this.gameView.SetData(BaseEnum.GameViewLogicEnum.Alert, 'InsufficientBalance');
+            return;
+        }
         //游戏进行中 禁用按钮
         this.gameView.SetData(Enum.GameViewLogicEnum.ChangGameStatus, Enum.GameStatus.Execute);
         let betDto = this.betLogic.GetBetInfo();
         let HandlerDto = new Dto.HandlerDto();
         HandlerDto.Data = betDto;
         this.SendData(HandlerDto);
+    }
+    /**收获分数 */
+    private Gather():void{
+        this.winAmount = 0;
+        this.gameView.SetData(Enum.GameViewLogicEnum.ChangGameStatus, Enum.GameStatus.Default);
+        this.ChangeMoney();
     }
     /**游戏滚动结束 */
     private GameEnd(): void {
@@ -279,6 +289,9 @@ class MainGameLogic extends BaseGameLogic {
         } else {
             this.gameView.SetData(Enum.GameViewLogicEnum.ChangGameStatus, Enum.GameStatus.Default);
         }
+        this.gameView.SetData(Enum.GameViewLogicEnum.ClearBet,null);
+        this.ChangeCurrBet();
+        this.gameView.SetData(Enum.GameViewLogicEnum.GameEnd,this.roundResult);
         this.ChangeMoney();
     }
     /**增加猜大小金额 */
@@ -312,12 +325,7 @@ class MainGameLogic extends BaseGameLogic {
     }
     /**获取最新余额 */
     private GetNewBalance(): void {
-        let loginService = new Laya.Browser.window.LoginService(Network.Http, Utils.Storage, () => {
-            let memberInfo = loginService.GetMemberInfoByLocal();
-            this.ChangeMoney();
-        });
-        //获取会员信息
-        loginService.GetMemberInfo(true);
+        this.GetBalanceByService();
     }
 
 } 

@@ -54,6 +54,9 @@ class HeadView extends BaseHeadView implements IView{
 
     /**返回首页 */
     public OnGoHome():void{}
+
+    /**跳转支付 */
+    public OnPay():void{}
     
     /**刷新余额 */
     public OnRefreshBalance():void{
@@ -68,8 +71,7 @@ class HeadView extends BaseHeadView implements IView{
         }else{
             this.ui.btnSound.skin = 'ui/head_sound.png';
         }
-        SoundManage.SetMute(this.muted);
-        this.EventNotification(Enum.ListenViewEnum.SetMute,this.muted);
+        Laya.SoundManager.muted = this.muted;
     }
 
     /**显示规则面板 */
@@ -77,12 +79,17 @@ class HeadView extends BaseHeadView implements IView{
         this.EventNotification(Enum.ListenViewEnum.ShowRule);
     }
 
+    /**显示记录面板 */
+    public OnShowRecord():void{
+
+    }
+
     /**
      * 统一事件发送
      * @param type 事件类型
      */
     private EventNotification(type:Enum.ListenViewEnum,value:any = ''):void{
-        SoundManage.PlaySound(SoundConfig.SounRes.Button);
+        Laya.SoundManager.playSound(SoundConfig.SounRes.Button);
         let data: Dto.EventNotificationDto = new Dto.EventNotificationDto();
         data.Value = value;
         data.Type = type;
