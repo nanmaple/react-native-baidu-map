@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":3,
-    "selecteID":10,
+    "selectedBox":4,
+    "selecteID":5,
     "props":{"width":750,"sceneColor":"#fbfbfb","height":350,"bottom":0},
     "nodeParent":-1,
     "label":"View",
@@ -40,7 +40,7 @@
                 {
                     "x":30,
                     "type":"Label",
-                    "props":{"x":0,"width":100,"var":"total","valign":"middle","text":"总投:","fontSize":30,"color":"#ffffff","centerY":0,"align":"center"},
+                    "props":{"x":0,"width":100,"var":"total","valign":"middle","text":"总投:","overflow":"scroll","height":50,"fontSize":30,"color":"#ffffff","centerY":0,"align":"center"},
                     "nodeParent":4,
                     "label":"Label(total)",
                     "isDirectory":false,
@@ -53,7 +53,7 @@
                 {
                     "x":30,
                     "type":"Label",
-                    "props":{"x":100,"width":200,"var":"money","text":"0","fontSize":30,"color":"#ffffff","centerY":0},
+                    "props":{"x":100,"width":200,"var":"money","valign":"middle","text":"0","height":50,"fontSize":30,"color":"#ffffff","centerY":0,"align":"left"},
                     "nodeParent":4,
                     "label":"Label(money)",
                     "isDirectory":false,

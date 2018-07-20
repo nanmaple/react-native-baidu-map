@@ -4,6 +4,8 @@ namespace Enum{
         SetCurrentBet = 10000,
         /**开始随机数动画 */
         RandomAnimated,
+        /**猜大小结束结束 */
+        GuessEnd,
     }
 }
 /**中心信息面板类 */
@@ -40,6 +42,21 @@ class InternalView extends BaseInternalView implements IView{
             case Enum.InternalView.RandomAnimated:
                 this.Roll(data);
                 break;
+            case Enum.InternalView.GuessEnd:
+                this.GuessEnd(data);
+                break;
+        }
+    }
+
+    /**
+     * 猜大小结束
+     * @param data 是否获胜
+     */
+    private GuessEnd(data:boolean):void{
+        if(data){
+             Laya.SoundManager.playSound(SoundConfig.SounRes.GuessWin);
+        }else{
+            Laya.SoundManager.playSound(SoundConfig.SounRes.GuessLoss);
         }
     }
 

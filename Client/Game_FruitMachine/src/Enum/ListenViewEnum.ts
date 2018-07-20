@@ -50,5 +50,11 @@ namespace Enum{
 
         /**打开规则面板 */
         ShowRule,
+
+        /**获取历史记录 */
+        GetRecord,
+
+        /**打开记录面板*/
+        ShowRecord,
     }
 }

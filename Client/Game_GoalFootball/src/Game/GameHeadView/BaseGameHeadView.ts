@@ -43,6 +43,7 @@ abstract class BaseGameHeadView {
         this.ui.rule.on(Laya.Event.CLICK, this, this.OpenRule);
         this.ui.home.on(Laya.Event.CLICK, this, this.BackHome);
         this.ui.record.on(Laya.Event.CLICK, this, this.OpenRecord);
+        this.ui.recharge.on(Laya.Event.CLICK, this, this.Recharge);
         this.ui.title.skin = LanguageUtils.Language.Get("HeadTitleSkin");
     }
     /**
@@ -83,6 +84,13 @@ abstract class BaseGameHeadView {
      * 返回首页
      */
     private BackHome():void{
+        Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
+        Laya.Browser.window.location.href = "";
+    }
+    /**
+     * 充值
+     */
+    private Recharge():void{
         Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
         Laya.Browser.window.location.href = "";
     }

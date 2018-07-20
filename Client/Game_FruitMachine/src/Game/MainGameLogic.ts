@@ -1,4 +1,4 @@
-/// <reference path="../GameFrame/BaseGameLogic/index.ts"/>
+﻿/// <reference path="../GameFrame/BaseGameLogic/index.ts"/>
 /// <reference path="../BetLogic/Bet/BetLogic.ts"/>
 class MainGameLogic extends BaseGameLogic {
     /**
@@ -10,12 +10,27 @@ class MainGameLogic extends BaseGameLogic {
     /**最大可竞猜分数 */
     private maxGuessAmount: number = 0;
     private roundResult:Dto.GameResultDto;
-
+	/**
+     * 投注记录请求dto
+     */
+    private betRecordPageDto: Dto.BetRecordPageDto;
+    /**
+     * 请求参数
+     */
+    private requestParams: IRequestParams = {
+        Type: "Post",
+        Url: null,
+        Params: null,
+        Header: null,
+    }
     constructor() {
         super();
         //初始化时创建GameViwLogic,注入Handler
         this.gameView = new GameViewLogic(Laya.Handler.create(this, this.ViewHandler, null, false));
         this.betLogic = new OnceBet.BetLogic();
+this.betRecordPageDto = new Dto.BetRecordPageDto();
+        this.betRecordPageDto.GameId = GameConfig.GameID;
+        this.betRecordPageDto.PageSize = 10;
     }
 
     /**
@@ -131,7 +146,7 @@ class MainGameLogic extends BaseGameLogic {
         }
         this.gameView.SetData(BaseEnum.GameViewLogicEnum.GameData, response);
     };
-
+	
     /**
      * Ack回调
      * @param data ack信息，一般为之前发送信息的消息id
@@ -205,6 +220,10 @@ class MainGameLogic extends BaseGameLogic {
             /**获取最新余额 */
             case Enum.GameViewHandlerEnum.GetBalance:
                 this.GetNewBalance();
+                break
+            /**获取历史记录 */
+            case Enum.GameViewHandlerEnum.GetRecord:
+                this.GetGameRecord(Data);
                 break
         }
     }
@@ -316,16 +335,50 @@ class MainGameLogic extends BaseGameLogic {
     }
     /**猜大小结束 */
     private RandomEnd(): void {
+        let win = false;
         if (this.winAmount == 0) {
             this.gameView.SetData(Enum.GameViewLogicEnum.ChangGameStatus, Enum.GameStatus.Default);
         } else {
+            win = true;
             this.gameView.SetData(Enum.GameViewLogicEnum.ChangGameStatus, Enum.GameStatus.Guess);
         }
+        this.gameView.SetData(Enum.GameViewLogicEnum.GuessEnd, win);
         this.ChangeMoney();
     }
     /**获取最新余额 */
     private GetNewBalance(): void {
         this.GetBalanceByService();
     }
+
+     /**
+     * 获取游戏记录
+     */
+    private GetGameRecord(refresh:boolean):void{
+        if(refresh){
+            this.betRecordPageDto.LastId = null;
+        }
+        this.requestParams.Params = this.betRecordPageDto;
+        this.requestParams.Url = ApiConfig.GetBetRecord;
+        this.Request(this.requestParams,this.GetRecordSuccess,this.GetRecordFail);
+    }
+    /**
+     * 获取记录成功
+     * @param data 
+     */
+    private GetRecordSuccess=(data:any):void=>{
+        console.log(data)
+        if(data && data.length > 0){
+            this.betRecordPageDto.LastId = data[data.length - 1].Id;
+        }
+        this.gameView.SetData(Enum.GameViewLogicEnum.GetRecord, data);
+    }
+    /**
+     * 获取记录失败
+     * @param data 
+     */
+    private GetRecordFail=(error:any):void=>{
+        this.gameView.SetData(Enum.GameViewLogicEnum.GetRecord, null);
+    }
+
 
 } 

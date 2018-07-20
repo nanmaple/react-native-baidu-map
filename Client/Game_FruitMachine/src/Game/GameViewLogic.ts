@@ -12,6 +12,7 @@ class GameViewLogic extends BaseGameViewLogic {
     public HeadView: HeadView;
     public InternalView: InternalView;
     public RuleView: RuleView;
+    public RecordView: RecordView;
 
     constructor(Handler: Laya.Handler) {
         super();
@@ -86,6 +87,8 @@ class GameViewLogic extends BaseGameViewLogic {
         this.InternalView.ResetScreen();
         this.RuleView = new RuleView();
         this.RuleView.ResetScreen();
+        this.RecordView = new RecordView(this.GameViewEventKey);
+        this.RecordView.ResetScreen();
 
         Laya.SoundManager.playMusic(SoundConfig.SounRes.GameBg);
 
@@ -104,6 +107,10 @@ class GameViewLogic extends BaseGameViewLogic {
             //打开规则
             case Enum.ListenViewEnum.ShowRule:
                 this.RuleView.Set(null);
+                break;
+            //打开记录
+            case Enum.ListenViewEnum.ShowRecord:
+                this.RecordView.Set(null,Enum.RecordView.Show);
                 break;
             //修改投注基数
             case Enum.ListenViewEnum.ChangBaseAmount:
@@ -153,6 +160,10 @@ class GameViewLogic extends BaseGameViewLogic {
             //获取最新余额
             case Enum.ListenViewEnum.GetBalance:
                 this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.GetBalance, null]);
+                break;
+            //获取历史记录
+            case Enum.ListenViewEnum.GetRecord:
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.GetRecord, null]);
                 break;
             default:
                 break;
@@ -204,9 +215,17 @@ class GameViewLogic extends BaseGameViewLogic {
             case Enum.GameViewLogicEnum.GameEnd:
                 this.BetBarView.Set(data,Enum.BetBarView.GameEnd);
                 break;
-                //清理投注记录
+            //猜大小结束
+            case Enum.GameViewLogicEnum.GuessEnd:
+                this.InternalView.Set(data,Enum.InternalView.GuessEnd);
+                break;
+            //清理投注记录
             case Enum.GameViewLogicEnum.ClearBet:
                 this.BetBarView.Set(data,Enum.BetBarView.ClearAll);
+                break;
+            //设置历史记录
+            case Enum.GameViewLogicEnum.SetRecord:
+                this.BetBarView.Set(data,'');
                 break;
             default:
                 break;

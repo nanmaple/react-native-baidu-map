@@ -41,7 +41,7 @@
                 {
                     "x":30,
                     "type":"Label",
-                    "props":{"y":12,"x":10,"width":150,"var":"betNum","text":"0","height":41,"fontSize":34,"color":"#ffffff","align":"center"},
+                    "props":{"y":12,"x":10,"width":150,"var":"betNum","text":"100","height":41,"fontSize":34,"color":"#ffffff","align":"center"},
                     "nodeParent":6,
                     "label":"Label(betNum)",
                     "isDirectory":false,

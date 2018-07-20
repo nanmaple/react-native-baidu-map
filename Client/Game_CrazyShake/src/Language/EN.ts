@@ -414,5 +414,17 @@ namespace LanguageUtils {
          * 最大按钮的信息
          */
         MaxBtnNote:"Max",
+        /**
+         * 投注结果 “小”
+         */
+        Little:"little",
+        /**
+         * 投注结果 “大”
+         */
+        Big:"big",
+        /**
+         * 投注结果 “豹子”
+         */
+        Jaguar:"leopard",
     }
 }

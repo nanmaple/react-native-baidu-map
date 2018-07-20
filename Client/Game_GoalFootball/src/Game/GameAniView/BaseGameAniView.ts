@@ -86,6 +86,9 @@ abstract class BaseGameAniView {
         this.endPos = {X:this.ui.goal.x, Y:this.ui.goal.y};
         this.centPos = {X:this.endPos.X, Y:(this.initPos.Y + this.endPos.Y) / 2};
         Effect.CurvesEffect.CreateLine(this.initPos, this.centPos, this.endPos);
+        this.ui.goalkeeper.loadAnimation("GoalkeeperAni.ani",Laya.Handler.create(this,()=>{
+            this.ui.goalkeeper.play(0,true,"guard_wait");
+        },null,false));
         this.DefenderRandomPos();
         this.InitProp();
     }

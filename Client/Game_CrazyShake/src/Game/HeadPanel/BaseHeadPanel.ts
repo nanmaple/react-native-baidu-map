@@ -7,7 +7,7 @@ class BaseHeadPanel {
     protected scoreNum: number = 0;
     protected isVoiceOn: boolean = true;
     protected winAmount: number = 0;
-    protected listenEventKey:string;
+    protected listenEventKey: string;
     constructor(eventKey: string) {
         this.listenEventKey = eventKey;
     }
@@ -31,11 +31,8 @@ class BaseHeadPanel {
      * 绑定按钮
      */
     protected OnButton(): void {
-        this.ui.homeBtn.on(Laya.Event.CLICK, this, () => {
-            window.location.href = "";
-            //返回游戏大厅
-        })
-        this.ui.ruleBtn.on(Laya.Event.CLICK, this, this.EventNotification)
+        this.OnMouseDown();
+        this.OnMouseUp();
         this.ui.voiceBtn.on(Laya.Event.CLICK, this, () => {
             if (this.isVoiceOn) {
                 this.isVoiceOn = false;
@@ -47,20 +44,58 @@ class BaseHeadPanel {
                 Laya.SoundManager.musicMuted = false;
                 this.ui.voiceBtn.skin = "ui/voiceOnBtn.png"
             }
-
         })
-        this.ui.rechargeBtn.on(Laya.Event.CLICK, this, () => {
-            //弹出游戏充值面板
-        })
-        this.ui.rankBtn.on(Laya.Event.CLICK, this, () => {
+        this.ui.recordBtn.on(Laya.Event.CLICK, this, () => {
+            this.ui.recordBtn.skin = "ui/recordBtn1.png"
             //弹出游戏排行榜
         })
     }
     /**
+     * 鼠标按下事件
+     */
+    private OnMouseDown() {
+        this.ui.homeBtn.on(Laya.Event.MOUSE_DOWN, this, () => {
+            this.ui.homeBtn.skin = "ui/homeBtn2.png"
+        })
+        this.ui.ruleBtn.on(Laya.Event.MOUSE_DOWN, this, () => {
+            this.ui.ruleBtn.skin = "ui/ruleBtn2.png"
+        })
+        this.ui.rechargeBtn.on(Laya.Event.MOUSE_DOWN, this, () => {
+            this.ui.rechargeBtn.skin = "ui/rechargeBtn2.png"
+        })
+        this.ui.recordBtn.on(Laya.Event.MOUSE_DOWN, this, () => {
+            this.ui.recordBtn.skin = "ui/recordBtn2.png"
+        })
+    }
+    /**
+     * 鼠标抬起事件
+     */
+    private OnMouseUp() {
+
+        this.ui.homeBtn.on(Laya.Event.MOUSE_UP, this, () => {
+            this.ui.homeBtn.skin = "ui/homeBtn1.png"
+            window.location.href = "";
+            //返回游戏大厅
+        })
+        this.ui.ruleBtn.on(Laya.Event.MOUSE_UP, this, () => {
+            this.ui.ruleBtn.skin = "ui/ruleBtn1.png"
+            this.EventNotification(Enum.ListenViewEnum.OpenRule);
+        })
+        this.ui.rechargeBtn.on(Laya.Event.MOUSE_UP, this, () => {
+            this.ui.rechargeBtn.skin = "ui/rechargeBtn1.png"
+            //弹出游戏充值面板
+        })
+        this.ui.recordBtn.on(Laya.Event.MOUSE_UP,this,()=>{
+            this.ui.recordBtn.skin = "ui/recordBtn1.png"
+            this.EventNotification(Enum.ListenViewEnum.OpenRecord)
+        })
+    }
+
+    /**
      * 余额显示
      * @param rechargeNum余额 
      */
-    protected SetRechargeNum(data:any): void {
+    protected SetRechargeNum(data: any): void {
         this.ui.balanceNum.changeText(data.toString());
     }
     /**
@@ -82,15 +117,15 @@ class BaseHeadPanel {
      * 通过事件，向上通知
      * 事件key值，通过构造函数时注入
      */
-    private EventNotification(): void {
+    private EventNotification(Data:any): void {
         let data: Dto.EventNotificationDto = new Dto.EventNotificationDto();
         data.Value = {};
-        data.Type = Enum.ListenViewEnum.OpenRule;
+        data.Type = Data;
         let event = new CustomEvent(this.listenEventKey, { detail: data });
         document.dispatchEvent(event);
     }
 
-    private ChangeSlogan():void{
-        
+    private ChangeSlogan(): void {
+
     }
 }

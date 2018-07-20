@@ -1,9 +1,25 @@
-/// <reference path="../GameFrame/BaseGameLogic/index.ts"/>
+﻿/// <reference path="../GameFrame/BaseGameLogic/index.ts"/>
 class MainGameLogic extends BaseGameLogic {
+    /**
+         * 投注记录请求dto
+         */
+    private betRecordPageDto: Dto.BetRecordPageDto;
+    /**
+     * 请求参数
+     */
+    private requestParams: IRequestParams = {
+        Type: "Post",
+        Url: null,
+        Params: null,
+        Header: null,
+    }
     constructor() {
         super();
         //初始化时创建GameViwLogic,注入Handler
         this.gameView = new GameViewLogic(Laya.Handler.create(this, this.ViewHandler, [], false));
+        this.betRecordPageDto = new Dto.BetRecordPageDto();
+        this.betRecordPageDto.GameId = GameConfig.GameID;
+        this.betRecordPageDto.PageSize = 10;
     }
     /**
      * 登录完成
@@ -124,6 +140,36 @@ class MainGameLogic extends BaseGameLogic {
         gameDto.Data = dto;
         this.Send(gameDto);
     }
+
+    /**
+         * 获取游戏记录
+         */
+    private GetGameRecord(refresh: boolean): void {
+        if (refresh) {
+            this.betRecordPageDto.LastId = null;
+        }
+        this.requestParams.Params = this.betRecordPageDto;
+        this.requestParams.Url = ApiConfig.GetBetRecord;
+        this.Request(this.requestParams, this.GetRecordSuccess, this.GetRecordFail);
+    }
+    /**
+     * 获取记录成功
+     * @param data 
+     */
+    private GetRecordSuccess = (data: any): void => {
+        console.log(data)
+        if (data && data.length > 0) {
+            this.betRecordPageDto.LastId = data[data.length - 1].Id;
+        }
+        this.gameView.SetData(Enum.GameViewLogicEnum.GetRecord, data);
+    }
+    /**
+     * 获取记录失败
+     * @param data 
+     */
+    private GetRecordFail = (error: any): void => {
+        this.gameView.SetData(Enum.GameViewLogicEnum.GetRecord, null);
+    }
     /********************* Socket *********************/
     /******************* 界面事件hander *****************/
     public ViewHandler(type: Enum.GameViewHandlerEnum, data: any): void {
@@ -139,6 +185,9 @@ class MainGameLogic extends BaseGameLogic {
                     this.gameView.SetData(BaseEnum.GameViewLogicEnum.Alert, LanguageUtils.Language.Get("BALANCE_SMALL"))
                     this.gameView.SetData(Enum.GameViewLogicEnum.MsgGameRefreshBtn, null);
                 };
+                break;
+            case Enum.GameViewHandlerEnum.GetRecord:
+                this.GetGameRecord(data);
                 break;
         }
     }

@@ -43,6 +43,7 @@ abstract class BaseGameChipsView {
     private Init():void{
         this.DisabledShootBtn(true);
         this.ui.btn_max.label = LanguageUtils.Language.Get("MaxChip");
+        this.ui.total.text = LanguageUtils.Language.Get("Total");
     }
     
     /**

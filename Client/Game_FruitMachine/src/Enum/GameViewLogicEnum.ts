@@ -19,6 +19,8 @@ namespace Enum {
         GameEnd,
         /**清理投注记录 */
         ClearBet,
+        /**猜大小结束 */
+        GuessEnd,
 
 
 

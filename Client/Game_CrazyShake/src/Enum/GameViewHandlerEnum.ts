@@ -21,5 +21,9 @@ namespace Enum {
          * 获取最新余额
          */
         ChangeMoney,
+        /**
+         * 获取记录
+         */
+        GetRecord,
     }
 }

@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":2,
+    "selecteID":8,
     "props":{"width":750,"sceneColor":"#000000","height":1334},
     "nodeParent":-1,
     "label":"View",
@@ -23,7 +23,23 @@
             "hasChild":false,
             "compId":2,
             "child":[
-                ]
+                ],
+            "$HIDDEN":false
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"y":0,"x":0,"width":1334,"visible":false,"var":"maskBg","skin":"ui/maskBg.png","skewY":90,"skewX":90,"height":750,"alpha":0.4},
+            "nodeParent":1,
+            "label":"Image(maskBg)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":3,
+            "child":[
+                ],
+            "$LOCKED":false,
+            "$HIDDEN":false
         }],
     "animations":[
         {

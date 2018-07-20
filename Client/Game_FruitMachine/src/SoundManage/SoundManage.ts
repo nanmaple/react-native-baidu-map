@@ -22,6 +22,10 @@ namespace SoundConfig{
         Win:'sound/win.mp3',
         /**未猜中音效 */
         Loss:'sound/loss.mp3',
+        /**猜大小成功 */
+        GuessWin: 'sound/gwin.mp3',
+        /**猜大小失败 */
+        GuessLoss: 'sound/gloss.mp3',
 
     }
 }

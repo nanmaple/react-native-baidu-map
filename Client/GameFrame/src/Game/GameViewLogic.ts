@@ -67,7 +67,7 @@ class GameViewLogic extends BaseGameViewLogic {
         //加载其他组件
         this.GameBgView = new GameBgView(this.GameViewEventKey);
         this.GameBgView.ResetScreen();
-
+        //启动游戏socket
         this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.StartSocket, {}]);
     }
 

@@ -71,6 +71,7 @@ class GameAniView extends BaseGameAniView implements IView {
                 Laya.Handler.create(this,this.EndCurvesMove,null,false)])//主控制  0.001自己调整(运动快慢)
             }
         })  
+
     }
     /**
      * 游戏初始化

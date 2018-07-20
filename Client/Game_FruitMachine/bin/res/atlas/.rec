@@ -21,6 +21,8 @@ R B3C7140C bgm.mp3
 R D0F6070D click.mp3
 R C80BE32E gameBg.mp3
 R 847E9693 gather.mp3
+R 9588DED4 gloss.mp3
+R B41D63B3 gwin.mp3
 R 9588DED4 loss.mp3
 R C9AE2E14 result_1.mp3
 R 8936B85D result_2.mp3
@@ -35,6 +37,7 @@ R 2C3F1CE9 start_2.mp3
 R 49BA340E start_3.mp3
 R 05F21064 win.mp3
 D ui
+R 2D2209B7 alert_bg.png
 P 67409238 bet_apple.png
 P 4E0465BC bet_bar.png
 P B9AA5013 bet_bell.png
@@ -46,17 +49,11 @@ P AA4D3EE6 bet_seven.png
 P 744F42D3 bet_star.png
 P 652BED07 bet_watermelon.png
 R B602DE64 bg.png
-R 577CD16E bg_alert.png
-R 5C94EABC bg_record.png
 P 2DB7F7D4 btn_add.png
 P C61B0C5C btn_addAll.png
-P 6430E8BA btn_big.png
-P 870541B2 btn_clear.png
-P A2524C7D btn_close.png
-P 1510F9B7 btn_gather.png
+P B496A046 btn_close.png
 P 2AD7316E btn_guess.png
 P 76486C83 btn_reduce.png
-P B22E04EC btn_small.png
 P 7EDDEFC2 btn_start.png
 R 84BD9D07 chip_bg.png
 P 399A1BAB chip_btnAdd.png
@@ -99,36 +96,8 @@ R 3947C27C maskBg.png
 P F2941557 mid_bet.png
 P 46CA383B mid_random.png
 R 577CD16E prompt.png
-R 7335BA8A rule_bg.png
-D ui/Bet
-P 67409238 bet_apple.png
-P 4E0465BC bet_bar.png
-P B9AA5013 bet_bell.png
-P FF473F40 bet_numBox.png
-R 5D2C3670 bet_oddsBar.png
-P 31CDFEC2 bet_orange.png
-P 550E5241 bet_papaya.png
-P AA4D3EE6 bet_seven.png
-P 744F42D3 bet_star.png
-P 652BED07 bet_watermelon.png
-D ui/Head
-P AB4938F4 head_balance.png
-P 7B74AAC8 head_gain.png
-P 735EF754 head_gainLogo.png
-P 5EF30D2E head_home_1.png
-P A4958D2E head_home_2.png
-P A721CCE7 head_home_3.png
-P 5EA4CCB8 head_logo.png
-P ABA43049 head_muted.png
-P 0019E083 head_pay.png
-P 0019E083 head_record.png
-P A5CD23ED head_rule.png
-P 37B9A3C4 head_sound.png
-D ui/Operate
-P 2DB7F7D4 btn_add.png
-P C61B0C5C btn_addAll_CH.png
-P 2AD7316E btn_guess.png
-P 76486C83 btn_reduce.png
-P 7EDDEFC2 btn_start_CH.png
-P 399A1BAB chip_btnAdd.png
-P 4D80C66D chip_numBg.png
+R 810FA50B record_bg.png
+P D24817FA record_Item_1.png
+P DEA40138 record_Item_2.png
+P 271E527E record_title.png
+R ADEE9DA5 rule_bg_CH.png

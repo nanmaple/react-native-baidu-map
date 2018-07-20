@@ -177,6 +177,10 @@ namespace LanguageUtils {
          * 选择最大筹码
          */
         MaxChip: "Max",
+        /**
+         * 总投
+         */
+        Total: "Total:",
 
         //游戏规则内容
         GameRuleFirst: "1.Click the right or left toggle to select the numeric button or click the 'Max' button to confirm the amount of bet used.",
@@ -213,5 +217,13 @@ namespace LanguageUtils {
          * 游戏头部标题皮肤
          */
         HeadTitleSkin: "ui/header/head_tit.png",
+        /**
+         * 游戏规则头部皮肤
+         */
+        RuleTitleSkin: "ui/rule/rule_title.png",
+        /**
+         * 游戏规则第四张图皮肤（射门）
+         */
+        RuleImgFourSkin: "ui/rule/ruleImg_4.png",
     }
 }

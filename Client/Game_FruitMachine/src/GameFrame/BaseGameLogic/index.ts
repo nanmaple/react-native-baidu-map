@@ -1,4 +1,4 @@
-
+﻿
 /// <reference path="../Dto/MemberInfoDto.ts" />
 /// <reference path="../Dto/AuthorizationDto.ts" />
 /// <reference path="../Dto/GameModalDto.ts" />
@@ -222,14 +222,22 @@ abstract class BaseGameLogic {
      */
     protected Request(requestDto: IRequestParams, successCallback: Function, failCallback: Function): void {
         if (requestDto.Type.toLowerCase() == "get") {
-            this.webApi.Get(requestDto.Url, requestDto.Params, requestDto.Header, (response: any) => {
-                successCallback(response);
+            this.webApi.Get(requestDto.Url, requestDto.Params, requestDto.Header, (response: any) => {   
+                if (response.Result == BaseEnum.ErrorCode.Success) { 
+                    successCallback(response.Data);
+                } else {
+                    failCallback(response.Result);
+                }
             }, (error: any) => {
                 failCallback(error);
             })
         } else {
             this.webApi.Post(requestDto.Url, requestDto.Params, requestDto.Header, (response: any) => {
-                successCallback(response);
+                if (response.Result == BaseEnum.ErrorCode.Success) { 
+                    successCallback(response.Data);
+                } else {
+                    failCallback(response.Result);
+                }
             }, (error: any) => {
                 failCallback(error);
             })

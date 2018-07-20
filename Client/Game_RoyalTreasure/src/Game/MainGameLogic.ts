@@ -100,21 +100,11 @@ class MainGameLogic extends BaseGameLogic {
         let data: any = response.Data;
         this.Log(data, "OnMessageHandler");
         switch (response.Command) {
-            case Enum.GameCommand.MSG_GAME_INIT://初始化
+            case Enum.GameCommand.MsgGameInit://初始化
                 this.SetBalance((response.Data as Dto.ClientInitDto).Balance);
-                this.gameView.SetData(BaseEnum.GameViewLogicEnum.GameData,response)
+                this.gameView.SetData(BaseEnum.GameViewLogicEnum.GameData, response)
                 break;
-            case Enum.GameCommand.MSG_GAME_START: //游戏开始
-                break;
-            case Enum.GameCommand.MSG_GAME_BETRESULT://投注结果
-
-                break;
-            case Enum.GameCommand.MSG_GAME_STOPBET://游戏停止投注
-                break
-            case Enum.GameCommand.MSG_GAME_GAMERESULT: //游戏结果
-
-                break;
-            case Enum.GameCommand.MSG_GAME_SETTLERESULT://游戏结算
+            case Enum.GameCommand.MsgGameSettleResult://游戏结算
                 //游戏结算，重置之前投注数据
                 this.SetBalance((response.Data as Dto.GameResultDto).Balance);
                 this.gameView.SetData(Enum.GameViewLogicEnum.ChangMoney, this.GetBalance());
@@ -143,9 +133,8 @@ class MainGameLogic extends BaseGameLogic {
         this.Log({ Data: dto.Data, msgID: msgID }, "SendHandelr");
         //组装游戏命令Dto
         let gameDto: Dto.GameMessageDto = new Dto.GameMessageDto();
-        gameDto.Command = Enum.GameCommand.MSG_GAME_BET;
+        gameDto.Command = Enum.GameCommand.MsgGameBet;
         gameDto.Data = dto.Data;
-
         this.Send(gameDto, msgID);
     }
     /********************* Socket *********************/
@@ -155,13 +144,13 @@ class MainGameLogic extends BaseGameLogic {
         switch (Type) {
             case Enum.GameViewHandlerEnum.BetPos:
                 break;
-
             case Enum.GameViewHandlerEnum.GetMemberInfo:
                 let memberInfo = this.GetMemberInfo();
                 let isTourists = this.IsTourist();
                 this.gameView.SetData(Enum.GameViewLogicEnum.GetMemberInfo, { memberInfo, isTourists })
-                break
-
+                break;
+            default:
+                break;
         }
     }
 

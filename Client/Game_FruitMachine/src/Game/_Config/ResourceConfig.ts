@@ -3,12 +3,18 @@ namespace GameResourceConfig {
     export const Domain: string = GameConfig.Domain;
     export const LoadResourcesConfig: Array<any> = [
         { url: "res/atlas/ui.atlas", type: Laya.Loader.ATLAS },
-        { url: "ui/bg.png", type: Laya.Loader.IMAGE },
-        { url: "ui/bg_alert.png", type: Laya.Loader.IMAGE },
-        { url: "ui/bg_record.png", type: Laya.Loader.IMAGE },
+        // { url: "ui/bg.png", type: Laya.Loader.IMAGE },
+        { url: "ui/alert_bg.png", type: Laya.Loader.IMAGE },
+        { url: "ui/record_bg.png", type: Laya.Loader.IMAGE },
+        // { url: "ui/bg_record.png", type: Laya.Loader.IMAGE },
         { url: "ui/maskBg.png", type: Laya.Loader.IMAGE },
-        { url: "ui/tip.png", type: Laya.Loader.IMAGE },
+        // { url: "ui/tip.png", type: Laya.Loader.IMAGE },
         { url: "ui/prompt.png", type: Laya.Loader.IMAGE },
+        { url: "ui/bet_oddsBar.png", type: Laya.Loader.IMAGE },
+        { url: "ui/gameBg.png", type: Laya.Loader.IMAGE },
+        { url: "ui/content.png", type: Laya.Loader.IMAGE },
+        { url: "ui/rule_bg_CH.png", type: Laya.Loader.IMAGE },
+
         { url: "sound/click.mp3", type: Laya.Loader.SOUND },
         { url: "sound/bgm.mp3", type: Laya.Loader.SOUND },
         { url: "sound/start_1.mp3", type: Laya.Loader.SOUND },
@@ -33,5 +39,7 @@ namespace GameResourceConfig {
         { url: "sound/result_8.mp3", type: Laya.Loader.SOUND },
         { url: "sound/win.mp3", type: Laya.Loader.SOUND },
         { url: "sound/loss.mp3", type: Laya.Loader.SOUND },
+        { url: "sound/gwin.mp3", type: Laya.Loader.SOUND },
+        { url: "sound/gloss.mp3", type: Laya.Loader.SOUND },
     ]
 }

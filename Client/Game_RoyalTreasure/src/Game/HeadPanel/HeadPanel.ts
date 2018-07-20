@@ -23,5 +23,4 @@ class HeadPanel extends BaseHeadPanel implements IView {
         this.SetBalance(data);
     }
 
-    
 }

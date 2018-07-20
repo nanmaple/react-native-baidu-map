@@ -81,7 +81,7 @@ class HeadView extends BaseHeadView implements IView{
 
     /**显示记录面板 */
     public OnShowRecord():void{
-
+        this.EventNotification(Enum.ListenViewEnum.ShowRecord);
     }
 
     /**

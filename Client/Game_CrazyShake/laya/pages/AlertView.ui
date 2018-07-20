@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":1,
-    "selecteID":15,
+    "selectedBox":9,
+    "selecteID":10,
     "props":{"width":750,"sceneColor":"#ffffff","height":1334},
     "nodeParent":-1,
     "label":"View",
@@ -27,7 +27,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":667,"x":375,"width":567,"var":"prompt","skin":"ui/prompt.png","height":328,"centerY":0,"centerX":0,"anchorY":0.5,"anchorX":0.5},
+                    "props":{"y":667,"x":375,"width":567,"var":"prompt","skin":"ui/alert_bg.png","height":328,"centerY":0,"centerX":0,"anchorY":0.5,"anchorX":0.5},
                     "nodeParent":2,
                     "label":"Image(prompt)",
                     "isOpen":true,
@@ -65,7 +65,7 @@
                         {
                             "x":45,
                             "type":"Label",
-                            "props":{"y":100,"wordWrap":true,"width":500,"var":"txt","valign":"top","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":150,"fontSize":32,"font":"Arial","color":"#000000","centerX":0,"align":"left"},
+                            "props":{"y":62,"wordWrap":true,"width":515,"var":"txt","valign":"middle","styleSkin":"ui/prompt/label.png","overflow":"scroll","height":202,"fontSize":32,"font":"Arial","color":"#fff","centerX":0},
                             "nodeParent":9,
                             "label":"Label(txt)",
                             "isDirectory":false,
@@ -78,7 +78,7 @@
                         {
                             "x":45,
                             "type":"Image",
-                            "props":{"y":20,"x":479,"var":"close","skin":"ui/close.png"},
+                            "props":{"y":-29,"x":535,"var":"close","skin":"ui/btn_close.png"},
                             "nodeParent":9,
                             "label":"Image(close)",
                             "isDirectory":false,

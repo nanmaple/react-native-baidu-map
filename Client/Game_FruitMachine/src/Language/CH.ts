@@ -171,6 +171,9 @@ namespace LanguageUtils {
 
         //-------------中间--------------
 
-        CurrentCoin: '当前投币：'
+        CurrentCoin: '当前投币:',
+
+        //-------------规则--------------
+        RuleView: 'ui/rule_bg_CH.png'
     }
 }

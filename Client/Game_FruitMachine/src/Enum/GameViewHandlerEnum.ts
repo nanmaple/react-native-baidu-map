@@ -48,5 +48,8 @@ namespace Enum {
 
         /** 随机数动画结束*/
         RandomEnd,
+
+        /**获取历史记录 */
+        GetRecord,
     }
 }

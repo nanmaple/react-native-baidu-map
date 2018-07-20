@@ -41,6 +41,8 @@ abstract class BaseGameRuleView {
      * 初始化
      */
     private Init(): void {
+        this.ui.title.skin = LanguageUtils.Language.Get("RuleTitleSkin");
+        this.ui.ruleImg_4.skin = LanguageUtils.Language.Get("RuleImgFourSkin");
         this.ui.rule_1.text = LanguageUtils.Language.Get("GameRuleFirst");
         this.ui.rule_2.text = LanguageUtils.Language.Get("GameRuleSecond");
         this.ui.rule_3.text = LanguageUtils.Language.Get("GameRuleThird");

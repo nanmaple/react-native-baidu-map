@@ -170,6 +170,9 @@ namespace LanguageUtils {
 
         //-------------中间--------------
 
-        CurrentCoin: 'Current Coin:'
+        CurrentCoin: 'Current Coin:',
+
+        //-------------规则--------------
+        RuleView: 'ui/rule_bg_EN.png'
     }
 }

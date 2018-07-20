@@ -24,5 +24,13 @@ namespace Enum {
          * 打开游戏规则
          */
         OpenRule,
+        /**
+         * 获取记录
+         */
+        GetRecord,
+        /**
+         * 打开记录
+         */
+        OpenRecord,
     }
 }

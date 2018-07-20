@@ -20,8 +20,6 @@ class BaseBetNumPanel {
         this.OnButton();
         // 禁用按钮
         this.EnableButton(false);
-        
-
     }
 
     /**
@@ -29,23 +27,44 @@ class BaseBetNumPanel {
      */
     private OnButton() :void{
         //根据语言切换最大按钮信息
-        // this.ui.maxBtn.skin=LanguageUtils.Language.Get("MaxBtnNote");
-        //最大投注
-        this.ui.maxBtn.on(Laya.Event.CLICK, this, () => {
+        this.ui.maxWord.changeText(LanguageUtils.Language.Get("MaxBtnNote"))
+        this.OnMouseDown();
+        this.OnMouseUp();
+    }
+    /**
+     * 鼠标按下事件
+     */
+    private OnMouseDown():void{
+        this.ui.maxBtn.on(Laya.Event.MOUSE_DOWN,this,()=>{
+            this.ui.maxBtn.skin="ui/maxBtn2.png";
+        })
+        this.ui.decreaseBtn.on(Laya.Event.MOUSE_DOWN,this,()=>{
+            this.ui.decreaseBtn.skin="ui/decreaseBtn2.png"
+        })
+        this.ui.addBtn.on(Laya.Event.MOUSE_DOWN,this,()=>{
+            this.ui.addBtn.skin="ui/addBtn2.png"
+        })
+    }
+    /**
+     * 鼠标抬起事件
+     */
+    private OnMouseUp():void{
+        this.ui.maxBtn.on(Laya.Event.MOUSE_UP, this, () => {
+            this.ui.maxBtn.skin="ui/maxBtn1.png";
             Laya.SoundManager.playSound("sound/btnSound.mp3");
             this.currentBetNum = this.maxBetNum;
             if (this.currentBetNum < 100) this.currentBetNum = 100;
             this.ui.betNumText.changeText(JSON.stringify(this.currentBetNum));
         })
-        //减少投注
-        this.ui.decreaseBtn.on(Laya.Event.CLICK, this, () => {
+        this.ui.decreaseBtn.on(Laya.Event.MOUSE_UP, this, () => {
+            this.ui.decreaseBtn.skin="ui/decreaseBtn1.png";
             Laya.SoundManager.playSound("sound/btnSound.mp3");
             this.currentBetNum -= 100;
             if (this.currentBetNum < 100) this.currentBetNum = 100;
             this.ui.betNumText.changeText(JSON.stringify(this.currentBetNum));
         })
-        //增加投注
-        this.ui.addBtn.on(Laya.Event.CLICK, this, () => {
+        this.ui.addBtn.on(Laya.Event.MOUSE_UP, this, () => {
+            this.ui.addBtn.skin="ui/addBtn1.png";
             Laya.SoundManager.playSound("sound/btnSound.mp3");
             this.currentBetNum += 100;
             if (this.currentBetNum > this.maxBetNum) this.currentBetNum = this.maxBetNum;
@@ -53,6 +72,7 @@ class BaseBetNumPanel {
             this.ui.betNumText.changeText(JSON.stringify(this.currentBetNum));
         })
     }
+
     /**
      * 启用按钮
      * @param isEnabled 

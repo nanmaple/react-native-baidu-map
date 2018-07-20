@@ -7,5 +7,9 @@ namespace Enum {
          * 刷新按钮
          */
         MsgGameRefreshBtn=6000,
+        /**
+         * 获取记录
+         */
+        GetRecord,
     }
 }

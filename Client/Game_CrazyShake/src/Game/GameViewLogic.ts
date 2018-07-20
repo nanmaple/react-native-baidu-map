@@ -9,6 +9,8 @@ class GameViewLogic extends BaseGameViewLogic {
     public BetNumPanel: BetNumPanel;
     public BetPanel: BetPanel;
     public RulePanel: RulePanel;
+    public ResultPanel: ResultPanel;
+    public GameRecordView: GameRecordView;
     constructor(Handler: Laya.Handler) {
         super();
         this.CtrlHandler = Handler;
@@ -82,6 +84,10 @@ class GameViewLogic extends BaseGameViewLogic {
         this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.StartSocket, {}]);
         this.RulePanel = new RulePanel(this.GameViewEventKey);
         this.RulePanel.ResetScreen();
+        this.ResultPanel = new ResultPanel();
+        this.ResultPanel.ResetScreen();
+        this.GameRecordView = new GameRecordView(this.GameViewEventKey);
+        this.GameRecordView.ResetScreen();
     }
 
     /**
@@ -111,6 +117,12 @@ class GameViewLogic extends BaseGameViewLogic {
             case Enum.ListenViewEnum.OpenRule:
                 this.RulePanel.Refresh();
                 break;
+            case Enum.ListenViewEnum.OpenRecord:
+                this.GameRecordView.Set(null, Enum.GameRecordView.IsRecordShow);
+                break;
+            case Enum.ListenViewEnum.GetRecord:
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.GetRecord, data]);
+                break;
             default:
                 break;
         }
@@ -125,7 +137,7 @@ class GameViewLogic extends BaseGameViewLogic {
         switch (type) {
             //基本分发数据类型
             case BaseEnum.GameViewLogicEnum.Alert:
-                this.ShowAlert(1, data);
+                this.ShowAlert(0, data);
                 break;
             case BaseEnum.GameViewLogicEnum.Error:
                 console.log(data);
@@ -145,6 +157,10 @@ class GameViewLogic extends BaseGameViewLogic {
             case Enum.GameViewLogicEnum.MsgGameRefreshBtn:
                 this.BetPanel.Refresh();
                 this.BetNumPanel.Refresh();
+                break;
+            case Enum.GameViewLogicEnum.GetRecord:
+                this.GameRecordView.Set(data, Enum.GameRecordView.GetRecordData)
+                break;
             default:
                 break;
         }
@@ -186,9 +202,11 @@ class GameViewLogic extends BaseGameViewLogic {
      */
     public OnGameSettleResult(data: any): void {
         this.Log(data, "GameGetResult");
+        this.GameBgView.Set(null);
         this.ToyPanel.Set(data);
         this.HeadPanel.Set(data.Data, Enum.HeadPanel.GameSettleResult);
         this.BetNumPanel.Set(data.Data, Enum.BetNumPanel.GameSettleResult);
+        this.ResultPanel.Set(data.Data);
     }
 
     /**
@@ -199,5 +217,7 @@ class GameViewLogic extends BaseGameViewLogic {
         this.HeadPanel.Refresh();
         this.BetNumPanel.Refresh();
         this.BetPanel.Refresh();
+        this.GameBgView.Refresh();
+        this.ResultPanel.Refresh();
     }
 }

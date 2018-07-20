@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":6,
-    "selecteID":9,
+    "selecteID":7,
     "props":{"width":400,"top":580,"sceneColor":"#000000","left":175,"height":130},
     "nodeParent":-1,
     "label":"View",
@@ -53,7 +53,7 @@
                 {
                     "x":30,
                     "type":"Label",
-                    "props":{"y":16,"x":165,"width":120,"var":"curBet","valign":"middle","text":"0","height":25,"fontSize":25,"color":"#fff","align":"center"},
+                    "props":{"y":15,"x":165,"width":120,"var":"curBet","valign":"middle","text":"0","height":30,"fontSize":30,"color":"#fff","align":"center"},
                     "nodeParent":6,
                     "label":"Label(curBet)",
                     "isDirectory":false,
@@ -66,7 +66,7 @@
                 {
                     "x":30,
                     "type":"Label",
-                    "props":{"y":12,"x":20,"var":"currentbet","text":"当前投币：","fontSize":25,"font":"Microsoft YaHei","color":"#fff800","bold":true},
+                    "props":{"y":17,"x":20,"var":"currentbet","text":"当前投币:","fontSize":25,"color":"#fff800","bold":true},
                     "nodeParent":6,
                     "label":"Label(currentbet)",
                     "isDirectory":false,
