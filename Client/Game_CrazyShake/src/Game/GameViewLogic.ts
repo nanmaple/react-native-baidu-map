@@ -12,9 +12,7 @@ class GameViewLogic extends BaseGameViewLogic {
     public ResultPanel: ResultPanel;
     public GameRecordView: GameRecordView;
     constructor(Handler: Laya.Handler) {
-        super();
-        this.CtrlHandler = Handler;
-        this.GameLoad();
+        super(Handler);
     }
 
     /***************游戏基础逻辑***************/
@@ -24,47 +22,13 @@ class GameViewLogic extends BaseGameViewLogic {
     public ResetScreen(): void {
 
     }
-
-    /**
-     * 启动游戏资源页面，开始加载游戏资源
-     */
-    public GameLoad(): void {
-        this.gameLoadView = new GameLoadView(this.GameViewEventKey);
-        this.gameLoadView.ResetScreen();
-        this.gameLoadView.StartLoad(GameResourceConfig.LoadResourcesConfig);
-    }
-
-    /**
-     * 游戏资源加载完成，检查登录状态
-     */
-    public CheckLoad(): void {
-        this.isLoadSuccess = true;
-        if (this.isLoginSucess) {
-            this.gameLoadView.Remove();
-            //加载主界面
-            this.GameMainUI();
-        }
-    }
-
-    /**
-     * 游戏登录完成，检查游戏资源加载状态
-     */
-    private GameLoginComplete(): void {
-        this.isLoginSucess = true;
-        if (this.isLoadSuccess) {
-            this.gameLoadView.Remove();
-            //加载主界面
-            this.GameMainUI();
-        }
-    }
-
     /***************游戏基本逻辑***************/
 
     /***************游戏方法处理（方法名不变，修改方法内部逻辑）***************/
     /**
      * 加载游戏主界面
      */
-    private GameMainUI(): void {
+    public GameMainUI(): void {
         //初始化基本alert,loading组件的界面
         this.alertView = new AlertView();
         this.alertView.ResetScreen();
@@ -154,6 +118,9 @@ class GameViewLogic extends BaseGameViewLogic {
             case BaseEnum.GameViewLogicEnum.Balance:
                 break;
             // 扩展数据分发类型
+            case Enum.GameViewLogicEnum.StartAni:
+                this.OnStartAni(data);
+                break;
             case Enum.GameViewLogicEnum.MsgGameRefreshBtn:
                 this.BetPanel.Refresh();
                 this.BetNumPanel.Refresh();
@@ -194,6 +161,19 @@ class GameViewLogic extends BaseGameViewLogic {
         this.HeadPanel.Set(data, Enum.HeadPanel.GameInit);
         this.BetNumPanel.Set(data, Enum.BetNumPanel.GameInit);
         this.BetPanel.Set(data.PosOdds);
+        this.BetPanel.Refresh();
+        this.ToyPanel.Set(null,Enum.ToyPanel.GameInit)
+    }
+    /**
+     * 开始游戏动画
+     * @param data投注额 
+     */
+    public OnStartAni(data: any) {
+        this.GameBgView.Set(null);
+        this.HeadPanel.Set(data, Enum.HeadPanel.GameStartAni);
+        this.ToyPanel.Set(null, Enum.ToyPanel.GameStartAni);
+        this.BetNumPanel.Set(null, Enum.BetNumPanel.GameStartAni);
+        this.ResultPanel.Set(null,Enum.ResultPanel.GameStartAni);
     }
 
     /**
@@ -202,11 +182,10 @@ class GameViewLogic extends BaseGameViewLogic {
      */
     public OnGameSettleResult(data: any): void {
         this.Log(data, "GameGetResult");
-        this.GameBgView.Set(null);
-        this.ToyPanel.Set(data);
+        this.ToyPanel.Set(data, Enum.ToyPanel.GameSettleResult);
         this.HeadPanel.Set(data.Data, Enum.HeadPanel.GameSettleResult);
         this.BetNumPanel.Set(data.Data, Enum.BetNumPanel.GameSettleResult);
-        this.ResultPanel.Set(data.Data);
+        this.ResultPanel.Set(data.Data,Enum.ResultPanel.GameSettleResult);
     }
 
     /**
@@ -219,5 +198,6 @@ class GameViewLogic extends BaseGameViewLogic {
         this.BetPanel.Refresh();
         this.GameBgView.Refresh();
         this.ResultPanel.Refresh();
+        this.ToyPanel.Refresh();
     }
 }

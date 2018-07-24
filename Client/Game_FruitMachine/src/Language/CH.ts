@@ -169,11 +169,40 @@ namespace LanguageUtils {
         /**开始本轮游戏 */
         GameStart: '开始',
 
+        /**收分 */
+        GainScore: '收分',
+
         //-------------中间--------------
 
+        /**当前投币 */
         CurrentCoin: '当前投币:',
 
         //-------------规则--------------
-        RuleView: 'ui/rule_bg_CH.png'
+
+        /**规则面板 */
+        RuleView: 'ui/rule_bg_CH.png',
+
+        //-------------记录--------------
+
+        /**记录标题 */
+        RecordTitle: 'ui/record_title_CH.png',
+
+        /**序号标题 */
+        Number: '序号',
+
+        /**奖励 */
+        Reward: '获得奖励',
+
+        /**时间 */
+        Time: '时间',
+
+        /**正在加载状态 */
+        RecordLoading: '正在加载...',
+
+        /**暂无数据 */
+        NoteRecord: '暂无记录'
+
+        
+
     }
 }

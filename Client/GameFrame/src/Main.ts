@@ -1,3 +1,9 @@
+/**
+ * 游戏项目入口文件
+ * 调试模式下会显示登录界面
+ * 非调试下直接进入资源加载页面
+ * -->无需修改<--
+ */
 /// <reference path="./Game/MainGameLogic.ts"/>
 /// <reference path="./Login.ts"/>
 // 程序入口

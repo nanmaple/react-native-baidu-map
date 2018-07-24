@@ -8,29 +8,66 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var Enum;
+(function (Enum) {
+    var RouletteView;
+    (function (RouletteView) {
+        /**设置结果 */
+        RouletteView[RouletteView["SetResult"] = 10000] = "SetResult";
+        /**开始滚动 */
+        RouletteView[RouletteView["StartRoll"] = 10001] = "StartRoll";
+        /**初始化 */
+        RouletteView[RouletteView["Init"] = 10002] = "Init";
+    })(RouletteView = Enum.RouletteView || (Enum.RouletteView = {}));
+})(Enum || (Enum = {}));
 /**轮盘类面板*/
 var RouletteView = /** @class */ (function (_super) {
     __extends(RouletteView, _super);
     function RouletteView(eventKey) {
         return _super.call(this, eventKey) || this;
     }
-    /**
-     * 刷新UI
-    */
+    /** 刷新UI*/
     RouletteView.prototype.Refresh = function () {
     };
     /**
      * 设置结果
      */
-    RouletteView.prototype.Set = function (data) {
-        this.StartRoll(data);
+    RouletteView.prototype.Set = function (data, type) {
+        switch (type) {
+            case Enum.RouletteView.SetResult:
+                this.SetResult(data);
+                break;
+            case Enum.RouletteView.StartRoll:
+                this.StartRoll();
+                break;
+            case Enum.RouletteView.Init:
+                this.Init();
+                break;
+        }
+    };
+    /** 游戏初始化*/
+    RouletteView.prototype.Init = function () {
+        Laya.timer.clear(this, this.LoopCallBack);
+        this.start = 1;
+        this.index = 0;
+        this.end = null;
+        this.firstRoll = true;
+        this.rollStatus = Enum.RollStatus.SpeedUp;
+        this.currentSpeed = defaultSpeed;
+        this.currentFrame = 0;
+        var length = this.box.numChildren;
+        for (var i = 0; i < length; i++) {
+            this.box.getChildAt(i).getChildByName('halo').visible = false;
+        }
+        this.box.getChildAt(0).getChildByName('halo').visible = true;
+        this.box.getChildAt(0).getChildByName('halo').alpha = 1;
+        Laya.SoundManager.stopAllSound();
     };
     /**
-     * 开始滚动
+     * 设置游戏结果
      * @param result 结果类型
      */
-    RouletteView.prototype.StartRoll = function (result) {
-        this.num = 0;
+    RouletteView.prototype.SetResult = function (result) {
         var res = gameResult[result];
         if (!res)
             return;
@@ -41,8 +78,13 @@ var RouletteView = /** @class */ (function (_super) {
             var index = Math.floor(Math.random() * res.length);
             this.end = res[index];
         }
-        this.slowDistance = Math.floor(Math.random() * (slow.max + 1 - slow.min)) + slow.min;
         this.DeceleratePoint();
+    };
+    /**
+     * 开始滚动
+     */
+    RouletteView.prototype.StartRoll = function () {
+        this.num = 0;
         Laya.timer.frameLoop(1, this, this.LoopCallBack);
     };
     /**
@@ -53,7 +95,7 @@ var RouletteView = /** @class */ (function (_super) {
         //每次到达间隔帧动画移动
         if (this.currentFrame % this.currentSpeed == 0) {
             this.AuraMove();
-            if (this.num >= this.accelerateEnd + this.slowDistance) {
+            if (this.end != null && this.num >= this.accelerateEnd + this.slowDistance) {
                 this.RollEnd();
             }
             this.currentFrame = 0;
@@ -65,7 +107,9 @@ var RouletteView = /** @class */ (function (_super) {
     RouletteView.prototype.RollEnd = function () {
         Laya.timer.clear(this, this.LoopCallBack);
         this.start = this.end;
-        this.accelerateStart = true;
+        this.end = null;
+        this.firstRoll = true;
+        this.rollStatus = Enum.RollStatus.SpeedUp;
         this.currentSpeed = defaultSpeed;
         //发送事件
         var data = new Dto.EventNotificationDto();
@@ -76,45 +120,72 @@ var RouletteView = /** @class */ (function (_super) {
     };
     /**
      * 光环移动
-    */
+     */
     RouletteView.prototype.AuraMove = function () {
-        //加速
-        if (this.accelerateStart && this.currentSpeed > 1) {
-            this.currentSpeed -= 2;
+        if (this.firstRoll) {
+            Laya.SoundManager.playSound(SoundConfig.SounRes.RollEaseIn);
+            this.firstRoll = false;
         }
+        //加速
+        this.SpeedUp();
         //显示和隐藏位置修改
-        var hide = this.accelerateStart ? this.index - 2 : this.index;
+        var hide = this.rollStatus != Enum.RollStatus.SpeedDwon ? this.index - (this.halos - 1) : this.index;
         hide = this.Convert(hide);
-        this.Deceleration();
+        /**减速 */
+        this.SpeedDown();
         //显示、隐藏、透明度操作
-        if (this.index == (this.iconNum - 1))
-            this.index = -1;
-        var index = this.box.getChildAt(hide).getChildByName('animated').index;
-        this.box.getChildAt(this.index + 1).getChildByName('animated').visible = true;
-        this.box.getChildAt(this.index + 1).getChildByName('animated').play(index);
-        this.box.getChildAt(hide).getChildByName('animated').gotoAndStop(0);
-        this.box.getChildAt(hide).getChildByName('animated').visible = false;
-        //记录数据修改
+        this.ChangAlpha(hide);
+        //记录数据修改 
         this.index++;
         this.num++;
     };
     /**
+     * 透明度修改操作
+     * @param hide 隐藏位置
+     */
+    RouletteView.prototype.ChangAlpha = function (hide) {
+        if (this.index == (this.iconNum - 1))
+            this.index = -1;
+        this.box.getChildAt(this.index + 1).getChildByName('halo').visible = true;
+        this.box.getChildAt(this.index + 1).getChildByName('halo').alpha = 1;
+        for (var i = 1; i < this.halos; i++) {
+            this.box.getChildAt(this.Convert(this.index - i)).getChildByName('halo').alpha = 1 - 0.2 * i;
+        }
+        this.box.getChildAt(hide).getChildByName('halo').visible = false;
+    };
+    /**加速运动 */
+    RouletteView.prototype.SpeedUp = function () {
+        if (this.rollStatus == Enum.RollStatus.SpeedUp) {
+            this.currentSpeed -= 2;
+            if (this.currentSpeed < 1) {
+                this.currentSpeed = 1;
+                this.rollStatus = Enum.RollStatus.SpeeUniform;
+                Laya.SoundManager.stopSound(SoundConfig.SounRes.RollEaseIn);
+                Laya.SoundManager.playSound(SoundConfig.SounRes.RollLinear, 0);
+            }
+        }
+    };
+    /**
      * 减速运动
      */
-    RouletteView.prototype.Deceleration = function () {
+    RouletteView.prototype.SpeedDown = function () {
+        //未返回结果禁止减速
+        if (this.end == null)
+            return;
         //减速
-        if (!this.accelerateStart) {
-            var speed = Math.floor(30 / this.slowDistance);
+        if (this.rollStatus == Enum.RollStatus.SpeedDwon) {
+            var speed = Math.floor(20 / this.slowDistance);
             this.currentSpeed += speed;
             return;
         }
         //开始减速运动
-        if (this.accelerateStart && this.num >= this.accelerateEnd) {
-            this.accelerateStart = false;
-            this.box.getChildAt(this.index).getChildByName('animated').gotoAndStop(0);
-            this.box.getChildAt(this.Convert(this.index - 1)).getChildByName('animated').gotoAndStop(0);
-            this.box.getChildAt(this.index).getChildByName('animated').visible = false;
-            this.box.getChildAt(this.Convert(this.index - 1)).getChildByName('animated').visible = false;
+        if (this.rollStatus == Enum.RollStatus.SpeeUniform && this.num >= this.accelerateEnd) {
+            this.rollStatus = Enum.RollStatus.SpeedDwon;
+            Laya.SoundManager.stopSound(SoundConfig.SounRes.RollLinear);
+            Laya.SoundManager.playSound(SoundConfig.SounRes.RollEaseOut);
+            for (var i = 0; i < this.halos; i++) {
+                this.box.getChildAt(this.Convert(this.index - i)).getChildByName('halo').visible = false;
+            }
         }
     };
     /**
@@ -132,13 +203,17 @@ var RouletteView = /** @class */ (function (_super) {
             else {
                 dic = this.iconNum - (this.slowDistance + distance);
             }
-            this.accelerateEnd = this.iconNum * 3 + dic;
         }
         else {
             distance = Math.abs(distance);
             dic = (distance - this.slowDistance);
             dic = dic > 0 ? dic : this.iconNum + dic;
-            this.accelerateEnd = this.iconNum * 3 + dic;
+        }
+        if (this.num / this.iconNum < 4) {
+            this.accelerateEnd = this.iconNum * 4 + dic;
+        }
+        else {
+            this.accelerateEnd = this.iconNum * Math.ceil(this.num / this.iconNum) + dic;
         }
     };
     /**

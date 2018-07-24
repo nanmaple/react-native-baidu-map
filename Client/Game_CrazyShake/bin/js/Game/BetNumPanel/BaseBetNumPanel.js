@@ -22,33 +22,84 @@ var BaseBetNumPanel = /** @class */ (function () {
      * 绑定按钮
      */
     BaseBetNumPanel.prototype.OnButton = function () {
+        //根据语言切换最大按钮信息
+        this.ui.maxWord.changeText(LanguageUtils.Language.Get("MaxBtnNote"));
+        this.OnMouseDown();
+        this.OnMouseUp();
+    };
+    /**
+     * 鼠标按下事件
+     */
+    BaseBetNumPanel.prototype.OnMouseDown = function () {
         var _this = this;
-        //最大投注
-        this.ui.maxBtn.on(Laya.Event.CLICK, this, function () {
+        this.ui.maxBtn.on(Laya.Event.MOUSE_DOWN, this, function () {
+            _this.ui.maxBtn.skin = "ui/maxBtn2.png";
+        });
+        this.ui.decreaseBtn.on(Laya.Event.MOUSE_DOWN, this, function () {
+            _this.ui.decreaseBtn.skin = "ui/decreaseBtn2.png";
+        });
+        this.ui.addBtn.on(Laya.Event.MOUSE_DOWN, this, function () {
+            _this.ui.addBtn.skin = "ui/addBtn2.png";
+        });
+    };
+    /**
+     * 鼠标抬起事件
+     */
+    BaseBetNumPanel.prototype.OnMouseUp = function () {
+        var _this = this;
+        this.ui.maxBtn.on(Laya.Event.MOUSE_UP, this, function () {
+            _this.ui.maxBtn.skin = "ui/maxBtn1.png";
             Laya.SoundManager.playSound("sound/btnSound.mp3");
             _this.currentBetNum = _this.maxBetNum;
             if (_this.currentBetNum < 100)
                 _this.currentBetNum = 100;
             _this.ui.betNumText.changeText(JSON.stringify(_this.currentBetNum));
         });
-        //减少投注
-        this.ui.decreaseBtn.on(Laya.Event.CLICK, this, function () {
+        this.ui.decreaseBtn.on(Laya.Event.MOUSE_UP, this, function () {
+            _this.ui.decreaseBtn.skin = "ui/decreaseBtn1.png";
             Laya.SoundManager.playSound("sound/btnSound.mp3");
-            _this.currentBetNum -= 100;
+            _this.currentBetNum = _this.DecreaseBetNum(_this.currentBetNum);
             if (_this.currentBetNum < 100)
                 _this.currentBetNum = 100;
             _this.ui.betNumText.changeText(JSON.stringify(_this.currentBetNum));
         });
-        //增加投注
-        this.ui.addBtn.on(Laya.Event.CLICK, this, function () {
+        this.ui.addBtn.on(Laya.Event.MOUSE_UP, this, function () {
+            _this.ui.addBtn.skin = "ui/addBtn1.png";
             Laya.SoundManager.playSound("sound/btnSound.mp3");
-            _this.currentBetNum += 100;
+            _this.currentBetNum = _this.AddBetNum(_this.currentBetNum);
             if (_this.currentBetNum > _this.maxBetNum)
                 _this.currentBetNum = _this.maxBetNum;
             if (_this.currentBetNum < 100)
                 _this.currentBetNum = 100;
             _this.ui.betNumText.changeText(JSON.stringify(_this.currentBetNum));
         });
+    };
+    /**
+     * 减少投注额逻辑
+     * @param currentBetNum 临时投注额
+     */
+    BaseBetNumPanel.prototype.DecreaseBetNum = function (currentBetNum) {
+        var current = currentBetNum.toString().split("");
+        var maxNum = Number(current[0]);
+        if (maxNum > 1) {
+            maxNum -= 1;
+            current[0] = maxNum.toString();
+            return Number(current.join(""));
+        }
+        current[0] = "";
+        current[1] = "9";
+        return Number(current.join(""));
+    };
+    /**
+     * 增加投注额逻辑
+     * @param currentBetNum 临时投注额
+     */
+    BaseBetNumPanel.prototype.AddBetNum = function (currentBetNum) {
+        var current = currentBetNum.toString().split("");
+        var maxNum = Number(current[0]);
+        maxNum += 1;
+        current[0] = maxNum.toString();
+        return Number(current.join(""));
     };
     /**
      * 启用按钮

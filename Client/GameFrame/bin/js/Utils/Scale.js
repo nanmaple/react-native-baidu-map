@@ -1,3 +1,6 @@
+/**
+ * 工具类-缩放算法
+ */
 var Utils;
 (function (Utils) {
     var Scale = /** @class */ (function () {

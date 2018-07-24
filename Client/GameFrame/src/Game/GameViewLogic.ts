@@ -5,9 +5,7 @@ class GameViewLogic extends BaseGameViewLogic {
     public GameBgView: GameBgView;
 
     constructor(Handler: Laya.Handler) {
-        super();
-        this.CtrlHandler = Handler;
-        this.GameLoad();
+        super(Handler);
     }
 
     /***************游戏基础逻辑***************/
@@ -18,47 +16,9 @@ class GameViewLogic extends BaseGameViewLogic {
     }
 
     /**
-    * 启动游戏资源页面，开始加载游戏资源
-    */
-    public GameLoad(): void {
-        this.gameLoadView = new GameLoadView(this.GameViewEventKey);
-        this.gameLoadView.ResetScreen();
-        //设置版本控制类型为使用文件名映射的方式
-        // Laya.ResourceVersion.type = Laya.ResourceVersion.FILENAME_VERSION;
-        //加载版本信息文件
-        // Laya.ResourceVersion.enable("version.json", Laya.Handler.create(this, ()=>{
-        this.gameLoadView.StartLoad(GameResourceConfig.LoadResourcesConfig);
-        // },null,false)); 
-    }
-
-    /**
-     * 游戏资源加载完成，检查登录状态
-     */
-    public CheckLoad(): void {
-        this.isLoadSuccess = true;
-        if (this.isLoginSucess) {
-            this.gameLoadView.Remove();
-            //加载主界面
-            this.GameMainUI();
-        }
-    }
-
-    /**
-     * 游戏登录完成，检查游戏资源加载状态
-     */
-    private GameLoginComplete(): void {
-        this.isLoginSucess = true;
-        if (this.isLoadSuccess) {
-            this.gameLoadView.Remove();
-            //加载主界面
-            this.GameMainUI();
-        }
-    }
-
-    /**
      * 加载游戏主界面
      */
-    private GameMainUI(): void {
+    public GameMainUI(): void {
         //初始化基本alert,loading组件的界面
         this.alertView = new AlertView();
         this.alertView.ResetScreen();
@@ -67,6 +27,7 @@ class GameViewLogic extends BaseGameViewLogic {
         //加载其他组件
         this.GameBgView = new GameBgView(this.GameViewEventKey);
         this.GameBgView.ResetScreen();
+        
         //启动游戏socket
         this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.StartSocket, {}]);
     }
@@ -81,6 +42,7 @@ class GameViewLogic extends BaseGameViewLogic {
                 this.CheckLoad();
                 break;
             case Enum.ListenViewEnum.BetPos:
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.BetPos, null]); 
                 break;
             case Enum.ListenViewEnum.GetBalance:
                 this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.GetBalance, null]); 
@@ -97,7 +59,7 @@ class GameViewLogic extends BaseGameViewLogic {
      */
     public SetData(type: BaseEnum.GameViewLogicEnum | Enum.GameViewLogicEnum, data: any): void {
         switch (type) {
-            //基本分发数据类型
+            //↓↓↓↓基本分发数据类型↓↓↓↓
             case BaseEnum.GameViewLogicEnum.Alert:
                 this.ShowAlert(0, data);
                 break;
@@ -115,6 +77,7 @@ class GameViewLogic extends BaseGameViewLogic {
                 break;
             case BaseEnum.GameViewLogicEnum.Balance:
                 break;
+            //↑↑↑↑↑↑↑↑
             //扩展数据分发类型
             case Enum.GameViewLogicEnum.ChangMoney:
                 break;
@@ -122,7 +85,7 @@ class GameViewLogic extends BaseGameViewLogic {
                 break;
             case Enum.GameViewLogicEnum.BetPos:
                 break;
-            case Enum.GameViewLogicEnum.SetRecord:
+            case Enum.GameViewLogicEnum.GetRecord:
                 break;
             default:
                 break;
@@ -166,7 +129,7 @@ class GameViewLogic extends BaseGameViewLogic {
      * 游戏初始化命令处理
      * @param data 游戏初始化数据
      */
-    public OnGameInit(data: Dto.InitGameDto): void {
+    public OnGameInit(data: Dto.GameInitDto): void {
         this.Log(data, "GameInit");
 
     }
@@ -175,7 +138,7 @@ class GameViewLogic extends BaseGameViewLogic {
      * 游戏开始命令处理
      * @param data 游戏开始数据
      */
-    public OnGameStart(data: Dto.StartGameDto): void {
+    public OnGameStart(data: Dto.GameStartDto): void {
         this.Log(data, "GameStart");
     }
 
@@ -200,7 +163,7 @@ class GameViewLogic extends BaseGameViewLogic {
      * 游戏结果
      * @param data 游戏结果数据
      */
-    public OnGameResult(data: Dto.EndGameDto): void {
+    public OnGameResult(data: Dto.GameEndDto): void {
         this.Log(data, "GameResult");
     }
 

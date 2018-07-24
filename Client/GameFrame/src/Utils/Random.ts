@@ -1,3 +1,6 @@
+/**
+ * 工具类-随机数生成
+ */
 namespace Utils {
     export class Random {
         /**

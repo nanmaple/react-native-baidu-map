@@ -20,9 +20,13 @@ var Enum;
          */
         BetNumPanel[BetNumPanel["GameInit"] = 15000] = "GameInit";
         /**
+         * 开始游戏动画
+         */
+        BetNumPanel[BetNumPanel["GameStartAni"] = 15001] = "GameStartAni";
+        /**
          * 收到游戏结果
          */
-        BetNumPanel[BetNumPanel["GameSettleResult"] = 15001] = "GameSettleResult";
+        BetNumPanel[BetNumPanel["GameSettleResult"] = 15002] = "GameSettleResult";
     })(BetNumPanel = Enum.BetNumPanel || (Enum.BetNumPanel = {}));
 })(Enum || (Enum = {}));
 /**
@@ -51,9 +55,13 @@ var BetNumPanel = /** @class */ (function (_super) {
         switch (type) {
             case Enum.BetNumPanel.GameInit:
                 this.EnableButton();
+                this.ui.betNumText.changeText("100");
                 this.MaxBet = data.MaxBet;
                 var initMaxBet = Math.floor(data.Balance / 100) * 100;
                 this.maxBetNum = initMaxBet < this.MaxBet ? initMaxBet : this.MaxBet;
+                break;
+            case Enum.BetNumPanel.GameStartAni:
+                this.EnableButton(false);
                 break;
             case Enum.BetNumPanel.GameSettleResult:
                 var comMaxBet = Math.floor(data.Balance / 100) * 100;

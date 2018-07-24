@@ -26,7 +26,7 @@ namespace MemberManager {
             this.failHanlder = failHandler;
             let authorizationInfo = this.GetAuthorization();
             if (!authorizationInfo || !authorizationInfo.Token) {
-                // !GameConfig.IsDebug && this.GoGameLobby();
+                !GameConfig.IsDebug && this.GoGameLobby();
             } else {
                 //获取会员信息
                 this.loginService.GetMemberInfo(true);
@@ -48,7 +48,7 @@ namespace MemberManager {
          * @param data 
          */
         private GetMemberInfoError = (data: any): void => {
-            this.failHanlder.runWith({ Type: BaseEnum.CheckLoginEnum.MemberInfo, Data: data });
+            this.failHanlder.runWith({ Type: BaseEnum.CheckLoginEnum.MemberInfoError, Data: data });
         }
 
         /**

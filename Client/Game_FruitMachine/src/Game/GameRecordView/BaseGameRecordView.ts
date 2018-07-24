@@ -12,6 +12,11 @@ abstract class BaseGameRecordView {
      * 暂无更多数据
      */
     protected noMoreData: boolean = false;  
+
+    /**
+     * 是否初始化
+     */
+    protected isInit:boolean = false;
     /**
      * 鼠标按下时坐标
      */
@@ -32,6 +37,12 @@ abstract class BaseGameRecordView {
     public ResetScreen() {
         Laya.stage.removeChild(this.ui);
         this.ui = new ui.GameRecordViewUI();
+        this.ui.title.skin = LanguageUtils.Language.Get('RecordTitle');
+        this.ui.num_tit.text = LanguageUtils.Language.Get('Number');
+        this.ui.reward_tit.text = LanguageUtils.Language.Get('Reward');
+        this.ui.time_tit.text = LanguageUtils.Language.Get('Time');
+        this.ui.isLoading.text = LanguageUtils.Language.Get('RecordLoading');
+        this.ui.noRecord.text = LanguageUtils.Language.Get('NoteRecord');
         this.ui.zOrder = 5;
         this.ui.cacheAs = "bitmap";
         Laya.stage.addChild(this.ui);
@@ -48,7 +59,7 @@ abstract class BaseGameRecordView {
         this.ui.noRecord.visible = false;
         this.ui.isLoading.visible = false;
         this.noMoreData = false;
-        
+        this.isInit = true;
     }
 
     /**
@@ -100,6 +111,7 @@ abstract class BaseGameRecordView {
      * 上拉加载更多
      */
     public PullUpMore():void{
+        this.isInit = false;
         this.EventNotification(Enum.ListenViewEnum.GetRecord, false);
     };
     /**
@@ -113,7 +125,7 @@ abstract class BaseGameRecordView {
      * 隐藏面板
      */
     private Hide(): void {
-        Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
+        Laya.SoundManager.playSound(SoundConfig.SounRes.Button);
         Effect.AlertEffect.Hide(this.ui.prompt, Laya.Handler.create(this, () => {
             this.isShow = false;
             this.ui.visible = this.isShow;

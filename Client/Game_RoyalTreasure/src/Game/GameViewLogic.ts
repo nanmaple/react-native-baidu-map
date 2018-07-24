@@ -7,9 +7,7 @@ class GameViewLogic extends BaseGameViewLogic {
     public TreasurePanel: TreasurePanel;
     public FootPanel: FootPanel;
     constructor(Handler: Laya.Handler) {
-        super();
-        this.CtrlHandler = Handler;
-        this.GameLoad();
+        super(Handler);
     }
 
     /***************游戏基础逻辑***************/
@@ -21,42 +19,9 @@ class GameViewLogic extends BaseGameViewLogic {
     }
 
     /**
-    * 启动游戏资源页面，开始加载游戏资源
-    */
-    public GameLoad(): void {
-        this.gameLoadView = new GameLoadView(this.GameViewEventKey);
-        this.gameLoadView.ResetScreen();
-        this.gameLoadView.StartLoad(GameResourceConfig.LoadResourcesConfig);
-    }
-
-    /**
-     * 游戏资源加载完成，检查登录状态
-     */
-    public CheckLoad(): void {
-        this.isLoadSuccess = true;
-        if (this.isLoginSucess) {
-            this.gameLoadView.Remove();
-            //加载主界面
-            this.GameMainUI();
-        }
-    }
-
-    /**
-     * 游戏登录完成，检查游戏资源加载状态
-     */
-    private GameLoginComplete(): void {
-        this.isLoginSucess = true;
-        if (this.isLoadSuccess) {
-            this.gameLoadView.Remove();
-            //加载主界面
-            this.GameMainUI();
-        }
-    }
-
-    /**
      * 加载游戏主界面
      */
-    private GameMainUI(): void {
+    public GameMainUI(): void {
         //初始化基本alert,loading组件的界面
         this.alertView = new AlertView();
         this.alertView.ResetScreen();

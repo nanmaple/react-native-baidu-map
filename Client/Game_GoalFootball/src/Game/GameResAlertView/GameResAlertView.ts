@@ -46,7 +46,8 @@ class GameResAlertView extends BaseGameResAlertView implements IView {
             this.resultSound = "sound/goal.mp3";
             this.ui.prompt.skin = this.sucTipSkin;
             this.ui.result.visible = true;
-            this.ui.result.text = "x" + data.Odds + "  +" + data.WinAmount;
+            this.ui.times.text = "x" + data.Odds;
+            this.ui.win.text = LanguageUtils.Language.Get("Win") + data.WinAmount;
         }
     }
     /**

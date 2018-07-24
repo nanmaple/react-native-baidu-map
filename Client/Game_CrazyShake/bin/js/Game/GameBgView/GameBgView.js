@@ -27,12 +27,14 @@ var GameBgView = /** @class */ (function (_super) {
      * 一般用于，当数据改变后，渲染需要延迟进行的情况
      */
     GameBgView.prototype.Refresh = function () {
+        this.ui.maskBg.visible = true;
     };
     /**
      * 接收上层View或者GameViewLogic的数据,根据数据，进行不同的渲染
      * @param data
      */
     GameBgView.prototype.Set = function (data) {
+        this.ui.maskBg.visible = false;
     };
     return GameBgView;
 }(BaseGameBgView));

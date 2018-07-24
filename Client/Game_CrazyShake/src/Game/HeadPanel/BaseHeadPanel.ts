@@ -36,12 +36,13 @@ class BaseHeadPanel {
         this.ui.voiceBtn.on(Laya.Event.CLICK, this, () => {
             if (this.isVoiceOn) {
                 this.isVoiceOn = false;
-                Laya.SoundManager.musicMuted = true;
+                Laya.SoundManager.muted=true;
                 this.ui.voiceBtn.skin = "ui/voiceOffBtn.png"
             }
             else {
-                this.isVoiceOn = true
-                Laya.SoundManager.musicMuted = false;
+                this.isVoiceOn = true;
+                Laya.SoundManager.muted=false;
+                Laya.SoundManager.playSound("sound/btnSound.mp3")
                 this.ui.voiceBtn.skin = "ui/voiceOnBtn.png"
             }
         })
@@ -55,15 +56,19 @@ class BaseHeadPanel {
      */
     private OnMouseDown() {
         this.ui.homeBtn.on(Laya.Event.MOUSE_DOWN, this, () => {
+            Laya.SoundManager.playSound("sound/btnSound.mp3")
             this.ui.homeBtn.skin = "ui/homeBtn2.png"
         })
         this.ui.ruleBtn.on(Laya.Event.MOUSE_DOWN, this, () => {
+            Laya.SoundManager.playSound("sound/btnSound.mp3")
             this.ui.ruleBtn.skin = "ui/ruleBtn2.png"
         })
         this.ui.rechargeBtn.on(Laya.Event.MOUSE_DOWN, this, () => {
+            Laya.SoundManager.playSound("sound/btnSound.mp3")
             this.ui.rechargeBtn.skin = "ui/rechargeBtn2.png"
         })
         this.ui.recordBtn.on(Laya.Event.MOUSE_DOWN, this, () => {
+            Laya.SoundManager.playSound("sound/btnSound.mp3")
             this.ui.recordBtn.skin = "ui/recordBtn2.png"
         })
     }

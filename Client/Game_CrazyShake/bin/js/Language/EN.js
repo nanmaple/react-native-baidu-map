@@ -141,22 +141,11 @@ var LanguageUtils;
         /// 低于最小投注限额
         /// </summary>
         LOW_LIMIT: "Low The Limit",
+        /**
+         * 获取用户信息失败
+         */
+        GetMemberInfoError: "Get Member Info Error",
         /************************************/
-        IN: "Goal",
-        OUT: "Out",
-        HIT: "Hit",
-        RED: "Red",
-        BLACK: "Black",
-        BIG: "Big",
-        SMALL: "Small",
-        ODD: "Odd",
-        EVEN: "Even",
-        LOUT: "L.Out",
-        ROUT: "R.Out",
-        LHIT: "L.Hit",
-        RHIT: "R.Hit",
-        Maximum: "Max",
-        Minimum: "Min",
         /**
          * 成功
          */
@@ -364,31 +353,69 @@ var LanguageUtils;
          * 已结算
          */
         HaveSettled: "Settled",
-        //游戏结果进球提示
+        /*********游戏结算结果*********/
         /**
-         * 球进啦
-         */
-        ShootIn: "Shoot In",
+          * 余额不足，投注失败
+          */
+        InsufficientBalance: "Insufficient Balance",
         /**
-         * 左边射偏啦
+         * 投注总金额超过额度限制
          */
-        ShootLeft: "Shoot Left",
+        OverLimit: "Over Limit",
         /**
-         * 右边射偏啦
+         * 参数错误
          */
-        ShootRight: "Shoot Right",
+        ParameterError: "Parameter Error",
+        /***********按钮信息***********/
         /**
-         * 撞柱啦
+         * 投注按钮的信息
          */
-        ShootGoalPost: "Shoot GoalPost",
+        BetNote: "Win",
         /**
-         * 左边撞柱啦
+         * 投注小的信息
          */
-        ShootLeftGoalPost: "Shoot Left GoalPost",
+        LittleRule: "4-10point",
         /**
-         * 右边撞柱啦
+         * 投注豹子的信息
          */
-        ShootRightGoalPost: "Shoot Right GoalPost",
+        JaguarRule: "3 same dice",
+        /**
+         * 投注大的信息
+         */
+        BigRule: "11-17point",
+        /**
+         * 最大按钮的信息
+         */
+        MaxBtnNote: "Max",
+        /**
+         * 投注结果 “小”
+         */
+        Little: "little",
+        /**
+         * 投注结果 “大”
+         */
+        Big: "big",
+        /**
+         * 投注结果 “豹子”
+         */
+        Jaguar: "leopard",
+        /*********历史记录面板********/
+        /**
+         * 序号
+         */
+        NumTit: "OrderNum",
+        /**
+         * 获得奖励
+         */
+        RewardTit: "Reward",
+        /**
+         * 时间
+         */
+        TimeTit: "Time",
+        /**
+         * 暂无数据
+         */
+        NoRecord: "No Record",
     };
 })(LanguageUtils || (LanguageUtils = {}));
 //# sourceMappingURL=EN.js.map

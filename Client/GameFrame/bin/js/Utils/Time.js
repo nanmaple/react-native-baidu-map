@@ -1,3 +1,6 @@
+/**
+ * 工具类-时间格式转换
+ */
 var Utils;
 (function (Utils) {
     //分割时间

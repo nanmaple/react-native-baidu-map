@@ -13,8 +13,36 @@ var MainGameLogic = /** @class */ (function (_super) {
     __extends(MainGameLogic, _super);
     function MainGameLogic() {
         var _this = _super.call(this) || this;
-        //初始化时创建GameViwLogic,注入Handler
-        _this.gameView = new GameViewLogic(Laya.Handler.create(_this, _this.ViewHandler, [], false));
+        /**
+         * 请求参数
+         */
+        _this.requestParams = {
+            Type: "Post",
+            Url: null,
+            Params: null,
+            Header: null,
+        };
+        /**
+         * 获取记录成功
+         * @param data
+         */
+        _this.GetRecordSuccess = function (data) {
+            console.log(data);
+            if (data && data.length > 0) {
+                _this.betRecordPageDto.LastId = data[data.length - 1].Id;
+            }
+            _this.gameView.SetData(Enum.GameViewLogicEnum.GetRecord, data);
+        };
+        /**
+         * 获取记录失败
+         * @param data
+         */
+        _this.GetRecordFail = function (error) {
+            _this.gameView.SetData(Enum.GameViewLogicEnum.GetRecord, null);
+        };
+        _this.betRecordPageDto = new Dto.BetRecordPageDto();
+        _this.betRecordPageDto.GameId = GameConfig.GameID;
+        _this.betRecordPageDto.PageSize = 10;
         return _this;
     }
     /**
@@ -136,6 +164,17 @@ var MainGameLogic = /** @class */ (function (_super) {
         gameDto.Data = dto;
         this.Send(gameDto);
     };
+    /**
+         * 获取游戏记录
+         */
+    MainGameLogic.prototype.GetGameRecord = function (refresh) {
+        if (refresh) {
+            this.betRecordPageDto.LastId = null;
+        }
+        this.requestParams.Params = this.betRecordPageDto;
+        this.requestParams.Url = ApiConfig.GetBetRecord;
+        this.Request(this.requestParams, this.GetRecordSuccess, this.GetRecordFail);
+    };
     /********************* Socket *********************/
     /******************* 界面事件hander *****************/
     MainGameLogic.prototype.ViewHandler = function (type, data) {
@@ -145,6 +184,7 @@ var MainGameLogic = /** @class */ (function (_super) {
                 break;
             case Enum.GameViewHandlerEnum.BetPos:
                 if (100 <= data.Amount && data.Amount <= this.GetBalance()) {
+                    this.gameView.SetData(Enum.GameViewLogicEnum.StartAni, data.Amount);
                     this.SendBet(data);
                 }
                 else {
@@ -152,6 +192,9 @@ var MainGameLogic = /** @class */ (function (_super) {
                     this.gameView.SetData(Enum.GameViewLogicEnum.MsgGameRefreshBtn, null);
                 }
                 ;
+                break;
+            case Enum.GameViewHandlerEnum.GetRecord:
+                this.GetGameRecord(data);
                 break;
         }
     };

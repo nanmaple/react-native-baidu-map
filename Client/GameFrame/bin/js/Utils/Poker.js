@@ -1,3 +1,6 @@
+/**
+ * 工具类-牌面算法
+ */
 var Utils;
 (function (Utils) {
     /**
@@ -9,9 +12,9 @@ var Utils;
         /**
          * 获取花色
          */
-        // static GetCardColor(type: number): Enum.CardColor {
-        //     return (type - 1) / 13;
-        // }
+        Poker.GetCardColor = function (type) {
+            return (type - 1) / 13;
+        };
         /**
          * 获取牌的值
          */

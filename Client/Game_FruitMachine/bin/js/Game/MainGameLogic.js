@@ -18,9 +18,38 @@ var MainGameLogic = /** @class */ (function (_super) {
         _this.winAmount = 0;
         /**最大可竞猜分数 */
         _this.maxGuessAmount = 0;
+        /**
+         * 请求参数
+         */
+        _this.requestParams = {
+            Type: "Post",
+            Url: null,
+            Params: null,
+            Header: null,
+        };
+        /**
+         * 获取记录成功
+         * @param data
+         */
+        _this.GetRecordSuccess = function (data) {
+            console.log(data);
+            if (data && data.length > 0) {
+                _this.betRecordPageDto.LastId = data[data.length - 1].Id;
+            }
+            _this.gameView.SetData(Enum.GameViewLogicEnum.SetRecord, data);
+        };
+        /**
+         * 获取记录失败
+         * @param data
+         */
+        _this.GetRecordFail = function (error) {
+            _this.gameView.SetData(Enum.GameViewLogicEnum.SetRecord, null);
+        };
         //初始化时创建GameViwLogic,注入Handler
-        _this.gameView = new GameViewLogic(Laya.Handler.create(_this, _this.ViewHandler, null, false));
         _this.betLogic = new OnceBet.BetLogic();
+        _this.betRecordPageDto = new Dto.BetRecordPageDto();
+        _this.betRecordPageDto.GameId = GameConfig.GameID;
+        _this.betRecordPageDto.PageSize = 10;
         return _this;
     }
     /**
@@ -126,6 +155,8 @@ var MainGameLogic = /** @class */ (function (_super) {
                     this.SetBalance(response.Data.Balance);
                     this.winAmount = response.Data.WinAmount;
                     this.maxGuessAmount = this.winAmount * 2;
+                    // this.betLogic.ClearBet();
+                    this.roundResult = response.Data;
                 }
                 break;
             default:
@@ -189,9 +220,7 @@ var MainGameLogic = /** @class */ (function (_super) {
                 break;
             /**收获分数 */
             case Enum.GameViewHandlerEnum.GatherFraction:
-                this.winAmount = 0;
-                this.gameView.SetData(Enum.GameViewLogicEnum.ChangGameStatus, Enum.GameStatus.Default);
-                this.ChangeMoney();
+                this.Gather();
                 break;
             /**添加猜大小金额 */
             case Enum.GameViewHandlerEnum.AddGuessSum:
@@ -208,6 +237,10 @@ var MainGameLogic = /** @class */ (function (_super) {
             /**获取最新余额 */
             case Enum.GameViewHandlerEnum.GetBalance:
                 this.GetNewBalance();
+                break;
+            /**获取历史记录 */
+            case Enum.GameViewHandlerEnum.GetRecord:
+                this.GetGameRecord(Data);
                 break;
         }
     };
@@ -247,7 +280,6 @@ var MainGameLogic = /** @class */ (function (_super) {
      */
     MainGameLogic.prototype.ChangBaseAmount = function (data) {
         var baseAmount = this.betLogic.ChangBaseAmount(this.GetBalance(), data);
-        this.gameView.SetData(Enum.GameViewLogicEnum.ChangBaseAmount, baseAmount);
         this.ChangeCurrBet();
     };
     /**
@@ -269,12 +301,23 @@ var MainGameLogic = /** @class */ (function (_super) {
         var BetScore = this.betLogic.GetBetScore();
         if (BetScore == 0)
             return;
+        if (BetScore > this.GetBalance()) {
+            this.gameView.SetData(BaseEnum.GameViewLogicEnum.Alert, 'InsufficientBalance');
+            return;
+        }
         //游戏进行中 禁用按钮
         this.gameView.SetData(Enum.GameViewLogicEnum.ChangGameStatus, Enum.GameStatus.Execute);
+        this.gameView.SetData(Enum.GameViewLogicEnum.GameStart, null);
         var betDto = this.betLogic.GetBetInfo();
         var HandlerDto = new Dto.HandlerDto();
         HandlerDto.Data = betDto;
         this.SendData(HandlerDto);
+    };
+    /**收获分数 */
+    MainGameLogic.prototype.Gather = function () {
+        this.winAmount = 0;
+        this.gameView.SetData(Enum.GameViewLogicEnum.ChangGameStatus, Enum.GameStatus.Default);
+        this.ChangeMoney();
     };
     /**游戏滚动结束 */
     MainGameLogic.prototype.GameEnd = function () {
@@ -285,6 +328,9 @@ var MainGameLogic = /** @class */ (function (_super) {
         else {
             this.gameView.SetData(Enum.GameViewLogicEnum.ChangGameStatus, Enum.GameStatus.Default);
         }
+        // this.gameView.SetData(Enum.GameViewLogicEnum.ClearBet,null);
+        this.ChangeCurrBet();
+        this.gameView.SetData(Enum.GameViewLogicEnum.GameEnd, this.roundResult);
         this.ChangeMoney();
     };
     /**增加猜大小金额 */
@@ -310,23 +356,31 @@ var MainGameLogic = /** @class */ (function (_super) {
     };
     /**猜大小结束 */
     MainGameLogic.prototype.RandomEnd = function () {
+        var win = false;
         if (this.winAmount == 0) {
             this.gameView.SetData(Enum.GameViewLogicEnum.ChangGameStatus, Enum.GameStatus.Default);
         }
         else {
+            win = true;
             this.gameView.SetData(Enum.GameViewLogicEnum.ChangGameStatus, Enum.GameStatus.Guess);
         }
+        this.gameView.SetData(Enum.GameViewLogicEnum.GuessEnd, win);
         this.ChangeMoney();
     };
     /**获取最新余额 */
     MainGameLogic.prototype.GetNewBalance = function () {
-        var _this = this;
-        var loginService = new Laya.Browser.window.LoginService(Network.Http, Utils.Storage, function () {
-            var memberInfo = loginService.GetMemberInfoByLocal();
-            _this.ChangeMoney();
-        });
-        //获取会员信息
-        loginService.GetMemberInfo(true);
+        this.GetBalanceByService();
+    };
+    /**
+    * 获取游戏记录
+    */
+    MainGameLogic.prototype.GetGameRecord = function (refresh) {
+        if (refresh) {
+            this.betRecordPageDto.LastId = null;
+        }
+        this.requestParams.Params = this.betRecordPageDto;
+        this.requestParams.Url = ApiConfig.GetBetRecord;
+        this.Request(this.requestParams, this.GetRecordSuccess, this.GetRecordFail);
     };
     return MainGameLogic;
 }(BaseGameLogic));

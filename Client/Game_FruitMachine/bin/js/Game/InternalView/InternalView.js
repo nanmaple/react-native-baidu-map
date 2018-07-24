@@ -16,6 +16,8 @@ var Enum;
         InternalView[InternalView["SetCurrentBet"] = 10000] = "SetCurrentBet";
         /**开始随机数动画 */
         InternalView[InternalView["RandomAnimated"] = 10001] = "RandomAnimated";
+        /**猜大小结束结束 */
+        InternalView[InternalView["GuessEnd"] = 10002] = "GuessEnd";
     })(InternalView = Enum.InternalView || (Enum.InternalView = {}));
 })(Enum || (Enum = {}));
 /**中心信息面板类 */
@@ -46,6 +48,21 @@ var InternalView = /** @class */ (function (_super) {
             case Enum.InternalView.RandomAnimated:
                 this.Roll(data);
                 break;
+            case Enum.InternalView.GuessEnd:
+                this.GuessEnd(data);
+                break;
+        }
+    };
+    /**
+     * 猜大小结束
+     * @param data 是否获胜
+     */
+    InternalView.prototype.GuessEnd = function (data) {
+        if (data) {
+            Laya.SoundManager.playSound(SoundConfig.SounRes.GuessWin);
+        }
+        else {
+            Laya.SoundManager.playSound(SoundConfig.SounRes.GuessLoss);
         }
     };
     /**
@@ -62,16 +79,9 @@ var InternalView = /** @class */ (function (_super) {
      */
     InternalView.prototype.LoopCallBack = function () {
         this.currCount++;
+        //显示数值
         var number = this.currCount % this.bigNumber;
         number = number ? number : this.bigNumber;
-        //图片显示数值的情况
-        // let one = number%10;
-        // let ten = Math.floor(number/10);
-        // this.ui.onesPlace.index = one;
-        // this.ui.tensPlace.index = ten;
-        //文字显示数值的情况
-        if (number < 10)
-            number = '0' + number;
         this.ui.random.text = number + '';
         if (this.currCount >= this.count + this.resNumber) {
             this.RollEnd();

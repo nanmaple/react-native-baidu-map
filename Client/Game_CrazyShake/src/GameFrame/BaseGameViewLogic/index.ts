@@ -52,7 +52,7 @@ abstract class BaseGameViewLogic extends Laya.EventDispatcher {
      */
     protected GameViewEventKey: string = "GameViewKey";
 
-    constructor() {
+    constructor(Handler: Laya.Handler) {
         super();
         //横竖屏监听
         document.addEventListener(this.ScreeModeEventKey, () => {
@@ -64,6 +64,10 @@ abstract class BaseGameViewLogic extends Laya.EventDispatcher {
         document.addEventListener(this.GameViewEventKey, (data: any) => {
             this.ListenUI(data.detail)
         })
+
+        this.CtrlHandler = Handler;
+        this.GameLoad();
+
     }
 
     /**
@@ -77,6 +81,50 @@ abstract class BaseGameViewLogic extends Laya.EventDispatcher {
             this.gameLoadView && this.gameLoadView.ResetScreen();
         }
     }
+
+    /**
+    * 启动游戏资源页面，开始加载游戏资源
+    */
+    public GameLoad(): void {
+        this.gameLoadView = new GameLoadView(this.GameViewEventKey);
+        this.gameLoadView.ResetScreen();
+        //设置版本控制类型为使用文件名映射的方式
+        // Laya.ResourceVersion.type = Laya.ResourceVersion.FILENAME_VERSION;
+        //加载版本信息文件
+        // Laya.ResourceVersion.enable("version.json", Laya.Handler.create(this, ()=>{
+        this.gameLoadView.StartLoad(GameResourceConfig.LoadResourcesConfig);
+        // },null,false)); 
+    }
+
+    /**
+     * 游戏资源加载完成，检查登录状态
+     */
+    protected CheckLoad(): void {
+        this.isLoadSuccess = true;
+        if (this.isLoginSucess) {
+            this.gameLoadView.Remove();
+            //加载主界面
+            this.GameMainUI();
+        }
+    }
+
+    /**
+     * 游戏登录完成，检查游戏资源加载状态
+     */
+    protected GameLoginComplete(): void {
+        this.isLoginSucess = true;
+        if (this.isLoadSuccess) {
+            this.gameLoadView.Remove();
+            //加载主界面
+            this.GameMainUI();
+        }
+    }
+
+    /**
+     * 监听UI事件
+     * @param data 
+     */
+    abstract GameMainUI(): void;
 
 
     /**
@@ -112,9 +160,9 @@ abstract class BaseGameViewLogic extends Laya.EventDispatcher {
      * @param type 类型
      * @param msg 内容
      */
-    protected ShowAlert(type: AlertType, msg: string,handler?:Laya.Handler): void {
+    protected ShowAlert(type: AlertType, msg: string, handler?: Laya.Handler): void {
         if (this.alertView) {
-            this.alertView.Show(type, msg,handler);
+            this.alertView.Show(type, msg, handler);
         } else {
             alert(msg);
         }
@@ -125,7 +173,7 @@ abstract class BaseGameViewLogic extends Laya.EventDispatcher {
     protected HideAlert(): void {
         this.alertView && this.alertView.Hide();
     }
-    
+
     /**
      * 根据传输的数据Dto，显隐Loading
      * @param dto 

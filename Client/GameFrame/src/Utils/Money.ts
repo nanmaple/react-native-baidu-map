@@ -1,3 +1,6 @@
+/**
+ * 工具类-货币格式转换
+ */
 namespace Utils {
     export class Money {
         static Format(money: any, places?: number, symbol?: string, thousand?: string, decimal?: string) {

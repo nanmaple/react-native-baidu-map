@@ -11,17 +11,13 @@ var __extends = (this && this.__extends) || (function () {
 /// <reference path="../GameFrame/BaseGameViewLogic/index.ts" />
 /// <reference path="./OperateView/OperateView.ts" />
 /// <reference path="./RouletteView/RouletteView.ts" />
-/// <reference path="./ChipView/ChipView.ts" />
 /// <reference path="./BetBarView/BetBarView.ts" />
 /// <reference path="./HeadView/HeadView.ts" />
 /// <reference path="./InternalView/InternalView.ts" />
 var GameViewLogic = /** @class */ (function (_super) {
     __extends(GameViewLogic, _super);
     function GameViewLogic(Handler) {
-        var _this = _super.call(this) || this;
-        _this.CtrlHandler = Handler;
-        _this.GameLoad();
-        return _this;
+        return _super.call(this, Handler) || this;
     }
     /***************游戏基础逻辑***************/
     /**
@@ -30,56 +26,19 @@ var GameViewLogic = /** @class */ (function (_super) {
     GameViewLogic.prototype.ResetScreen = function () {
     };
     /**
-    * 启动游戏资源页面，开始加载游戏资源
-    */
-    GameViewLogic.prototype.GameLoad = function () {
-        this.alertView = new AlertView();
-        this.loadingView = new LoadingView();
-        this.gameLoadView = new GameLoadView(this.GameViewEventKey);
-        this.gameLoadView.ResetScreen();
-        //设置版本控制类型为使用文件名映射的方式
-        // Laya.ResourceVersion.type = Laya.ResourceVersion.FILENAME_VERSION;
-        //加载版本信息文件
-        // Laya.ResourceVersion.enable("version.json", Laya.Handler.create(this, ()=>{
-        this.gameLoadView.StartLoad(GameResourceConfig.LoadResourcesConfig);
-        // },null,false)); 
-    };
-    /**
-     * 游戏资源加载完成，检查登录状态
-     */
-    GameViewLogic.prototype.CheckLoad = function () {
-        this.isLoadSuccess = true;
-        if (this.isLoginSucess) {
-            this.gameLoadView.Remove();
-            //加载主界面
-            this.GameMainUI();
-        }
-    };
-    /**
-     * 游戏登录完成，检查游戏资源加载状态
-     */
-    GameViewLogic.prototype.GameLoginComplete = function () {
-        this.isLoginSucess = true;
-        if (this.isLoadSuccess) {
-            this.gameLoadView.Remove();
-            //加载主界面
-            this.GameMainUI();
-        }
-    };
-    /**
      * 加载游戏主界面
      */
     GameViewLogic.prototype.GameMainUI = function () {
         //初始化基本alert,loading组件的界面
+        this.alertView = new AlertView();
         this.alertView.ResetScreen();
+        this.loadingView = new LoadingView();
         this.loadingView.ResetScreen();
         //加载其他组件
         this.OperateView = new OperateView(this.GameViewEventKey);
         this.OperateView.ResetScreen();
         this.RouletteView = new RouletteView(this.GameViewEventKey);
         this.RouletteView.ResetScreen();
-        this.ChipView = new ChipView(this.GameViewEventKey);
-        this.ChipView.ResetScreen();
         this.BetBarView = new BetBarView(this.GameViewEventKey);
         this.BetBarView.ResetScreen();
         this.HeadView = new HeadView(this.GameViewEventKey);
@@ -88,7 +47,9 @@ var GameViewLogic = /** @class */ (function (_super) {
         this.InternalView.ResetScreen();
         this.RuleView = new RuleView();
         this.RuleView.ResetScreen();
-        // SoundManage.PlayMusic(SoundConfig.SounRes.GameBg);
+        this.GameRecordView = new GameRecordView(this.GameViewEventKey);
+        this.GameRecordView.ResetScreen();
+        Laya.SoundManager.playMusic(SoundConfig.SounRes.GameBg);
         this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.StartSocket, {}]);
     };
     /**
@@ -103,6 +64,10 @@ var GameViewLogic = /** @class */ (function (_super) {
             //打开规则
             case Enum.ListenViewEnum.ShowRule:
                 this.RuleView.Set(null);
+                break;
+            //打开记录
+            case Enum.ListenViewEnum.ShowRecord:
+                this.GameRecordView.Set(null, Enum.GameRecordView.IsRecordShow);
                 break;
             //修改投注基数
             case Enum.ListenViewEnum.ChangBaseAmount:
@@ -153,6 +118,10 @@ var GameViewLogic = /** @class */ (function (_super) {
             case Enum.ListenViewEnum.GetBalance:
                 this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.GetBalance, null]);
                 break;
+            //获取历史记录
+            case Enum.ListenViewEnum.GetRecord:
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.GetRecord, data]);
+                break;
             default:
                 break;
         }
@@ -192,15 +161,30 @@ var GameViewLogic = /** @class */ (function (_super) {
             case Enum.GameViewLogicEnum.BetSuccess:
                 this.BetBarView.Set(data, Enum.BetBarView.SetBet);
                 break;
-            //修改投注基数
-            case Enum.GameViewLogicEnum.ChangBaseAmount:
-                this.ChipView.Set(data, Enum.ChipView.SetBaseAmonut);
-                break;
             //修改游戏状态
             case Enum.GameViewLogicEnum.ChangGameStatus:
-                this.OperateView.Set(data);
                 this.BetBarView.Set(data, Enum.BetBarView.ChangGameStatus);
-                this.ChipView.Set(data, Enum.ChipView.ChangGameStatus);
+                this.OperateView.Set(data, Enum.OperateView.ChangGameStatus);
+                break;
+            //本次滚动开始
+            case Enum.GameViewLogicEnum.GameStart:
+                this.RouletteView.Set(null, Enum.RouletteView.StartRoll);
+                break;
+            //本次滚动结束
+            case Enum.GameViewLogicEnum.GameEnd:
+                this.BetBarView.Set(data, Enum.BetBarView.GameEnd);
+                break;
+            //猜大小结束
+            case Enum.GameViewLogicEnum.GuessEnd:
+                this.InternalView.Set(data, Enum.InternalView.GuessEnd);
+                break;
+            //清理投注记录
+            case Enum.GameViewLogicEnum.ClearBet:
+                this.BetBarView.Set(data, Enum.BetBarView.ClearAll);
+                break;
+            //设置历史记录
+            case Enum.GameViewLogicEnum.SetRecord:
+                this.GameRecordView.Set(data, Enum.GameRecordView.GetRecordData);
                 break;
             default:
                 break;
@@ -243,7 +227,10 @@ var GameViewLogic = /** @class */ (function (_super) {
         var dto = new Dto.AmountDto;
         dto.balance = data.Balance;
         this.HeadView.Set(dto, Enum.HeadView.Init);
-        this.ChipView.Set(data.BaseAmounts, Enum.ChipView.Init);
+        this.OperateView.Set(data.BaseAmounts, Enum.OperateView.Init);
+        this.OperateView.Set(Enum.GameStatus.Default, Enum.OperateView.ChangGameStatus);
+        this.BetBarView.Set(Enum.GameStatus.Default, Enum.BetBarView.ChangGameStatus);
+        this.RouletteView.Set(null, Enum.RouletteView.Init);
     };
     /**
      * 结算命令
@@ -260,14 +247,15 @@ var GameViewLogic = /** @class */ (function (_super) {
                 var dto = new Dto.AmountDto();
                 dto.balance = data.Balance - data.WinAmount;
                 this.HeadView.Set(dto, Enum.HeadView.Chang);
-                this.RouletteView.Set(data.Result);
+                // this.RouletteView.Set(data.Result);
+                this.RouletteView.Set(data.Result, Enum.RouletteView.SetResult);
             }
         }
         else {
             this.ShowAlert(0, Enum.BetResultCode[data.Status]);
-            this.OperateView.Set(Enum.GameStatus.Default);
+            this.OperateView.Set(Enum.GameStatus.Default, Enum.OperateView.ChangGameStatus);
             this.BetBarView.Set(Enum.GameStatus.Default, Enum.BetBarView.ChangGameStatus);
-            this.ChipView.Set(Enum.GameStatus.Default, Enum.ChipView.ChangGameStatus);
+            this.RouletteView.Set(null, Enum.RouletteView.Init);
         }
     };
     GameViewLogic.prototype.OnGameOther = function (data) {

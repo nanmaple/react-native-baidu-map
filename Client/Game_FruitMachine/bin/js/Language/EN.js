@@ -141,6 +141,41 @@ var LanguageUtils;
         /// 低于最小投注限额
         /// </summary>
         LOW_LIMIT: "Low The Limit",
+        /************************************/
+        /**账户余额不足 */
+        InsufficientBalance: '余额不足',
+        /**超出最大投注总额 */
+        OverLimit: '超出最大投注限制',
+        /**socket参数错误 */
+        ParmeterError: '参数错误',
+        //-------------操作部分--------------
+        /**清除所有投注 */
+        ClearBet: 'clear',
+        /**所有投注位置+1 */
+        AddAll: 'All+1',
+        /**开始本轮游戏 */
+        GameStart: 'Start',
+        /**收分 */
+        GainScore: 'Gain',
+        //-------------中间--------------
+        /**当前投币 */
+        CurrentCoin: 'Current Coin:',
+        //-------------规则--------------
+        /**规则面板 */
+        RuleView: 'ui/rule_bg_EN.png',
+        //-------------记录--------------
+        /**记录标题 */
+        RecordTitle: '',
+        /**序号标题 */
+        Number: 'Number',
+        /**奖励 */
+        Reward: 'Reward',
+        /**时间 */
+        Time: 'Time',
+        /**正在加载状态 */
+        RecordLoading: 'Loading...',
+        /**暂无数据 */
+        NoteRecord: 'No Record'
     };
 })(LanguageUtils || (LanguageUtils = {}));
 //# sourceMappingURL=EN.js.map

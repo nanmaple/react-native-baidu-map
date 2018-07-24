@@ -1,3 +1,6 @@
+/**
+ * 工具类-牌面算法
+ */
 namespace Utils {
     /**
      * 牌数据转换类
@@ -6,9 +9,9 @@ namespace Utils {
         /**
          * 获取花色
          */
-        // static GetCardColor(type: number): Enum.CardColor {
-        //     return (type - 1) / 13;
-        // }
+        static GetCardColor(type: number): number {
+            return (type - 1) / 13;
+        }
 
         /**
          * 获取牌的值

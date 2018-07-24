@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":8,
-    "selecteID":22,
+    "selectedBox":3,
+    "selecteID":9,
     "props":{"width":750,"sceneColor":"#ffffff","height":1334},
     "nodeParent":-1,
     "label":"View",
@@ -27,7 +27,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":667,"x":375,"width":558,"var":"prompt","skin":"ui/record.png","height":797,"centerY":0,"centerX":0,"anchorY":0.5,"anchorX":0.5},
+                    "props":{"y":667,"x":375,"width":558,"var":"prompt","skin":"ui/record_bg.png","height":797,"centerY":0,"centerX":0,"anchorY":0.5,"anchorX":0.5},
                     "nodeParent":2,
                     "label":"Image(prompt)",
                     "isOpen":true,
@@ -39,7 +39,7 @@
                         {
                             "x":45,
                             "type":"Image",
-                            "props":{"y":-25,"x":522,"var":"close","top":-25,"skin":"ui/rule/btn_close.png","right":-25},
+                            "props":{"y":-25,"x":522,"var":"close","top":-25,"skin":"ui/btn_close.png","right":-25},
                             "nodeParent":3,
                             "label":"Image(close)",
                             "isDirectory":false,
@@ -52,7 +52,7 @@
                         {
                             "x":45,
                             "type":"Image",
-                            "props":{"y":-5,"var":"title","skin":"ui/record_tit.png","centerX":0},
+                            "props":{"y":-5,"var":"title","skin":"ui/record_title_CH.png","centerX":0},
                             "nodeParent":3,
                             "label":"Image(title)",
                             "isDirectory":false,
@@ -65,7 +65,7 @@
                         {
                             "x":45,
                             "type":"Panel",
-                            "props":{"y":69,"x":12,"width":500,"var":"panelList","height":680,"centerX":0},
+                            "props":{"y":86,"width":500,"var":"panelList","height":673,"centerX":0},
                             "nodeParent":3,
                             "label":"Panel(panelList)",
                             "isOpen":true,
@@ -80,13 +80,14 @@
                                     "props":{"width":500,"height":60},
                                     "nodeParent":8,
                                     "label":"Box",
-                                    "isOpen":false,
+                                    "isOpen":true,
                                     "isDirectory":true,
                                     "isAniNode":true,
                                     "hasChild":true,
                                     "compId":10,
                                     "child":[
                                         {
+                                            "x":75,
                                             "type":"Label",
                                             "props":{"y":0,"width":150,"var":"num_tit","valign":"middle","text":"序号","left":0,"height":60,"fontSize":30,"color":"#fecc05","bold":true,"align":"center"},
                                             "nodeParent":10,
@@ -99,6 +100,7 @@
                                                 ]
                                         },
                                         {
+                                            "x":75,
                                             "type":"Label",
                                             "props":{"y":0,"x":150,"width":200,"var":"reward_tit","valign":"middle","text":"获得奖励","height":60,"fontSize":30,"color":"#fecc05","bold":true,"align":"center"},
                                             "nodeParent":10,
@@ -111,6 +113,7 @@
                                                 ]
                                         },
                                         {
+                                            "x":75,
                                             "type":"Label",
                                             "props":{"y":0,"width":150,"var":"time_tit","valign":"middle","text":"时间","right":0,"height":60,"fontSize":30,"color":"#fecc05","bold":true,"align":"center"},
                                             "nodeParent":10,
@@ -141,15 +144,16 @@
                                             "props":{"width":500,"renderType":"render","height":55,"centerX":0},
                                             "nodeParent":19,
                                             "label":"Box",
-                                            "isOpen":false,
+                                            "isOpen":true,
                                             "isDirectory":true,
                                             "isAniNode":false,
                                             "hasChild":true,
                                             "compId":15,
                                             "child":[
                                                 {
+                                                    "x":90,
                                                     "type":"Image",
-                                                    "props":{"y":0,"x":0,"width":500,"skin":"ui/listBgTwo.png","sizeGrid":"20,20,20,20","name":"listBg","height":55},
+                                                    "props":{"y":0,"x":0,"width":500,"skin":"ui/record_Item_2.png","sizeGrid":"20,20,20,20","name":"listBg","height":55},
                                                     "nodeParent":15,
                                                     "label":"Image(listBg)",
                                                     "isDirectory":false,
@@ -160,6 +164,7 @@
                                                         ]
                                                 },
                                                 {
+                                                    "x":90,
                                                     "type":"Label",
                                                     "props":{"y":0,"width":150,"valign":"middle","text":"1","name":"num","left":0,"height":55,"fontSize":25,"color":"#ffffff","align":"center"},
                                                     "nodeParent":15,
@@ -172,6 +177,7 @@
                                                         ]
                                                 },
                                                 {
+                                                    "x":90,
                                                     "type":"Label",
                                                     "props":{"y":0,"width":200,"valign":"middle","text":"100","name":"reward","height":55,"fontSize":25,"color":"#ffffff","centerX":0,"align":"center"},
                                                     "nodeParent":15,
@@ -184,6 +190,7 @@
                                                         ]
                                                 },
                                                 {
+                                                    "x":90,
                                                     "type":"Label",
                                                     "props":{"y":5,"width":150,"valign":"middle","text":"2018-01-16","right":0,"name":"date","height":25,"fontSize":20,"color":"#ffffff","align":"center"},
                                                     "nodeParent":15,
@@ -196,6 +203,7 @@
                                                         ]
                                                 },
                                                 {
+                                                    "x":90,
                                                     "type":"Label",
                                                     "props":{"y":30,"width":150,"valign":"middle","text":"18:25:25","right":0,"name":"time","height":25,"fontSize":20,"color":"#ffffff","align":"center"},
                                                     "nodeParent":15,

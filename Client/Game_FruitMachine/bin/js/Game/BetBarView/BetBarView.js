@@ -20,6 +20,8 @@ var Enum;
         BetBarView[BetBarView["ClearAll"] = 10002] = "ClearAll";
         /**改变游戏状态 */
         BetBarView[BetBarView["ChangGameStatus"] = 10003] = "ChangGameStatus";
+        /**游戏结束 */
+        BetBarView[BetBarView["GameEnd"] = 10004] = "GameEnd";
     })(BetBarView = Enum.BetBarView || (Enum.BetBarView = {}));
 })(Enum || (Enum = {}));
 var BetBarView = /** @class */ (function (_super) {
@@ -27,7 +29,7 @@ var BetBarView = /** @class */ (function (_super) {
     function BetBarView(eventKey) {
         var _this = _super.call(this) || this;
         /**游戏状态 */
-        _this.gameStatus = Enum.GameStatus.Default;
+        _this.gameStatus = Enum.GameStatus.WaitInit;
         _this.ListenEventKey = eventKey;
         return _this;
     }
@@ -54,6 +56,9 @@ var BetBarView = /** @class */ (function (_super) {
             case Enum.BetBarView.ChangGameStatus:
                 this.gameStatus = data;
                 break;
+            case Enum.BetBarView.GameEnd:
+                this.GameEnd(data);
+                break;
         }
     };
     BetBarView.prototype.SetBet = function (data) {
@@ -78,6 +83,22 @@ var BetBarView = /** @class */ (function (_super) {
         }
     };
     /**
+     * 游戏结束
+     * @param result 结果对象
+     */
+    BetBarView.prototype.GameEnd = function (result) {
+        if (result.WinAmount != 0) {
+            var pos = betpos[result.Result];
+            if (pos != betpos[16]) {
+                Laya.SoundManager.playSound(SoundConfig.SounRes.WinPos[pos], 1, Laya.Handler.create(this, function () {
+                    Laya.SoundManager.playSound(SoundConfig.SounRes.Win);
+                }));
+                return;
+            }
+            Laya.SoundManager.playSound(SoundConfig.SounRes.Loss);
+        }
+    };
+    /**
      * 点击事件触发函数
      * @param position 投注位置
      */
@@ -85,7 +106,7 @@ var BetBarView = /** @class */ (function (_super) {
         if (this.gameStatus != Enum.GameStatus.Default)
             return;
         if (sound)
-            SoundManage.PlaySound(SoundConfig.SounRes.Bet);
+            Laya.SoundManager.playSound(SoundConfig.SounRes.Bet[position]);
         var data = new Dto.EventNotificationDto();
         data.Value = position;
         data.Type = Enum.ListenViewEnum.BetPos;

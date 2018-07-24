@@ -23,6 +23,7 @@ var BaseRulePanel = /** @class */ (function () {
      * 事件key值，通过构造函数时注入
      */
     BaseRulePanel.prototype.EventNotification = function () {
+        Laya.SoundManager.playSound("sound/btnSound.mp3");
         var data = new Dto.EventNotificationDto();
         data.Value = {};
         data.Type = Enum.ListenViewEnum.CloseRule;

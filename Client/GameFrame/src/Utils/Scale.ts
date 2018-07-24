@@ -1,3 +1,6 @@
+/**
+ * 工具类-缩放算法
+ */
 module Utils {
     export class Scale {
 

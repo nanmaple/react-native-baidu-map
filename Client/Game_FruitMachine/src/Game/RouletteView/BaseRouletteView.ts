@@ -1,5 +1,5 @@
 /**最大最小缓速距离 */
-const defaultSpeed = 21;
+const defaultSpeed = 20;
 const gameResult = {0:[6,11,17,23],1:[1,13],2:12,3:[7,19],4:18,5:[2,14],6:24,7:8,8:9,9:20,10:21,11:16,12:15,13:4,14:3,15:5,16:[10,22]}
 /**轮盘面板基类 */
 abstract class BaseRouletteView{
@@ -16,7 +16,7 @@ abstract class BaseRouletteView{
     /**开始位置 从1开始 */
     protected start:number = 1;
     /**结束位置 */
-    protected end:number = 7;
+    protected end:number = null;
     /**当前所在位置 从0开始 */
     protected index:number = 0;
 
@@ -45,8 +45,6 @@ abstract class BaseRouletteView{
         Laya.stage.removeChild(this.ui);
         this.ui = new ui.RouletteViewUI();
         this.box = this.ui.getChildAt(0) as Laya.Image;
-        // (this.box.getChildAt(0).getChildByName('animated') as Laya.Animation).visible = true;
-        // (this.box.getChildAt(0).getChildByName('animated') as Laya.Animation).play();
         (this.box.getChildAt(0).getChildByName('halo') as Laya.Animation).visible = true;
         this.ui.zOrder = 1;
         // this.ui.cacheAs = "bitmap";

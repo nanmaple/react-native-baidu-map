@@ -1,3 +1,6 @@
+/**
+ * 工具类-随机数生成
+ */
 var Utils;
 (function (Utils) {
     var Random = /** @class */ (function () {

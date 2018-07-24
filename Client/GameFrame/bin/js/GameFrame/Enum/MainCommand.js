@@ -5,27 +5,27 @@ var BaseEnum;
         /**
          * 登出
          */
-        MainCommand[MainCommand["MsgKickout"] = 1] = "MsgKickout";
+        MainCommand[MainCommand["MSG_KICKOUT"] = 1] = "MSG_KICKOUT";
         /**
          * 服务器收到投注消息，回复客户端
          */
-        MainCommand[MainCommand["MsgAck"] = 2] = "MsgAck";
+        MainCommand[MainCommand["MSG_ACK"] = 2] = "MSG_ACK";
         /**
          * 错误消息
          */
-        MainCommand[MainCommand["MsgError"] = 3] = "MsgError";
+        MainCommand[MainCommand["MSG_ERROR"] = 3] = "MSG_ERROR";
         /**
          * 系统推送消息
          */
-        MainCommand[MainCommand["MsgSystemPush"] = 4] = "MsgSystemPush";
+        MainCommand[MainCommand["MSG_SYSTEM_PUSH"] = 4] = "MSG_SYSTEM_PUSH";
         /**
          * 游戏消息
          */
-        MainCommand[MainCommand["MsgGame"] = 5] = "MsgGame";
+        MainCommand[MainCommand["MSG_GAME"] = 5] = "MSG_GAME";
         /**
          * 会员状态已关闭
          */
-        MainCommand[MainCommand["MsgMemberClosed"] = 6] = "MsgMemberClosed";
+        MainCommand[MainCommand["MSG_MEMBERCLOSED"] = 6] = "MSG_MEMBERCLOSED";
     })(MainCommand = BaseEnum.MainCommand || (BaseEnum.MainCommand = {}));
 })(BaseEnum || (BaseEnum = {}));
 //# sourceMappingURL=MainCommand.js.map

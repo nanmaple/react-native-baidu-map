@@ -4,10 +4,24 @@ class MainGameLogic extends BaseGameLogic {
      * 投注信息
      */
     protected betInfo: Dto.BetInfoDto = new Dto.BetInfoDto();
+    /**
+     * 投注记录请求dto
+     */
+    private betRecordParamsDto: Dto.BetRecordParamsDto;
+    /**
+     * 请求参数
+     */
+    private requestParams: IRequestParams = {
+        Type: "Post",
+        Url: null,
+        Params: null,
+        Header: null,
+    }
     constructor() {
         super();
-        //初始化时创建GameViwLogic,注入Handler
-        this.gameView = new GameViewLogic(Laya.Handler.create(this, this.ViewHandler,null,false));
+        this.betRecordParamsDto = new Dto.BetRecordParamsDto();
+        this.betRecordParamsDto.GameId = GameConfig.GameID;
+        this.betRecordParamsDto.PageSize = 10;
     }
 
     /**
@@ -153,11 +167,11 @@ class MainGameLogic extends BaseGameLogic {
      */
     private BetPos():void{
         if(this.betInfo.betTotalAmount > this.GetBalance()){
-            this.gameView.SetData(Enum.GameViewLogicEnum.BetPosError, "BALANCE_SMALL");
+            this.gameView.SetData(Enum.GameViewLogicEnum.BetPosError, "BalanceSmall");
         }else if(this.betInfo.betTotalAmount < this.betInfo.MinBet){
-            this.gameView.SetData(Enum.GameViewLogicEnum.BetPosError, "LOW_LIMIT");
+            this.gameView.SetData(Enum.GameViewLogicEnum.BetPosError, "LowLimit");
         }else if(this.betInfo.betTotalAmount > this.betInfo.MaxBet){
-            this.gameView.SetData(Enum.GameViewLogicEnum.BetPosError, "OVER_LIMIT");
+            this.gameView.SetData(Enum.GameViewLogicEnum.BetPosError, "OverLimit");
         }else{
             let gameBet:Dto.GameBetDto = new Dto.GameBetDto();
             let handlerDto:Dto.HandlerDto = new Dto.HandlerDto();
@@ -168,6 +182,34 @@ class MainGameLogic extends BaseGameLogic {
             let balance = this.GetBalance();
             this.gameView.SetData(Enum.GameViewLogicEnum.ChangMoney, balance - this.betInfo.betTotalAmount);
         }
+    }
+    /**
+     * 获取游戏记录
+     */
+    private GetGameRecord(refresh:boolean):void{
+        if(refresh){
+            this.betRecordParamsDto.LastId = null;
+        }
+        this.requestParams.Params = this.betRecordParamsDto;
+        this.requestParams.Url = ApiConfig.GetBetRecord;
+        this.Request(this.requestParams,this.GetRecordSuccess,this.GetRecordFail);
+    }
+    /**
+     * 获取记录成功
+     * @param data 
+     */
+    private GetRecordSuccess=(data:any):void=>{
+        if(data && data.length > 0){
+            this.betRecordParamsDto.LastId = data[data.length - 1].Id;
+        }
+        this.gameView.SetData(Enum.GameViewLogicEnum.GetRecord, data);
+    }
+    /**
+     * 获取记录失败
+     * @param data 
+     */
+    private GetRecordFail=(error:any):void=>{
+        this.gameView.SetData(Enum.GameViewLogicEnum.GetRecord, null);
     }
     /********************* Socket *********************/
 
@@ -201,6 +243,9 @@ class MainGameLogic extends BaseGameLogic {
                 break;
             case Enum.GameViewHandlerEnum.GetBalance:
                 this.GetBalanceByService();
+                break;
+            case Enum.GameViewHandlerEnum.GetRecord:
+                this.GetGameRecord(Data);
                 break;
         }
     }

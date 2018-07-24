@@ -2,9 +2,8 @@ class LoginView {
     private Account: Laya.TextInput;
     private Password: Laya.TextInput;
     private Button: Laya.Button;
-    private ButtonTourist:Laya.Button;
+    private ButtonTourist: Laya.Button;
     private handler: Laya.Handler;
-
     private loginService: any;
     constructor(successHandler: Laya.Handler) {
         this.handler = successHandler;
@@ -13,8 +12,9 @@ class LoginView {
             //设置画布的背景颜色
             this.Account = this.InputCreate(220, 200, 300, 60, "w015854");
             this.Password = this.InputCreate(220, 300, 300, 60, "123456");
-            this.Button = this.ButtonCreate(220, 400, 300, 60, "登录", false);
-            this.ButtonTourist = this.ButtonCreate(220, 500, 300, 60, "游客登录", true);
+            this.Button = this.ButtonCreate(220, 400, 300, 60, "登录", false, this.Login);
+            this.ButtonTourist = this.ButtonCreate(220, 500, 300, 60, "游客登录", true, this.Login);
+            this.ButtonTourist = this.ButtonCreate(220, 650, 300, 60, "清除登录信息", true, this.Clear);
         }));
     }
 
@@ -33,9 +33,9 @@ class LoginView {
         return textInput;
     }
 
-    private ButtonCreate(x, y, w, h, label, isTourist) {
+    private ButtonCreate(x, y, w, h, label, isTourist, callback) {
         var button: Laya.Button = new Laya.Button();//创建一个 TextInput 类的实例对象 textInput 。
-        button.label =label;//设置 textInput 的文本。
+        button.label = label;//设置 textInput 的文本。
         button.labelSize = 22;//设置 textInput 的字体大小。
         button.x = x;//设置 textInput 对象的属性 x 的值，用于控制 textInput 对象的显示位置。
         button.y = y;//设置 textInput 对象的属性 y 的值，用于控制 textInput 对象的显示位置。
@@ -43,7 +43,7 @@ class LoginView {
         button.height = h;//设置 textInput 的高度。
         button.skin = 'comp/button.png';
         Laya.stage.addChild(button);//将 textInput 添加到显示列表。
-        button.on(Laya.Event.CLICK, this, this.Login, [isTourist])
+        button.on(Laya.Event.CLICK, this, callback, [isTourist])
         return button;
     }
 
@@ -55,6 +55,13 @@ class LoginView {
         } else {
             this.loginService.LoginByAccount(this.Account.text, this.Password.text, this.LoginSuccess);
         }
+    }
+
+    private Clear() {
+        //获取Socket Token
+        this.loginService = new Laya.Browser.window.LoginService(Network.WebApi, Utils.Storage, this.LoginSuccess, null, this.LoginError);
+        this.loginService.ClearAuthorization();
+        this.loginService.ClearUserInfo();
     }
 
     private LoginSuccess = (data: any) => {

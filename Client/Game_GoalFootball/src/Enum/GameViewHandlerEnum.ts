@@ -34,6 +34,10 @@ namespace Enum {
         /**
          * 获取余额
          */
-        GetBalance
+        GetBalance,
+        /**
+         * 获取游戏记录
+         */
+        GetRecord,
     }
 }

@@ -15,8 +15,6 @@ class MainGameLogic extends BaseGameLogic {
     }
     constructor() {
         super();
-        //初始化时创建GameViwLogic,注入Handler
-        this.gameView = new GameViewLogic(Laya.Handler.create(this, this.ViewHandler, [], false));
         this.betRecordPageDto = new Dto.BetRecordPageDto();
         this.betRecordPageDto.GameId = GameConfig.GameID;
         this.betRecordPageDto.PageSize = 10;
@@ -179,6 +177,7 @@ class MainGameLogic extends BaseGameLogic {
                 break;
             case Enum.GameViewHandlerEnum.BetPos:
                 if (100 <= data.Amount && data.Amount <= this.GetBalance()) {
+                    this.gameView.SetData(Enum.GameViewLogicEnum.StartAni,data.Amount)
                     this.SendBet(data);
                 }
                 else {

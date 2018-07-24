@@ -1,3 +1,7 @@
+/**
+ * 多语言配置文件
+ * 根据实际需要的语言项，添加或者删除语言项
+ */
 var LanguageUtils;
 (function (LanguageUtils) {
     var LanguageType;

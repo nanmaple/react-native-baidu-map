@@ -170,37 +170,80 @@ var LanguageUtils;
          * 超过最大投注限额
          */
         OVER_LIMIT: "超过最大投注限额",
-        //投注结果信息提示
-        /**
-         * 球进了
-         */
-        GameSuccess: "干得漂亮!",
-        /**
-         * 奖励金
-         */
-        GameReward: ", 恭喜你获得奖励金 ",
-        /**
-         * 奖励倍数
-         */
-        GameMultiple: "倍",
-        /**
-         * 未进球
-         */
-        GameFail: "很遗憾，差一点点，再接再厉哦!",
         /**
          * 选择最大筹码
          */
         MaxChip: "最大",
+        /**
+         * 总投
+         */
+        Total: "总投:",
+        /**
+         * 记录序号标题
+         */
+        RecordNumTitle: "序号",
+        /**
+         * 记录奖励标题
+         */
+        RecordRewardTitle: "获得奖励",
+        /**
+         * 记录时间标题
+         */
+        RecordTimeTitle: "时间",
+        /**
+         * 记录暂无数据
+         */
+        NoRecordData: "暂无数据",
+        /**
+         * 记录正在加载中
+         */
+        IsLoading: "正在加载中...",
         //游戏规则内容
-        GameRuleFirst: "1.左右点击切换选择数值按钮或直接点击“Max”按钮，确认射门使用的投注金额。",
-        GameRuleSecond: "2.可以使用道具。一种道具减少一名防守队员。",
-        GameRuleThird: "3.上下左右滑动黄色路径，调整最佳射门角度，事半功倍。",
-        GameRuleFour: "4.点击“射门”，临门一脚。",
-        GameTotalRule: "<p style='fontSize:30;font-weight:bold'>游戏简介</p>" + "<br/>",
-        //游戏关注提示内容
-        GameTips: "<p style='fontSize:35'>由于您还没有登录，现在是试玩模式，想要体验更多游戏乐趣，请点击左上方</p>" +
-            "<p style='fontSize:35;color:red'>&nbsp;'关注'&nbsp;</p>" +
-            "<p style='fontSize:35'>按钮，即可登录。</p>",
+        GameRuleFirst: "左右点击切换选择数值按钮或直接点击“Max”按钮，确认射门使用的投注金额。",
+        GameRuleSecond: "可以使用道具。一种道具减少一名防守队员。",
+        GameRuleThird: "上下左右滑动黄色路径，调整最佳射门角度，事半功倍。",
+        GameRuleFour: "点击“射门”，临门一脚。",
+        /**
+         * 游戏总的规则说明
+         */
+        GameTotalRule: "<p style='fontSize:30;font-weight:bold;color:#f6ef45'>玩家规则</p>" + "<br/>" +
+            "<p style='fontSize:20;color:#fff'>1.选择投注金额后，调整射门角度;</p>" + "<br/>" +
+            "<p style='fontSize:20;color:#fff'>2.使用一种道具能减少一名防守队员，最多可以使用三种道具。道具的金额根据投注金额按比例进行变化，以用户“射门”时显示的道具金额为准;</p>" + "<br/>" +
+            "<p style='fontSize:20;color:#fff'>3.点击“射门”开始踢球;</p>" + "<br/>" +
+            "<p style='fontSize:20;color:#fff'>4.用户进球后，可以获得1.5、2、5、10倍不等奖励;</p>" + "<br/>",
+        //游戏图片多语言切换
+        /**
+         * 射门默认按钮皮肤
+         */
+        ShootDoorSkin: "ui/chip/btn_shoor.png",
+        /**
+         * 射门按下按钮皮肤
+         */
+        NoShootDoorSkin: "ui/chip/btn_shoor_n.png",
+        /**
+         * 选中的筹码皮肤
+         */
+        SelectChipSkin: "ui/chip/btn_select.png",
+        /**
+         * 未选中的筹码皮肤
+         */
+        NoSelectChipSkin: "ui/chip/btn_noselect.png",
+        /**
+         * 游戏头部标题皮肤
+         */
+        HeadTitleSkin: "ui/header/head_tit.png",
+        /**
+         * 游戏规则头部皮肤
+         */
+        RuleTitleSkin: "ui/rule/rule_title.png",
+        /**
+         * 游戏规则第四张图皮肤（射门）
+         */
+        RuleImgFourSkin: "ui/rule/ruleImg_4.png",
+        /**
+         * 游戏记录头部标题皮肤
+         */
+        RecordTitleSkin: "ui/record_tit.png",
     };
 })(LanguageUtils || (LanguageUtils = {}));
 //# sourceMappingURL=CH.js.map

@@ -37,6 +37,10 @@ var Enum;
          * 获取余额
          */
         GameViewHandlerEnum[GameViewHandlerEnum["GetBalance"] = 7] = "GetBalance";
+        /**
+         * 获取游戏记录
+         */
+        GameViewHandlerEnum[GameViewHandlerEnum["GetRecord"] = 8] = "GetRecord";
     })(GameViewHandlerEnum = Enum.GameViewHandlerEnum || (Enum.GameViewHandlerEnum = {}));
 })(Enum || (Enum = {}));
 //# sourceMappingURL=GameViewHandlerEnum.js.map

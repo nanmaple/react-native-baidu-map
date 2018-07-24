@@ -146,38 +146,22 @@ namespace LanguageUtils {
         /************************************/
 
         /**
-         * 成功
-         */
-        SUCCESS: "成功",
-        /**
-         * 赔率错误
-         */
-        ODDS_ERROR: "赔率错误",
-        /**
-         * 金额错误
-         */
-        AMOUNT_ERROR: "金额错误",
-        /**
          * 余额不足
          */
-        BALANCE_SMALL: "余额不足",
-        /**
-         * 投注位置错误
-         */
-        BETPOS_ERROR: "投注位置错误",
-        /**
-         * 不在投注状态
-         */
-        NOTBET_STATUS: "不在投注状态",
+        BalanceSmall: "余额不足",
         /**
          * 低于最小投注限额
          */
-        LOW_LIMIT: "低于最小投注限额",
+        LowLimit: "低于最小投注限额",
         /**
          * 超过最大投注限额
          */
-        OVER_LIMIT: "超过最大投注限额",
+        OverLimit: "超过最大投注限额",
 
+        /**
+         * 游戏结果提示，赢
+         */
+        Win: "赢",
         /**
          * 选择最大筹码
          */
@@ -186,6 +170,26 @@ namespace LanguageUtils {
          * 总投
          */
         Total: "总投:",
+        /**
+         * 记录序号标题
+         */
+        RecordNumTitle: "序号",
+        /**
+         * 记录奖励标题
+         */
+        RecordRewardTitle: "获得奖励",
+        /**
+         * 记录时间标题
+         */
+        RecordTimeTitle: "时间",
+        /**
+         * 记录暂无数据
+         */
+        NoRecordData: "暂无记录",
+        /**
+         * 记录正在加载中
+         */
+        IsLoading: "正在加载中...",
 
         //游戏规则内容
         GameRuleFirst: "左右点击切换选择数值按钮或直接点击“Max”按钮，确认射门使用的投注金额。",
@@ -196,10 +200,10 @@ namespace LanguageUtils {
          * 游戏总的规则说明
          */
         GameTotalRule:"<p style='fontSize:30;font-weight:bold;color:#f6ef45'>玩家规则</p>"+"<br/>"+
-        "<p style='fontSize:20;color:#fff'>1.选择投注金额后，调整射门角度;</p>"+"<br/>"+
-        "<p style='fontSize:20;color:#fff'>2.使用一种道具能减少一名防守队员，最多可以使用三种道具。道具的金额根据投注金额按比例进行变化，以用户“射门”时显示的道具金额为准;</p>"+"<br/>"+
-        "<p style='fontSize:20;color:#fff'>3.点击“射门”开始踢球;</p>"+"<br/>"+
-        "<p style='fontSize:20;color:#fff'>4.用户进球后，可以获得1.5、2、5、10倍不等奖励;</p>"+"<br/>",
+        "<p style='fontSize:25;color:#fff'>1.选择投注金额后，调整射门角度;</p>"+"<br/>"+
+        "<p style='fontSize:25;color:#fff'>2.使用一种道具能减少一名防守队员，最多可以使用三种道具。道具的金额根据投注金额按比例进行变化，以用户“射门”时显示的道具金额为准;</p>"+"<br/>"+
+        "<p style='fontSize:25;color:#fff'>3.点击“射门”开始踢球;</p>"+"<br/>"+
+        "<p style='fontSize:25;color:#fff'>4.用户进球后，可以获得1.5、2、5、10倍不等奖励;</p>"+"<br/>",
 
         //游戏图片多语言切换
         /**
@@ -230,5 +234,9 @@ namespace LanguageUtils {
          * 游戏规则第四张图皮肤（射门）
          */
         RuleImgFourSkin: "ui/rule/ruleImg_4.png",
+        /**
+         * 游戏记录头部标题皮肤
+         */
+        RecordTitleSkin: "ui/record_tit.png",
     }
 }

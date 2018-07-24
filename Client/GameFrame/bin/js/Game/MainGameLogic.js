@@ -8,21 +8,24 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+/**
+ * 主游戏逻辑
+ */
 /// <reference path="../GameFrame/BaseGameLogic/index.ts"/>
 /// <reference path="../BetLogic/MulBet/MulBetLogic.ts"/>
 var MainGameLogic = /** @class */ (function (_super) {
     __extends(MainGameLogic, _super);
     function MainGameLogic() {
         var _this = _super.call(this) || this;
-        //初始化时创建GameViwLogic,注入Handler
-        _this.gameView = new GameViewLogic(Laya.Handler.create(_this, _this.ViewHandler));
         _this.betLogic = new MulBet.MulBetLogic();
         return _this;
     }
     /**
      * 登录完成
+     * -->抽象方法实现，方面中逻辑可修改<--
      */
     MainGameLogic.prototype.LoginComplete = function () {
+        //↓↓↓↓微信功能启用↓↓↓↓
         // let memberInfo: BaseDto.MemberInfoDto = this.GetMemberInfo();
         // //启用微信分享
         // WeChatModule.InitWeChat(memberInfo.MemberId);
@@ -30,9 +33,11 @@ var MainGameLogic = /** @class */ (function (_super) {
         // WeChatModule.GetWeChatUrl(Utils.GetQuery("parentid"),true);
         // //从服务器获取余额
         // this.GetBalanceByService();
+        //↑↑↑↑微信功能启用↑↑↑↑
     };
     /**
      * 从服务器获取分数成功
+     * -->抽象方法实现，方面中逻辑可修改<--
      * @param balance 余额
      */
     MainGameLogic.prototype.GetBalanceComplete = function (balance) {
@@ -143,11 +148,11 @@ var MainGameLogic = /** @class */ (function (_super) {
      */
     MainGameLogic.prototype.OnAckHandler = function (data) {
         this.Log(data, "OnAckHandler");
-        this.betLogic.BetAck(data);
     };
     ;
     /**
-     * 发送消息回调
+     * 发送消息
+     * -->发送逻辑，可适当添加投注回调处理<--
      * @param dto
      */
     MainGameLogic.prototype.SendHandler = function (dto) {
@@ -157,38 +162,22 @@ var MainGameLogic = /** @class */ (function (_super) {
         var gameDto = new Dto.GameMessageDto();
         gameDto.Command = Enum.GameCommand.MsgGameBet;
         gameDto.Data = dto.Data;
-        this.betLogic.SetMsgID(msgID);
         this.Send(gameDto, msgID);
     };
     /********************* Socket *********************/
     /******************* 界面事件hander *****************/
     MainGameLogic.prototype.ViewHandler = function (Type, Data) {
         switch (Type) {
+            //↓↓↓↓基本事件：启动socket,投注,获取余额↓↓↓↓
+            case Enum.GameViewHandlerEnum.StartSocket:
+                this.StartSocket();
+                break;
             case Enum.GameViewHandlerEnum.BetPos:
-                var result = this.betLogic.Bet(this.GetBalance(), Data);
-                if (result.success) {
-                    var BetPosAmount = new MulBet.BetPosAmountDto();
-                    BetPosAmount.Pos = Data.Pos;
-                    BetPosAmount.Amount = result.data;
-                    this.gameView.SetData(Enum.GameViewLogicEnum.BetPos, BetPosAmount);
-                    var money = this.GetBalance() - this.betLogic.GetBetScore();
-                    this.gameView.SetData(Enum.GameViewLogicEnum.ChangMoney, money);
-                }
-                else {
-                    this.gameView.SetData(BaseEnum.GameViewLogicEnum.Alert, result.data);
-                }
-                var requestParams = {
-                    Type: "Get",
-                    Params: {},
-                    Url: "sss",
-                };
-                this.Request(requestParams, function (response) { }, function (error) { });
                 break;
-            case Enum.GameViewHandlerEnum.GetMemberInfo:
-                var memberInfo = this.GetMemberInfo();
-                var isTourists = this.IsTourist();
-                this.gameView.SetData(Enum.GameViewLogicEnum.GetMemberInfo, { memberInfo: memberInfo, isTourists: isTourists });
+            case Enum.GameViewHandlerEnum.GetBalance:
+                this.GetBalanceByService();
                 break;
+            //↑↑↑↑↑↑↑↑
         }
     };
     return MainGameLogic;

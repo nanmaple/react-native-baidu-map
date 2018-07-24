@@ -58,6 +58,10 @@ var BaseGameAniView = /** @class */ (function () {
          * 是否按下鼠标
          */
         this.isMouseDown = false;
+        /**
+         * 道具使用音效
+         */
+        this.propSoundArr = ["sound/bomb.mp3", "sound/bottles.mp3", "sound/bra.mp3"];
     }
     /**
      * 重置屏幕
@@ -76,10 +80,14 @@ var BaseGameAniView = /** @class */ (function () {
      * 游戏初始化
      */
     BaseGameAniView.prototype.Init = function () {
+        var _this = this;
         this.initPos = { X: Laya.stage.width / 2, Y: 885 };
         this.endPos = { X: this.ui.goal.x, Y: this.ui.goal.y };
         this.centPos = { X: this.endPos.X, Y: (this.initPos.Y + this.endPos.Y) / 2 };
         Effect.CurvesEffect.CreateLine(this.initPos, this.centPos, this.endPos);
+        this.ui.goalkeeper.loadAnimation("GoalkeeperAni.ani", Laya.Handler.create(this, function () {
+            _this.ui.goalkeeper.play(0, true, "guard_wait");
+        }, null, false));
         this.DefenderRandomPos();
         this.InitProp();
     };
@@ -109,6 +117,7 @@ var BaseGameAniView = /** @class */ (function () {
      * @param index
      */
     BaseGameAniView.prototype.TakeProp = function (index) {
+        Utils.BackgroundMusic.PlaySounds(this.propSoundArr[index]);
         this.propBoxArr[index].disabled = true;
         this.propBoxArr[index].gray = false;
         this.propBoxArr[index].select.visible = true;

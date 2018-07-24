@@ -64,15 +64,18 @@ var BaseBetPanel = /** @class */ (function () {
      * 按钮样式复原
      */
     BaseBetPanel.prototype.RecoverBtnImg = function () {
-        this.ui.littleBtn.skin = "ui/littleBtn1.png";
-        this.ui.jaguarBtn.skin = "ui/jaguarBtn1.png";
-        this.ui.bigBtn.skin = "ui/bigBtn1.png";
+        this.ui.littleBtn.skin = "ui/betBtnUp.png";
+        this.ui.jaguarBtn.skin = "ui/betBtnUp.png";
+        this.ui.bigBtn.skin = "ui/betBtnUp.png";
         this.ui.littleOdds.scale(1, 1);
         this.ui.jaguarOdds.scale(1, 1);
         this.ui.bigOdds.scale(1, 1);
         this.ui.littleRule.scale(1, 1);
         this.ui.jaguarRule.scale(1, 1);
         this.ui.jaguarRule.scale(1, 1);
+        this.ui.littleWord.scale(1, 1);
+        this.ui.jaguarWord.scale(1, 1);
+        this.ui.bigWord.scale(1, 1);
     };
     /**
      * 按钮样式的绑定
@@ -80,17 +83,20 @@ var BaseBetPanel = /** @class */ (function () {
     BaseBetPanel.prototype.OnChangBtnImg = function () {
         var _this = this;
         this.ui.littleBtn.on(Laya.Event.MOUSE_DOWN, this, function () {
-            _this.ui.littleBtn.skin = "ui/littleBtn2.png";
+            _this.ui.littleBtn.skin = "ui/betBtnDown.png";
+            _this.ui.littleWord.scale(0.9, 0.9);
             _this.ui.littleOdds.scale(0.9, 0.9);
             _this.ui.littleRule.scale(0.9, 0.9);
         });
         this.ui.jaguarBtn.on(Laya.Event.MOUSE_DOWN, this, function () {
-            _this.ui.jaguarBtn.skin = "ui/jaguarBtn2.png";
+            _this.ui.jaguarBtn.skin = "ui/betBtnDown.png";
+            _this.ui.jaguarWord.scale(0.9, 0.9);
             _this.ui.jaguarOdds.scale(0.9, 0.9);
             _this.ui.jaguarRule.scale(0.9, 0.9);
         });
         this.ui.bigBtn.on(Laya.Event.MOUSE_DOWN, this, function () {
-            _this.ui.bigBtn.skin = "ui/bigBtn2.png";
+            _this.ui.bigBtn.skin = "ui/betBtnDown.png";
+            _this.ui.bigWord.scale(0.9, 0.9);
             _this.ui.bigOdds.scale(0.9, 0.9);
             _this.ui.bigRule.scale(0.9, 0.9);
         });

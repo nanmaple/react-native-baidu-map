@@ -15,6 +15,8 @@ namespace Enum {
         ChangGameStatus,
         /**修改当前投注分数 */
         ChangeCurrBet,
+        /**本次滚动开始 */
+        GameStart,
         /**本次滚动结束 */
         GameEnd,
         /**清理投注记录 */

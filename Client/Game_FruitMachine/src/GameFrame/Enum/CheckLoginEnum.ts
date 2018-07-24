@@ -11,5 +11,9 @@ namespace BaseEnum {
          * sockeToken
          */
         SocketToken = 2,
+        /**
+         * 会员信息失败
+         */
+        MemberInfoError = 3,
     }
 }

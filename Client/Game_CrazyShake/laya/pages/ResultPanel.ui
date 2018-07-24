@@ -67,7 +67,7 @@
                         {
                             "x":45,
                             "type":"Label",
-                            "props":{"y":6,"x":85,"width":115,"var":"wordResultPoint","text":"1、1、1","height":35,"fontSize":30,"color":"#e54209","align":"center"},
+                            "props":{"y":6,"x":64,"width":137,"var":"wordResultPoint","text":"1、1、1","height":42,"fontSize":38,"color":"#e54209","align":"center"},
                             "nodeParent":7,
                             "label":"Label(wordResultPoint)",
                             "isDirectory":false,
@@ -80,7 +80,7 @@
                         {
                             "x":45,
                             "type":"Label",
-                            "props":{"y":6,"x":205,"width":45,"var":"wordPoint","text":"点","height":35,"fontSize":30,"color":"#ffefa3","align":"center"},
+                            "props":{"y":6,"x":207,"width":45,"var":"wordPoint","text":"点","height":42,"fontSize":38,"color":"#ffefa3","align":"center"},
                             "nodeParent":7,
                             "label":"Label(wordPoint)",
                             "isDirectory":false,
@@ -93,7 +93,7 @@
                         {
                             "x":45,
                             "type":"Label",
-                            "props":{"y":6,"x":254,"width":63,"var":"wordResult","text":"大","height":35,"fontSize":30,"color":"#e54209","align":"left"},
+                            "props":{"y":6,"x":260,"width":85,"var":"wordResult","text":"大","height":42,"fontSize":38,"color":"#e54209","align":"left"},
                             "nodeParent":7,
                             "label":"Label(wordResult)",
                             "isDirectory":false,
@@ -106,7 +106,7 @@
                         {
                             "x":45,
                             "type":"Label",
-                            "props":{"y":50,"x":31,"width":324,"var":"wordEnd","text":"恭喜您！","height":35,"fontSize":30,"color":"#ffefa3","align":"center"},
+                            "props":{"y":50,"x":35,"width":324,"var":"wordEnd","text":"恭喜您！","height":42,"fontSize":38,"color":"#ffefa3","align":"center"},
                             "nodeParent":7,
                             "label":"Label(wordEnd)",
                             "isDirectory":false,

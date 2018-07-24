@@ -7,25 +7,25 @@ abstract class BaseGameRecordView {
     /**
      * 是否显示
      */
-    protected isShow: boolean = false;  
+    protected isShow: boolean = false;
     /**
      * 暂无更多数据
      */
-    protected noMoreData: boolean = false;  
+    protected noMoreData: boolean = false;
     /**
      * 鼠标按下时坐标
      */
-    protected mouseDownY: number;   
+    protected mouseDownY: number;
     protected isActiveData: boolean = false;  //初始化数据
     protected scrollValue: number = 0;   //列表滚动位置
     protected listBoxH: number;   //列表每一行的高度
     protected recordListH: number;  //列表显示区域的高度
-    protected dataArr: Array<any> = []; 
-    protected isLoading:boolean = false;
+    protected dataArr: Array<any> = [];
+    protected isLoading: boolean = false;
     /**
      * 是否初始化
      */
-    protected isInit:boolean = false;
+    protected isInit: boolean = false;
     constructor() {
 
     }
@@ -36,8 +36,9 @@ abstract class BaseGameRecordView {
     public ResetScreen() {
         Laya.stage.removeChild(this.ui);
         this.ui = new ui.GameRecordViewUI();
-        this.ui.zOrder = 5;
+        this.ui.zOrder = 888;
         this.ui.cacheAs = "bitmap";
+        this.ChangeWordLan();
         Laya.stage.addChild(this.ui);
         this.ui.visible = this.isShow;
         this.ui.close.on(Laya.Event.CLICK, this, this.Hide);
@@ -52,7 +53,17 @@ abstract class BaseGameRecordView {
         this.ui.noRecord.visible = false;
         this.ui.isLoading.visible = false;
         this.noMoreData = false;
-        this.isInit=true;
+        this.isInit = true;
+    }
+    /**
+     * 初始化语言
+     */
+    private ChangeWordLan() {
+        this.ui.num_tit.changeText(LanguageUtils.Language.Get("NumTit"));
+        this.ui.reward_tit.changeText(LanguageUtils.Language.Get("RewardTit"));
+        this.ui.time_tit.changeText(LanguageUtils.Language.Get("TimeTit"));
+        this.ui.noRecord.changeText(LanguageUtils.Language.Get("NoRecord"));
+        this.ui.isLoading.changeText(LanguageUtils.Language.Get("IsLoading"));
     }
 
     /**
@@ -60,14 +71,14 @@ abstract class BaseGameRecordView {
      */
     private OnMouseUp(): void {
         let value = this.ui.recordList.scrollBar.value;
-        if(this.isLoading){
+        if (this.isLoading) {
             return;
         }
-        if(value <= -30){
+        if (value <= -30) {
             this.isLoading = true;
             this.PullDownRefresh(true);
         }
-        else if((value - this.dataArr.length * (this.listBoxH + 5) + this.recordListH) >= 30 && !this.noMoreData){
+        else if ((value - this.dataArr.length * (this.listBoxH + 5) + this.recordListH) >= 30 && !this.noMoreData) {
             this.isLoading = true;
             this.PullUpMore();
         }
@@ -76,12 +87,12 @@ abstract class BaseGameRecordView {
      * 设置列表数据
      * @param data 
      */
-    protected SetListArray(data:any):void{
+    protected SetListArray(data: any): void {
         this.ui.recordList.dataSource = data;
-        if(!data || data.length == 0){
+        if (!data || data.length == 0) {
             this.ui.noRecord.visible = true;
             this.ui.recordList.visible = false;
-        }else{
+        } else {
             this.ui.noRecord.visible = false;
             this.ui.recordList.visible = true;
         }
@@ -91,19 +102,19 @@ abstract class BaseGameRecordView {
      * 下拉刷新
      * @param isInit 
      */
-    public PullDownRefresh(isInit:boolean):void{  
+    public PullDownRefresh(isInit: boolean): void {
         this.dataArr = [];
         this.SetListArray(this.dataArr);
-        if(isInit){
+        if (isInit) {
             this.Init();
         }
         this.ShowLoading(true);
         this.EventNotification(Enum.ListenViewEnum.GetRecord, true);
     };
-   /**
-     * 上拉加载更多
-     */
-    public PullUpMore():void{
+    /**
+      * 上拉加载更多
+      */
+    public PullUpMore(): void {
         this.isInit = false;
         this.EventNotification(Enum.ListenViewEnum.GetRecord, false);
     };
@@ -111,7 +122,7 @@ abstract class BaseGameRecordView {
      * 是否显示正在加载中
      * @param isLoading 
      */
-    protected ShowLoading(isLoading:boolean):void{
+    protected ShowLoading(isLoading: boolean): void {
         this.ui.isLoading.visible = isLoading;
     }
     /**
@@ -131,6 +142,6 @@ abstract class BaseGameRecordView {
      * @param type 类型
      * @param value 值
      */
-    abstract EventNotification(type:any, value?:any): void;
-    
+    abstract EventNotification(type: any, value?: any): void;
+
 }

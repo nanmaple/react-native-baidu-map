@@ -1,3 +1,7 @@
+/**
+ * 初始化Laya及适配
+ * -->根据项目，适当修改配置<--
+ */
 var InitState = /** @class */ (function () {
     function InitState() {
         this.event = new Event('ScreeMode');

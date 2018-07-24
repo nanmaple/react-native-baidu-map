@@ -4,6 +4,8 @@ namespace GameConfig {
     export const IsDebug: boolean = true;
     //是否开启日志
     export const OpenLog: boolean = true;
+    //是否使用测试服务器地址
+    export const IsTestServer: boolean = true;
     /****************基础信息*****************/
     //游戏ID
     export const GameID: number = 5;
@@ -16,9 +18,9 @@ namespace GameConfig {
 
     /****************API信息*****************/
     //api域名
-    export const Domain: string = IsDebug ? "192.168.0.2:9113" : "m.synjiguang.com";
+    export const Domain: string = IsTestServer ? "192.168.0.2:9113" : "m.synjiguang.com";
     //socket域名
-    export const SocketUrl: string = IsDebug ? "ws://192.168.0.120:9800" : "ws://m.synjiguang.com:9111";
+    export const SocketUrl: string = IsTestServer ? "ws://192.168.0.2:9110" : "ws://m.synjiguang.com:9111";
     //api基本地址
     export const WebApiBaseUrl: string = `http://${Domain}/api`;
     //投注基本地址

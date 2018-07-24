@@ -6,24 +6,25 @@ var Enum;
     var GameViewHandlerEnum;
     (function (GameViewHandlerEnum) {
         /**
+         * 启动socket
+         */
+        GameViewHandlerEnum[GameViewHandlerEnum["StartSocket"] = 0] = "StartSocket";
+        /**
          * 投注操作
         */
-        GameViewHandlerEnum[GameViewHandlerEnum["BetPos"] = 0] = "BetPos";
-        GameViewHandlerEnum[GameViewHandlerEnum["ConfirmBet"] = 1] = "ConfirmBet";
-        GameViewHandlerEnum[GameViewHandlerEnum["CancelBet"] = 2] = "CancelBet";
-        GameViewHandlerEnum[GameViewHandlerEnum["GetNoBetSucData"] = 3] = "GetNoBetSucData";
-        /**
-         * 获取投注记录
-        */
-        GameViewHandlerEnum[GameViewHandlerEnum["GetBetRecord"] = 4] = "GetBetRecord";
-        /**
-         * 获取最新余额
-         */
-        GameViewHandlerEnum[GameViewHandlerEnum["ChangeMoney"] = 5] = "ChangeMoney";
+        GameViewHandlerEnum[GameViewHandlerEnum["BetPos"] = 1] = "BetPos";
         /**
          * 获取用户信息
          */
-        GameViewHandlerEnum[GameViewHandlerEnum["GetMemberInfo"] = 6] = "GetMemberInfo";
+        GameViewHandlerEnum[GameViewHandlerEnum["GetMemberInfo"] = 2] = "GetMemberInfo";
+        /**
+         * 游戏结束
+         */
+        GameViewHandlerEnum[GameViewHandlerEnum["GameResult"] = 3] = "GameResult";
+        /**
+         * 获取余额
+         */
+        GameViewHandlerEnum[GameViewHandlerEnum["GetBalance"] = 4] = "GetBalance";
     })(GameViewHandlerEnum = Enum.GameViewHandlerEnum || (Enum.GameViewHandlerEnum = {}));
 })(Enum || (Enum = {}));
 //# sourceMappingURL=GameViewHandlerEnum.js.map

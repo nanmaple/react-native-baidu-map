@@ -79,6 +79,7 @@ abstract class BaseGameHeadView {
      */
     private OpenRecord():void{
         Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
+        this.EventNotification(Enum.ListenViewEnum.OpenRecord);
     }
     /**
      * 返回首页

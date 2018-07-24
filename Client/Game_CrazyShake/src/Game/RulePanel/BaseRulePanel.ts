@@ -27,6 +27,7 @@ class BaseRulePanel {
      * 事件key值，通过构造函数时注入
      */
     private EventNotification(): void {
+        Laya.SoundManager.playSound("sound/btnSound.mp3")
         let data: Dto.EventNotificationDto = new Dto.EventNotificationDto();
         data.Value = {};
         data.Type = Enum.ListenViewEnum.CloseRule;

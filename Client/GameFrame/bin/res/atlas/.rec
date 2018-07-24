@@ -2,8 +2,11 @@ D .
 D comp
 P 1F3929EA button.png
 D ui
-R 577CD16E alert.png
+R A734F81D alert.png
 R B602DE64 bg.png
 P 5C977BB8 btn_chip.png
-P 97F7108C close.png
+P E6D76FDF close.png
 R 3947C27C maskBg.png
+R 26A85952 record.png
+P 822950AC record_tit.png
+P 585158CE recordlist.png

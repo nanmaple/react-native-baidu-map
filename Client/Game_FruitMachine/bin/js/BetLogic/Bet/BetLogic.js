@@ -14,13 +14,13 @@ var OnceBet;
          * @param positon 本次投注位置
          */
         BetLogic.prototype.Bet = function (memScore, positon) {
-            memScore -= this.betInfo.BetNumber * this.betInfo.BaseAmount;
-            if (memScore < this.betInfo.BaseAmount) {
+            memScore -= this.betInfo.BetNumber * this.betInfo.CurrBaseAmount;
+            if (memScore < this.betInfo.CurrBaseAmount) {
                 return { success: false, data: 'InsufficientBalance' };
             }
             var pos = this.betInfo.BetSuccessData[positon];
             if (pos) {
-                if (pos >= this.betInfo.MaxBetNum || pos * this.betInfo.BaseAmount > this.betInfo.MaxBet) {
+                if (pos >= this.betInfo.MaxBetNum || pos * this.betInfo.CurrBaseAmount > this.betInfo.MaxBet) {
                     return { success: false, data: 'OverLimit' };
                 }
                 this.betInfo.BetSuccessData[positon] += 1;
@@ -38,8 +38,9 @@ var OnceBet;
          * @param MinBet
          */
         BetLogic.prototype.SetBetLimit = function (BaseAmounts, MaxBet, MinBet) {
-            this.betInfo.BaseAmount = BaseAmounts[0];
-            this.betInfo.MaxBase = BaseAmounts[2];
+            // this.betInfo.BaseAmount = BaseAmounts[0];
+            this.betInfo.CurrBaseAmount = BaseAmounts[0];
+            // this.betInfo.MaxBase = BaseAmounts[2];
             this.betInfo.MaxBet = MaxBet;
             this.betInfo.MinBet = MinBet;
         };
@@ -55,7 +56,7 @@ var OnceBet;
          */
         BetLogic.prototype.GetBetInfo = function () {
             var dto = new OnceBet.BetDto();
-            dto.BaseAmount = this.betInfo.BaseAmount;
+            dto.BaseAmount = this.betInfo.CurrBaseAmount;
             dto.BetInfos = this.betInfo.BetSuccessData;
             return dto;
         };
@@ -63,7 +64,7 @@ var OnceBet;
          * 获取当前局投注总分数
          */
         BetLogic.prototype.GetBetScore = function () {
-            var sum = this.betInfo.BaseAmount * this.betInfo.BetNumber;
+            var sum = this.betInfo.CurrBaseAmount * this.betInfo.BetNumber;
             return sum;
         };
         /**
@@ -71,18 +72,7 @@ var OnceBet;
          * @param data
          */
         BetLogic.prototype.ChangBaseAmount = function (memScore, data) {
-            if (data > this.betInfo.MaxBase)
-                data = this.betInfo.MaxBase;
-            var all = data * this.betInfo.BetNumber;
-            if (all > memScore) {
-                var chip = Math.floor(memScore / this.betInfo.BetNumber / data) * data;
-                if (chip == 0)
-                    chip = data;
-                this.betInfo.BaseAmount = chip;
-                return chip;
-            }
-            this.betInfo.BaseAmount = data;
-            return data;
+            this.betInfo.CurrBaseAmount = data;
         };
         return BetLogic;
     }());

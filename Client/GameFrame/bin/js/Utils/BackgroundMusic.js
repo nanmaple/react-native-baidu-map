@@ -1,3 +1,6 @@
+/**
+ * 工具类-背景音乐功能
+ */
 var Utils;
 (function (Utils) {
     //背景音乐

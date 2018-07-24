@@ -10,9 +10,9 @@ var Enum;
          */
         GameViewLogicEnum[GameViewLogicEnum["BetPos"] = 101] = "BetPos";
         /**
-         * 添加投注记录
+         * 获取投注记录
          */
-        GameViewLogicEnum[GameViewLogicEnum["SetRecord"] = 102] = "SetRecord";
+        GameViewLogicEnum[GameViewLogicEnum["GetRecord"] = 102] = "GetRecord";
         /**
          * 改变余额
          */

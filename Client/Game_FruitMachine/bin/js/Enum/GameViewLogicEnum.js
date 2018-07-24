@@ -13,16 +13,18 @@ var Enum;
          * 添加投注记录
          */
         GameViewLogicEnum[GameViewLogicEnum["SetRecord"] = 102] = "SetRecord";
-        /**
-         * 修改投注基数
-         */
-        GameViewLogicEnum[GameViewLogicEnum["ChangBaseAmount"] = 103] = "ChangBaseAmount";
         /**修改游戏状态 */
-        GameViewLogicEnum[GameViewLogicEnum["ChangGameStatus"] = 104] = "ChangGameStatus";
+        GameViewLogicEnum[GameViewLogicEnum["ChangGameStatus"] = 103] = "ChangGameStatus";
         /**修改当前投注分数 */
-        GameViewLogicEnum[GameViewLogicEnum["ChangeCurrBet"] = 105] = "ChangeCurrBet";
+        GameViewLogicEnum[GameViewLogicEnum["ChangeCurrBet"] = 104] = "ChangeCurrBet";
+        /**本次滚动开始 */
+        GameViewLogicEnum[GameViewLogicEnum["GameStart"] = 105] = "GameStart";
         /**本次滚动结束 */
-        // GameEnd,
+        GameViewLogicEnum[GameViewLogicEnum["GameEnd"] = 106] = "GameEnd";
+        /**清理投注记录 */
+        GameViewLogicEnum[GameViewLogicEnum["ClearBet"] = 107] = "ClearBet";
+        /**猜大小结束 */
+        GameViewLogicEnum[GameViewLogicEnum["GuessEnd"] = 108] = "GuessEnd";
     })(GameViewLogicEnum = Enum.GameViewLogicEnum || (Enum.GameViewLogicEnum = {}));
 })(Enum || (Enum = {}));
 //# sourceMappingURL=GameViewLogicEnum.js.map

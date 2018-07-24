@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":2,
+    "selecteID":12,
     "props":{"width":750,"sceneColor":"#ffffff","height":1334},
     "nodeParent":-1,
     "label":"View",
@@ -40,16 +40,42 @@
         },
         {
             "x":15,
-            "type":"Label",
-            "props":{"y":710,"width":750,"var":"result","valign":"middle","text":"0","strokeColor":"#734b26","stroke":5,"height":100,"fontSize":40,"font":"Arial","color":"#ffcc00","centerX":0,"bold":true,"align":"center"},
+            "type":"Box",
+            "props":{"y":710,"width":300,"var":"result","height":100,"centerX":20},
             "nodeParent":1,
-            "label":"Label(result)",
-            "isDirectory":false,
+            "label":"Box(result)",
+            "isOpen":true,
+            "isDirectory":true,
             "isAniNode":true,
-            "hasChild":false,
-            "compId":10,
+            "hasChild":true,
+            "compId":12,
             "child":[
-                ]
+                {
+                    "x":30,
+                    "type":"Label",
+                    "props":{"width":100,"var":"times","valign":"middle","text":"0","strokeColor":"#734b26","stroke":5,"left":0,"height":100,"fontSize":40,"font":"Arial","color":"#ffcc00","bold":true,"align":"center"},
+                    "nodeParent":12,
+                    "label":"Label(times)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":10,
+                    "child":[
+                        ]
+                },
+                {
+                    "x":30,
+                    "type":"Label",
+                    "props":{"y":0,"width":200,"var":"win","valign":"middle","text":"0","strokeColor":"#734b26","stroke":5,"right":0,"height":100,"fontSize":40,"font":"Arial","color":"#ffcc00","bold":true,"align":"center"},
+                    "nodeParent":12,
+                    "label":"Label(win)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":11,
+                    "child":[
+                        ]
+                }]
         }],
     "animations":[
         {

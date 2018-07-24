@@ -60,6 +60,8 @@ abstract class BaseGameLogic {
         //启动网络监测
         this.InitNetWork();
         this.InitLogin();
+        
+        this.gameView = new GameViewLogic(Laya.Handler.create(this, this.ViewHandler,null,false));
     }
 
     /********************* 日志 *********************/
@@ -209,6 +211,9 @@ abstract class BaseGameLogic {
     private FailHanlder(data: BaseDto.CheckLoginDto): void {
         if (data.Type == BaseEnum.CheckLoginEnum.MemberInfo) {
 
+        } if (data.Type == BaseEnum.CheckLoginEnum.MemberInfoError) {
+            //通知总UI发生错误 
+            this.gameView.SetData(BaseEnum.GameViewLogicEnum.Error, LanguageUtils.Language.Get("GetMemberInfoError"));
         } else {
             //通知总UI发生错误 
             this.gameView.SetData(BaseEnum.GameViewLogicEnum.Error, data.Data);
@@ -222,8 +227,8 @@ abstract class BaseGameLogic {
      */
     protected Request(requestDto: IRequestParams, successCallback: Function, failCallback: Function): void {
         if (requestDto.Type.toLowerCase() == "get") {
-            this.webApi.Get(requestDto.Url, requestDto.Params, requestDto.Header, (response: any) => {   
-                if (response.Result == BaseEnum.ErrorCode.Success) { 
+            this.webApi.Get(requestDto.Url, requestDto.Params, requestDto.Header, (response: any) => {
+                if (response.Result == BaseEnum.ErrorCode.Success) {
                     successCallback(response.Data);
                 } else {
                     failCallback(response.Result);
@@ -233,7 +238,7 @@ abstract class BaseGameLogic {
             })
         } else {
             this.webApi.Post(requestDto.Url, requestDto.Params, requestDto.Header, (response: any) => {
-                if (response.Result == BaseEnum.ErrorCode.Success) { 
+                if (response.Result == BaseEnum.ErrorCode.Success) {
                     successCallback(response.Data);
                 } else {
                     failCallback(response.Result);

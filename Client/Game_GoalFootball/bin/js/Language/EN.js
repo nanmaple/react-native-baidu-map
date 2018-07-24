@@ -166,37 +166,80 @@ var LanguageUtils;
          * 超过最大投注限额
          */
         OVER_LIMIT: "Exceed The Quota",
-        //投注结果信息提示
-        /**
-         * 球进了
-         */
-        GameSuccess: "Nice!",
-        /**
-         * 奖励金
-         */
-        GameReward: ", Congratulations on your award ",
-        /**
-         * 奖励倍数
-         */
-        GameMultiple: "times",
-        /**
-         * 未进球
-         */
-        GameFail: "I'm sorry, just a little, try it again!",
         /**
          * 选择最大筹码
          */
         MaxChip: "Max",
+        /**
+         * 总投
+         */
+        Total: "Total:",
+        /**
+         * 记录序号标题
+         */
+        RecordNumTitle: "Num",
+        /**
+         * 记录奖励标题
+         */
+        RecordRewardTitle: "Reward",
+        /**
+         * 记录时间标题
+         */
+        RecordTimeTitle: "Time",
+        /**
+         * 记录暂无数据
+         */
+        NoRecordData: "No Data",
+        /**
+         * 记录正在加载中
+         */
+        IsLoading: "IsLoading...",
         //游戏规则内容
         GameRuleFirst: "1.Click the right or left toggle to select the numeric button or click the 'Max' button to confirm the amount of bet used.",
         GameRuleSecond: "2.The props can be used. A prop reduces a defender",
         GameRuleThird: "3.Sliding yellow path up and down, adjust the best shooting angle, get twice the result with half the effort.",
         GameRuleFour: "4.Click on 'shot' and go to the door.",
-        GameTotalRule: "<p style='fontSize:30;font-weight:bold'>游戏简介</p>" + "<br/>",
-        //游戏关注提示内容
-        GameTips: "<p style='fontSize:35'>Since you haven't logged in yet, now it's a play mode, to experience more fun games, click on the top left</p>" +
-            "<p style='fontSize:35;color:red'>&nbsp;'attention'&nbsp;</p>" +
-            "<p style='fontSize:35'>button to log in.</p>",
+        /**
+         * 游戏总的规则说明
+         */
+        GameTotalRule: "<p style='fontSize:30;font-weight:bold;color:#f6ef45'>Player Rule</p>" + "<br/>" +
+            "<p style='fontSize:20;color:#fff'>1.After choosing the amount of the injection, adjust the shooting angle;</p>" + "<br/>" +
+            "<p style='fontSize:20;color:#fff'>2.Using a prop can reduce a defender and can use up to three kinds of props. The amount of props varies according to the proportion of the amount of betting, and the amount of props displayed when the user shoots.;</p>" + "<br/>" +
+            "<p style='fontSize:20;color:#fff'>3.Click on 'shot' to kick the ball;</p>" + "<br/>" +
+            "<p style='fontSize:20;color:#fff'>4.Users can get 1.5, 2, 5, 10 times reward after scoring;</p>" + "<br/>",
+        //游戏图片多语言切换
+        /**
+         * 射门按钮
+         */
+        BtnShootDoor: "ui/chip/btn_shoor.png",
+        /**
+         * 射门按钮禁用
+         */
+        BtnNoShootDoor: "ui/chip/btn_shoor_n.png",
+        /**
+         * 选中的筹码皮肤
+         */
+        SelectChipSkin: "ui/chip/btn_select.png",
+        /**
+         * 未选中的筹码皮肤
+         */
+        NoSelectChipSkin: "ui/chip/btn_noselect.png",
+        /**
+         * 游戏头部标题皮肤
+         */
+        HeadTitleSkin: "ui/header/head_tit.png",
+        /**
+         * 游戏规则头部皮肤
+         */
+        RuleTitleSkin: "ui/rule/rule_title.png",
+        /**
+         * 游戏规则第四张图皮肤（射门）
+         */
+        RuleImgFourSkin: "ui/rule/ruleImg_4.png",
+        /**
+         * 游戏记录头部标题皮肤
+         */
+        RecordTitleSkin: "ui/record_tit.png",
     };
 })(LanguageUtils || (LanguageUtils = {}));
 //# sourceMappingURL=EN.js.map

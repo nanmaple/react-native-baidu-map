@@ -12,14 +12,20 @@ namespace Enum{
          */
         GetBalance,
         /**
-         * 投注按钮点击
+         * 投注
          */
         BetPos,
-
-        OnGameBgClick,
-
-        ConfirmBet,
-
-        CancelBet,
+        /**
+         * 打开规则面板
+         */
+        OpenRule,
+        /**
+         * 打开游戏记录面板
+         */
+        OpenRecord,
+        /**
+         * 获取游戏记录
+         */
+        GetRecord,
     }
 }

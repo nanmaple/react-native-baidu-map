@@ -48,7 +48,7 @@ namespace MemberManager {
          * @param data 
          */
         private GetMemberInfoError = (data: any): void => {
-            this.failHanlder.runWith({ Type: BaseEnum.CheckLoginEnum.MemberInfo, Data: data });
+            this.failHanlder.runWith({ Type: BaseEnum.CheckLoginEnum.MemberInfoError, Data: data });
         }
 
         /**

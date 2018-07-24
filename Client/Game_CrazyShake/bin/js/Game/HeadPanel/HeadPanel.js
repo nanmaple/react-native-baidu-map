@@ -23,6 +23,10 @@ var Enum;
          * 收到游戏结果
          */
         HeadPanel[HeadPanel["GameSettleResult"] = 13001] = "GameSettleResult";
+        /**
+         * 开始游戏动画
+         */
+        HeadPanel[HeadPanel["GameStartAni"] = 13002] = "GameStartAni";
     })(HeadPanel = Enum.HeadPanel || (Enum.HeadPanel = {}));
 })(Enum || (Enum = {}));
 /**
@@ -50,13 +54,20 @@ var HeadPanel = /** @class */ (function (_super) {
     HeadPanel.prototype.Set = function (data, type) {
         switch (type) {
             case Enum.HeadPanel.GameInit:
+                this.balance = data.Balance;
+                this.winAmount = 0;
                 this.SetRechargeNum(data.Balance);
+                this.SetScore(0);
+                break;
+            case Enum.HeadPanel.GameStartAni:
+                this.SetRechargeNum(this.balance - data);
+                this.SetScore(0);
                 break;
             case Enum.HeadPanel.GameSettleResult:
                 this.balance = data.Balance;
                 this.winAmount = data.WinAmount;
-                this.SetRechargeNum(data.Balance - data.WinAmount);
-                this.SetScore(0);
+                // this.SetRechargeNum(data.Balance - data.WinAmount);
+                // this.SetScore(0);
                 break;
             default:
                 break;

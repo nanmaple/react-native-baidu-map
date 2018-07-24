@@ -5,15 +5,13 @@ var OnceBet;
      */
     var BetDataDto = /** @class */ (function () {
         function BetDataDto() {
-            /**
-             * 当前总投注信息
-             */
+            /*** 当前总投注信息*/
             this.BetSuccessData = new Object();
-            /**
-             * 当前投注的总数
-             */
+            /**当前投注的总数 */
             this.BetNumber = 0;
-            /**上一次投注位置、个数信息 */
+            /**最大基数 */
+            // public MaxBase:number;
+            /**上一次投注位置、个数信息 data, number*/
             this.LastBet = new Object();
             /**单个位置最大投注数 */
             this.MaxBetNum = 99;

@@ -61,6 +61,7 @@ class OperateView extends BaseOperateView implements IView {
                 this.ui.start.disabled = false;
                 this.ui.big.disabled = true;
                 this.ui.small.disabled = true;
+                this.ui.start.label = LanguageUtils.Language.Get('GameStart');
                 break;
             case Enum.GameStatus.Execute:
                 this.ui.addChip.disabled = true;
@@ -79,6 +80,7 @@ class OperateView extends BaseOperateView implements IView {
                 this.ui.clear.disabled = true;
                 this.ui.addAll.disabled = true;
                 this.ui.start.disabled = false;
+                this.ui.start.label = LanguageUtils.Language.Get('GainScore');
                 break;
         }
     }

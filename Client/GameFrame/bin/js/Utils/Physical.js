@@ -1,3 +1,6 @@
+/**
+ * 工具类-物理引擎算法
+ */
 var Utils;
 (function (Utils) {
     var Physical = /** @class */ (function () {

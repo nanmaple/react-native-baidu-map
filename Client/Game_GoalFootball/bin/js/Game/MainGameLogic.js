@@ -17,8 +17,36 @@ var MainGameLogic = /** @class */ (function (_super) {
          * 投注信息
          */
         _this.betInfo = new Dto.BetInfoDto();
-        //初始化时创建GameViwLogic,注入Handler
-        _this.gameView = new GameViewLogic(Laya.Handler.create(_this, _this.ViewHandler, null, false));
+        /**
+         * 请求参数
+         */
+        _this.requestParams = {
+            Type: "Post",
+            Url: null,
+            Params: null,
+            Header: null,
+        };
+        /**
+         * 获取记录成功
+         * @param data
+         */
+        _this.GetRecordSuccess = function (data) {
+            console.log(data);
+            if (data && data.length > 0) {
+                _this.betRecordParamsDto.LastId = data[data.length - 1].Id;
+            }
+            _this.gameView.SetData(Enum.GameViewLogicEnum.GetRecord, data);
+        };
+        /**
+         * 获取记录失败
+         * @param data
+         */
+        _this.GetRecordFail = function (error) {
+            _this.gameView.SetData(Enum.GameViewLogicEnum.GetRecord, null);
+        };
+        _this.betRecordParamsDto = new Dto.BetRecordParamsDto();
+        _this.betRecordParamsDto.GameId = GameConfig.GameID;
+        _this.betRecordParamsDto.PageSize = 10;
         return _this;
     }
     /**
@@ -180,6 +208,17 @@ var MainGameLogic = /** @class */ (function (_super) {
             this.gameView.SetData(Enum.GameViewLogicEnum.ChangMoney, balance - this.betInfo.betTotalAmount);
         }
     };
+    /**
+     * 获取游戏记录
+     */
+    MainGameLogic.prototype.GetGameRecord = function (refresh) {
+        if (refresh) {
+            this.betRecordParamsDto.LastId = null;
+        }
+        this.requestParams.Params = this.betRecordParamsDto;
+        this.requestParams.Url = ApiConfig.GetBetRecord;
+        this.Request(this.requestParams, this.GetRecordSuccess, this.GetRecordFail);
+    };
     /********************* Socket *********************/
     /******************* 界面事件hander *****************/
     MainGameLogic.prototype.ViewHandler = function (Type, Data) {
@@ -211,6 +250,9 @@ var MainGameLogic = /** @class */ (function (_super) {
                 break;
             case Enum.GameViewHandlerEnum.GetBalance:
                 this.GetBalanceByService();
+                break;
+            case Enum.GameViewHandlerEnum.GetRecord:
+                this.GetGameRecord(Data);
                 break;
         }
     };

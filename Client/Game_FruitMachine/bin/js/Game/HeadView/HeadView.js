@@ -63,6 +63,8 @@ var HeadView = /** @class */ (function (_super) {
     };
     /**返回首页 */
     HeadView.prototype.OnGoHome = function () { };
+    /**跳转支付 */
+    HeadView.prototype.OnPay = function () { };
     /**刷新余额 */
     HeadView.prototype.OnRefreshBalance = function () {
         this.EventNotification(Enum.ListenViewEnum.GetBalance);
@@ -76,12 +78,15 @@ var HeadView = /** @class */ (function (_super) {
         else {
             this.ui.btnSound.skin = 'ui/head_sound.png';
         }
-        SoundManage.SetMute(this.muted);
-        this.EventNotification(Enum.ListenViewEnum.SetMute, this.muted);
+        Laya.SoundManager.muted = this.muted;
     };
     /**显示规则面板 */
     HeadView.prototype.OnShowRule = function () {
         this.EventNotification(Enum.ListenViewEnum.ShowRule);
+    };
+    /**显示记录面板 */
+    HeadView.prototype.OnShowRecord = function () {
+        this.EventNotification(Enum.ListenViewEnum.ShowRecord);
     };
     /**
      * 统一事件发送
@@ -89,7 +94,7 @@ var HeadView = /** @class */ (function (_super) {
      */
     HeadView.prototype.EventNotification = function (type, value) {
         if (value === void 0) { value = ''; }
-        SoundManage.PlaySound(SoundConfig.SounRes.Button);
+        Laya.SoundManager.playSound(SoundConfig.SounRes.Button);
         var data = new Dto.EventNotificationDto();
         data.Value = value;
         data.Type = type;

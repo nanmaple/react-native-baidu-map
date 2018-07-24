@@ -8,6 +8,7 @@ var BaseRuleView = /** @class */ (function () {
     BaseRuleView.prototype.ResetScreen = function () {
         Laya.stage.removeChild(this.ui);
         this.ui = new ui.RuleViewUI();
+        this.ui.ruleBg.skin = LanguageUtils.Language.Get('RuleView');
         this.ui.zOrder = 3;
         this.ui.cacheAs = "bitmap";
         Laya.stage.addChild(this.ui);

@@ -1,3 +1,7 @@
+/**
+ * 资源加载配置
+ * 根据项目，将需要的资源加载到配置数组中
+ */
 /// <reference path="./GameConfig.ts" />
 var GameResourceConfig;
 (function (GameResourceConfig) {

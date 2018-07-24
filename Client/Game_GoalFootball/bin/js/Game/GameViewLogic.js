@@ -13,51 +13,13 @@ var __extends = (this && this.__extends) || (function () {
 var GameViewLogic = /** @class */ (function (_super) {
     __extends(GameViewLogic, _super);
     function GameViewLogic(Handler) {
-        var _this = _super.call(this) || this;
-        _this.CtrlHandler = Handler;
-        _this.GameLoad();
-        return _this;
+        return _super.call(this, Handler) || this;
     }
     /***************游戏基础逻辑***************/
     /**
      * 横竖屏监听
      */
     GameViewLogic.prototype.ResetScreen = function () {
-    };
-    /**
-    * 启动游戏资源页面，开始加载游戏资源
-    */
-    GameViewLogic.prototype.GameLoad = function () {
-        this.gameLoadView = new GameLoadView(this.GameViewEventKey);
-        this.gameLoadView.ResetScreen();
-        //设置版本控制类型为使用文件名映射的方式
-        // Laya.ResourceVersion.type = Laya.ResourceVersion.FILENAME_VERSION;
-        //加载版本信息文件
-        // Laya.ResourceVersion.enable("version.json", Laya.Handler.create(this, ()=>{
-        this.gameLoadView.StartLoad(GameResourceConfig.LoadResourcesConfig);
-        // },null,false)); 
-    };
-    /**
-     * 游戏资源加载完成，检查登录状态
-     */
-    GameViewLogic.prototype.CheckLoad = function () {
-        this.isLoadSuccess = true;
-        if (this.isLoginSucess) {
-            this.gameLoadView.Remove();
-            //加载主界面
-            this.GameMainUI();
-        }
-    };
-    /**
-     * 游戏登录完成，检查游戏资源加载状态
-     */
-    GameViewLogic.prototype.GameLoginComplete = function () {
-        this.isLoginSucess = true;
-        if (this.isLoadSuccess) {
-            this.gameLoadView.Remove();
-            //加载主界面
-            this.GameMainUI();
-        }
     };
     /**
      * 加载游戏主界面
@@ -81,7 +43,12 @@ var GameViewLogic = /** @class */ (function (_super) {
         this.GameResAlertView.ResetScreen();
         this.GameRuleView = new GameRuleView(this.GameViewEventKey);
         this.GameRuleView.ResetScreen();
+        this.GameRecordView = new GameRecordView(this.GameViewEventKey);
+        this.GameRecordView.ResetScreen();
         this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.StartSocket, {}]);
+        Laya.loader.load(GameResourceConfig.LoadResSoundConfig, Laya.Handler.create(this, function () {
+            Utils.BackgroundMusic.PlayMusic("sound/bgsound.mp3");
+        }, null, false));
     };
     /**
      * UI监听
@@ -113,6 +80,11 @@ var GameViewLogic = /** @class */ (function (_super) {
             case Enum.ListenViewEnum.OpenRule:
                 this.GameRuleView.Set(true);
                 break;
+            case Enum.ListenViewEnum.OpenRecord:
+                this.GameRecordView.Set(null, Enum.GameRecordView.IsRecordShow);
+                break;
+            case Enum.ListenViewEnum.GetRecord:
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.GetRecord, data.Value]);
             default:
                 break;
         }
@@ -165,6 +137,10 @@ var GameViewLogic = /** @class */ (function (_super) {
             case Enum.GameViewLogicEnum.BetPosError:
                 this.ShowAlert(0, data);
                 this.GameChipsView.Set(null, Enum.GameChipsView.BetPosError);
+                break;
+            case Enum.GameViewLogicEnum.GetRecord:
+                this.GameRecordView.Set(data, Enum.GameRecordView.GetRecordData);
+                break;
             default:
                 break;
         }

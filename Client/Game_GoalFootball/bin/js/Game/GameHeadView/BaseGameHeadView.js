@@ -35,11 +35,15 @@ var BaseGameHeadView = /** @class */ (function () {
         this.ui.voice.on(Laya.Event.CLICK, this, this.SetVoice);
         this.ui.rule.on(Laya.Event.CLICK, this, this.OpenRule);
         this.ui.home.on(Laya.Event.CLICK, this, this.BackHome);
+        this.ui.record.on(Laya.Event.CLICK, this, this.OpenRecord);
+        this.ui.recharge.on(Laya.Event.CLICK, this, this.Recharge);
+        this.ui.title.skin = LanguageUtils.Language.Get("HeadTitleSkin");
     };
     /**
      * 获取最新余额
      */
     BaseGameHeadView.prototype.GetBalance = function () {
+        Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
         this.EventNotification(Enum.ListenViewEnum.GetBalance);
     };
     /**
@@ -61,12 +65,29 @@ var BaseGameHeadView = /** @class */ (function () {
      * 打开规则面板
      */
     BaseGameHeadView.prototype.OpenRule = function () {
+        Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
         this.EventNotification(Enum.ListenViewEnum.OpenRule);
+    };
+    /**
+     * 打开游戏记录
+     */
+    BaseGameHeadView.prototype.OpenRecord = function () {
+        Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
+        this.EventNotification(Enum.ListenViewEnum.OpenRecord);
     };
     /**
      * 返回首页
      */
     BaseGameHeadView.prototype.BackHome = function () {
+        Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
+        Laya.Browser.window.location.href = "";
+    };
+    /**
+     * 充值
+     */
+    BaseGameHeadView.prototype.Recharge = function () {
+        Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
+        Laya.Browser.window.location.href = "";
     };
     return BaseGameHeadView;
 }());

@@ -2,6 +2,7 @@ namespace GameConfig {
     /****************调试*********************/
     export const IsDebug: boolean = true;
     export const OpenLog: boolean = true;
+    export const IsTestServer: boolean = true;
     /****************基础信息*****************/
     export const GameID: number = 3;//游戏ID
     export const DeviceType: string = "MOBILE";//登录设备类型
@@ -9,8 +10,8 @@ namespace GameConfig {
     export const CacheType: number = 0; //存储类型 0 localstorage , 1 cookie ,2 session
 
     /****************API信息*****************/
-    export const Domain: string = IsDebug ? "192.168.0.2:9113" : "m.synjiguang.com";//api域名
-    export const SocketUrl: string = IsDebug ? "ws://192.168.0.120:9800" : "ws://m.synjiguang.com:9111";//socket域名
+    export const Domain: string = IsTestServer ? "192.168.0.2:9113" : "m.synjiguang.com";//api域名
+    export const SocketUrl: string = IsTestServer ? "ws://192.168.0.2:9110" : "ws://m.synjiguang.com:9111";//socket域名
     export const WebApiBaseUrl: string = `http://${Domain}/api`;//api
     export const BetWebApiBaseUrl: string = `http://${Domain}/report`;
 
@@ -18,7 +19,7 @@ namespace GameConfig {
     export const DesignLength: number = 1334;//设计尺寸-长边
     export const DesignShort: number = 750;//设计尺寸-短边
     export let ScreenMode: number = 0;//横竖屏类型 ：0 竖屏  1横屏，默认竖屏
-	
+
     /*************配置微信分享信息*************/
 
     export const WeChatShareMsg: any = {
@@ -27,7 +28,7 @@ namespace GameConfig {
         ImgUrl: `http://${Domain}/logo.jpg`,
         Link: ""
     }
-    
+
     /***************配置信息方法***************/
     /**
      * 获取游戏token方法

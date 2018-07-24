@@ -11,5 +11,9 @@ namespace Enum {
          * 获取记录
          */
         GetRecord,
+        /**
+         * 开始动画
+         */
+        StartAni,
     }
 }

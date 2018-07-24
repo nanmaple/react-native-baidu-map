@@ -1,3 +1,6 @@
+/**
+ * 工具类-货币格式转换
+ */
 var Utils;
 (function (Utils) {
     var Money = /** @class */ (function () {

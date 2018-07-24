@@ -22,6 +22,10 @@ var Enum;
          * 获取最新余额
          */
         GameViewHandlerEnum[GameViewHandlerEnum["ChangeMoney"] = 3] = "ChangeMoney";
+        /**
+         * 获取记录
+         */
+        GameViewHandlerEnum[GameViewHandlerEnum["GetRecord"] = 4] = "GetRecord";
     })(GameViewHandlerEnum = Enum.GameViewHandlerEnum || (Enum.GameViewHandlerEnum = {}));
 })(Enum || (Enum = {}));
 //# sourceMappingURL=GameViewHandlerEnum.js.map

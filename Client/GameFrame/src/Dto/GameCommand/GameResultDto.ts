@@ -1,6 +1,6 @@
 namespace Dto {
     /**
-     * 游戏结果Dto
+     * 游戏结算结果Dto
      */
     export class GameResultDto {
         /**

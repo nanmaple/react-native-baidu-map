@@ -1,8 +1,12 @@
-namespace Dto{
+/**
+ * 事件通知Dto
+ * -->一版不修改<--
+ */
+namespace Dto {
     /**
      * 事件通知数据
      */
-    export class EventNotificationDto{
+    export class EventNotificationDto {
         /**
          * 类型
          */

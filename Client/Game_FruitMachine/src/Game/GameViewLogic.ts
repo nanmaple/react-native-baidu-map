@@ -12,12 +12,10 @@ class GameViewLogic extends BaseGameViewLogic {
     public HeadView: HeadView;
     public InternalView: InternalView;
     public RuleView: RuleView;
-    public RecordView: RecordView;
+    public GameRecordView: GameRecordView;
 
     constructor(Handler: Laya.Handler) {
-        super();
-        this.CtrlHandler = Handler;
-        this.GameLoad();
+        super(Handler);
     }
 
     /***************游戏基础逻辑***************/
@@ -28,51 +26,13 @@ class GameViewLogic extends BaseGameViewLogic {
     }
 
     /**
-    * 启动游戏资源页面，开始加载游戏资源
-    */
-    public GameLoad(): void {
-        this.alertView = new AlertView();
-        this.loadingView = new LoadingView();
-        this.gameLoadView = new GameLoadView(this.GameViewEventKey);
-        this.gameLoadView.ResetScreen();
-        //设置版本控制类型为使用文件名映射的方式
-        // Laya.ResourceVersion.type = Laya.ResourceVersion.FILENAME_VERSION;
-        //加载版本信息文件
-        // Laya.ResourceVersion.enable("version.json", Laya.Handler.create(this, ()=>{
-        this.gameLoadView.StartLoad(GameResourceConfig.LoadResourcesConfig);
-        // },null,false)); 
-    }
-
-    /**
-     * 游戏资源加载完成，检查登录状态
-     */
-    public CheckLoad(): void {
-        this.isLoadSuccess = true;
-        if (this.isLoginSucess) {
-            this.gameLoadView.Remove();
-            //加载主界面
-            this.GameMainUI();
-        }
-    }
-
-    /**
-     * 游戏登录完成，检查游戏资源加载状态
-     */
-    private GameLoginComplete(): void {
-        this.isLoginSucess = true;
-        if (this.isLoadSuccess) {
-            this.gameLoadView.Remove();
-            //加载主界面
-            this.GameMainUI();
-        }
-    }
-
-    /**
      * 加载游戏主界面
      */
-    private GameMainUI(): void {
+    public GameMainUI(): void {
         //初始化基本alert,loading组件的界面
+        this.alertView = new AlertView();
         this.alertView.ResetScreen();
+        this.loadingView = new LoadingView();
         this.loadingView.ResetScreen();
         //加载其他组件
         this.OperateView = new OperateView(this.GameViewEventKey);
@@ -87,8 +47,8 @@ class GameViewLogic extends BaseGameViewLogic {
         this.InternalView.ResetScreen();
         this.RuleView = new RuleView();
         this.RuleView.ResetScreen();
-        this.RecordView = new RecordView(this.GameViewEventKey);
-        this.RecordView.ResetScreen();
+        this.GameRecordView = new GameRecordView(this.GameViewEventKey);
+        this.GameRecordView.ResetScreen();
 
         Laya.SoundManager.playMusic(SoundConfig.SounRes.GameBg);
 
@@ -110,7 +70,7 @@ class GameViewLogic extends BaseGameViewLogic {
                 break;
             //打开记录
             case Enum.ListenViewEnum.ShowRecord:
-                this.RecordView.Set(null,Enum.RecordView.Show);
+                this.GameRecordView.Set(null,Enum.GameRecordView.IsRecordShow);
                 break;
             //修改投注基数
             case Enum.ListenViewEnum.ChangBaseAmount:
@@ -163,7 +123,7 @@ class GameViewLogic extends BaseGameViewLogic {
                 break;
             //获取历史记录
             case Enum.ListenViewEnum.GetRecord:
-                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.GetRecord, null]);
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.GetRecord, data]);
                 break;
             default:
                 break;
@@ -211,6 +171,10 @@ class GameViewLogic extends BaseGameViewLogic {
                 this.BetBarView.Set(data, Enum.BetBarView.ChangGameStatus);
                 this.OperateView.Set(data, Enum.OperateView.ChangGameStatus);
                 break;
+            //本次滚动开始
+            case Enum.GameViewLogicEnum.GameStart:
+                this.RouletteView.Set(null,Enum.RouletteView.StartRoll);
+                break;
             //本次滚动结束
             case Enum.GameViewLogicEnum.GameEnd:
                 this.BetBarView.Set(data,Enum.BetBarView.GameEnd);
@@ -225,7 +189,7 @@ class GameViewLogic extends BaseGameViewLogic {
                 break;
             //设置历史记录
             case Enum.GameViewLogicEnum.SetRecord:
-                this.BetBarView.Set(data,'');
+                this.GameRecordView.Set(data,Enum.GameRecordView.GetRecordData);
                 break;
             default:
                 break;
@@ -273,6 +237,7 @@ class GameViewLogic extends BaseGameViewLogic {
         this.OperateView.Set(data.BaseAmounts,Enum.OperateView.Init);
         this.OperateView.Set(Enum.GameStatus.Default,Enum.OperateView.ChangGameStatus);
         this.BetBarView.Set(Enum.GameStatus.Default, Enum.BetBarView.ChangGameStatus);
+        this.RouletteView.Set(null,Enum.RouletteView.Init);
     }
 
     /**
@@ -289,12 +254,14 @@ class GameViewLogic extends BaseGameViewLogic {
                 let dto = new Dto.AmountDto();
                 dto.balance = data.Balance - data.WinAmount;
                 this.HeadView.Set(dto, Enum.HeadView.Chang);
-                this.RouletteView.Set(data.Result);
+                // this.RouletteView.Set(data.Result);
+                this.RouletteView.Set(data.Result,Enum.RouletteView.SetResult);
             }
         } else {
             this.ShowAlert(0, Enum.BetResultCode[data.Status]);
             this.OperateView.Set(Enum.GameStatus.Default,Enum.OperateView.ChangGameStatus);
             this.BetBarView.Set(Enum.GameStatus.Default, Enum.BetBarView.ChangGameStatus);
+            this.RouletteView.Set(null,Enum.RouletteView.Init);
         }
 
     }

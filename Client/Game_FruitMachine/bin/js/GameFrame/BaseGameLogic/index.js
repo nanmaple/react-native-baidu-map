@@ -43,6 +43,7 @@ var BaseGameLogic = /** @class */ (function () {
         //启动网络监测
         this.InitNetWork();
         this.InitLogin();
+        this.gameView = new GameViewLogic(Laya.Handler.create(this, this.ViewHandler, null, false));
     }
     /********************* 日志 *********************/
     /**
@@ -169,6 +170,10 @@ var BaseGameLogic = /** @class */ (function () {
     BaseGameLogic.prototype.FailHanlder = function (data) {
         if (data.Type == BaseEnum.CheckLoginEnum.MemberInfo) {
         }
+        if (data.Type == BaseEnum.CheckLoginEnum.MemberInfoError) {
+            //通知总UI发生错误 
+            this.gameView.SetData(BaseEnum.GameViewLogicEnum.Error, LanguageUtils.Language.Get("GetMemberInfoError"));
+        }
         else {
             //通知总UI发生错误 
             this.gameView.SetData(BaseEnum.GameViewLogicEnum.Error, data.Data);
@@ -182,14 +187,24 @@ var BaseGameLogic = /** @class */ (function () {
     BaseGameLogic.prototype.Request = function (requestDto, successCallback, failCallback) {
         if (requestDto.Type.toLowerCase() == "get") {
             this.webApi.Get(requestDto.Url, requestDto.Params, requestDto.Header, function (response) {
-                successCallback(response);
+                if (response.Result == BaseEnum.ErrorCode.Success) {
+                    successCallback(response.Data);
+                }
+                else {
+                    failCallback(response.Result);
+                }
             }, function (error) {
                 failCallback(error);
             });
         }
         else {
             this.webApi.Post(requestDto.Url, requestDto.Params, requestDto.Header, function (response) {
-                successCallback(response);
+                if (response.Result == BaseEnum.ErrorCode.Success) {
+                    successCallback(response.Data);
+                }
+                else {
+                    failCallback(response.Result);
+                }
             }, function (error) {
                 failCallback(error);
             });

@@ -37,6 +37,8 @@ var Enum;
         GameViewHandlerEnum[GameViewHandlerEnum["ReduceGuessSum"] = 11] = "ReduceGuessSum";
         /** 随机数动画结束*/
         GameViewHandlerEnum[GameViewHandlerEnum["RandomEnd"] = 12] = "RandomEnd";
+        /**获取历史记录 */
+        GameViewHandlerEnum[GameViewHandlerEnum["GetRecord"] = 13] = "GetRecord";
     })(GameViewHandlerEnum = Enum.GameViewHandlerEnum || (Enum.GameViewHandlerEnum = {}));
 })(Enum || (Enum = {}));
 //# sourceMappingURL=GameViewHandlerEnum.js.map

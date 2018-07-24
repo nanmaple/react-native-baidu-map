@@ -4,7 +4,7 @@
  */
 var BaseGameBgView = /** @class */ (function () {
     function BaseGameBgView() {
-        Laya.SoundManager.playMusic("sound/bgSound.wav");
+        Laya.SoundManager.playMusic("sound/bgSound.mp3");
     }
     /**
      * 重置屏幕

@@ -38,10 +38,17 @@ var BaseGameRuleView = /** @class */ (function () {
      * 初始化
      */
     BaseGameRuleView.prototype.Init = function () {
+        this.ui.title.skin = LanguageUtils.Language.Get("RuleTitleSkin");
+        this.ui.ruleImg_4.skin = LanguageUtils.Language.Get("RuleImgFourSkin");
         this.ui.rule_1.text = LanguageUtils.Language.Get("GameRuleFirst");
         this.ui.rule_2.text = LanguageUtils.Language.Get("GameRuleSecond");
         this.ui.rule_3.text = LanguageUtils.Language.Get("GameRuleThird");
         this.ui.rule_4.text = LanguageUtils.Language.Get("GameRuleFour");
+        var htmlD = new Laya.HTMLDivElement();
+        htmlD.innerHTML = LanguageUtils.Language.Get("GameTotalRule");
+        htmlD.style.lineHeight = 40;
+        htmlD.style.width = 480;
+        this.ui.ruleTotal.addChild(htmlD);
         this.ui.rulePanel.hScrollBarSkin = "";
         this.ui.rulePanel.hScrollBar.elasticBackTime = 300;
         this.ui.rulePanel.hScrollBar.elasticDistance = 50;
@@ -59,6 +66,7 @@ var BaseGameRuleView = /** @class */ (function () {
      */
     BaseGameRuleView.prototype.HideRule = function () {
         var _this = this;
+        Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
         Effect.AlertEffect.Hide(this.ui.prompt, Laya.Handler.create(this, function () {
             _this.isShow = false;
             _this.ui.visible = _this.isShow;

@@ -167,21 +167,6 @@ module ui {
 }
 
 module ui {
-    export class RecordPanelUI extends View {
-
-        public static  uiView:any ={"type":"View","props":{"width":600,"height":830},"child":[{"type":"Image","props":{"y":24,"x":0,"skin":"ui/record.png"},"child":[{"type":"Image","props":{"y":0,"x":180,"skin":"ui/record_tit.png"}}]},{"type":"Image","props":{"y":5,"x":521,"skin":"ui/btn_close.png"}}]};
-        constructor(){ super()}
-        createChildren():void {
-        
-            super.createChildren();
-            this.createView(ui.RecordPanelUI.uiView);
-
-        }
-
-    }
-}
-
-module ui {
     export class ResultPanelUI extends View {
 		public winImg:Laya.Image;
 		public resultNote:Laya.Image;
@@ -193,7 +178,7 @@ module ui {
 		public wordEnd:Laya.Label;
 		public failImg:Laya.Image;
 
-        public static  uiView:any ={"type":"View","props":{"width":519,"height":527},"child":[{"type":"Image","props":{"y":0,"x":0,"width":519,"var":"winImg","skin":"ui/win.png","height":527}},{"type":"Image","props":{"y":359,"x":69,"width":380,"var":"resultNote","skin":"ui/mask.png","height":101},"child":[{"type":"Label","props":{"y":10,"x":0,"wordWrap":true,"width":377,"visible":false,"var":"failNote","text":"阿哦~一定是手滑了，再来一次吧~","height":81,"fontSize":38,"font":"Helvetica","color":"#b7b5b5","align":"center"}},{"type":"Label","props":{"y":0,"x":0,"wordWrap":true,"width":380,"visible":false,"var":"winNote","height":101,"color":"#b7b5b5"},"child":[{"type":"Label","props":{"y":6,"x":85,"width":115,"var":"wordResultPoint","text":"1、1、1","height":35,"fontSize":30,"color":"#e54209","align":"center"}},{"type":"Label","props":{"y":6,"x":205,"width":45,"var":"wordPoint","text":"点","height":35,"fontSize":30,"color":"#ffefa3","align":"center"}},{"type":"Label","props":{"y":6,"x":254,"width":63,"var":"wordResult","text":"大","height":35,"fontSize":30,"color":"#e54209","align":"left"}},{"type":"Label","props":{"y":50,"x":31,"width":324,"var":"wordEnd","text":"恭喜您！","height":35,"fontSize":30,"color":"#ffefa3","align":"center"}}]}]},{"type":"Image","props":{"y":169,"x":185,"var":"failImg","skin":"ui/fail.png"}}]};
+        public static  uiView:any ={"type":"View","props":{"width":519,"height":527},"child":[{"type":"Image","props":{"y":0,"x":0,"width":519,"var":"winImg","skin":"ui/win.png","height":527}},{"type":"Image","props":{"y":359,"x":69,"width":380,"var":"resultNote","skin":"ui/mask.png","height":101},"child":[{"type":"Label","props":{"y":10,"x":0,"wordWrap":true,"width":377,"visible":false,"var":"failNote","text":"阿哦~一定是手滑了，再来一次吧~","height":81,"fontSize":38,"font":"Helvetica","color":"#b7b5b5","align":"center"}},{"type":"Label","props":{"y":0,"x":0,"wordWrap":true,"width":380,"visible":false,"var":"winNote","height":101,"color":"#b7b5b5"},"child":[{"type":"Label","props":{"y":6,"x":64,"width":137,"var":"wordResultPoint","text":"1、1、1","height":42,"fontSize":38,"color":"#e54209","align":"center"}},{"type":"Label","props":{"y":6,"x":207,"width":45,"var":"wordPoint","text":"点","height":42,"fontSize":38,"color":"#ffefa3","align":"center"}},{"type":"Label","props":{"y":6,"x":260,"width":85,"var":"wordResult","text":"大","height":42,"fontSize":38,"color":"#e54209","align":"left"}},{"type":"Label","props":{"y":50,"x":35,"width":324,"var":"wordEnd","text":"恭喜您！","height":42,"fontSize":38,"color":"#ffefa3","align":"center"}}]}]},{"type":"Image","props":{"y":169,"x":185,"var":"failImg","skin":"ui/fail.png"}}]};
         constructor(){ super()}
         createChildren():void {
         

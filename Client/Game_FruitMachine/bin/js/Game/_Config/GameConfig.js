@@ -5,6 +5,8 @@ var GameConfig;
     GameConfig.IsDebug = true;
     //是否开启日志
     GameConfig.OpenLog = true;
+    //是否使用测试服务器地址
+    GameConfig.IsTestServer = true;
     /****************基础信息*****************/
     //游戏ID
     GameConfig.GameID = 5;
@@ -16,9 +18,9 @@ var GameConfig;
     GameConfig.CacheType = 0;
     /****************API信息*****************/
     //api域名
-    GameConfig.Domain = GameConfig.IsDebug ? "192.168.0.2:9113" : "m.synjiguang.com";
+    GameConfig.Domain = GameConfig.IsTestServer ? "192.168.0.2:9113" : "m.synjiguang.com";
     //socket域名
-    GameConfig.SocketUrl = GameConfig.IsDebug ? "ws://192.168.0.120:9800" : "ws://m.synjiguang.com:9111";
+    GameConfig.SocketUrl = GameConfig.IsTestServer ? "ws://192.168.0.2:9110" : "ws://m.synjiguang.com:9111";
     //api基本地址
     GameConfig.WebApiBaseUrl = "http://" + GameConfig.Domain + "/api";
     //投注基本地址

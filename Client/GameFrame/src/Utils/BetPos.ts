@@ -1,3 +1,6 @@
+/**
+ * 工具类-投注结果转换
+ */
 namespace Utils {
     //投注类型
     export class BetPos {

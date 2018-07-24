@@ -66,7 +66,7 @@ class GameRecordView extends BaseGameRecordView implements IView {
         //添加list数据
         let listArr:Array<any> = [];
         let len:number = data.length;
-        if(data && len == 0){
+        if(data && len == 0 && !this.isInit){
             this.noMoreData = true;
             return;
         }
@@ -84,6 +84,7 @@ class GameRecordView extends BaseGameRecordView implements IView {
         //renderHandler:单元格渲染处理器(默认返回参数cell:Box,index:int)。
         this.ui.recordList.renderHandler = Laya.Handler.create(this, this.onRender, null, false);
     }
+
     /**
      *渲染List 
      * @param cell

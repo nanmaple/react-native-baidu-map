@@ -14,12 +14,14 @@ R F57C2ED7 play.mp3
 R 5F10A72D pound.mp3
 R 495D9EBD seduce.mp3
 D ui
-R 577CD16E alert.png
+R A734F81D alert.png
 R CD5B1FCB bg.jpg
-P 97F7108C close.png
 P 25CFF298 failTip.png
 P 7E668BD4 football.png
 R 3947C27C maskBg.png
+R 26A85952 record.png
+P 822950AC record_tit.png
+P 585158CE recordlist.png
 P DFF8B093 successTip.png
 D ui/chip
 P 7DB4F9EE btn_left.png

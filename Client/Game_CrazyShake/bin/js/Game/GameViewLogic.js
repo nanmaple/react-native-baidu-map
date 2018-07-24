@@ -13,46 +13,13 @@ var __extends = (this && this.__extends) || (function () {
 var GameViewLogic = /** @class */ (function (_super) {
     __extends(GameViewLogic, _super);
     function GameViewLogic(Handler) {
-        var _this = _super.call(this) || this;
-        _this.CtrlHandler = Handler;
-        _this.GameLoad();
-        return _this;
+        return _super.call(this, Handler) || this;
     }
     /***************游戏基础逻辑***************/
     /**
      * 横竖屏监听
      */
     GameViewLogic.prototype.ResetScreen = function () {
-    };
-    /**
-    * 启动游戏资源页面，开始加载游戏资源
-    */
-    GameViewLogic.prototype.GameLoad = function () {
-        this.gameLoadView = new GameLoadView(this.GameViewEventKey);
-        this.gameLoadView.ResetScreen();
-        this.gameLoadView.StartLoad(GameResourceConfig.LoadResourcesConfig);
-    };
-    /**
-     * 游戏资源加载完成，检查登录状态
-     */
-    GameViewLogic.prototype.CheckLoad = function () {
-        this.isLoadSuccess = true;
-        if (this.isLoginSucess) {
-            this.gameLoadView.Remove();
-            //加载主界面
-            this.GameMainUI();
-        }
-    };
-    /**
-     * 游戏登录完成，检查游戏资源加载状态
-     */
-    GameViewLogic.prototype.GameLoginComplete = function () {
-        this.isLoginSucess = true;
-        if (this.isLoadSuccess) {
-            this.gameLoadView.Remove();
-            //加载主界面
-            this.GameMainUI();
-        }
     };
     /***************游戏基本逻辑***************/
     /***************游戏方法处理（方法名不变，修改方法内部逻辑）***************/
@@ -79,6 +46,10 @@ var GameViewLogic = /** @class */ (function (_super) {
         this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.StartSocket, {}]);
         this.RulePanel = new RulePanel(this.GameViewEventKey);
         this.RulePanel.ResetScreen();
+        this.ResultPanel = new ResultPanel();
+        this.ResultPanel.ResetScreen();
+        this.GameRecordView = new GameRecordView(this.GameViewEventKey);
+        this.GameRecordView.ResetScreen();
     };
     /**
      * UI监听
@@ -107,6 +78,12 @@ var GameViewLogic = /** @class */ (function (_super) {
             case Enum.ListenViewEnum.OpenRule:
                 this.RulePanel.Refresh();
                 break;
+            case Enum.ListenViewEnum.OpenRecord:
+                this.GameRecordView.Set(null, Enum.GameRecordView.IsRecordShow);
+                break;
+            case Enum.ListenViewEnum.GetRecord:
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.GetRecord, data]);
+                break;
             default:
                 break;
         }
@@ -120,7 +97,7 @@ var GameViewLogic = /** @class */ (function (_super) {
         switch (type) {
             //基本分发数据类型
             case BaseEnum.GameViewLogicEnum.Alert:
-                this.ShowAlert(1, data);
+                this.ShowAlert(0, data);
                 break;
             case BaseEnum.GameViewLogicEnum.Error:
                 console.log(data);
@@ -137,9 +114,16 @@ var GameViewLogic = /** @class */ (function (_super) {
             case BaseEnum.GameViewLogicEnum.Balance:
                 break;
             // 扩展数据分发类型
+            case Enum.GameViewLogicEnum.StartAni:
+                this.OnStartAni(data);
+                break;
             case Enum.GameViewLogicEnum.MsgGameRefreshBtn:
                 this.BetPanel.Refresh();
                 this.BetNumPanel.Refresh();
+                break;
+            case Enum.GameViewLogicEnum.GetRecord:
+                this.GameRecordView.Set(data, Enum.GameRecordView.GetRecordData);
+                break;
             default:
                 break;
         }
@@ -170,6 +154,19 @@ var GameViewLogic = /** @class */ (function (_super) {
         this.HeadPanel.Set(data, Enum.HeadPanel.GameInit);
         this.BetNumPanel.Set(data, Enum.BetNumPanel.GameInit);
         this.BetPanel.Set(data.PosOdds);
+        this.BetPanel.Refresh();
+        this.ToyPanel.Set(null, Enum.ToyPanel.GameInit);
+    };
+    /**
+     * 开始游戏动画
+     * @param data投注额
+     */
+    GameViewLogic.prototype.OnStartAni = function (data) {
+        this.GameBgView.Set(null);
+        this.HeadPanel.Set(data, Enum.HeadPanel.GameStartAni);
+        this.ToyPanel.Set(null, Enum.ToyPanel.GameStartAni);
+        this.BetNumPanel.Set(null, Enum.BetNumPanel.GameStartAni);
+        this.ResultPanel.Set(null, Enum.ResultPanel.GameStartAni);
     };
     /**
      * 收到投注结果命令后续界面处理
@@ -177,9 +174,10 @@ var GameViewLogic = /** @class */ (function (_super) {
      */
     GameViewLogic.prototype.OnGameSettleResult = function (data) {
         this.Log(data, "GameGetResult");
-        this.ToyPanel.Set(data);
+        this.ToyPanel.Set(data, Enum.ToyPanel.GameSettleResult);
         this.HeadPanel.Set(data.Data, Enum.HeadPanel.GameSettleResult);
         this.BetNumPanel.Set(data.Data, Enum.BetNumPanel.GameSettleResult);
+        this.ResultPanel.Set(data.Data, Enum.ResultPanel.GameSettleResult);
     };
     /**
      * 动画播放完毕后执行
@@ -189,6 +187,9 @@ var GameViewLogic = /** @class */ (function (_super) {
         this.HeadPanel.Refresh();
         this.BetNumPanel.Refresh();
         this.BetPanel.Refresh();
+        this.GameBgView.Refresh();
+        this.ResultPanel.Refresh();
+        this.ToyPanel.Refresh();
     };
     return GameViewLogic;
 }(BaseGameViewLogic));

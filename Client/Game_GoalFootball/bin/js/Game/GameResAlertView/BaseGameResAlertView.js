@@ -20,6 +20,10 @@ var BaseGameResAlertView = /** @class */ (function () {
          * 成功进球提示皮肤
          */
         this.sucTipSkin = "ui/successTip.png";
+        /**
+         * 游戏结果播放音效
+         */
+        this.resultSound = null;
     }
     /**
      * 重置屏幕
@@ -30,8 +34,6 @@ var BaseGameResAlertView = /** @class */ (function () {
         this.ui.zOrder = 6;
         this.ui.cacheAs = "bitmap";
         Laya.stage.addChild(this.ui);
-        // this.ui.close.on(Laya.Event.CLICK, this, this.Hide);
-        // this.ui.sure.on(Laya.Event.CLICK, this, this.Hide);
         this.ui.on(Laya.Event.CLICK, this, function () {
             return;
         });

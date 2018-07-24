@@ -1,7 +1,8 @@
 class BaseToyPanel {
     protected ui: ui.ToyPanelUI;
     protected listenEventKey: string;
-    protected dices:Array<number>;
+    protected dices: Array<number>;
+    protected isGetResult: boolean = false;
     constructor(eventKey: string) {
         this.listenEventKey = eventKey;
     }
@@ -17,8 +18,8 @@ class BaseToyPanel {
         this.ui.x = 183;
         this.ui.y = 360
         Laya.stage.addChild(this.ui);
-        this.ui.ani4.on(Laya.Event.COMPLETE, this, this.Lottery);
-        
+        // this.ui.ani4.on(Laya.Event.COMPLETE, this, this.Lottery);
+
     }
     /**
      * 开始摇盅
@@ -27,10 +28,25 @@ class BaseToyPanel {
         Laya.timer.once(400, this, () => { Laya.SoundManager.playSound("sound/duangSound.mp3") });
         Laya.Tween.to(this.ui.cap, { y: 17 }, 500, Laya.Ease.linearIn, Laya.Handler.create(this, () => {
             Laya.timer.once(250, this, () => {
-                Laya.SoundManager.playSound("sound/rockDiceSound.mp3");
-                this.ui.ani4.play(0, true);
+                this.Rock();
             })
         }))
+    }
+    /**
+     * 摇摆
+     */
+    protected Rock(): void {
+        Laya.SoundManager.playSound("sound/rockDiceSound.mp3");
+        this.ui.ani4.play(0, false);
+        Laya.timer.frameOnce(145, this, () => {
+            if (this.isGetResult) {
+                Laya.timer.clear(this, this.Rock);
+                this.Lottery();
+            }else{
+                this.Rock();
+            }
+        });
+
     }
 
 
@@ -39,7 +55,6 @@ class BaseToyPanel {
      * @param data 游戏结果
      */
     protected Lottery(): void {
-        this.ui.ani4.stop();
         this.ChangeDice(this.dices);
         Laya.timer.once(570, this, () => { Laya.SoundManager.playSound("sound/upCoverSound.mp3") });
         Laya.Tween.to(this.ui.cap, { y: -470 }, 500, Laya.Ease.linearIn, Laya.Handler.create(this, () => {

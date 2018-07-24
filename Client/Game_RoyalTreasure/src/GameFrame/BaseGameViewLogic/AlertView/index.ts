@@ -69,7 +69,7 @@ class AlertView extends BaseAlertView implements IView {
         this.alertTxt = LanguageUtils.Language.Get(txt);
         this.ui.visible = this.alertShow;
         this.ui.txt.text = this.alertTxt;
-        Laya.Tween.to(this.ui.prompt, { scaleX: 1, scaleY: 1 }, 500, Laya.Ease.backOut);
+        Laya.Tween.to(this.ui.prompt, { scaleX: 1, scaleY: 1 }, 300, Laya.Ease.backOut);
     }
 
     /**
@@ -79,7 +79,7 @@ class AlertView extends BaseAlertView implements IView {
         if (!this.ui) {
             return;
         }
-        Laya.Tween.to(this.ui.prompt, { scaleX: 0, scaleY: 0 }, 500, Laya.Ease.backIn, Laya.Handler.create(this, () => {
+        Laya.Tween.to(this.ui.prompt, { scaleX: 0, scaleY: 0 }, 300, Laya.Ease.backIn, Laya.Handler.create(this, () => {
             this.alertShow = false;
             this.ui.visible = this.alertShow;
         }, null, false));

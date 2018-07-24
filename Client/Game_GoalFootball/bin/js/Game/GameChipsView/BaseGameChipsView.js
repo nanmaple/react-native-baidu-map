@@ -6,22 +6,6 @@ var BaseGameChipsView = /** @class */ (function () {
          */
         this.chipsArr = null;
         /**
-         * 选中的筹码皮肤
-         */
-        this.selectChipSkin = "ui/chip/btn_select.png";
-        /**
-         * 未选中的筹码皮肤
-         */
-        this.noSelectChipSkin = "ui/chip/btn_noselect.png";
-        /**
-         * 射门默认的皮肤
-         */
-        this.shootDoorSkin = "ui/chip/btn_shoor.png";
-        /**
-         * 射门按下的皮肤
-         */
-        this.noShootDoorSkin = "ui/chip/btn_shoor_n.png";
-        /**
          * 投注金额(不包含道具金额)
          */
         this.betAmount = null;
@@ -46,7 +30,6 @@ var BaseGameChipsView = /** @class */ (function () {
         this.ui.btn_left.on(Laya.Event.CLICK, this, this.PreviousPage);
         this.ui.btn_right.on(Laya.Event.CLICK, this, this.NextPage);
         this.ui.btn_max.on(Laya.Event.CLICK, this, this.ChooseMaxChip);
-        this.ui.btn_max.label = LanguageUtils.Language.Get("MaxChip");
         Laya.stage.addChild(this.ui);
         this.Init();
     };
@@ -56,6 +39,8 @@ var BaseGameChipsView = /** @class */ (function () {
      */
     BaseGameChipsView.prototype.Init = function () {
         this.DisabledShootBtn(true);
+        this.ui.btn_max.label = LanguageUtils.Language.Get("MaxChip");
+        this.ui.total.text = LanguageUtils.Language.Get("Total");
     };
     /**
      * 是否禁用射门按钮
@@ -63,10 +48,10 @@ var BaseGameChipsView = /** @class */ (function () {
      */
     BaseGameChipsView.prototype.DisabledShootBtn = function (disabled) {
         if (disabled) {
-            this.ui.btn_shoor.skin = this.noShootDoorSkin;
+            this.ui.btn_shoor.skin = LanguageUtils.Language.Get("NoShootDoorSkin");
         }
         else {
-            this.ui.btn_shoor.skin = this.shootDoorSkin;
+            this.ui.btn_shoor.skin = LanguageUtils.Language.Get("ShootDoorSkin");
         }
         this.ui.btn_shoor.disabled = disabled;
         this.ui.btn_shoor.gray = false;
@@ -79,6 +64,7 @@ var BaseGameChipsView = /** @class */ (function () {
             return;
         }
         else {
+            Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
             this.pageNow--;
             Laya.Tween.to(this.ui.chipBox, { x: -this.ui.chipPanel.width * (this.pageNow - 1) }, 500, Laya.Ease.circInOut);
         }
@@ -91,6 +77,7 @@ var BaseGameChipsView = /** @class */ (function () {
             return;
         }
         else {
+            Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
             this.pageNow++;
             Laya.Tween.to(this.ui.chipBox, { x: -this.ui.chipPanel.width * (this.pageNow - 1) }, 500, Laya.Ease.circInOut);
         }

@@ -1,3 +1,6 @@
+/**
+ * 工具类-横竖版监听
+ */
 var Utils;
 (function (Utils) {
     var Version = /** @class */ (function () {

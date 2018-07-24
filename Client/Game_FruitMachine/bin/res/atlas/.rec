@@ -48,7 +48,6 @@ P 550E5241 bet_papaya.png
 P AA4D3EE6 bet_seven.png
 P 744F42D3 bet_star.png
 P 652BED07 bet_watermelon.png
-R B602DE64 bg.png
 P 2DB7F7D4 btn_add.png
 P C61B0C5C btn_addAll.png
 P B496A046 btn_close.png
@@ -58,7 +57,6 @@ P 7EDDEFC2 btn_start.png
 R 84BD9D07 chip_bg.png
 P 399A1BAB chip_btnAdd.png
 P 4D80C66D chip_numBg.png
-P 97F7108C close.png
 R 49D7B935 content.png
 R C59B6F39 gameBg.png
 P 1C57705A Halo.png
@@ -99,5 +97,5 @@ R 577CD16E prompt.png
 R 810FA50B record_bg.png
 P D24817FA record_Item_1.png
 P DEA40138 record_Item_2.png
-P 271E527E record_title.png
+P 271E527E record_title_CH.png
 R ADEE9DA5 rule_bg_CH.png

@@ -145,34 +145,22 @@ namespace LanguageUtils {
         /************************************/
 
         /**
-         * 赔率错误
-         */
-        ODDS_ERROR: "Odds Error",
-        /**
-         * 金额错误
-         */
-        AMOUNT_ERROR: "Amount Error",
-        /**
          * 余额不足
          */
-        BALANCE_SMALL: "Not Sufficient Funds",
-        /**
-         * 投注位置错误
-         */
-        BETPOS_ERROR: "Injection Position Error",
-        /**
-         * 不在投注状态
-         */
-        NOTBET_STATUS: "Not In The State Of Betting",
+        BalanceSmall: "Not Sufficient Funds",
         /**
          * 低于最小投注限额
          */
-        LOW_LIMIT: "Low The Limit",
+        LowLimit: "Low Limit",
         /**
          * 超过最大投注限额
          */
-        OVER_LIMIT: "Exceed The Quota",
+        OverLimit: "Over Limit",
 
+        /**
+         * 游戏结果提示，赢
+         */
+        Win: "Win",
         /**
          * 选择最大筹码
          */
@@ -181,6 +169,26 @@ namespace LanguageUtils {
          * 总投
          */
         Total: "Total:",
+        /**
+         * 记录序号标题
+         */
+        RecordNumTitle: "Num",
+        /**
+         * 记录奖励标题
+         */
+        RecordRewardTitle: "Reward",
+        /**
+         * 记录时间标题
+         */
+        RecordTimeTitle: "Time",
+        /**
+         * 记录暂无数据
+         */
+        NoRecordData: "No Record",
+        /**
+         * 记录正在加载中
+         */
+        IsLoading: "IsLoading...",
 
         //游戏规则内容
         GameRuleFirst: "1.Click the right or left toggle to select the numeric button or click the 'Max' button to confirm the amount of bet used.",
@@ -191,10 +199,10 @@ namespace LanguageUtils {
          * 游戏总的规则说明
          */
         GameTotalRule:"<p style='fontSize:30;font-weight:bold;color:#f6ef45'>Player Rule</p>"+"<br/>"+
-        "<p style='fontSize:20;color:#fff'>1.After choosing the amount of the injection, adjust the shooting angle;</p>"+"<br/>"+
-        "<p style='fontSize:20;color:#fff'>2.Using a prop can reduce a defender and can use up to three kinds of props. The amount of props varies according to the proportion of the amount of betting, and the amount of props displayed when the user shoots.;</p>"+"<br/>"+
-        "<p style='fontSize:20;color:#fff'>3.Click on 'shot' to kick the ball;</p>"+"<br/>"+
-        "<p style='fontSize:20;color:#fff'>4.Users can get 1.5, 2, 5, 10 times reward after scoring;</p>"+"<br/>",
+        "<p style='fontSize:25;color:#fff'>1.After choosing the amount of the injection, adjust the shooting angle;</p>"+"<br/>"+
+        "<p style='fontSize:25;color:#fff'>2.Using a prop can reduce a defender and can use up to three kinds of props. The amount of props varies according to the proportion of the amount of betting, and the amount of props displayed when the user shoots.;</p>"+"<br/>"+
+        "<p style='fontSize:25;color:#fff'>3.Click on 'shot' to kick the ball;</p>"+"<br/>"+
+        "<p style='fontSize:25;color:#fff'>4.Users can get 1.5, 2, 5, 10 times reward after scoring;</p>"+"<br/>",
 
         //游戏图片多语言切换
         /**
@@ -225,5 +233,9 @@ namespace LanguageUtils {
          * 游戏规则第四张图皮肤（射门）
          */
         RuleImgFourSkin: "ui/rule/ruleImg_4.png",
+        /**
+         * 游戏记录头部标题皮肤
+         */
+        RecordTitleSkin: "ui/record_tit.png",
     }
 }

@@ -13,6 +13,10 @@ var BaseEnum;
          * sockeToken
          */
         CheckLoginEnum[CheckLoginEnum["SocketToken"] = 2] = "SocketToken";
+        /**
+         * 会员信息失败
+         */
+        CheckLoginEnum[CheckLoginEnum["MemberInfoError"] = 3] = "MemberInfoError";
     })(CheckLoginEnum = BaseEnum.CheckLoginEnum || (BaseEnum.CheckLoginEnum = {}));
 })(BaseEnum || (BaseEnum = {}));
 //# sourceMappingURL=CheckLoginEnum.js.map

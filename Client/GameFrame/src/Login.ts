@@ -1,3 +1,7 @@
+/**
+ * 账号或者游客登录界面(调试状态下)
+ * -->无需修改<--
+ */
 class LoginView {
 
     private loginView: Laya.View = new Laya.View()

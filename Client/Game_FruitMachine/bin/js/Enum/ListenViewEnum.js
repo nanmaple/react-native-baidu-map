@@ -39,8 +39,10 @@ var Enum;
         ListenViewEnum[ListenViewEnum["GetBalance"] = 12] = "GetBalance";
         /**打开规则面板 */
         ListenViewEnum[ListenViewEnum["ShowRule"] = 13] = "ShowRule";
-        /**静音设置 */
-        ListenViewEnum[ListenViewEnum["SetMute"] = 14] = "SetMute";
+        /**获取历史记录 */
+        ListenViewEnum[ListenViewEnum["GetRecord"] = 14] = "GetRecord";
+        /**打开记录面板*/
+        ListenViewEnum[ListenViewEnum["ShowRecord"] = 15] = "ShowRecord";
     })(ListenViewEnum = Enum.ListenViewEnum || (Enum.ListenViewEnum = {}));
 })(Enum || (Enum = {}));
 //# sourceMappingURL=ListenViewEnum.js.map

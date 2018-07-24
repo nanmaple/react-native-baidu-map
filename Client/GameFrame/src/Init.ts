@@ -1,3 +1,7 @@
+/**
+ * 初始化Laya及适配
+ * -->根据项目，适当修改配置<--
+ */
 class InitState {
     private event: any = new Event('ScreeMode');
     private mode: number = 0;

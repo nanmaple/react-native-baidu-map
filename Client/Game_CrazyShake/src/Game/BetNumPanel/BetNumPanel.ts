@@ -8,6 +8,10 @@ namespace Enum {
          */
         GameInit = 15000,
         /**
+         * 开始游戏动画
+         */
+        GameStartAni,
+        /**
          * 收到游戏结果
          */
         GameSettleResult,
@@ -41,9 +45,13 @@ class BetNumPanel extends BaseBetNumPanel implements IView {
         switch (type) {
             case Enum.BetNumPanel.GameInit:
                 this.EnableButton();
+                this.ui.betNumText.changeText("100");
                 this.MaxBet = data.MaxBet;
                 let initMaxBet = Math.floor(data.Balance / 100) * 100;
                 this.maxBetNum = initMaxBet < this.MaxBet ? initMaxBet : this.MaxBet;
+                break;
+            case Enum.BetNumPanel.GameStartAni:
+                this.EnableButton(false);
                 break;
             case Enum.BetNumPanel.GameSettleResult:
                 let comMaxBet = Math.floor(data.Balance / 100) * 100;

@@ -1,3 +1,7 @@
+/**
+ * API请求地址配置
+ * 基础地址根据游戏配置
+ */
 /// <reference path="./GameConfig.ts" />
 namespace ApiConfig {
     /**

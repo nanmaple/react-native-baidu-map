@@ -74,6 +74,7 @@ var GameAniView = /** @class */ (function (_super) {
         this.ui.player.on(Laya.Event.LABEL, this, function (data) {
             // 在标签start后开始执行
             if (data == "start") {
+                Utils.BackgroundMusic.PlaySounds("sound/play.mp3");
                 _this.DefenderStartJump();
                 _this.GetFootballEndPos();
                 Laya.timer.once(750, _this, _this.SetGuardAnimation, [_this.guardAniType]);

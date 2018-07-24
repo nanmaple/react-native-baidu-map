@@ -1,3 +1,7 @@
+/**
+ * 多语言功能
+ * -->无需修改<--
+ */
 /// <reference path="./Config.ts"/>
 var LanguageUtils;
 (function (LanguageUtils) {

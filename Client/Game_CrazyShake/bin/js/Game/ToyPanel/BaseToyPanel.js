@@ -1,5 +1,6 @@
 var BaseToyPanel = /** @class */ (function () {
     function BaseToyPanel(eventKey) {
+        this.isGetResult = false;
         this.listenEventKey = eventKey;
     }
     /**
@@ -13,7 +14,7 @@ var BaseToyPanel = /** @class */ (function () {
         this.ui.x = 183;
         this.ui.y = 360;
         Laya.stage.addChild(this.ui);
-        this.ui.ani2.on(Laya.Event.COMPLETE, this, this.Lottery);
+        // this.ui.ani4.on(Laya.Event.COMPLETE, this, this.Lottery);
     };
     /**
      * 开始摇盅
@@ -23,10 +24,26 @@ var BaseToyPanel = /** @class */ (function () {
         Laya.timer.once(400, this, function () { Laya.SoundManager.playSound("sound/duangSound.mp3"); });
         Laya.Tween.to(this.ui.cap, { y: 17 }, 500, Laya.Ease.linearIn, Laya.Handler.create(this, function () {
             Laya.timer.once(250, _this, function () {
-                Laya.SoundManager.playSound("sound/rockDiceSound.mp3");
-                _this.ui.ani2.play(0, true);
+                _this.Rock();
             });
         }));
+    };
+    /**
+     * 摇摆
+     */
+    BaseToyPanel.prototype.Rock = function () {
+        var _this = this;
+        Laya.SoundManager.playSound("sound/rockDiceSound.mp3");
+        this.ui.ani4.play(0, false);
+        Laya.timer.frameOnce(145, this, function () {
+            if (_this.isGetResult) {
+                Laya.timer.clear(_this, _this.Rock);
+                _this.Lottery();
+            }
+            else {
+                _this.Rock();
+            }
+        });
     };
     /**
      * 开奖
@@ -34,7 +51,6 @@ var BaseToyPanel = /** @class */ (function () {
      */
     BaseToyPanel.prototype.Lottery = function () {
         var _this = this;
-        this.ui.ani2.stop();
         this.ChangeDice(this.dices);
         Laya.timer.once(570, this, function () { Laya.SoundManager.playSound("sound/upCoverSound.mp3"); });
         Laya.Tween.to(this.ui.cap, { y: -470 }, 500, Laya.Ease.linearIn, Laya.Handler.create(this, function () {

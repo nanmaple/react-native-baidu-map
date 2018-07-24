@@ -8,9 +8,9 @@ namespace Enum {
          */
         BetPos = 101,
         /**
-         * 添加投注记录
+         * 获取投注记录
          */
-        SetRecord,
+        GetRecord,
         /**
          * 改变余额
          */

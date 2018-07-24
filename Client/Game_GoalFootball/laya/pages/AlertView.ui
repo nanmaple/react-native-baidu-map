@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":9,
-    "selecteID":12,
+    "selectedBox":2,
+    "selecteID":9,
     "props":{"width":750,"sceneColor":"#ffffff","height":1334},
     "nodeParent":-1,
     "label":"View",
@@ -27,7 +27,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":667,"x":375,"width":567,"var":"prompt","skin":"ui/alert_bg.png","height":328,"centerY":0,"centerX":0,"anchorY":0.5,"anchorX":0.5},
+                    "props":{"y":667,"x":375,"width":567,"var":"prompt","skin":"ui/alert.png","height":328,"centerY":0,"centerX":0,"anchorY":0.5,"anchorX":0.5},
                     "nodeParent":2,
                     "label":"Image(prompt)",
                     "isOpen":true,
@@ -78,7 +78,7 @@
                         {
                             "x":45,
                             "type":"Image",
-                            "props":{"y":-38,"x":509,"var":"close","skin":"ui/btn_close.png"},
+                            "props":{"y":-30,"x":530,"var":"close","skin":"ui/rule/btn_close.png"},
                             "nodeParent":9,
                             "label":"Image(close)",
                             "isDirectory":false,

@@ -30,6 +30,8 @@ namespace Effect{
             endPos.X + 10,endPos.Y + 30,
             centPos.X + 20,centPos.Y,
             initPos.X + 50,initPos.Y,
+            initPos.X,initPos.Y - 25,
+            initPos.X - 50,initPos.Y,
             ],"#faff89",5);
             Laya.stage.addChild(this.line);
         }

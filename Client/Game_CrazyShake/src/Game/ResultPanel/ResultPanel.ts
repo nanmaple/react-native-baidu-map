@@ -4,6 +4,8 @@ namespace Enum {
      * 结果面板参数类型枚举
      */
     export enum ResultPanel {
+        GameStartAni = 8888,
+        GameSettleResult,
     }
 }
 
@@ -33,17 +35,23 @@ class ResultPanel extends BaseResultPanel implements IView {
      * 接收上层View或者GameViewLogic的数据,根据数据，进行不同的渲染
      * @param data 
      */
-    public Set(data: any): void {
-        this.ui.visible = false;
-        if (data.WinAmount == 0) {
-            this.isWin = false;
-            this.ResultFail();
+    public Set(data: any, type?: any): void {
+        switch (type) {
+            case Enum.ResultPanel.GameStartAni:
+                this.ui.visible = false;
+                break;
+            case Enum.ResultPanel.GameSettleResult:
+                if (data.WinAmount == 0) {
+                    this.isWin = false;
+                    this.ResultFail();
+                }
+                else {
+                    this.isWin = true;
+                    this.ResultWin(data);
+                }
+                break;
+                default:
+                break;
         }
-        else {
-            this.isWin = true;
-            this.ResultWin(data);
-        }
-
-
     }
 }

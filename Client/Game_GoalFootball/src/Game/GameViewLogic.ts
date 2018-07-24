@@ -8,11 +8,10 @@ class GameViewLogic extends BaseGameViewLogic {
     public GameHeadView: GameHeadView;
     public GameResAlertView: GameResAlertView;
     public GameRuleView: GameRuleView;
+    public GameRecordView: GameRecordView;
 
     constructor(Handler: Laya.Handler) {
-        super();
-        this.CtrlHandler = Handler;
-        this.GameLoad();
+        super(Handler);
     }
 
     /***************游戏基础逻辑***************/
@@ -22,48 +21,11 @@ class GameViewLogic extends BaseGameViewLogic {
     public ResetScreen(): void {
     }
 
-    /**
-    * 启动游戏资源页面，开始加载游戏资源
-    */
-    public GameLoad(): void {
-        this.gameLoadView = new GameLoadView(this.GameViewEventKey);
-        this.gameLoadView.ResetScreen();
-        //设置版本控制类型为使用文件名映射的方式
-        // Laya.ResourceVersion.type = Laya.ResourceVersion.FILENAME_VERSION;
-        //加载版本信息文件
-        // Laya.ResourceVersion.enable("version.json", Laya.Handler.create(this, ()=>{
-        this.gameLoadView.StartLoad(GameResourceConfig.LoadResourcesConfig);
-        // },null,false)); 
-    }
-
-    /**
-     * 游戏资源加载完成，检查登录状态
-     */
-    public CheckLoad(): void {
-        this.isLoadSuccess = true;
-        if (this.isLoginSucess) {
-            this.gameLoadView.Remove();
-            //加载主界面
-            this.GameMainUI();
-        }
-    }
-
-    /**
-     * 游戏登录完成，检查游戏资源加载状态
-     */
-    private GameLoginComplete(): void {
-        this.isLoginSucess = true;
-        if (this.isLoadSuccess) {
-            this.gameLoadView.Remove();
-            //加载主界面
-            this.GameMainUI();
-        }
-    }
 
     /**
      * 加载游戏主界面
      */
-    private GameMainUI(): void {
+    public GameMainUI(): void {
         //初始化基本alert,loading组件的界面
         this.alertView = new AlertView();
         this.alertView.ResetScreen();
@@ -82,6 +44,8 @@ class GameViewLogic extends BaseGameViewLogic {
         this.GameResAlertView.ResetScreen();
         this.GameRuleView = new GameRuleView(this.GameViewEventKey);
         this.GameRuleView.ResetScreen();
+        this.GameRecordView = new GameRecordView(this.GameViewEventKey);
+        this.GameRecordView.ResetScreen();
 
         this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.StartSocket, {}]);
 
@@ -121,6 +85,11 @@ class GameViewLogic extends BaseGameViewLogic {
             case Enum.ListenViewEnum.OpenRule:
                 this.GameRuleView.Set(true);
                 break;
+            case Enum.ListenViewEnum.OpenRecord:
+                this.GameRecordView.Set(null, Enum.GameRecordView.IsRecordShow);
+                break;
+            case Enum.ListenViewEnum.GetRecord:
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.GetRecord, data.Value]); 
             default:
                 break;
         }
@@ -174,6 +143,10 @@ class GameViewLogic extends BaseGameViewLogic {
             case Enum.GameViewLogicEnum.BetPosError:
                 this.ShowAlert(0, data);
                 this.GameChipsView.Set(null, Enum.GameChipsView.BetPosError);
+                break;
+            case Enum.GameViewLogicEnum.GetRecord:
+                this.GameRecordView.Set(data, Enum.GameRecordView.GetRecordData);
+                break;
             default:
                 break;
         }
@@ -203,7 +176,6 @@ class GameViewLogic extends BaseGameViewLogic {
      */
     public OnGameInit(data: Dto.GameInitDto): void {
         this.Log(data, "GameInit");
-        console.log(data);
         this.GameHeadView.Set(data, Enum.GameCommand.MsgGameInit);
         this.GameAniView.Set(data, Enum.GameCommand.MsgGameInit);
         this.GameChipsView.Set(data, Enum.GameCommand.MsgGameInit);
@@ -215,7 +187,6 @@ class GameViewLogic extends BaseGameViewLogic {
      */
     public OnGameResult(data: Dto.BetResultDto): void {
         this.Log(data, "GameResult");
-        console.log(data);
         this.GameHeadView.Set(data, Enum.GameCommand.MsgGameSettleResult);
         this.GameAniView.Set(data, Enum.GameCommand.MsgGameSettleResult);
         this.GameChipsView.Set(data, Enum.GameCommand.MsgGameSettleResult);

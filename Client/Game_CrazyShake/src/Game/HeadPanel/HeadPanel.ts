@@ -12,6 +12,10 @@ namespace Enum {
          * 收到游戏结果
          */
         GameSettleResult,
+        /**
+         * 开始游戏动画
+         */
+        GameStartAni,
     }
 }
 
@@ -40,13 +44,20 @@ class HeadPanel extends BaseHeadPanel implements IView {
     public Set(data: any, type?: any): void {
         switch (type) {
             case Enum.HeadPanel.GameInit:
+                this.balance=data.Balance;
+                this.winAmount=0;
                 this.SetRechargeNum(data.Balance);
+                this.SetScore(0);
                 break;
+            case Enum.HeadPanel.GameStartAni:
+                this.SetRechargeNum(this.balance-data);
+                this.SetScore(0);
+            break;
             case Enum.HeadPanel.GameSettleResult:
                 this.balance = data.Balance;
                 this.winAmount = data.WinAmount;
-                this.SetRechargeNum(data.Balance - data.WinAmount);
-                this.SetScore(0);
+                // this.SetRechargeNum(data.Balance - data.WinAmount);
+                // this.SetScore(0);
                 break;
             default:
                 break;

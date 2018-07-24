@@ -1,3 +1,7 @@
+/**
+ * 游戏配置
+ * 根据项目实际修改配置
+ */
 namespace GameConfig {
     /****************调试*********************/
     export const IsDebug: boolean = true;

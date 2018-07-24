@@ -26,6 +26,14 @@ var Enum;
          * 打开游戏规则
          */
         ListenViewEnum[ListenViewEnum["OpenRule"] = 4] = "OpenRule";
+        /**
+         * 获取记录
+         */
+        ListenViewEnum[ListenViewEnum["GetRecord"] = 5] = "GetRecord";
+        /**
+         * 打开记录
+         */
+        ListenViewEnum[ListenViewEnum["OpenRecord"] = 6] = "OpenRecord";
     })(ListenViewEnum = Enum.ListenViewEnum || (Enum.ListenViewEnum = {}));
 })(Enum || (Enum = {}));
 //# sourceMappingURL=ListenViewEnum.js.map

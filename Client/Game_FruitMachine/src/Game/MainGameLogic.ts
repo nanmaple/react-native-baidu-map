@@ -26,9 +26,8 @@ class MainGameLogic extends BaseGameLogic {
     constructor() {
         super();
         //初始化时创建GameViwLogic,注入Handler
-        this.gameView = new GameViewLogic(Laya.Handler.create(this, this.ViewHandler, null, false));
         this.betLogic = new OnceBet.BetLogic();
-this.betRecordPageDto = new Dto.BetRecordPageDto();
+        this.betRecordPageDto = new Dto.BetRecordPageDto();
         this.betRecordPageDto.GameId = GameConfig.GameID;
         this.betRecordPageDto.PageSize = 10;
     }
@@ -137,7 +136,7 @@ this.betRecordPageDto = new Dto.BetRecordPageDto();
                     this.SetBalance((response.Data as Dto.GameResultDto).Balance);
                     this.winAmount = (response.Data as Dto.GameResultDto).WinAmount;
                     this.maxGuessAmount = this.winAmount * 2;
-                    this.betLogic.ClearBet();
+                    // this.betLogic.ClearBet();
                     this.roundResult = response.Data;
                 }
                 break;
@@ -220,11 +219,11 @@ this.betRecordPageDto = new Dto.BetRecordPageDto();
             /**获取最新余额 */
             case Enum.GameViewHandlerEnum.GetBalance:
                 this.GetNewBalance();
-                break
+                break;
             /**获取历史记录 */
             case Enum.GameViewHandlerEnum.GetRecord:
                 this.GetGameRecord(Data);
-                break
+                break;
         }
     }
 
@@ -289,6 +288,7 @@ this.betRecordPageDto = new Dto.BetRecordPageDto();
         }
         //游戏进行中 禁用按钮
         this.gameView.SetData(Enum.GameViewLogicEnum.ChangGameStatus, Enum.GameStatus.Execute);
+        this.gameView.SetData(Enum.GameViewLogicEnum.GameStart,null);
         let betDto = this.betLogic.GetBetInfo();
         let HandlerDto = new Dto.HandlerDto();
         HandlerDto.Data = betDto;
@@ -308,7 +308,7 @@ this.betRecordPageDto = new Dto.BetRecordPageDto();
         } else {
             this.gameView.SetData(Enum.GameViewLogicEnum.ChangGameStatus, Enum.GameStatus.Default);
         }
-        this.gameView.SetData(Enum.GameViewLogicEnum.ClearBet,null);
+        // this.gameView.SetData(Enum.GameViewLogicEnum.ClearBet,null);
         this.ChangeCurrBet();
         this.gameView.SetData(Enum.GameViewLogicEnum.GameEnd,this.roundResult);
         this.ChangeMoney();
@@ -370,14 +370,14 @@ this.betRecordPageDto = new Dto.BetRecordPageDto();
         if(data && data.length > 0){
             this.betRecordPageDto.LastId = data[data.length - 1].Id;
         }
-        this.gameView.SetData(Enum.GameViewLogicEnum.GetRecord, data);
+        this.gameView.SetData(Enum.GameViewLogicEnum.SetRecord, data);
     }
     /**
      * 获取记录失败
      * @param data 
      */
     private GetRecordFail=(error:any):void=>{
-        this.gameView.SetData(Enum.GameViewLogicEnum.GetRecord, null);
+        this.gameView.SetData(Enum.GameViewLogicEnum.SetRecord, null);
     }
 
 

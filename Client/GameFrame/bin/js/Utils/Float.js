@@ -1,3 +1,6 @@
+/**
+ * 工具类-浮点数加减
+ */
 var Utils;
 (function (Utils) {
     /**

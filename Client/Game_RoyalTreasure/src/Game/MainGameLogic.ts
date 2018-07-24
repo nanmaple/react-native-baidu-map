@@ -8,9 +8,6 @@ class MainGameLogic extends BaseGameLogic {
 
     constructor() {
         super();
-        //初始化时创建GameViwLogic,注入Handler
-        this.gameView = new GameViewLogic(Laya.Handler.create(this, this.ViewHandler));
-
     }
 
     /**
@@ -139,7 +136,7 @@ class MainGameLogic extends BaseGameLogic {
     }
     /********************* Socket *********************/
 
-    /******************* 界面事件hander *****************/
+    /******************* 界面事件handler *****************/
     public ViewHandler(Type: Enum.GameViewHandlerEnum, Data: any): void {
         switch (Type) {
             case Enum.GameViewHandlerEnum.BetPos:

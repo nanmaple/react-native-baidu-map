@@ -65,7 +65,7 @@ var Network;
             //组装消息dto
             var msgDto = new BaseDto.MessageDto();
             msgDto.MSGID = msgID;
-            msgDto.Command = BaseEnum.MainCommand.MsgGame;
+            msgDto.Command = BaseEnum.MainCommand.MSG_GAME;
             msgDto.Data = gameData;
             var msg = JSON.stringify(msgDto);
             //发送
@@ -113,29 +113,29 @@ var Network;
                 return;
             }
             switch (messageDto.Command) {
-                case BaseEnum.MainCommand.MsgAck:
+                case BaseEnum.MainCommand.MSG_ACK:
                     //广播上层-ACK
                     this.event(Network.SocketEvent.OnAck, messageDto.Data);
                     break;
-                case BaseEnum.MainCommand.MsgGame:
+                case BaseEnum.MainCommand.MSG_GAME:
                     //广播上层-游戏命令
                     this.event(Network.SocketEvent.OnGame, messageDto.Data);
                     break;
-                case BaseEnum.MainCommand.MsgError:
+                case BaseEnum.MainCommand.MSG_ERROR:
                     //广播上层-错误
                     this.event(Network.SocketEvent.OnError, messageDto.Data);
                     break;
-                case BaseEnum.MainCommand.MsgKickout:
+                case BaseEnum.MainCommand.MSG_KICKOUT:
                     //登出，断开连接
                     this.socket.Close();
                     //广播上层-登出
                     this.event(Network.SocketEvent.OnLogout);
                     break;
-                case BaseEnum.MainCommand.MsgSystemPush:
+                case BaseEnum.MainCommand.MSG_SYSTEM_PUSH:
                     //系统推送消息
                     this.event(Network.SocketEvent.OnSystemPush, messageDto.Data);
                     break;
-                case BaseEnum.MainCommand.MsgMemberClosed:
+                case BaseEnum.MainCommand.MSG_MEMBERCLOSED:
                     //断开连接
                     this.socket.Close();
                     //广播上层-会员状态已经关闭

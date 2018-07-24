@@ -1,30 +1,65 @@
+namespace Enum{
+    export enum RouletteView{
+        /**设置结果 */
+        SetResult = 10000,
+        /**开始滚动 */
+        StartRoll,
+        /**初始化 */
+        Init,
+    }
+}
 /**轮盘类面板*/
 class RouletteView extends BaseRouletteView implements IView{  
     constructor(eventKey:string){
         super(eventKey);
-
     }
 
-    /** 
-     * 刷新UI
-    */
+    /** 刷新UI*/
     public Refresh():void{
-
     }
 
     /**
      * 设置结果
      */
-    public Set(data:any):void{
-       this.StartRoll(data);
+    public Set(data:any,type?:Enum.RouletteView):void{
+        switch(type){
+        case Enum.RouletteView.SetResult:
+            this.SetResult(data);
+            break;
+        case Enum.RouletteView.StartRoll:
+            this.StartRoll();
+            break;
+        case Enum.RouletteView.Init:
+            this.Init();
+            break;
+       }
+    }
+
+    /** 游戏初始化*/
+    private Init():void{
+        Laya.timer.clear(this,this.LoopCallBack);
+        this.start = 1;
+        this.index = 0;
+        this.end = null;
+        this.firstRoll = true;
+        this.rollStatus = Enum.RollStatus.SpeedUp;
+        this.currentSpeed = defaultSpeed;
+        this.currentFrame = 0;
+
+        let length = this.box.numChildren;
+        for(let i= 0;i<length;i++){
+            (this.box.getChildAt(i).getChildByName('halo') as Laya.Animation).visible = false;
+        }
+        (this.box.getChildAt(0).getChildByName('halo') as Laya.Animation).visible = true;
+        (this.box.getChildAt(0).getChildByName('halo') as Laya.Animation).alpha = 1;
+        Laya.SoundManager.stopAllSound();
     }
 
     /**
-     * 开始滚动
+     * 设置游戏结果
      * @param result 结果类型
      */
-    private StartRoll(result:Enum.ResultPosEnum):void{
-        this.num = 0;
+    private SetResult(result:Enum.ResultPosEnum):void{
         let res = gameResult[result];
         if(!res) return;
         if(typeof res == 'number'){
@@ -33,8 +68,14 @@ class RouletteView extends BaseRouletteView implements IView{
             let index = Math.floor(Math.random()*res.length);
             this.end = res[index];
         }
-        // this.slowDistance = Math.floor(Math.random()*(slow.max+1-slow.min))+slow.min;
         this.DeceleratePoint();
+    }
+
+    /**
+     * 开始滚动
+     */
+    private StartRoll():void{
+        this.num = 0;
         Laya.timer.frameLoop(1,this,this.LoopCallBack)
     }
 
@@ -47,7 +88,7 @@ class RouletteView extends BaseRouletteView implements IView{
         if(this.currentFrame%this.currentSpeed == 0){
             this.AuraMove();
 
-            if(this.num >= this.accelerateEnd + this.slowDistance){
+            if(this.end != null && this.num >= this.accelerateEnd + this.slowDistance){
                 this.RollEnd();
             }
             this.currentFrame = 0;
@@ -60,6 +101,7 @@ class RouletteView extends BaseRouletteView implements IView{
     private RollEnd():void{
         Laya.timer.clear(this,this.LoopCallBack);
         this.start = this.end;
+        this.end = null;
         this.firstRoll = true;
         this.rollStatus = Enum.RollStatus.SpeedUp;
         this.currentSpeed = defaultSpeed;
@@ -90,13 +132,7 @@ class RouletteView extends BaseRouletteView implements IView{
         this.SpeedDown();
 
         //显示、隐藏、透明度操作
-        if(this.index == (this.iconNum-1)) this.index = -1;
         this.ChangAlpha(hide);
-        // let index = (this.box.getChildAt(hide).getChildByName('animated') as Laya.Animation).index;
-        // (this.box.getChildAt(this.index+1).getChildByName('animated') as Laya.Animation).visible = true;
-        // (this.box.getChildAt(this.index+1).getChildByName('animated') as Laya.Animation).play(index);
-        // (this.box.getChildAt(hide).getChildByName('animated') as Laya.Animation).gotoAndStop(0);
-        // (this.box.getChildAt(hide).getChildByName('animated') as Laya.Animation).visible = false;
 
         //记录数据修改 
         this.index++;
@@ -108,6 +144,7 @@ class RouletteView extends BaseRouletteView implements IView{
      * @param hide 隐藏位置
      */
     private ChangAlpha(hide:number):void{
+        if(this.index == (this.iconNum-1)) this.index = -1;
         (this.box.getChildAt(this.index+1).getChildByName('halo') as Laya.Animation).visible = true;
         (this.box.getChildAt(this.index+1).getChildByName('halo') as Laya.Animation).alpha = 1;
         for(let i = 1;i<this.halos;i++){
@@ -133,6 +170,8 @@ class RouletteView extends BaseRouletteView implements IView{
      * 减速运动
      */
     private SpeedDown():void{
+        //未返回结果禁止减速
+        if(this.end == null) return;
         //减速
         if(this.rollStatus == Enum.RollStatus.SpeedDwon){
             let speed = Math.floor(20/this.slowDistance);
@@ -145,10 +184,6 @@ class RouletteView extends BaseRouletteView implements IView{
             this.rollStatus = Enum.RollStatus.SpeedDwon;
             Laya.SoundManager.stopSound(SoundConfig.SounRes.RollLinear);
             Laya.SoundManager.playSound(SoundConfig.SounRes.RollEaseOut);
-            // (this.box.getChildAt(this.index).getChildByName('animated') as Laya.Animation).gotoAndStop(0);
-            // (this.box.getChildAt(this.Convert(this.index-1)).getChildByName('animated') as Laya.Animation).gotoAndStop(0);
-            // (this.box.getChildAt(this.index).getChildByName('animated') as Laya.Animation).visible = false;
-            // (this.box.getChildAt(this.Convert(this.index-1)).getChildByName('animated') as Laya.Animation).visible = false;
             for(let i = 0;i<this.halos;i++){
              (this.box.getChildAt(this.Convert(this.index-i)).getChildByName('halo') as Laya.Animation).visible = false;
             }
@@ -170,13 +205,17 @@ class RouletteView extends BaseRouletteView implements IView{
             }else{
                 dic =this.iconNum-(this.slowDistance+distance);
             }
-            this.accelerateEnd = this.iconNum*4+dic;
         }else{
             distance = Math.abs(distance);
             dic = (distance-this.slowDistance); 
             dic = dic > 0 ? dic : this.iconNum+dic;
-            this.accelerateEnd = this.iconNum*4+dic;
         } 
+
+        if(this.num/this.iconNum < 4){
+            this.accelerateEnd = this.iconNum*4+dic;
+        }else{
+            this.accelerateEnd = this.iconNum*Math.ceil(this.num/this.iconNum)+dic;
+        }
     }
 
     /**

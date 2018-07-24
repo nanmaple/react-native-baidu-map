@@ -27,7 +27,7 @@ var MemberManager;
              * @param data
              */
             this.GetMemberInfoError = function (data) {
-                _this.failHanlder.runWith({ Type: BaseEnum.CheckLoginEnum.MemberInfo, Data: data });
+                _this.failHanlder.runWith({ Type: BaseEnum.CheckLoginEnum.MemberInfoError, Data: data });
             };
             //获取Socket Token
             this.loginService = new Laya.Browser.window.LoginService(Network.Http, Utils.Storage, this.GetMemberInfoSuccess, null, this.GetMemberInfoError);
@@ -42,7 +42,7 @@ var MemberManager;
             this.failHanlder = failHandler;
             var authorizationInfo = this.GetAuthorization();
             if (!authorizationInfo || !authorizationInfo.Token) {
-                // !GameConfig.IsDebug && this.GoGameLobby();
+                !GameConfig.IsDebug && this.GoGameLobby();
             }
             else {
                 //获取会员信息

@@ -146,22 +146,12 @@ namespace LanguageUtils {
         /// </summary>
         LOW_LIMIT: "Low The Limit",
         
+        /**
+         * 获取用户信息失败
+         */
+        GetMemberInfoError:"Get Member Info Error",
+        
         /************************************/
-        IN: "Goal",
-        OUT: "Out",
-        HIT: "Hit",
-        RED: "Red",
-        BLACK: "Black",
-        BIG: "Big",
-        SMALL: "Small",
-        ODD: "Odd",
-        EVEN: "Even",
-        LOUT: "L.Out",
-        ROUT: "R.Out",
-        LHIT: "L.Hit",
-        RHIT: "R.Hit",
-        Maximum: "Max",
-        Minimum: "Min",
 
         /**
          * 成功
@@ -426,5 +416,22 @@ namespace LanguageUtils {
          * 投注结果 “豹子”
          */
         Jaguar:"leopard",
+        /*********历史记录面板********/
+        /**
+         * 序号
+         */
+        NumTit:"OrderNum",
+        /**
+         * 获得奖励
+         */
+        RewardTit:"Reward",
+        /**
+         * 时间
+         */
+         TimeTit:"Time",
+         /**
+          * 暂无数据
+          */
+         NoRecord:"No Record",
     }
 }

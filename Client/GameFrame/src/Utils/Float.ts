@@ -1,3 +1,6 @@
+/**
+ * 工具类-浮点数加减
+ */
 namespace Utils {
     /**
      * float浮点数加减乘除法运算工具类
@@ -9,9 +12,9 @@ namespace Utils {
          * @param b 
          */
         static Add(a: number, b: number): number {
-            var c:any = void 0,
-                d:any = void 0,
-                e:any = void 0;
+            var c: any = void 0,
+                d: any = void 0,
+                e: any = void 0;
             try {
                 c = a.toString().split('.')[1].length;
             } catch (f) {
@@ -31,9 +34,9 @@ namespace Utils {
          * @param b 
          */
         static Sub(a: number, b: number): number {
-            var c:any = void 0,
-                d:any = void 0,
-                e:any = void 0;
+            var c: any = void 0,
+                d: any = void 0,
+                e: any = void 0;
             try {
                 c = a.toString().split('.')[1].length;
             } catch (f) {
@@ -52,7 +55,7 @@ namespace Utils {
          * @param a 
          * @param b 
          */
-        static Mul(a:number, b:number) {
+        static Mul(a: number, b: number) {
             var c = 0;
             var d = a.toString();
             var e = b.toString();
@@ -73,10 +76,10 @@ namespace Utils {
          * @param b 
          */
         static Div(a: number, b: number): number {
-            var c:any = void 0,
-                d:any = void 0,
-                e:number = 0,
-                f:number = 0;
+            var c: any = void 0,
+                d: any = void 0,
+                e: number = 0,
+                f: number = 0;
             try {
                 e = a.toString().split('.')[1].length;
             } catch (g) { }

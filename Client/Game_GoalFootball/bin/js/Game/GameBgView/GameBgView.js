@@ -35,11 +35,15 @@ var GameBgView = /** @class */ (function (_super) {
     GameBgView.prototype.Set = function (data, type) {
     };
     /**
-     * 类型：私有方法
      * 通过事件，向上通知
      * 事件key值，通过构造函数时注入
      */
-    GameBgView.prototype.EventNotification = function () {
+    GameBgView.prototype.EventNotification = function (type, value) {
+        var data = new Dto.EventNotificationDto();
+        data.Value = value;
+        data.Type = type;
+        var event = new CustomEvent(this.listenEventKey, { detail: data });
+        document.dispatchEvent(event);
     };
     return GameBgView;
 }(BaseGameBgView));

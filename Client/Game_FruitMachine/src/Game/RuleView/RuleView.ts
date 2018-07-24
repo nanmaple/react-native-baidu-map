@@ -22,7 +22,7 @@ class RuleView extends BaseRuleView implements IView{
     private ShowRule():void{
         this.ui.ruleBox.scale(0, 0);
         this.ui.visible = true;
-        Laya.Tween.to(this.ui.ruleBox, { scaleX: 1, scaleY: 1 }, 300, Laya.Ease.backOut);
+        Effect.AlertEffect.Show(this.ui.ruleBox, null);
     }
 
     /**
@@ -30,8 +30,8 @@ class RuleView extends BaseRuleView implements IView{
     */
     public OnCloseRule():void{
         Laya.SoundManager.playSound(SoundConfig.SounRes.Button);
-        Laya.Tween.to(this.ui.ruleBox, { scaleX: 0, scaleY: 0 }, 300, Laya.Ease.backIn, Laya.Handler.create(this, () => {
+        Effect.AlertEffect.Hide(this.ui.ruleBox, Laya.Handler.create(this, () => {
             this.ui.visible = false;
-        }, null, false));
+        }, null, false))
     }
 }

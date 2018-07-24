@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":5,
-    "selecteID":19,
+    "selecteID":3,
     "props":{"width":750,"visible":false,"sceneColor":"#fff","height":1334},
     "nodeParent":-1,
     "label":"View",
@@ -66,7 +66,7 @@
                 {
                     "x":30,
                     "type":"Image",
-                    "props":{"y":0,"x":154,"var":"recordTitle","skin":"ui/record_title.png"},
+                    "props":{"y":0,"x":154,"var":"recordTitle","skin":"ui/record_title_CH.png"},
                     "nodeParent":5,
                     "label":"Image(recordTitle)",
                     "isDirectory":false,
