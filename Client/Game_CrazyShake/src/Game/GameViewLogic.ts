@@ -162,7 +162,8 @@ class GameViewLogic extends BaseGameViewLogic {
         this.BetNumPanel.Set(data, Enum.BetNumPanel.GameInit);
         this.BetPanel.Set(data.PosOdds);
         this.BetPanel.Refresh();
-        this.ToyPanel.Set(null,Enum.ToyPanel.GameInit)
+        this.ToyPanel.Set(null,Enum.ToyPanel.GameInit);
+        this.ResultPanel.Set(null,Enum.ResultPanel.GameInit);
     }
     /**
      * 开始游戏动画

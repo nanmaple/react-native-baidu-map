@@ -46,10 +46,6 @@ class BaseHeadPanel {
                 this.ui.voiceBtn.skin = "ui/voiceOnBtn.png"
             }
         })
-        this.ui.recordBtn.on(Laya.Event.CLICK, this, () => {
-            this.ui.recordBtn.skin = "ui/recordBtn1.png"
-            //弹出游戏排行榜
-        })
     }
     /**
      * 鼠标按下事件

@@ -1,8 +1,26 @@
+namespace Enum {
+    /**
+     * 头部面板枚举
+     */
+    export enum HeadPanel {
+        /**
+         * 游戏初始化
+         */
+        GameInit = 10000,
+        /**
+         * 游戏结果处理
+         */
+        GameSettleResult,
+    }
+}
+
+
+
 /**
  * 顶部面板
  */
 class HeadPanel extends BaseHeadPanel implements IView {
-    
+    private currentBalance: number;
     constructor(eventKey: string) {
         super(eventKey);
     }
@@ -19,8 +37,19 @@ class HeadPanel extends BaseHeadPanel implements IView {
      * 接收上层View或者GameViewLogic的数据,根据数据，进行不同的渲染
      * @param data 
      */
-    public Set(data: any): void {
-        this.SetBalance(data);
+    public Set(data: any, type?: any): void {
+        switch (type) {
+            case Enum.HeadPanel.GameInit:
+                this.currentBalance = data;
+                this.SetBalance(data);
+                break;
+            case Enum.HeadPanel.GameSettleResult:
+                
+                break;
+            default:
+                break;
+        }
+
     }
 
 }

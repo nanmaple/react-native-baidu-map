@@ -1,6 +1,6 @@
 namespace Dto{
     /**
-     * 初始化数据类
+     * 初始化Dto
      */
     export class ClientInitDto{
         /**

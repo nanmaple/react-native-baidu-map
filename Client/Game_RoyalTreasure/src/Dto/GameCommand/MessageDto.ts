@@ -1,6 +1,5 @@
 /// <reference path='../../Enum/GameCommand.ts'/>
 namespace Dto {
-
     /**
      * 游戏命令dto
      */

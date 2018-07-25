@@ -26,10 +26,10 @@ module ui {
 		public betNum:Laya.Label;
 		public addBtn:Laya.Button;
 		public decreaseBtn:Laya.Button;
-		public rechargeBtn:Laya.Button;
+		public maxBtn:Laya.Button;
 		public autoDigBtn:Laya.Button;
 
-        public static  uiView:any ={"type":"View","props":{"width":750,"height":200},"child":[{"type":"Image","props":{"y":6,"x":-22,"width":793,"skin":"ui/footer.png"}},{"type":"Image","props":{"y":102,"x":290,"width":170,"skin":"ui/betNumBg.png","height":65},"child":[{"type":"Label","props":{"y":12,"x":10,"width":150,"var":"betNum","text":"100","height":41,"fontSize":34,"color":"#ffffff","align":"center"}}]},{"type":"Button","props":{"y":92,"x":480,"width":65,"var":"addBtn","stateNum":1,"skin":"ui/btn_add.png","height":85}},{"type":"Button","props":{"y":92,"x":205,"width":65,"var":"decreaseBtn","stateNum":1,"skin":"ui/btn_decrease.png","height":85}},{"type":"Button","props":{"y":92,"x":4,"width":157,"var":"rechargeBtn","stateNum":1,"skin":"ui/btn_recharge.png","height":85}},{"type":"Button","props":{"y":92,"x":562,"width":179,"var":"autoDigBtn","stateNum":1,"skin":"ui/btn_autoDig.png","height":85},"child":[{"type":"Image","props":{"y":24,"x":27,"width":125,"skin":"ui/autoDigWord.png","height":36}}]}]};
+        public static  uiView:any ={"type":"View","props":{"width":750,"height":200},"child":[{"type":"Image","props":{"y":6,"x":-22,"width":793,"skin":"ui/footer.png"}},{"type":"Image","props":{"y":102,"x":290,"width":170,"skin":"ui/betNumBg.png","height":65},"child":[{"type":"Label","props":{"y":12,"x":10,"width":150,"var":"betNum","text":"100","height":41,"fontSize":34,"color":"#ffffff","align":"center"}}]},{"type":"Button","props":{"y":92,"x":480,"width":65,"var":"addBtn","stateNum":1,"skin":"ui/addBtn1.png","height":85}},{"type":"Button","props":{"y":92,"x":205,"width":65,"var":"decreaseBtn","stateNum":1,"skin":"ui/decreaseBtn1.png","height":85}},{"type":"Button","props":{"y":92,"x":4,"width":157,"var":"maxBtn","stateNum":1,"skin":"ui/maxBtn1.png","height":85},"child":[{"type":"Label","props":{"y":13,"x":0,"width":158,"text":"最大","height":58,"fontSize":40,"font":"Microsoft YaHei","color":"#703e3e","bold":true,"align":"center"}}]},{"type":"Button","props":{"y":92,"x":562,"width":179,"var":"autoDigBtn","stateNum":1,"skin":"ui/btn_autoDig.png","height":85},"child":[{"type":"Image","props":{"y":24,"x":27,"width":125,"skin":"ui/autoDigWord.png","height":36}}]}]};
         constructor(){ super()}
         createChildren():void {
         
@@ -76,8 +76,12 @@ module ui {
     export class HeadPanelUI extends View {
 		public balance:Laya.Label;
 		public homeBtn:Laya.Image;
+		public ruleBtn:Laya.Image;
+		public voiceBtn:Laya.Image;
+		public rechargeBtn:Laya.Image;
+		public recordBtn:Laya.Image;
 
-        public static  uiView:any ={"type":"View","props":{"width":750,"height":260},"child":[{"type":"Image","props":{"y":0,"x":0,"width":750,"skin":"ui/header.png"}},{"type":"Image","props":{"y":9,"x":280,"width":189,"skin":"ui/balanceBg.png"},"child":[{"type":"Label","props":{"y":12,"x":35,"width":145,"var":"balance","text":"0","height":27,"fontSize":25,"color":"#ffffff","align":"center"}}]},{"type":"Image","props":{"y":5,"x":261,"skin":"ui/balanceMark.png"}},{"type":"Image","props":{"y":5,"x":60,"width":80,"var":"homeBtn","skin":"ui/homeBtn.png"}},{"type":"Image","props":{"y":95,"x":249,"skin":"ui/semicircle.png"}},{"type":"Image","props":{"y":96,"x":265,"skin":"ui/lightOff.png"}},{"type":"Image","props":{"y":150,"x":243,"skin":"ui/leftGold.png"}},{"type":"Image","props":{"y":160,"x":377,"skin":"ui/rightGold.png"}},{"type":"Image","props":{"y":105,"x":341,"skin":"ui/crown.png"}},{"type":"Image","props":{"y":146,"x":307,"skin":"ui/blackDiamond.png"}},{"type":"Image","props":{"y":133,"x":371,"skin":"ui/redDiamond.png"}}]};
+        public static  uiView:any ={"type":"View","props":{"width":750,"height":260},"child":[{"type":"Image","props":{"y":0,"x":0,"width":750,"skin":"ui/header.png"}},{"type":"Image","props":{"y":9,"x":280,"width":189,"skin":"ui/balanceBg.png"},"child":[{"type":"Label","props":{"y":12,"x":35,"width":145,"var":"balance","text":"0","height":27,"fontSize":25,"color":"#ffffff","align":"center"}}]},{"type":"Image","props":{"y":5,"x":261,"skin":"ui/balanceMark.png"}},{"type":"Image","props":{"y":7,"x":60,"var":"homeBtn","skin":"ui/homeBtn1.png"}},{"type":"Image","props":{"y":95,"x":249,"skin":"ui/semicircle.png"}},{"type":"Image","props":{"y":96,"x":265,"skin":"ui/lightOff.png"}},{"type":"Image","props":{"y":150,"x":243,"skin":"ui/leftGold.png"}},{"type":"Image","props":{"y":160,"x":377,"skin":"ui/rightGold.png"}},{"type":"Image","props":{"y":105,"x":341,"skin":"ui/crown.png"}},{"type":"Image","props":{"y":146,"x":307,"skin":"ui/blackDiamond.png"}},{"type":"Image","props":{"y":133,"x":371,"skin":"ui/redDiamond.png"}},{"type":"Image","props":{"y":89,"x":17,"var":"ruleBtn","skin":"ui/ruleBtn1.png"}},{"type":"Image","props":{"y":89,"x":111,"var":"voiceBtn","skin":"ui/voiceOnBtn.png"}},{"type":"Image","props":{"y":89,"x":562,"var":"rechargeBtn","skin":"ui/rechargeBtn1.png"}},{"type":"Image","props":{"y":89,"x":656,"var":"recordBtn","skin":"ui/recordBtn1.png"}}]};
         constructor(){ super()}
         createChildren():void {
         
@@ -99,6 +103,23 @@ module ui {
         
             super.createChildren();
             this.createView(ui.LoadingViewUI.uiView);
+
+        }
+
+    }
+}
+
+module ui {
+    export class ToyPanelUI extends View {
+		public dig:Laya.FrameAnimation;
+		public hammer:Laya.Image;
+
+        public static  uiView:any ={"type":"View","props":{"width":280,"height":280},"compId":1,"child":[{"type":"Image","props":{"y":73,"x":58,"var":"hammer","skin":"ui/hammer.png"},"compId":2}],"animations":[{"nodes":[{"target":2,"keyframes":{"y":[{"value":134,"tweenMethod":"linearNone","tween":true,"target":2,"key":"y","index":0}],"x":[{"value":137,"tweenMethod":"linearNone","tween":true,"target":2,"key":"x","index":0},{"value":137,"tweenMethod":"linearNone","tween":true,"target":2,"key":"x","index":10},{"value":137,"tweenMethod":"linearNone","tween":true,"target":2,"key":"x","index":16}],"rotation":[{"value":0,"tweenMethod":"linearNone","tween":true,"target":2,"key":"rotation","index":0},{"value":180,"tweenMethod":"linearNone","tween":true,"target":2,"key":"rotation","index":10},{"value":-10,"tweenMethod":"linearNone","tween":true,"target":2,"key":"rotation","index":16}],"pivotY":[{"value":57,"tweenMethod":"linearNone","tween":true,"target":2,"key":"pivotY","index":0}],"pivotX":[{"value":122,"tweenMethod":"linearNone","tween":true,"target":2,"key":"pivotX","index":0}]}},{"target":1,"keyframes":{"width":[{"value":280,"tweenMethod":"linearNone","tween":true,"target":1,"key":"width","index":0},{"value":280,"tweenMethod":"linearNone","tween":true,"target":1,"key":"width","index":16}],"height":[{"value":227,"tweenMethod":"linearNone","tween":true,"target":1,"key":"height","index":0},{"value":227,"tweenMethod":"linearNone","tween":true,"target":1,"key":"height","index":16}]}}],"name":"dig","id":1,"frameRate":24,"action":0}]};
+        constructor(){ super()}
+        createChildren():void {
+        
+            super.createChildren();
+            this.createView(ui.ToyPanelUI.uiView);
 
         }
 

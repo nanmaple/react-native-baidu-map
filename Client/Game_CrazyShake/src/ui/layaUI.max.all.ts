@@ -29,7 +29,7 @@ module ui {
 		public decreaseBtn:Laya.Button;
 		public addBtn:Laya.Button;
 
-        public static  uiView:any ={"type":"View","props":{"width":750,"height":125},"child":[{"type":"Button","props":{"y":17,"x":39,"var":"maxBtn","stateNum":1,"skin":"ui/maxBtn1.png"},"child":[{"type":"Label","props":{"y":18,"x":25,"width":95,"var":"maxWord","height":60,"fontSize":43,"font":"Microsoft YaHei","color":"#6d3e04","bold":true,"align":"center"}}]},{"type":"Text","props":{"y":42,"x":383,"width":205,"var":"betNumText","text":"100","height":40,"fontSize":40,"color":"#ffffff","align":"center"}},{"type":"Button","props":{"y":15,"x":256,"var":"decreaseBtn","stateNum":1,"skin":"ui/decreaseBtn1.png"}},{"type":"Button","props":{"y":15,"x":609,"var":"addBtn","stateNum":1,"skin":"ui/addBtn1.png"}}]};
+        public static  uiView:any ={"type":"View","props":{"width":750,"height":125},"child":[{"type":"Button","props":{"y":17,"x":39,"var":"maxBtn","stateNum":1,"skin":"ui/maxBtn1.png"},"child":[{"type":"Label","props":{"y":21,"x":20,"width":105,"var":"maxWord","text":"最大","height":60,"fontSize":43,"font":"Microsoft YaHei","color":"#6d3e04","bold":true,"align":"center"}}]},{"type":"Text","props":{"y":42,"x":383,"width":205,"var":"betNumText","text":"100","height":40,"fontSize":40,"color":"#ffffff","align":"center"}},{"type":"Button","props":{"y":15,"x":256,"var":"decreaseBtn","stateNum":1,"skin":"ui/decreaseBtn1.png"}},{"type":"Button","props":{"y":15,"x":609,"var":"addBtn","stateNum":1,"skin":"ui/addBtn1.png"}}]};
         constructor(){ super()}
         createChildren():void {
         			View.regComponent("Text",laya.display.Text);

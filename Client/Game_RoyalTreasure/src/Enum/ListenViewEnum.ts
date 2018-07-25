@@ -13,6 +13,10 @@ namespace Enum{
          */
         BetPos = 1,
 
+        OpenRule,
+
+        OpenRecord,
+
         OnGameBgClick,
 
         ConfirmBet,

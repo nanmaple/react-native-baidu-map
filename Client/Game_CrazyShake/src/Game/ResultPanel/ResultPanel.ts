@@ -4,7 +4,8 @@ namespace Enum {
      * 结果面板参数类型枚举
      */
     export enum ResultPanel {
-        GameStartAni = 8888,
+        GameInit = 8888,
+        GameStartAni,
         GameSettleResult,
     }
 }
@@ -37,6 +38,9 @@ class ResultPanel extends BaseResultPanel implements IView {
      */
     public Set(data: any, type?: any): void {
         switch (type) {
+            case Enum.ResultPanel.GameInit:
+                this.ui.visible = false;
+                break;
             case Enum.ResultPanel.GameStartAni:
                 this.ui.visible = false;
                 break;
@@ -50,7 +54,7 @@ class ResultPanel extends BaseResultPanel implements IView {
                     this.ResultWin(data);
                 }
                 break;
-                default:
+            default:
                 break;
         }
     }

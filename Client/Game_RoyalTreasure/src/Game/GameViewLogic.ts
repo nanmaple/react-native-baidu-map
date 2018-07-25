@@ -133,7 +133,8 @@ class GameViewLogic extends BaseGameViewLogic {
      */
     public OnGameInit(data: any): void {
         this.Log(data, "GameInit");
-        this.HeadPanel.Set(data.Balance);
+        this.HeadPanel.Set(data.Balance,Enum.HeadPanel.GameInit);
+        this.FootPanel.Set(data)
     }
 
     /**
