@@ -113,6 +113,12 @@ class BaseFootPanel {
         this.ui.autoDigBtn.mouseEnabled=isEnable;
     }
 
+    /**
+     * 返回当前投注额
+     */
+    public BetNumber():number{
+        return this.currentBetNum
+    }
 
 
     /**

@@ -6,11 +6,23 @@ namespace Enum {
         /**
          * 游戏初始化
          */
-        GameInit = 10000,
+        GameInit = 14000,
+        /**
+         * 按下投注按钮
+         */
+        GameBetPos,
         /**
          * 游戏结果处理
          */
         GameSettleResult,
+        /**
+         * 刷新
+         */
+        GameRefreshBtn,
+        /**
+         * 下一场
+         */
+        GameNextTime,
     }
 }
 /**
@@ -43,9 +55,18 @@ class FootPanel extends BaseFootPanel implements IView {
                 let initMaxBet = Math.floor(data.Balance / 100) * 100;
                 this.maxBetNum = initMaxBet < this.MaxBet ? initMaxBet : this.MaxBet;
                 break;
+            case Enum.FootPanel.GameBetPos:
+                this.EnableButton(false);
+                break;
             case Enum.FootPanel.GameSettleResult:
-                let comMaxBet = Math.floor(data.Balance / 100) * 100;
+                let comMaxBet = Math.floor(data / 100) * 100;
                 this.maxBetNum = comMaxBet < this.MaxBet ? comMaxBet : this.MaxBet;
+                break;
+            case Enum.FootPanel.GameNextTime:
+                this.EnableButton();
+                break;
+            case Enum.FootPanel.GameRefreshBtn:
+                this.EnableButton();
                 break;
             default:
                 break;

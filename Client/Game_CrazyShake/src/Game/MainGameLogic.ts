@@ -17,7 +17,7 @@ class MainGameLogic extends BaseGameLogic {
         super();
         this.betRecordPageDto = new Dto.BetRecordPageDto();
         this.betRecordPageDto.GameId = GameConfig.GameID;
-        this.betRecordPageDto.PageSize = 10;
+        this.betRecordPageDto.PageSize = 5;
     }
     /**
      * 登录完成

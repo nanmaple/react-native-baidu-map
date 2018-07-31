@@ -2,10 +2,18 @@
 
 class MainGameLogic extends BaseGameLogic {
     /**
-     * 投注逻辑
+         * 投注记录请求dto
+         */
+    private betRecordPageDto: Dto.BetRecordPageDto;
+    /**
+     * 请求参数
      */
-
-
+    private requestParams: IRequestParams = {
+        Type: "Post",
+        Url: null,
+        Params: null,
+        Header: null,
+    }
     constructor() {
         super();
     }
@@ -94,22 +102,19 @@ class MainGameLogic extends BaseGameLogic {
      * @param data 
      */
     public OnMessageHandler(response: any): void {
-        let data: any = response.Data;
-        this.Log(data, "OnMessageHandler");
         switch (response.Command) {
             case Enum.GameCommand.MsgGameInit://初始化
                 this.SetBalance((response.Data as Dto.ClientInitDto).Balance);
-                this.gameView.SetData(BaseEnum.GameViewLogicEnum.GameData, response)
                 break;
             case Enum.GameCommand.MsgGameSettleResult://游戏结算
-                //游戏结算，重置之前投注数据
                 this.SetBalance((response.Data as Dto.GameResultDto).Balance);
-                this.gameView.SetData(Enum.GameViewLogicEnum.ChangMoney, this.GetBalance());
+                if (response.Data.Status != Enum.BetResult.Success) {
+                    return this.gameView.SetData(BaseEnum.GameViewLogicEnum.Alert, LanguageUtils.Language.Get(Enum.BetResult[response.Data.Status]));
+                }
                 break;
             default:
                 break;
         }
-
         this.gameView.SetData(BaseEnum.GameViewLogicEnum.GameData, response);
     };
 
@@ -125,30 +130,72 @@ class MainGameLogic extends BaseGameLogic {
      * 发送消息回调
      * @param dto 
      */
-    public SendHandler(dto: Dto.HandlerDto): void {
-        let msgID: string = dto.MsgID ? dto.MsgID : Utils.Guid.Create();
-        this.Log({ Data: dto.Data, msgID: msgID }, "SendHandelr");
+    public SendBet(dto: Dto.GameBetDto): void {
+        this.Log({ Data: dto }, "SendHandelr");
         //组装游戏命令Dto
         let gameDto: Dto.GameMessageDto = new Dto.GameMessageDto();
-        gameDto.Command = Enum.GameCommand.MsgGameBet;
-        gameDto.Data = dto.Data;
-        this.Send(gameDto, msgID);
+        gameDto.Command = Enum.GameCommand.MsgGameStart;
+        gameDto.Data = dto;
+        this.Send(gameDto);
+    }
+
+    /**
+         * 获取游戏记录
+         */
+    private GetGameRecord(refresh: boolean): void {
+        if (refresh) {
+            this.betRecordPageDto.LastId = null;
+        }
+        this.requestParams.Params = this.betRecordPageDto;
+        this.requestParams.Url = ApiConfig.GetBetRecord;
+        this.Request(this.requestParams, this.GetRecordSuccess, this.GetRecordFail);
+    }
+    /**
+     * 获取记录成功
+     * @param data 
+     */
+    private GetRecordSuccess = (data: any): void => {
+        console.log(data)
+        if (data && data.length > 0) {
+            this.betRecordPageDto.LastId = data[data.length - 1].Id;
+        }
+        this.gameView.SetData(Enum.GameViewLogicEnum.GetRecord, data);
+    }
+    /**
+     * 获取记录失败
+     * @param data 
+     */
+    private GetRecordFail = (error: any): void => {
+        this.gameView.SetData(Enum.GameViewLogicEnum.GetRecord, null);
     }
     /********************* Socket *********************/
 
     /******************* 界面事件handler *****************/
-    public ViewHandler(Type: Enum.GameViewHandlerEnum, Data: any): void {
-        switch (Type) {
-            case Enum.GameViewHandlerEnum.BetPos:
+    public ViewHandler(type: Enum.GameViewHandlerEnum, data: any): void {
+        switch (type) {
+            case Enum.GameViewHandlerEnum.StartSocket:
+                this.StartSocket();
                 break;
             case Enum.GameViewHandlerEnum.GetMemberInfo:
                 let memberInfo = this.GetMemberInfo();
                 let isTourists = this.IsTourist();
                 this.gameView.SetData(Enum.GameViewLogicEnum.GetMemberInfo, { memberInfo, isTourists })
                 break;
+            case Enum.GameViewHandlerEnum.BetPos:
+                if (100 <= data.Amount && data.Amount <= this.GetBalance()) {
+                    this.gameView.SetData(Enum.GameViewLogicEnum.BetPos,data.Amount);
+                    this.SendBet(data);
+                }
+                else {
+                    this.gameView.SetData(BaseEnum.GameViewLogicEnum.Alert, LanguageUtils.Language.Get("BALANCE_SMALL"))
+                    this.gameView.SetData(Enum.GameViewLogicEnum.GameRefreshBtn, null);
+                };
+                break;
+                case Enum.GameViewHandlerEnum.GetRecord:
+                this.GetGameRecord(data);
+                break;
             default:
                 break;
         }
     }
-
-} 
+}

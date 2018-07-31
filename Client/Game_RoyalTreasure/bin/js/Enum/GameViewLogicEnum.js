@@ -21,6 +21,10 @@ var Enum;
          * 获取用户信息
          */
         GameViewLogicEnum[GameViewLogicEnum["GetMemberInfo"] = 104] = "GetMemberInfo";
+        /**
+         * 刷新按钮
+         */
+        GameViewLogicEnum[GameViewLogicEnum["GameRefreshBtn"] = 105] = "GameRefreshBtn";
     })(GameViewLogicEnum = Enum.GameViewLogicEnum || (Enum.GameViewLogicEnum = {}));
 })(Enum || (Enum = {}));
 //# sourceMappingURL=GameViewLogicEnum.js.map

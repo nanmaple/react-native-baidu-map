@@ -10,7 +10,7 @@ namespace Enum {
         /**
          * 余额不足
          */
-        InsufficientBalance,
+        BalanceSmall,
         /**
          * 超过限额
          */
@@ -18,7 +18,7 @@ namespace Enum {
          /**
          * 参数错误
          */
-        ParameterError,
+        InvalidArgument,
         /**
          * 系统错误
          */

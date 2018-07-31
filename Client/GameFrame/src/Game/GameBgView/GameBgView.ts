@@ -23,7 +23,7 @@ class GameBgView extends BaseGameBgView implements IView {
      * 接收上层View或者GameViewLogic的数据,根据数据，进行不同的渲染
      * @param data 
      */
-    public Set(data: any): void {
+    public Set(data: any, Type?: any): void {
     }
 
     /**

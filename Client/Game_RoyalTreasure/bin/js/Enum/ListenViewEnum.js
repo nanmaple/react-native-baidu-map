@@ -13,9 +13,14 @@ var Enum;
          * 投注按钮点击
          */
         ListenViewEnum[ListenViewEnum["BetPos"] = 1] = "BetPos";
-        ListenViewEnum[ListenViewEnum["OnGameBgClick"] = 2] = "OnGameBgClick";
-        ListenViewEnum[ListenViewEnum["ConfirmBet"] = 3] = "ConfirmBet";
-        ListenViewEnum[ListenViewEnum["CancelBet"] = 4] = "CancelBet";
+        ListenViewEnum[ListenViewEnum["OpenRule"] = 2] = "OpenRule";
+        ListenViewEnum[ListenViewEnum["OpenRecord"] = 3] = "OpenRecord";
+        ListenViewEnum[ListenViewEnum["DigAniComplete"] = 4] = "DigAniComplete";
+        ListenViewEnum[ListenViewEnum["NextTime"] = 5] = "NextTime";
+        ListenViewEnum[ListenViewEnum["GameAniOver"] = 6] = "GameAniOver";
+        ListenViewEnum[ListenViewEnum["OnGameBgClick"] = 7] = "OnGameBgClick";
+        ListenViewEnum[ListenViewEnum["ConfirmBet"] = 8] = "ConfirmBet";
+        ListenViewEnum[ListenViewEnum["CancelBet"] = 9] = "CancelBet";
     })(ListenViewEnum = Enum.ListenViewEnum || (Enum.ListenViewEnum = {}));
 })(Enum || (Enum = {}));
 //# sourceMappingURL=ListenViewEnum.js.map

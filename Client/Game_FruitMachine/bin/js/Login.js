@@ -14,8 +14,9 @@ var LoginView = /** @class */ (function () {
             //设置画布的背景颜色
             _this.Account = _this.InputCreate(220, 200, 300, 60, "w015854");
             _this.Password = _this.InputCreate(220, 300, 300, 60, "123456");
-            _this.Button = _this.ButtonCreate(220, 400, 300, 60, "登录", false);
-            _this.ButtonTourist = _this.ButtonCreate(220, 500, 300, 60, "游客登录", true);
+            _this.Button = _this.ButtonCreate(220, 400, 300, 60, "登录", false, _this.Login);
+            _this.ButtonTourist = _this.ButtonCreate(220, 500, 300, 60, "游客登录", true, _this.Login);
+            _this.ButtonTourist = _this.ButtonCreate(220, 650, 300, 60, "清除登录信息", true, _this.Clear);
         }));
     }
     LoginView.prototype.InputCreate = function (x, y, w, h, text) {
@@ -32,7 +33,7 @@ var LoginView = /** @class */ (function () {
         Laya.stage.addChild(textInput); //将 textInput 添加到显示列表。
         return textInput;
     };
-    LoginView.prototype.ButtonCreate = function (x, y, w, h, label, isTourist) {
+    LoginView.prototype.ButtonCreate = function (x, y, w, h, label, isTourist, callback) {
         var button = new Laya.Button(); //创建一个 TextInput 类的实例对象 textInput 。
         button.label = label; //设置 textInput 的文本。
         button.labelSize = 22; //设置 textInput 的字体大小。
@@ -42,7 +43,7 @@ var LoginView = /** @class */ (function () {
         button.height = h; //设置 textInput 的高度。
         button.skin = 'comp/button.png';
         Laya.stage.addChild(button); //将 textInput 添加到显示列表。
-        button.on(Laya.Event.CLICK, this, this.Login, [isTourist]);
+        button.on(Laya.Event.CLICK, this, callback, [isTourist]);
         return button;
     };
     LoginView.prototype.Login = function (isTourist) {
@@ -54,6 +55,12 @@ var LoginView = /** @class */ (function () {
         else {
             this.loginService.LoginByAccount(this.Account.text, this.Password.text, this.LoginSuccess);
         }
+    };
+    LoginView.prototype.Clear = function () {
+        //获取Socket Token
+        this.loginService = new Laya.Browser.window.LoginService(Network.WebApi, Utils.Storage, this.LoginSuccess, null, this.LoginError);
+        this.loginService.ClearAuthorization();
+        this.loginService.ClearUserInfo();
     };
     LoginView.prototype.LoginError = function (error) {
         console.log(error);

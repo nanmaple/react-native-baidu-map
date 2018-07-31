@@ -33,7 +33,7 @@ class InitState {
         // Laya.DebugTool.init();
         //显示FPS
         if (GameConfig.IsDebug) {
-            // Laya.Stat.show(0, 0);
+            Laya.Stat.show(0, 0);
         }
         /***********调试相关**********/
 

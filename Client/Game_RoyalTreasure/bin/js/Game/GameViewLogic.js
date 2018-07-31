@@ -13,46 +13,13 @@ var __extends = (this && this.__extends) || (function () {
 var GameViewLogic = /** @class */ (function (_super) {
     __extends(GameViewLogic, _super);
     function GameViewLogic(Handler) {
-        var _this = _super.call(this) || this;
-        _this.CtrlHandler = Handler;
-        _this.GameLoad();
-        return _this;
+        return _super.call(this, Handler) || this;
     }
     /***************游戏基础逻辑***************/
     /**
      * 横竖屏监听
      */
     GameViewLogic.prototype.ResetScreen = function () {
-    };
-    /**
-    * 启动游戏资源页面，开始加载游戏资源
-    */
-    GameViewLogic.prototype.GameLoad = function () {
-        this.gameLoadView = new GameLoadView(this.GameViewEventKey);
-        this.gameLoadView.ResetScreen();
-        this.gameLoadView.StartLoad(GameResourceConfig.LoadResourcesConfig);
-    };
-    /**
-     * 游戏资源加载完成，检查登录状态
-     */
-    GameViewLogic.prototype.CheckLoad = function () {
-        this.isLoadSuccess = true;
-        if (this.isLoginSucess) {
-            this.gameLoadView.Remove();
-            //加载主界面
-            this.GameMainUI();
-        }
-    };
-    /**
-     * 游戏登录完成，检查游戏资源加载状态
-     */
-    GameViewLogic.prototype.GameLoginComplete = function () {
-        this.isLoginSucess = true;
-        if (this.isLoadSuccess) {
-            this.gameLoadView.Remove();
-            //加载主界面
-            this.GameMainUI();
-        }
     };
     /**
      * 加载游戏主界面
@@ -72,6 +39,9 @@ var GameViewLogic = /** @class */ (function (_super) {
         this.TreasurePanel.ResetScreen();
         this.FootPanel = new FootPanel(this.GameViewEventKey);
         this.FootPanel.ResetScreen();
+        this.ToyPanel = new ToyPanel(this.GameViewEventKey);
+        this.ToyPanel.ResetScreen();
+        this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.StartSocket, {}]);
     };
     /**
      * UI监听
@@ -86,7 +56,20 @@ var GameViewLogic = /** @class */ (function (_super) {
             //     this.RuleUIHV.ShowRule();
             //     break;
             case Enum.ListenViewEnum.BetPos:
+                var betData = new Dto.GameBetDto();
+                betData.Amount = this.FootPanel.BetNumber();
+                this.ToyPanel.DigWhere(data.Value);
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.BetPos, betData]);
                 break;
+            case Enum.ListenViewEnum.NextTime:
+                this.OnNextTime();
+                break;
+            case Enum.ListenViewEnum.DigAniComplete:
+                this.OnDigAniComplete();
+                break;
+            // case Enum.ListenViewEnum.GameAniOver:
+            //     this.OnGameAniOver();
+            // break;
             default:
                 break;
         }
@@ -115,11 +98,11 @@ var GameViewLogic = /** @class */ (function (_super) {
                 this.OnMessageHandler(data);
                 break;
             //扩展数据分发类型
-            case Enum.GameViewLogicEnum.ChangMoney:
-                break;
-            case Enum.GameViewLogicEnum.GetMemberInfo:
-                break;
             case Enum.GameViewLogicEnum.BetPos:
+                this.OnBetPos(data);
+                break;
+            case Enum.GameViewLogicEnum.GameRefreshBtn:
+                this.OnGameRefreshBtn();
                 break;
             case Enum.GameViewLogicEnum.SetRecord:
                 break;
@@ -133,26 +116,11 @@ var GameViewLogic = /** @class */ (function (_super) {
      */
     GameViewLogic.prototype.OnMessageHandler = function (data) {
         switch (data.Command) {
-            case Enum.GameCommand.MSG_GAME_INIT:
+            case Enum.GameCommand.MsgGameInit:
                 this.OnGameInit(data.Data);
                 break;
-            case Enum.GameCommand.MSG_GAME_START:
-                this.OnGameStart(data.Data);
-                break;
-            case Enum.GameCommand.MSG_GAME_BETRESULT:
-                this.OnBetResult(data.Data);
-                break;
-            case Enum.GameCommand.MSG_GAME_STOPBET:
-                this.OnStopBet(data);
-                break;
-            case Enum.GameCommand.MSG_GAME_GAMERESULT:
-                this.OnGameResult(data.Data);
-                break;
-            case Enum.GameCommand.MSG_GAME_SETTLERESULT:
+            case Enum.GameCommand.MsgGameSettleResult:
                 this.OnSettleResult(data.Data);
-                break;
-            case Enum.GameCommand.MSG_GAME_OTHER:
-                this.OnGameOther(data.Data);
                 break;
             default:
                 break;
@@ -165,33 +133,17 @@ var GameViewLogic = /** @class */ (function (_super) {
      */
     GameViewLogic.prototype.OnGameInit = function (data) {
         this.Log(data, "GameInit");
+        this.HeadPanel.Set(data.Balance, Enum.HeadPanel.GameInit);
+        this.FootPanel.Set(data, Enum.FootPanel.GameInit);
+        this.TreasurePanel.Set(data, Enum.TreasurePanel.GameInit);
     };
     /**
-     * 游戏开始命令处理
-     * @param data 游戏开始数据
-     */
-    GameViewLogic.prototype.OnGameStart = function (data) {
-        this.Log(data, "GameStart");
-    };
-    /**
-     * 投注结果命令处理
-     * @param data 游戏投注结果
-     */
-    GameViewLogic.prototype.OnBetResult = function (data) {
-        this.Log(data, "BetResult");
-    };
-    /**
-     * 停止投注
+     * 投注按钮按下后
      * @param data
      */
-    GameViewLogic.prototype.OnStopBet = function (data) {
-    };
-    /**
-     * 游戏结果
-     * @param data 游戏结果数据
-     */
-    GameViewLogic.prototype.OnGameResult = function (data) {
-        this.Log(data, "GameResult");
+    GameViewLogic.prototype.OnBetPos = function (data) {
+        this.TreasurePanel.Set(data, Enum.TreasurePanel.GameBetPos);
+        this.FootPanel.Set(null, Enum.FootPanel.GameBetPos);
     };
     /**
      * 结算命令
@@ -199,8 +151,30 @@ var GameViewLogic = /** @class */ (function (_super) {
      */
     GameViewLogic.prototype.OnSettleResult = function (data) {
         this.Log(data, "SettleResult");
+        //更改余额显示
+        this.HeadPanel.Set(data, Enum.HeadPanel.GameSettleResult);
+        //开始挖矿
+        this.ToyPanel.Set(data.WinAmount, Enum.ToyPanel.GameSettleResult);
+        //预设置最大投注额
+        this.FootPanel.Set(data.Balance, Enum.FootPanel.GameSettleResult);
+        //预设置所得矿石结果
+        this.TreasurePanel.Set(data, Enum.TreasurePanel.GameSettleResult);
     };
-    GameViewLogic.prototype.OnGameOther = function (data) {
+    GameViewLogic.prototype.OnDigAniComplete = function () {
+        this.TreasurePanel.Set(null, Enum.TreasurePanel.GameDigAniComplete);
+    };
+    GameViewLogic.prototype.OnNextTime = function () {
+        this.HeadPanel.Set(null, Enum.HeadPanel.GameNextTime);
+        this.FootPanel.Set(null, Enum.FootPanel.GameNextTime);
+        this.ToyPanel.Set(null, Enum.ToyPanel.GameNextTime);
+        this.TreasurePanel.Set(null, Enum.TreasurePanel.GameNextTime);
+    };
+    /**
+     * 刷新按钮
+     */
+    GameViewLogic.prototype.OnGameRefreshBtn = function () {
+        this.TreasurePanel.Set(null, Enum.TreasurePanel.GameRefreshBtn);
+        this.FootPanel.Set(null, Enum.FootPanel.GameRefreshBtn);
     };
     return GameViewLogic;
 }(BaseGameViewLogic));

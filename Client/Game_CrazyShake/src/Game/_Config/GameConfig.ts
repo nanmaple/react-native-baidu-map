@@ -1,8 +1,8 @@
 namespace GameConfig {
     /****************调试*********************/
-    export const IsDebug: boolean = true;
-    export const OpenLog: boolean = true;
-    export const IsTestServer: boolean = true;
+    export const IsDebug: boolean = false;
+    export const OpenLog: boolean = false;
+    export const IsTestServer: boolean = false;
     /****************基础信息*****************/
     export const GameID: number = 3;//游戏ID
     export const DeviceType: string = "MOBILE";//登录设备类型
@@ -38,12 +38,16 @@ namespace GameConfig {
     export function GetSocketUrl(memberId: number, token: string) {
         return `${SocketUrl}?GameId=${this.GameID}&MemberId=${memberId}&Device=${this.DeviceType}&DeviceId=${this.DeviceId}&Token=${token}`;
     }
-
+    
     /**
      * 获取大厅跳转地址
      * @param parentID 
      */
     export function GetHallUrl(parentID: string) {
-        return `http://${this.Domain}?gameid=${this.GameID}&parentid=${parentID}`;
+        let backUrl: string = Utils.GetQuery("backurl");
+        if (!backUrl) {
+            return `http://${this.Domain}?gameid=${this.GameID}&parentid=${parentID}`;
+        }
+        return backUrl;
     }
 }

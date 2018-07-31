@@ -8,6 +8,27 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var Enum;
+(function (Enum) {
+    /**
+     * 头部面板枚举
+     */
+    var HeadPanel;
+    (function (HeadPanel) {
+        /**
+         * 游戏初始化
+         */
+        HeadPanel[HeadPanel["GameInit"] = 10000] = "GameInit";
+        /**
+         * 游戏结果处理
+         */
+        HeadPanel[HeadPanel["GameSettleResult"] = 10001] = "GameSettleResult";
+        /**
+         * 下一场游戏
+         */
+        HeadPanel[HeadPanel["GameNextTime"] = 10002] = "GameNextTime";
+    })(HeadPanel = Enum.HeadPanel || (Enum.HeadPanel = {}));
+})(Enum || (Enum = {}));
 /**
  * 顶部面板
  */
@@ -27,8 +48,22 @@ var HeadPanel = /** @class */ (function (_super) {
      * 接收上层View或者GameViewLogic的数据,根据数据，进行不同的渲染
      * @param data
      */
-    HeadPanel.prototype.Set = function (data) {
-        this.SetBalance(data);
+    HeadPanel.prototype.Set = function (data, type) {
+        switch (type) {
+            case Enum.HeadPanel.GameInit:
+                this.currentBalance = data;
+                this.SetBalance(data);
+                break;
+            case Enum.HeadPanel.GameSettleResult:
+                this.currentBalance = data.Balance;
+                this.SetBalance(data.Balance - data.WinAmount);
+                break;
+            case Enum.HeadPanel.GameNextTime:
+                this.SetBalance(this.currentBalance);
+                break;
+            default:
+                break;
+        }
     };
     return HeadPanel;
 }(BaseHeadPanel));

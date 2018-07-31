@@ -36,14 +36,16 @@ class BaseHeadPanel {
         this.ui.voiceBtn.on(Laya.Event.CLICK, this, () => {
             if (this.isVoiceOn) {
                 this.isVoiceOn = false;
-                Laya.SoundManager.muted=true;
+                // Laya.SoundManager.muted=true;
                 this.ui.voiceBtn.skin = "ui/voiceOffBtn.png"
+                Utils.BackgroundMusic.MuteMusic(!this.isVoiceOn);
             }
             else {
                 this.isVoiceOn = true;
-                Laya.SoundManager.muted=false;
-                Laya.SoundManager.playSound("sound/btnSound.mp3")
-                this.ui.voiceBtn.skin = "ui/voiceOnBtn.png"
+                // Laya.SoundManager.muted=false;
+                this.ui.voiceBtn.skin = "ui/voiceOnBtn.png";
+                Utils.BackgroundMusic.MuteMusic(!this.isVoiceOn);
+                 Laya.SoundManager.playMusic("sound/bgSound.mp3");
             }
         })
     }
@@ -75,7 +77,9 @@ class BaseHeadPanel {
 
         this.ui.homeBtn.on(Laya.Event.MOUSE_UP, this, () => {
             this.ui.homeBtn.skin = "ui/homeBtn1.png"
-            window.location.href = "";
+            let parentID = Utils.GetQuery("parentid");
+        Laya.Browser.window.location.replace(GameConfig.GetHallUrl(parentID));
+
             //返回游戏大厅
         })
         this.ui.ruleBtn.on(Laya.Event.MOUSE_UP, this, () => {

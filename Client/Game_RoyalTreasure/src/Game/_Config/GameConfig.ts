@@ -5,16 +5,17 @@
 namespace GameConfig {
     /****************调试*********************/
     export const IsDebug: boolean = true;
-    export const OpenLog: boolean = false;
+    export const OpenLog: boolean = true;
+    export const IsTestServer: boolean = true;
     /****************基础信息*****************/
-    export const GameID: number = 1;//游戏ID
+    export const GameID: number = 6;//游戏ID
     export const DeviceType: string = "MOBILE";//登录设备类型
     export const DeviceId: string = "123456";//登录设备ID
     export const CacheType: number = 0; //存储类型 0 localstorage , 1 cookie ,2 session
 
     /****************API信息*****************/
-    export const Domain: string = IsDebug ? "m.synjiguang.com" : "m.synjiguang.com";//api域名
-    export const SocketUrl: string = IsDebug ? "ws://m.synjiguang.com:9111" : "ws://m.synjiguang.com:9111";//socket域名
+    export const Domain: string = IsTestServer ? "192.168.0.2:9113" : "m.synjiguang.com";//api域名
+    export const SocketUrl: string = IsTestServer ? "ws://192.168.0.120:9800" : "ws://m.synjiguang.com:9111";//socket域名
     export const WebApiBaseUrl: string = `http://${Domain}/api`;//api
     export const BetWebApiBaseUrl: string = `http://${Domain}/report`;
 
@@ -41,12 +42,16 @@ namespace GameConfig {
     export function GetSocketUrl(memberId: number, token: string) {
         return `${SocketUrl}?GameId=${this.GameID}&MemberId=${memberId}&Device=${this.DeviceType}&DeviceId=${this.DeviceId}&Token=${token}`;
     }
-
+	
     /**
      * 获取大厅跳转地址
      * @param parentID 
      */
     export function GetHallUrl(parentID: string) {
-        return `http://${this.Domain}?gameid=${this.GameID}&parentid=${parentID}`;
+        let backUrl: string = Utils.GetQuery("backurl");
+        if (!backUrl) {
+            return `http://${this.Domain}?gameid=${this.GameID}&parentid=${parentID}`;
+        }
+        return backUrl;
     }
 }

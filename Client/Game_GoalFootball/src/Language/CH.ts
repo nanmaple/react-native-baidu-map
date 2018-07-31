@@ -205,7 +205,7 @@ namespace LanguageUtils {
         "<p style='fontSize:25;color:#fff'>3.点击“射门”开始踢球;</p>"+"<br/>"+
         "<p style='fontSize:25;color:#fff'>4.用户进球后，可以获得1.5、2、5、10倍不等奖励;</p>"+"<br/>",
 
-        //游戏图片多语言切换
+        /******游戏图片多语言切换******/
         /**
          * 射门默认按钮皮肤
          */

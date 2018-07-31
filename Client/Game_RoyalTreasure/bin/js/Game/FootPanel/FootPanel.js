@@ -8,6 +8,35 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var Enum;
+(function (Enum) {
+    /**
+     * 底部面板枚举
+     */
+    var FootPanel;
+    (function (FootPanel) {
+        /**
+         * 游戏初始化
+         */
+        FootPanel[FootPanel["GameInit"] = 14000] = "GameInit";
+        /**
+         * 按下投注按钮
+         */
+        FootPanel[FootPanel["GameBetPos"] = 14001] = "GameBetPos";
+        /**
+         * 游戏结果处理
+         */
+        FootPanel[FootPanel["GameSettleResult"] = 14002] = "GameSettleResult";
+        /**
+         * 刷新
+         */
+        FootPanel[FootPanel["GameRefreshBtn"] = 14003] = "GameRefreshBtn";
+        /**
+         * 下一场
+         */
+        FootPanel[FootPanel["GameNextTime"] = 14004] = "GameNextTime";
+    })(FootPanel = Enum.FootPanel || (Enum.FootPanel = {}));
+})(Enum || (Enum = {}));
 /**
  * 底部面板
  */
@@ -27,7 +56,31 @@ var FootPanel = /** @class */ (function (_super) {
      * 接收上层View或者GameViewLogic的数据,根据数据，进行不同的渲染
      * @param data
      */
-    FootPanel.prototype.Set = function (data) {
+    FootPanel.prototype.Set = function (data, type) {
+        switch (type) {
+            case Enum.FootPanel.GameInit:
+                this.EnableButton();
+                this.ui.betNum.changeText("100");
+                this.MaxBet = data.MaxBet;
+                var initMaxBet = Math.floor(data.Balance / 100) * 100;
+                this.maxBetNum = initMaxBet < this.MaxBet ? initMaxBet : this.MaxBet;
+                break;
+            case Enum.FootPanel.GameBetPos:
+                this.EnableButton(false);
+                break;
+            case Enum.FootPanel.GameSettleResult:
+                var comMaxBet = Math.floor(data / 100) * 100;
+                this.maxBetNum = comMaxBet < this.MaxBet ? comMaxBet : this.MaxBet;
+                break;
+            case Enum.FootPanel.GameNextTime:
+                this.EnableButton();
+                break;
+            case Enum.FootPanel.GameRefreshBtn:
+                this.EnableButton();
+                break;
+            default:
+                break;
+        }
     };
     return FootPanel;
 }(BaseFootPanel));

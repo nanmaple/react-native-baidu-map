@@ -66,8 +66,9 @@ class GameHeadView extends BaseGameHeadView implements IView {
      * @param data 
      */
     private GameResult(data:Dto.BetResultDto):void{
-        this.balance = data.Balance;
-        if(data.Status != Enum.BetResultEnum.Success){
+        if(data.Status == Enum.BetResultEnum.Success){
+            this.balance = data.Balance;
+        }else{
             this.Refresh();
         }
     }

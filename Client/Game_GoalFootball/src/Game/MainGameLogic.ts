@@ -117,7 +117,11 @@ class MainGameLogic extends BaseGameLogic {
                 this.SetBetTotalAmount();
                 break;
             case Enum.GameCommand.MsgGameSettleResult://结算结果
-                this.SetBalance((data as Dto.BetResultDto).Balance);
+                if((data as Dto.BetResultDto).Status == Enum.BetResultEnum.Success){
+                    this.SetBalance((response.Data as Dto.BetResultDto).Balance);
+                }else{
+                    this.gameView.SetData(BaseEnum.GameViewLogicEnum.Error, Enum.BetResultEnum[(data as Dto.BetResultDto).Status])
+                }  
                 break;
             default:
                 break;
@@ -199,6 +203,7 @@ class MainGameLogic extends BaseGameLogic {
      * @param data 
      */
     private GetRecordSuccess=(data:any):void=>{
+        // console.log(data);
         if(data && data.length > 0){
             this.betRecordParamsDto.LastId = data[data.length - 1].Id;
         }

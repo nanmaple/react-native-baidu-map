@@ -124,7 +124,9 @@ module ui {
         
             super.createChildren();
             this.createView(ui.CardPanel_VerUI.uiView);
+
         }
+
     }
 }
 

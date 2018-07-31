@@ -1,16 +1,21 @@
+/**
+ * 游戏配置
+ * 根据项目实际修改配置
+ */
 var GameConfig;
 (function (GameConfig) {
     /****************调试*********************/
     GameConfig.IsDebug = true;
-    GameConfig.OpenLog = false;
+    GameConfig.OpenLog = true;
+    GameConfig.IsTestServer = true;
     /****************基础信息*****************/
-    GameConfig.GameID = 1; //游戏ID
+    GameConfig.GameID = 6; //游戏ID
     GameConfig.DeviceType = "MOBILE"; //登录设备类型
     GameConfig.DeviceId = "123456"; //登录设备ID
     GameConfig.CacheType = 0; //存储类型 0 localstorage , 1 cookie ,2 session
     /****************API信息*****************/
-    GameConfig.Domain = GameConfig.IsDebug ? "m.synjiguang.com" : "m.synjiguang.com"; //api域名
-    GameConfig.SocketUrl = GameConfig.IsDebug ? "ws://m.synjiguang.com:9111" : "ws://m.synjiguang.com:9111"; //socket域名
+    GameConfig.Domain = GameConfig.IsTestServer ? "192.168.0.2:9113" : "m.synjiguang.com"; //api域名
+    GameConfig.SocketUrl = GameConfig.IsTestServer ? "ws://192.168.0.120:9800" : "ws://m.synjiguang.com:9111"; //socket域名
     GameConfig.WebApiBaseUrl = "http://" + GameConfig.Domain + "/api"; //api
     GameConfig.BetWebApiBaseUrl = "http://" + GameConfig.Domain + "/report";
     /***************UI设计信息***************/

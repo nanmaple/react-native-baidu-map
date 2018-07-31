@@ -54,7 +54,11 @@ var GameConfig;
      * @param parentID
      */
     function GetHallUrl(parentID) {
-        return "http://" + this.Domain + "?gameid=" + this.GameID + "&parentid=" + parentID;
+        var backUrl = Utils.GetQuery("backurl");
+        if (!backUrl) {
+            return "http://" + this.Domain + "?gameid=" + this.GameID + "&parentid=" + parentID;
+        }
+        return backUrl;
     }
     GameConfig.GetHallUrl = GetHallUrl;
 })(GameConfig || (GameConfig = {}));

@@ -19,6 +19,14 @@ namespace Enum {
          * 获取用户信息
          */
         GetMemberInfo,
+        /**
+         * 刷新按钮
+         */
+        GameRefreshBtn,
+        /**
+         * 获取记录
+         */
+        GetRecord,
 
     }
 }

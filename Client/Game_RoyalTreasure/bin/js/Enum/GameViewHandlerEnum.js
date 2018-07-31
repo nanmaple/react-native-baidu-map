@@ -24,6 +24,10 @@ var Enum;
          * 获取用户信息
          */
         GameViewHandlerEnum[GameViewHandlerEnum["GetMemberInfo"] = 6] = "GetMemberInfo";
+        /**
+         * 启动连接
+         */
+        GameViewHandlerEnum[GameViewHandlerEnum["StartSocket"] = 7] = "StartSocket";
     })(GameViewHandlerEnum = Enum.GameViewHandlerEnum || (Enum.GameViewHandlerEnum = {}));
 })(Enum || (Enum = {}));
 //# sourceMappingURL=GameViewHandlerEnum.js.map

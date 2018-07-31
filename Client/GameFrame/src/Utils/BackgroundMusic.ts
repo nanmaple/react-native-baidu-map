@@ -26,6 +26,12 @@
             Laya.SoundManager.stopMusic();
         };
         /**
+         * 停止播放音效
+         */
+        static StopSound(url: string): void {
+            Laya.SoundManager.stopSound(url);
+        };
+        /**
          * 禁音(背景音乐和所有音效)
          * @param muted 是否禁音
          */
@@ -37,9 +43,9 @@
          * 播放音效
          * @param url 
          */
-        static PlaySounds(url: string): void {
+        static PlaySounds(url: string, hander?:Laya.Handler): void {
             if(this.muted) return;
-            Laya.SoundManager.playSound(url);   //默认播放一次
+            Laya.SoundManager.playSound(url, 1, hander);   //默认播放一次
         };
     }
 }

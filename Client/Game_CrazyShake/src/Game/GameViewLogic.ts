@@ -52,6 +52,8 @@ class GameViewLogic extends BaseGameViewLogic {
         this.ResultPanel.ResetScreen();
         this.GameRecordView = new GameRecordView(this.GameViewEventKey);
         this.GameRecordView.ResetScreen();
+
+        
     }
 
     /**
@@ -85,7 +87,7 @@ class GameViewLogic extends BaseGameViewLogic {
                 this.GameRecordView.Set(null, Enum.GameRecordView.IsRecordShow);
                 break;
             case Enum.ListenViewEnum.GetRecord:
-                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.GetRecord, data]);
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.GetRecord, data.Value]);
                 break;
             default:
                 break;

@@ -2,7 +2,7 @@
     "type":"View",
     "selectedBox":1,
     "selecteID":2,
-    "props":{"width":280,"sceneColor":"#000000","height":280},
+    "props":{"width":280,"sceneColor":"#000000","height":226},
     "nodeParent":-1,
     "label":"View",
     "isOpen":true,
@@ -13,7 +13,7 @@
     "child":[
         {
             "type":"Image",
-            "props":{"y":73,"x":58,"var":"hammer","skin":"ui/hammer.png"},
+            "props":{"y":77,"x":15,"var":"hammer","skin":"ui/hammer.png"},
             "nodeParent":1,
             "label":"Image(hammer)",
             "isDirectory":false,
@@ -22,6 +22,19 @@
             "compId":2,
             "child":[
                 ]
+        },
+        {
+            "type":"Image",
+            "props":{"y":78,"x":4,"width":154,"visible":false,"var":"hammerSplit","skin":"ui/hammerSplit.png","height":125},
+            "nodeParent":1,
+            "label":"Image(hammerSplit)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "compId":6,
+            "child":[
+                ],
+            "$HIDDEN":true
         }],
     "animations":[
         {
@@ -53,7 +66,7 @@
                                 "tween":true,
                                 "target":2,
                                 "key":"x",
-                                "index":10
+                                "index":18
                             },
                             {
                                 "value":137,
@@ -61,7 +74,7 @@
                                 "tween":true,
                                 "target":2,
                                 "key":"x",
-                                "index":16
+                                "index":26
                             }],
                         "rotation":[
                             {
@@ -73,12 +86,12 @@
                                 "index":0
                             },
                             {
-                                "value":180,
+                                "value":166,
                                 "tweenMethod":"linearNone",
                                 "tween":true,
                                 "target":2,
                                 "key":"rotation",
-                                "index":10
+                                "index":18
                             },
                             {
                                 "value":-10,
@@ -86,7 +99,7 @@
                                 "tween":true,
                                 "target":2,
                                 "key":"rotation",
-                                "index":16
+                                "index":26
                             }],
                         "pivotY":[
                             {
@@ -126,11 +139,11 @@
                                 "tween":true,
                                 "target":1,
                                 "key":"width",
-                                "index":16
+                                "index":26
                             }],
                         "height":[
                             {
-                                "value":227,
+                                "value":226,
                                 "tweenMethod":"linearNone",
                                 "tween":true,
                                 "target":1,
@@ -138,18 +151,18 @@
                                 "index":0
                             },
                             {
-                                "value":227,
+                                "value":226,
                                 "tweenMethod":"linearNone",
                                 "tween":true,
                                 "target":1,
                                 "key":"height",
-                                "index":16
+                                "index":26
                             }]
                     }
                 }],
             "name":"dig",
             "id":1,
-            "frameRate":24,
+            "frameRate":60,
             "action":0
         }]
 }

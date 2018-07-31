@@ -17,6 +17,16 @@ namespace Enum{
 
         OpenRecord,
 
+        DigAniComplete,
+
+        NextTime,
+
+        GameAniOver,
+
+        CloseRule,
+
+        GetRecord,
+
         OnGameBgClick,
 
         ConfirmBet,

@@ -15,7 +15,6 @@ namespace Effect{
         constructor(txt: Laya.Label) {
             this.txt = txt;
             this.result = this.MoneyToNumber(this.txt.text);
-
         }
 
         private MoneyToNumber(money: string): number {

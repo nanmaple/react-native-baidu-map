@@ -39,11 +39,16 @@ namespace GameConfig {
         return `${SocketUrl}?GameId=${this.GameID}&MemberId=${memberId}&Device=${this.DeviceType}&DeviceId=${this.DeviceId}&Token=${token}`;
     }
 
+    
     /**
      * 获取大厅跳转地址
      * @param parentID 
      */
     export function GetHallUrl(parentID: string) {
-        return `http://${this.Domain}?gameid=${this.GameID}&parentid=${parentID}`;
+        let backUrl: string = Utils.GetQuery("backurl");
+        if (!backUrl) {
+            return `http://${this.Domain}?gameid=${this.GameID}&parentid=${parentID}`;
+        }
+        return backUrl;
     }
 }

@@ -4,23 +4,19 @@ import {
     Prompt,
 } from 'react-router-dom';
 
-import { AuthorizationDto } from '../../Dto/AuthorizationDto';
-import CacheManager, { CacheType, UserInfo, Authorization } from '../../Service/CacheManager/CacheManager';
+import CacheManager, { CacheType } from '../../Service/CacheManager/CacheManager';
 
 import { GetRedirectUrl } from "../../GameConfig";
 import CompToast, { ToastType } from '../../Components/Toast';
 import LanguageManager from '../../Language/LanguageManager';
-import { ErrorCode } from '../../Enum/ErrorCode';
 import { GetQuery } from '../../Utils/Url';
 import * as GameConfig from '../../GameConfig';
 
 
 import { MemberRoute } from '../../Route/Config';
 import UserCtrl from "../../Controller/UserCtrl";
-import Money from '../../Utils/Money';
 
 import { GameList } from "../../GameList";
-import { url } from 'inspector';
 const logoImg = require("../../Image/logo.png");
 const style = require("./style.css");
 const rightImg = require("../../Image/right.png");
@@ -32,8 +28,8 @@ export default class Home extends React.Component<any, any> {
     private languageManager: LanguageManager = new LanguageManager();
     constructor(props: any) {
         super(props);
-        let memberInfo = this.userCtrl.loginService.GetMemberInfoByLocal(),
-            authorization = this.userCtrl.loginService.GetAuthorizationDtoByLocal();
+        let memberInfo:any = this.userCtrl.loginService.GetMemberInfoByLocal(),
+            authorization:any = this.userCtrl.loginService.GetAuthorizationDtoByLocal();
         this.state = {
             isLogin: this.userCtrl.loginService.IsLogin(),
             isClose: this.userCtrl.loginService.IsClose(),
@@ -58,8 +54,8 @@ export default class Home extends React.Component<any, any> {
             this.setState({
                 score: data.Score,
                 memberInfo: data,
-                account: memberInfo && data.Account.toUpperCase(),
-                nickName: memberInfo && data.Nickname
+                account:  data.Account.toUpperCase(),
+                nickName:  data.Nickname
             })
         }
 

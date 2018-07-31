@@ -1,11 +1,11 @@
 namespace GameConfig {
     /****************调试*********************/
     //是否为调试状态
-    export const IsDebug: boolean = true;
+    export const IsDebug: boolean = false;
     //是否开启日志
-    export const OpenLog: boolean = true;
+    export const OpenLog: boolean = false;
     //是否使用测试服务器地址
-    export const IsTestServer: boolean = true;
+    export const IsTestServer: boolean = false;
     /****************基础信息*****************/
     //游戏ID
     export const GameID: number = 5;
@@ -33,7 +33,7 @@ namespace GameConfig {
     export const DesignShort: number = 750;
     //横竖屏类型 ：0 竖屏  1横屏，默认竖屏
     export let ScreenMode: number = 0;
-	
+
     /*************配置微信分享信息*************/
 
     export const WeChatShareMsg: any = {
@@ -58,6 +58,10 @@ namespace GameConfig {
      * @param parentID 
      */
     export function GetHallUrl(parentID: string) {
-        return `http://${this.Domain}?gameid=${this.GameID}&parentid=${parentID}`;
+        let backUrl: string = Utils.GetQuery("backurl");
+        if (!backUrl) {
+            return `http://${this.Domain}?gameid=${this.GameID}&parentid=${parentID}`;
+        }
+        return backUrl;
     }
 }

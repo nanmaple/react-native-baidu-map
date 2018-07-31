@@ -123,7 +123,7 @@ class GameViewLogic extends BaseGameViewLogic {
                 break;
             //获取历史记录
             case Enum.ListenViewEnum.GetRecord:
-                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.GetRecord, data]);
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.GetRecord, data.Value]);
                 break;
             default:
                 break;

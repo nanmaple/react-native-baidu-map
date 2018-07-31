@@ -3,7 +3,7 @@
  */
 class BaseHeadPanel {
     protected ui: ui.HeadPanelUI;
-    protected balance: number = 0;
+    protected currentBalance: number;
     protected scoreNum: number = 0;
     protected isVoiceOn: boolean = true;
     protected winAmount: number = 0;
@@ -21,6 +21,8 @@ class BaseHeadPanel {
         this.ui.zOrder = 2;
         this.ui.cacheAs = "bitmap";
         Laya.stage.addChild(this.ui);
+        this.ui.ani1.play(0,true)
+        this.OnButton();
     }
     /**
      * 绑定按钮
@@ -31,13 +33,13 @@ class BaseHeadPanel {
         this.ui.voiceBtn.on(Laya.Event.CLICK, this, () => {
             if (this.isVoiceOn) {
                 this.isVoiceOn = false;
-                Laya.SoundManager.muted=true;
+                Laya.SoundManager.muted = true;
                 this.ui.voiceBtn.skin = "ui/voiceOffBtn.png"
             }
             else {
                 this.isVoiceOn = true;
-                Laya.SoundManager.muted=false;
-                Laya.SoundManager.playSound("sound/btnSound.mp3")
+                Laya.SoundManager.muted = false;
+                // Laya.SoundManager.playSound("sound/btnSound.mp3")
                 this.ui.voiceBtn.skin = "ui/voiceOnBtn.png"
             }
         })
@@ -47,19 +49,19 @@ class BaseHeadPanel {
      */
     private OnMouseDown() {
         this.ui.homeBtn.on(Laya.Event.MOUSE_DOWN, this, () => {
-            Laya.SoundManager.playSound("sound/btnSound.mp3")
+            // Laya.SoundManager.playSound("sound/btnSound.mp3")
             this.ui.homeBtn.skin = "ui/homeBtn2.png"
         })
         this.ui.ruleBtn.on(Laya.Event.MOUSE_DOWN, this, () => {
-            Laya.SoundManager.playSound("sound/btnSound.mp3")
+            // Laya.SoundManager.playSound("sound/btnSound.mp3")
             this.ui.ruleBtn.skin = "ui/ruleBtn2.png"
         })
         this.ui.rechargeBtn.on(Laya.Event.MOUSE_DOWN, this, () => {
-            Laya.SoundManager.playSound("sound/btnSound.mp3")
+            // Laya.SoundManager.playSound("sound/btnSound.mp3")
             this.ui.rechargeBtn.skin = "ui/rechargeBtn2.png"
         })
         this.ui.recordBtn.on(Laya.Event.MOUSE_DOWN, this, () => {
-            Laya.SoundManager.playSound("sound/btnSound.mp3")
+            // Laya.SoundManager.playSound("sound/btnSound.mp3")
             this.ui.recordBtn.skin = "ui/recordBtn2.png"
         })
     }
@@ -80,7 +82,7 @@ class BaseHeadPanel {
             this.ui.rechargeBtn.skin = "ui/rechargeBtn1.png"
             //弹出游戏充值面板
         })
-        this.ui.recordBtn.on(Laya.Event.MOUSE_UP,this,()=>{
+        this.ui.recordBtn.on(Laya.Event.MOUSE_UP, this, () => {
             this.ui.recordBtn.skin = "ui/recordBtn1.png"
             this.EventNotification(Enum.ListenViewEnum.OpenRecord)
         })
@@ -99,7 +101,7 @@ class BaseHeadPanel {
      * 通过事件，向上通知
      * 事件key值，通过构造函数时注入
      */
-    private EventNotification(Data:any): void {
+    private EventNotification(Data: any): void {
         let data: Dto.EventNotificationDto = new Dto.EventNotificationDto();
         data.Value = {};
         data.Type = Data;

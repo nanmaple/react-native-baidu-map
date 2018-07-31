@@ -62,7 +62,10 @@ var HeadView = /** @class */ (function (_super) {
         }
     };
     /**返回首页 */
-    HeadView.prototype.OnGoHome = function () { };
+    HeadView.prototype.OnGoHome = function () {
+        var parentID = Utils.GetQuery("parentid");
+        Laya.Browser.window.location.replace(GameConfig.GetHallUrl(parentID));
+    };
     /**跳转支付 */
     HeadView.prototype.OnPay = function () { };
     /**刷新余额 */

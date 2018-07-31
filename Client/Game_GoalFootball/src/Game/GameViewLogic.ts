@@ -90,6 +90,7 @@ class GameViewLogic extends BaseGameViewLogic {
                 break;
             case Enum.ListenViewEnum.GetRecord:
                 this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.GetRecord, data.Value]); 
+                break;
             default:
                 break;
         }
@@ -107,7 +108,7 @@ class GameViewLogic extends BaseGameViewLogic {
                 this.ShowAlert(0, data);
                 break;
             case BaseEnum.GameViewLogicEnum.Error:
-                console.log(data);
+                this.ShowAlert(0, data);
                 break;
             case BaseEnum.GameViewLogicEnum.Loading:
                 this.SetLoading(data);

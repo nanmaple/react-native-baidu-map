@@ -129,9 +129,9 @@ abstract class BaseGameRecordView {
         Effect.AlertEffect.Hide(this.ui.prompt, Laya.Handler.create(this, () => {
             this.isShow = false;
             this.ui.visible = this.isShow;
+            this.dataArr = [];
+            this.SetListArray(this.dataArr);
         }, null, false))
-        this.dataArr = [];
-        this.SetListArray(this.dataArr);
     }
     /**
      * 事件广播

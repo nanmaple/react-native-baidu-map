@@ -11,7 +11,7 @@ var ResultEnum = {
     Tourist: 4
 };
 
-var Domain = "m.synjiguang.com";
+var Domain = "192.168.0.2:9113";
 
 var DeviceType = "MOBILE";
 var DeviceId = "123456";

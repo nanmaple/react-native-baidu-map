@@ -27,5 +27,13 @@ namespace Enum {
          * 获取用户信息
          */
         GetMemberInfo = 6,
+        /**
+         * 启动连接
+         */
+        StartSocket,
+        /**
+         * 获取记录
+         */
+        GetRecord
     }
 }

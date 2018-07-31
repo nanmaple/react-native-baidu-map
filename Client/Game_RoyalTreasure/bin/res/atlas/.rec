@@ -1,6 +1,18 @@
 D .
 D comp
 P 1F3929EA button.png
+D outline
+P ACB98FD5 a.png
+P F8958D0C b.png
+P BC1CEE1A c.png
+P BE21B766 d.png
+P D184EE22 e.png
+P 3533BE7B f.png
+P 44A7CE69 g.png
+P FCF8D0FD h.png
+P 0ABE67CA i.png
+P AA86674C j.png
+P 2B086E3A k.png
 D ui
 P 66020FA6 addBtn1.png
 P 13DFF686 addBtn2.png
@@ -13,8 +25,10 @@ R 577CD16E bg_alert.png
 R 5C94EABC bg_record.png
 P 550C1ECA blackDiamond.png
 P 4E0F44FE btn_autoDig.png
+P 71509252 btn_close.png
 P 3A9E4B83 car.png
 P 97F7108C close.png
+P AA99E94A closeBtn.png
 P 98044097 crown.png
 P 42BC4281 decreaseBtn1.png
 P 50AEEAB6 decreaseBtn2.png
@@ -23,34 +37,37 @@ R 517DB5A9 footer.png
 P BB6D03DC goldHammer.png
 P 7DC63BF2 hammer.png
 P 24D92835 hammerBg.png
+P 878613F7 hammerSplit.png
 R AA211E3F header.png
 P 1F496377 homeBtn1.png
 P 72CC0DA3 homeBtn2.png
 P F6C24E0A leftGold.png
 P 5958F3C6 lightOff.png
 P 43928C19 lightOn.png
+P 1AEAAC1B listBgTwo.png
 R 008A41CD load.jpg
 R 3947C27C maskBg.png
 P 64E29EC8 maxBtn1.png
 P A5121631 maxBtn2.png
-R 0305E3DB mine1.png
-P C4386E70 mine2.png
-P 937F953D mine3.png
-P FD7B5DD0 mine4.png
-P 450CF53A mine5.png
-P 9C06D645 mine6.png
+R 80E2FBFD Mine.png
 R 6713AC7E new.png
 R 577CD16E prompt.png
 P 3DBF3B4E rechargeBtn1.png
 P 064766B3 rechargeBtn2.png
+R FD4CE482 record.png
+P BEFD222A record_tit.png
 P A7A0298C recordBtn1.png
 P C9ADB0A1 recordBtn2.png
 P 4785E4CE redDiamond.png
 P C0F516B3 rightGold.png
+R 6674C3E1 ruleBg.png
 P A55B12C0 ruleBtn1.png
 P 2D07C304 ruleBtn2.png
+P 37D79B54 ruleLogo.png
+P C58A395B ruleWord.png
 P 8A4F1EBF semicircle.png
 P 7D2C9B54 star.png
+P 9CB9F5FC testMine.png
 R EC3ADF62 tip.png
 P BB945F0F voiceOffBtn.png
 P F9DF90BB voiceOnBtn.png

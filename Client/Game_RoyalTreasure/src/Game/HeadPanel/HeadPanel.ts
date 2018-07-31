@@ -11,6 +11,10 @@ namespace Enum {
          * 游戏结果处理
          */
         GameSettleResult,
+        /**
+         * 下一场游戏
+         */
+        GameNextTime,
     }
 }
 
@@ -20,7 +24,6 @@ namespace Enum {
  * 顶部面板
  */
 class HeadPanel extends BaseHeadPanel implements IView {
-    private currentBalance: number;
     constructor(eventKey: string) {
         super(eventKey);
     }
@@ -44,8 +47,12 @@ class HeadPanel extends BaseHeadPanel implements IView {
                 this.SetBalance(data);
                 break;
             case Enum.HeadPanel.GameSettleResult:
-                
+                this.currentBalance = data.Balance;
+                this.SetBalance(data.Balance - data.WinAmount);
                 break;
+            case Enum.HeadPanel.GameNextTime:
+                this.SetBalance(this.currentBalance);
+            break;
             default:
                 break;
         }

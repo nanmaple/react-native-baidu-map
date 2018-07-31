@@ -8,8 +8,8 @@ namespace GameConfig {
 
     export const Domain: string = IsDebug ? "192.168.0.2:9113" : "m.synjiguang.com";
 	export const SocketUrl: string = IsDebug ? "ws://192.168.0.2:9110" : "ws://m.synjiguang.com:9111";
-    export const WebApiBaseUrl: string = `//${Domain}/api`;
-    export const BetWebApiBaseUrl: string = `//${Domain}/report`;
+    export const WebApiBaseUrl: string = `http://${Domain}/api`;
+    export const BetWebApiBaseUrl: string = `http://${Domain}/report`;
 
     export const DesignLength: number = 1334;
     export const DesignShort: number = 750;

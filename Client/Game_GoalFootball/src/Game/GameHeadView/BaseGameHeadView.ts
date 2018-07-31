@@ -85,15 +85,14 @@ abstract class BaseGameHeadView {
      * 返回首页
      */
     private BackHome():void{
-        Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
-        Laya.Browser.window.location.href = "";
+        let parentID = Utils.GetQuery("parentid");
+        Laya.Browser.window.location.replace(GameConfig.GetHallUrl(parentID));
     }
     /**
      * 充值
      */
     private Recharge():void{
         Utils.BackgroundMusic.PlaySounds("sound/btn.mp3");
-        Laya.Browser.window.location.href = "";
     }
     /**
      * 事件广播

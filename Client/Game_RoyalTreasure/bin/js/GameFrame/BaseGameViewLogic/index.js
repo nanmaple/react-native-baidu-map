@@ -24,7 +24,7 @@ var ScreenStatus;
  */
 var BaseGameViewLogic = /** @class */ (function (_super) {
     __extends(BaseGameViewLogic, _super);
-    function BaseGameViewLogic() {
+    function BaseGameViewLogic(Handler) {
         var _this = _super.call(this) || this;
         /**
          * 登录是否成功
@@ -56,6 +56,8 @@ var BaseGameViewLogic = /** @class */ (function (_super) {
         document.addEventListener(_this.GameViewEventKey, function (data) {
             _this.ListenUI(data.detail);
         });
+        _this.CtrlHandler = Handler;
+        _this.GameLoad();
         return _this;
     }
     /**
@@ -68,6 +70,41 @@ var BaseGameViewLogic = /** @class */ (function (_super) {
         }
         else {
             this.gameLoadView && this.gameLoadView.ResetScreen();
+        }
+    };
+    /**
+    * 启动游戏资源页面，开始加载游戏资源
+    */
+    BaseGameViewLogic.prototype.GameLoad = function () {
+        this.gameLoadView = new GameLoadView(this.GameViewEventKey);
+        this.gameLoadView.ResetScreen();
+        //设置版本控制类型为使用文件名映射的方式
+        // Laya.ResourceVersion.type = Laya.ResourceVersion.FILENAME_VERSION;
+        //加载版本信息文件
+        // Laya.ResourceVersion.enable("version.json", Laya.Handler.create(this, ()=>{
+        this.gameLoadView.StartLoad(GameResourceConfig.LoadResourcesConfig);
+        // },null,false)); 
+    };
+    /**
+     * 游戏资源加载完成，检查登录状态
+     */
+    BaseGameViewLogic.prototype.CheckLoad = function () {
+        this.isLoadSuccess = true;
+        if (this.isLoginSucess) {
+            this.gameLoadView.Remove();
+            //加载主界面
+            this.GameMainUI();
+        }
+    };
+    /**
+     * 游戏登录完成，检查游戏资源加载状态
+     */
+    BaseGameViewLogic.prototype.GameLoginComplete = function () {
+        this.isLoginSucess = true;
+        if (this.isLoadSuccess) {
+            this.gameLoadView.Remove();
+            //加载主界面
+            this.GameMainUI();
         }
     };
     /**

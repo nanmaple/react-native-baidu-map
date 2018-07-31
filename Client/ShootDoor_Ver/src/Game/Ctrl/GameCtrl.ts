@@ -249,7 +249,7 @@ class GameCtrl extends BaseCtrl {
      * @param data 游戏投注结果信息
      */
     public OnBetResult(data: Dto.BetResultDto): void {
-        // console.log("投注结果：",data)
+        console.log("投注结果：",data)
         if (!this.roundID || this.roundID < data.RoundID) {
             this.roundID = data.RoundID;
         } else if (this.roundID == data.RoundID) {

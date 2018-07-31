@@ -75,7 +75,7 @@ var AlertView = /** @class */ (function (_super) {
         this.alertTxt = LanguageUtils.Language.Get(txt);
         this.ui.visible = this.alertShow;
         this.ui.txt.text = this.alertTxt;
-        Laya.Tween.to(this.ui.prompt, { scaleX: 1, scaleY: 1 }, 500, Laya.Ease.backOut);
+        Laya.Tween.to(this.ui.prompt, { scaleX: 1, scaleY: 1 }, 300, Laya.Ease.backOut);
     };
     /**
      * 关闭弹出框
@@ -85,7 +85,7 @@ var AlertView = /** @class */ (function (_super) {
         if (!this.ui) {
             return;
         }
-        Laya.Tween.to(this.ui.prompt, { scaleX: 0, scaleY: 0 }, 500, Laya.Ease.backIn, Laya.Handler.create(this, function () {
+        Laya.Tween.to(this.ui.prompt, { scaleX: 0, scaleY: 0 }, 300, Laya.Ease.backIn, Laya.Handler.create(this, function () {
             _this.alertShow = false;
             _this.ui.visible = _this.alertShow;
         }, null, false));

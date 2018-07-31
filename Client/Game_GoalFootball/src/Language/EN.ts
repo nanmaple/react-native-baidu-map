@@ -204,7 +204,7 @@ namespace LanguageUtils {
         "<p style='fontSize:25;color:#fff'>3.Click on 'shot' to kick the ball;</p>"+"<br/>"+
         "<p style='fontSize:25;color:#fff'>4.Users can get 1.5, 2, 5, 10 times reward after scoring;</p>"+"<br/>",
 
-        //游戏图片多语言切换
+        /******游戏图片多语言切换******/
         /**
          * 射门按钮
          */

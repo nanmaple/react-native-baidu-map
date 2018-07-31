@@ -29,7 +29,7 @@ class MainGameLogic extends BaseGameLogic {
         this.betLogic = new OnceBet.BetLogic();
         this.betRecordPageDto = new Dto.BetRecordPageDto();
         this.betRecordPageDto.GameId = GameConfig.GameID;
-        this.betRecordPageDto.PageSize = 10;
+        this.betRecordPageDto.PageSize = 15;
     }
 
     /**

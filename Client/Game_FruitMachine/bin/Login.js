@@ -25,7 +25,7 @@ var LoginUrl = "//" + Domain + "/api/Member/Login";
 var GetJsSignature = "//" + Domain + "/api/WeChat/GetJsSignature";
 var GetAppIDApi = "//" + Domain + "/api/WeChat/GetAppID";
 var LoginByAccount = "//" + Domain + "/api/Member/AccountLogin";
-if (window.location.href.indexOf("http") == -1) {
+if (window.location.href.indexOf("http") !== 0) {
     LoginByTourist = "http:" + LoginByTourist;
     GetMemberInfo = "http:" + GetMemberInfo;
     LoginCheck = "http:" + LoginCheck;
@@ -73,7 +73,7 @@ LoginService.prototype.Login = function () {
             authorizationDto = this.GetAuthorization();
             this.ClearUserInfo();
             LoginService.header.Authorization = "";
-            this.webApi&&this.webApi.ClearToken();
+            this.webApi && this.webApi.ClearToken();
         }
         this.LoginByCode(code, parentId);
     }
@@ -114,7 +114,7 @@ LoginService.prototype.LoginByID = function (memberId) {
             };
             //设置token到单例webapi
             LoginService.header.Authorization = authorizationDto.Token;
-            this.webApi&&this.webApi.SetToken(authorizationDto.Token);
+            this.webApi && this.webApi.SetToken(authorizationDto.Token);
             this.http.Post(LoginById, loginByIdDto, LoginService.header, function (res) {
                 if (res) {
                     var Data = res.Data, Result = res.Result;
@@ -195,7 +195,7 @@ LoginService.prototype.LoginByToken = function (code, token, parentId) {
         //token直接做登录验证
         //设置token到单例webapi
         LoginService.header.Authorization = token;
-        this.webApi&&this.webApi.SetToken(token);
+        this.webApi && this.webApi.SetToken(token);
         var loginParamsDto = {};
         if (parentId) {
             loginParamsDto.DeviceType = DeviceType;
@@ -245,11 +245,11 @@ LoginService.prototype.LoginByTourist = function (code, token, parentId) {
         loginParamsDto.DeviceId = DeviceId;
         if (token) {
             LoginService.header.Authorization = token;
-            this.webApi&&this.webApi.SetToken(token);
+            this.webApi && this.webApi.SetToken(token);
         }
         else {
             LoginService.header.Authorization = "";
-            this.webApi&&this.webApi.ClearToken();
+            this.webApi && this.webApi.ClearToken();
         }
         this.http.Post(LoginByTourist, loginParamsDto, LoginService.header, function (res) {
 
@@ -320,7 +320,7 @@ LoginService.prototype.LoginByAccountSuccess = function (response, code, parentI
             dto.IsClose = Data.Closed;
             //写入到WebApi
             LoginService.header.Authorization = dto.Token;
-            this.webApi&&this.webApi.SetToken(dto.Token);
+            this.webApi && this.webApi.SetToken(dto.Token);
             //写入缓存中
             this.SetAuthorization(dto);
             this.GetMemberInfo();
@@ -355,7 +355,7 @@ LoginService.prototype.LoginSuccess = function (response, code, parentId, isTour
         dto.IsClose = response.Closed;
         //写入到WebApi
         LoginService.header.Authorization = dto.Token;
-        this.webApi&&this.webApi.SetToken(dto.Token);
+        this.webApi && this.webApi.SetToken(dto.Token);
         //写入缓存中
         this.SetAuthorization(dto);
         this.GetMemberInfo();

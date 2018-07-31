@@ -6,6 +6,9 @@ class GameViewLogic extends BaseGameViewLogic {
     public HeadPanel: HeadPanel;
     public TreasurePanel: TreasurePanel;
     public FootPanel: FootPanel;
+    public ToyPanel: ToyPanel;
+    public RulePanel:RulePanel;
+    public GameRecordView:GameRecordView;
     constructor(Handler: Laya.Handler) {
         super(Handler);
     }
@@ -36,6 +39,13 @@ class GameViewLogic extends BaseGameViewLogic {
         this.TreasurePanel.ResetScreen();
         this.FootPanel = new FootPanel(this.GameViewEventKey);
         this.FootPanel.ResetScreen();
+        this.ToyPanel = new ToyPanel(this.GameViewEventKey);
+        this.ToyPanel.ResetScreen();
+        this.GameRecordView = new GameRecordView(this.GameViewEventKey);
+        this.GameRecordView.ResetScreen();
+        this.RulePanel = new RulePanel(this.GameViewEventKey);
+        this.RulePanel.ResetScreen();
+        this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.StartSocket, {}]);
     }
 
     /**
@@ -47,10 +57,29 @@ class GameViewLogic extends BaseGameViewLogic {
             case Enum.ListenViewEnum.GameLoadComplate:
                 this.CheckLoad();
                 break;
-            // case Enum.ListenViewEnum.ShowRule:
-            //     this.RuleUIHV.ShowRule();
-            //     break;
+            case Enum.ListenViewEnum.CloseRule:
+                this.RulePanel.Set();
+                break;
+            case Enum.ListenViewEnum.OpenRule:
+                this.RulePanel.Refresh();
+                break;
+                case Enum.ListenViewEnum.OpenRecord:
+                this.GameRecordView.Set(null, Enum.GameRecordView.IsRecordShow);
+                break;
+            case Enum.ListenViewEnum.GetRecord:
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.GetRecord, data]);
+                break;
             case Enum.ListenViewEnum.BetPos:
+                let betData: Dto.GameBetDto = new Dto.GameBetDto();
+                betData.Amount = this.FootPanel.BetNumber();
+                this.ToyPanel.DigWhere(data.Value);
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.BetPos, betData]);
+                break;
+            case Enum.ListenViewEnum.NextTime:
+                this.OnNextTime();            
+                break;
+            case Enum.ListenViewEnum.DigAniComplete:
+                this.OnDigAniComplete();
                 break;
             default:
                 break;
@@ -81,11 +110,11 @@ class GameViewLogic extends BaseGameViewLogic {
                 this.OnMessageHandler(data);
                 break;
             //扩展数据分发类型
-            case Enum.GameViewLogicEnum.ChangMoney:
-                break;
-            case Enum.GameViewLogicEnum.GetMemberInfo:
-                break;
             case Enum.GameViewLogicEnum.BetPos:
+                this.OnBetPos(data)
+                break;
+            case Enum.GameViewLogicEnum.GameRefreshBtn:
+                this.OnGameRefreshBtn();
                 break;
             case Enum.GameViewLogicEnum.SetRecord:
                 break;
@@ -93,6 +122,7 @@ class GameViewLogic extends BaseGameViewLogic {
                 break;
         }
     }
+
     /**
      * 侦听游戏命令
      * @param data 
@@ -102,23 +132,8 @@ class GameViewLogic extends BaseGameViewLogic {
             case Enum.GameCommand.MsgGameInit:
                 this.OnGameInit(data.Data);
                 break;
-            case Enum.GameCommand.MsgGameStart:
-                this.OnGameStart(data.Data);
-                break;
-            case Enum.GameCommand.MsgGameBetResult:
-                this.OnBetResult(data.Data);
-                break;
-            case Enum.GameCommand.MsgGameStopBet:
-                this.OnStopBet(data);
-                break;
-            case Enum.GameCommand.MsgGameResult:
-                this.OnGameResult(data.Data);
-                break;
             case Enum.GameCommand.MsgGameSettleResult:
                 this.OnSettleResult(data.Data);
-                break;
-            case Enum.GameCommand.MsgGameOther:
-                this.OnGameOther(data.Data);
                 break;
             default:
                 break;
@@ -133,52 +148,58 @@ class GameViewLogic extends BaseGameViewLogic {
      */
     public OnGameInit(data: any): void {
         this.Log(data, "GameInit");
-        this.HeadPanel.Set(data.Balance,Enum.HeadPanel.GameInit);
-        this.FootPanel.Set(data)
+        this.HeadPanel.Set(data.Balance, Enum.HeadPanel.GameInit);
+        this.FootPanel.Set(data, Enum.FootPanel.GameInit);
+        this.TreasurePanel.Set(data, Enum.TreasurePanel.GameInit);
     }
 
     /**
-     * 游戏开始命令处理
-     * @param data 游戏开始数据
-     */
-    public OnGameStart(data: any): void {
-        this.Log(data, "GameStart");
-    }
-
-    /**
-     * 投注结果命令处理
-     * @param data 游戏投注结果
-     */
-    public OnBetResult(data: any): void {
-        this.Log(data, "BetResult");
-
-    }
-
-    /**
-     * 停止投注
+     * 投注按钮按下后
      * @param data 
      */
-    public OnStopBet(data: any): void {
-
+    public OnBetPos(data:any): void {
+        this.TreasurePanel.Set(data, Enum.TreasurePanel.GameBetPos);
+        this.FootPanel.Set(null, Enum.FootPanel.GameBetPos);
     }
-
-    /**
-     * 游戏结果
-     * @param data 游戏结果数据
-     */
-    public OnGameResult(data: any): void {
-        this.Log(data, "GameResult");
-    }
-
+    
     /**
      * 结算命令
      * @param data 游戏结算数据
      */
     public OnSettleResult(data: any): void {
         this.Log(data, "SettleResult");
+        //更改余额显示
+        this.HeadPanel.Set(data, Enum.HeadPanel.GameSettleResult);
+        //开始挖矿
+        this.ToyPanel.Set(data.WinAmount, Enum.ToyPanel.GameSettleResult);
+        //预设置最大投注额
+        this.FootPanel.Set(data.Balance,Enum.FootPanel.GameSettleResult);
+        //预设置所得矿石结果
+        this.TreasurePanel.Set(data,Enum.TreasurePanel.GameSettleResult);
     }
 
-    public OnGameOther(data: any): void {
+    
+    /**
+     * 挖掘动作完成
+     */
+    public OnDigAniComplete() {
+        this.TreasurePanel.Set(null,Enum.TreasurePanel.GameDigAniComplete)
+    }
+    /**
+     * 下一局
+     */
+    public OnNextTime():void{
+        this.HeadPanel.Set(null,Enum.HeadPanel.GameNextTime);
+        this.FootPanel.Set(null,Enum.FootPanel.GameNextTime);
+        this.ToyPanel.Set(null,Enum.ToyPanel.GameNextTime)
+        this.TreasurePanel.Set(null,Enum.TreasurePanel.GameNextTime)
+    }
 
+    /**
+     * 刷新按钮
+     */
+    public OnGameRefreshBtn(): void {
+        this.TreasurePanel.Set(null, Enum.TreasurePanel.GameRefreshBtn);
+        this.FootPanel.Set(null, Enum.FootPanel.GameRefreshBtn);
     }
 }
