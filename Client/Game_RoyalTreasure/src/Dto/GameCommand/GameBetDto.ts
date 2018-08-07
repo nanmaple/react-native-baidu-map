@@ -7,5 +7,9 @@ namespace Dto{
          * 投注额
          */
         public Amount:number;
+
+        public digTimes:number;
+
+        public nowTime:number;
     }
 }

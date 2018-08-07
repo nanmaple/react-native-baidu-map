@@ -23,6 +23,10 @@ namespace Enum {
          * 下一场
          */
         GameNextTime,
+        /**
+         * 自动挖矿结束
+         */
+        AutoDigOver
     }
 }
 /**
@@ -54,19 +58,28 @@ class FootPanel extends BaseFootPanel implements IView {
                 this.MaxBet = data.MaxBet;
                 let initMaxBet = Math.floor(data.Balance / 100) * 100;
                 this.maxBetNum = initMaxBet < this.MaxBet ? initMaxBet : this.MaxBet;
+                this.ui.autoDigBtn.visible=true;
+                this.ui.stopDigBtn.visible=false;
+                this.ui.autoDigTimes.visible=false;
+                this.isVisible=false;
                 break;
             case Enum.FootPanel.GameBetPos:
                 this.EnableButton(false);
+                this.ChangeStopBtnWord(data.digTimes - data.nowTime);
                 break;
             case Enum.FootPanel.GameSettleResult:
                 let comMaxBet = Math.floor(data / 100) * 100;
                 this.maxBetNum = comMaxBet < this.MaxBet ? comMaxBet : this.MaxBet;
                 break;
             case Enum.FootPanel.GameNextTime:
-                this.EnableButton();
+                if (data) this.EventNotification(data)
+                else this.EnableButton();
                 break;
             case Enum.FootPanel.GameRefreshBtn:
                 this.EnableButton();
+                break;
+                case Enum.FootPanel.AutoDigOver:
+                this.AutoDigOver();
                 break;
             default:
                 break;

@@ -4,8 +4,11 @@ namespace Enum{
          * 设置道具金额
          */
         SetPropAmount = 10000,
-         
-    }
+        /**
+         * 禁用面板
+         */
+        DisabledAniView,
+    }   
 }
 class GameAniView extends BaseGameAniView implements IView {
     constructor(eventKey: string) {
@@ -35,6 +38,9 @@ class GameAniView extends BaseGameAniView implements IView {
                 break;
             case Enum.GameAniView.SetPropAmount:
                 this.SetPropAmount(data);
+                break;
+            case Enum.GameAniView.DisabledAniView:
+                this.DisabledAniView(data);
                 break;
             default:
                 break;
@@ -93,8 +99,8 @@ class GameAniView extends BaseGameAniView implements IView {
     private GameResult(data:Dto.BetResultDto):void{
         if(data.Status == Enum.BetResultEnum.Success){
             this.ShootDoor(data.Odds);
-            this.ui.disabled = true;
-            this.ui.gray = false;
+        }else{
+            this.DisabledAniView(false);
         }
     }
     

@@ -26,6 +26,7 @@ R 5C94EABC bg_record.png
 P 550C1ECA blackDiamond.png
 P 4E0F44FE btn_autoDig.png
 P 71509252 btn_close.png
+P 65304DE8 btn_stopDig.png
 P 3A9E4B83 car.png
 P 97F7108C close.png
 P AA99E94A closeBtn.png
@@ -68,6 +69,9 @@ P C58A395B ruleWord.png
 P 8A4F1EBF semicircle.png
 P 7D2C9B54 star.png
 P 9CB9F5FC testMine.png
+P 5C3769BD timesBg.png
+P 5A31115C timesNumBg.png
 R EC3ADF62 tip.png
 P BB945F0F voiceOffBtn.png
 P F9DF90BB voiceOnBtn.png
+P E9176FDC wordStopDig.png

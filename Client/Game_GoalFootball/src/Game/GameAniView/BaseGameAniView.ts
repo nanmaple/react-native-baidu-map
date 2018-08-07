@@ -93,6 +93,14 @@ abstract class BaseGameAniView {
         this.InitProp();
     }
     /**
+     * 是否禁用动画面板
+     * @param disabled 
+     */
+    protected DisabledAniView(disabled: boolean):void{
+        this.ui.disabled = disabled;
+        this.ui.gray = false;
+    }
+    /**
      * 初始化道具
      */
     public InitProp():void{
@@ -238,7 +246,7 @@ abstract class BaseGameAniView {
         this.counts = 0;
         this.isDefense = false;
         this.isGoal = false;
-        this.ui.disabled = false;
+        this.DisabledAniView(false);
         this.ResetProp();
         this.GameAniResult();
     }

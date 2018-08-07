@@ -9,6 +9,9 @@ class GameViewLogic extends BaseGameViewLogic {
     public ToyPanel: ToyPanel;
     public RulePanel:RulePanel;
     public GameRecordView:GameRecordView;
+    public isAuto:boolean=false;
+    public autoDigTimes:number;
+    public isStop:boolean=false;
     constructor(Handler: Laya.Handler) {
         super(Handler);
     }
@@ -75,6 +78,24 @@ class GameViewLogic extends BaseGameViewLogic {
                 this.ToyPanel.DigWhere(data.Value);
                 this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.BetPos, betData]);
                 break;
+                case Enum.ListenViewEnum.StopAutoDig:
+                this.isStop=true;
+                break;
+            case Enum.ListenViewEnum.AutoBet:
+                if(this.isStop){
+                    this.OnAutoBetComplete();
+                    return
+                }
+                this.autoDigTimes=data.Value.digTime;
+                this.isAuto=true;
+                let betIndex: Dto.GameBetDto = new Dto.GameBetDto();
+                betIndex.Amount = this.FootPanel.BetNumber();
+                betIndex.digTimes=data.Value.digTime;
+                betIndex.nowTime=data.Value.nowTime;
+                this.ToyPanel.DigWhere(data.Value);
+                this.TreasurePanel.MineWhere(data.Value);
+                this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.AutoBet, betIndex]);
+            break;
             case Enum.ListenViewEnum.NextTime:
                 this.OnNextTime();            
                 break;
@@ -118,6 +139,9 @@ class GameViewLogic extends BaseGameViewLogic {
                 break;
             case Enum.GameViewLogicEnum.SetRecord:
                 break;
+                case Enum.GameViewLogicEnum.AutoBetComplete:
+                this.OnAutoBetComplete();
+                break;
             default:
                 break;
         }
@@ -159,7 +183,7 @@ class GameViewLogic extends BaseGameViewLogic {
      */
     public OnBetPos(data:any): void {
         this.TreasurePanel.Set(data, Enum.TreasurePanel.GameBetPos);
-        this.FootPanel.Set(null, Enum.FootPanel.GameBetPos);
+        this.FootPanel.Set(data, Enum.FootPanel.GameBetPos);
     }
     
     /**
@@ -185,14 +209,26 @@ class GameViewLogic extends BaseGameViewLogic {
     public OnDigAniComplete() {
         this.TreasurePanel.Set(null,Enum.TreasurePanel.GameDigAniComplete)
     }
+
     /**
      * 下一局
      */
     public OnNextTime():void{
         this.HeadPanel.Set(null,Enum.HeadPanel.GameNextTime);
-        this.FootPanel.Set(null,Enum.FootPanel.GameNextTime);
         this.ToyPanel.Set(null,Enum.ToyPanel.GameNextTime)
         this.TreasurePanel.Set(null,Enum.TreasurePanel.GameNextTime)
+        if(this.isAuto)this.FootPanel.Set(this.autoDigTimes,Enum.FootPanel.GameNextTime);
+        else this.FootPanel.Set(null,Enum.FootPanel.GameNextTime)
+    }
+
+    /**
+     * 自动挖矿结束
+     */
+    public OnAutoBetComplete(){
+        this.isStop=false;
+        this.isAuto=false;
+        this.autoDigTimes=0;
+        this.FootPanel.Set(null,Enum.FootPanel.AutoDigOver);
     }
 
     /**

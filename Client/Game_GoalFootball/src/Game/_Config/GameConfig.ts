@@ -1,8 +1,8 @@
 namespace GameConfig {
     /****************调试*********************/
-    export const IsDebug: boolean = true;
-    export const OpenLog: boolean = true;
-    export const IsTestServer: boolean = true;
+    export const IsDebug: boolean = false;
+    export const OpenLog: boolean = false;
+    export const IsTestServer: boolean = false;
     /****************基础信息*****************/
     export const GameID: number = 4;//游戏ID
     export const DeviceType: string = "MOBILE";//登录设备类型

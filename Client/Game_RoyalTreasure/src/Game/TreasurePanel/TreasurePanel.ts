@@ -65,7 +65,7 @@ class TreasurePanel extends BaseTreasurePanel implements IView {
                 break;
             case Enum.TreasurePanel.GameBetPos:
                 this.ui.mineImg.mouseEnabled = false;
-                this.betNum = data;
+                this.betNum = data.Amount;
                 break;
             case Enum.TreasurePanel.GameSettleResult:
                 this.mines = data.Mines;
@@ -137,5 +137,12 @@ class TreasurePanel extends BaseTreasurePanel implements IView {
         let jumpY = this.mineY + 30 +30 * Math.random();
         return [jumpX, jumpY]
     }
-
+    /**
+     * 矿石出现位置
+     * @param data位置参数 
+     */
+    public MineWhere(data:any){
+        this.mineX=data.x;
+        this.mineY=data.y;
+    }
 }

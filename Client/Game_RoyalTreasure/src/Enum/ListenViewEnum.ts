@@ -27,6 +27,10 @@ namespace Enum{
 
         GetRecord,
 
+        AutoBet,
+
+        StopAutoDig,
+
         OnGameBgClick,
 
         ConfirmBet,

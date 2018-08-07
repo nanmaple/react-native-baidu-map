@@ -2,8 +2,8 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":11,
-    "props":{"width":750,"sceneColor":"#000000","height":200},
+    "selecteID":27,
+    "props":{"width":750,"sceneColor":"#000000","height":273},
     "nodeParent":-1,
     "label":"View",
     "isOpen":true,
@@ -15,7 +15,7 @@
         {
             "x":15,
             "type":"Image",
-            "props":{"y":6,"x":-22,"width":793,"skin":"ui/footer.png"},
+            "props":{"y":80,"x":-22,"width":793,"skin":"ui/footer.png"},
             "nodeParent":1,
             "label":"Image",
             "isDirectory":false,
@@ -24,12 +24,12 @@
             "compId":2,
             "child":[
                 ],
-            "$LOCKED":true
+            "$LOCKED":false
         },
         {
             "x":15,
             "type":"Image",
-            "props":{"y":102,"x":290,"width":170,"skin":"ui/betNumBg.png","height":65},
+            "props":{"y":176,"x":290,"width":170,"skin":"ui/betNumBg.png","height":65},
             "nodeParent":1,
             "label":"Image",
             "isOpen":true,
@@ -55,7 +55,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":92,"x":480,"width":65,"var":"addBtn","stateNum":"1","skin":"ui/addBtn1.png","height":85},
+            "props":{"y":166,"x":480,"width":65,"var":"addBtn","stateNum":"1","skin":"ui/addBtn1.png","height":85},
             "nodeParent":1,
             "label":"Button(addBtn)",
             "isDirectory":false,
@@ -68,7 +68,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":92,"x":205,"width":65,"var":"decreaseBtn","stateNum":"1","skin":"ui/decreaseBtn1.png","height":85},
+            "props":{"y":166,"x":205,"width":65,"var":"decreaseBtn","stateNum":"1","skin":"ui/decreaseBtn1.png","height":85},
             "nodeParent":1,
             "label":"Button(decreaseBtn)",
             "isDirectory":false,
@@ -81,7 +81,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":92,"x":4,"width":157,"var":"maxBtn","stateNum":"1","skin":"ui/maxBtn1.png","height":85},
+            "props":{"y":166,"x":4,"width":157,"var":"maxBtn","stateNum":"1","skin":"ui/maxBtn1.png","height":85},
             "nodeParent":1,
             "label":"Button(maxBtn)",
             "isOpen":true,
@@ -107,17 +107,16 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":92,"x":562,"width":179,"var":"autoDigBtn","stateNum":"1","skin":"ui/btn_autoDig.png","height":85},
+            "props":{"y":209.5,"x":651.5,"width":179,"var":"autoDigBtn","stateNum":"1","skin":"ui/btn_autoDig.png","height":85,"anchorY":0.5,"anchorX":0.5},
             "nodeParent":1,
             "label":"Button(autoDigBtn)",
-            "isOpen":true,
+            "isOpen":false,
             "isDirectory":true,
             "isAniNode":true,
             "hasChild":true,
             "compId":14,
             "child":[
                 {
-                    "x":30,
                     "type":"Image",
                     "props":{"y":24,"x":27,"width":125,"skin":"ui/autoDigWord.png","height":36},
                     "nodeParent":14,
@@ -128,7 +127,158 @@
                     "compId":9,
                     "child":[
                         ]
-                }]
+                }],
+            "$HIDDEN":false
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"y":4,"x":583,"visible":false,"var":"autoDigTimes","skin":"ui/timesBg.png","scaleY":0.57,"scaleX":0.57},
+            "nodeParent":1,
+            "label":"Image(autoDigTimes)",
+            "isOpen":false,
+            "isDirectory":true,
+            "isAniNode":true,
+            "hasChild":true,
+            "compId":17,
+            "child":[
+                {
+                    "type":"Image",
+                    "props":{"y":9,"x":11,"var":"times_100","skin":"ui/timesNumBg.png"},
+                    "nodeParent":17,
+                    "label":"Image(times_100)",
+                    "isOpen":true,
+                    "isDirectory":true,
+                    "isAniNode":true,
+                    "hasChild":true,
+                    "compId":18,
+                    "child":[
+                        {
+                            "type":"Text",
+                            "props":{"y":3,"x":63,"width":91,"text":"100","height":54,"fontSize":38,"font":"Microsoft YaHei","color":"#e8e4e4","align":"center"},
+                            "nodeParent":18,
+                            "label":"Text",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":26,
+                            "child":[
+                                ]
+                        }]
+                },
+                {
+                    "type":"Image",
+                    "props":{"y":77,"x":11,"var":"times_50","skin":"ui/timesNumBg.png"},
+                    "nodeParent":17,
+                    "label":"Image(times_50)",
+                    "isOpen":true,
+                    "isDirectory":true,
+                    "isAniNode":true,
+                    "hasChild":true,
+                    "compId":20,
+                    "child":[
+                        {
+                            "type":"Text",
+                            "props":{"y":3,"x":63,"width":91,"text":"50","height":54,"fontSize":38,"font":"Microsoft YaHei","color":"#e8e4e4","align":"center"},
+                            "nodeParent":20,
+                            "label":"Text",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":25,
+                            "child":[
+                                ]
+                        }]
+                },
+                {
+                    "type":"Image",
+                    "props":{"y":144,"x":11,"var":"times_20","skin":"ui/timesNumBg.png"},
+                    "nodeParent":17,
+                    "label":"Image(times_20)",
+                    "isOpen":true,
+                    "isDirectory":true,
+                    "isAniNode":true,
+                    "hasChild":true,
+                    "compId":21,
+                    "child":[
+                        {
+                            "type":"Text",
+                            "props":{"y":3,"x":63,"width":91,"text":"20","height":54,"fontSize":38,"font":"Microsoft YaHei","color":"#e8e4e4","align":"center"},
+                            "nodeParent":21,
+                            "label":"Text",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":24,
+                            "child":[
+                                ]
+                        }]
+                },
+                {
+                    "type":"Image",
+                    "props":{"y":212,"x":11,"var":"times_10","skin":"ui/timesNumBg.png"},
+                    "nodeParent":17,
+                    "label":"Image(times_10)",
+                    "isOpen":true,
+                    "isDirectory":true,
+                    "isAniNode":true,
+                    "hasChild":true,
+                    "compId":22,
+                    "child":[
+                        {
+                            "type":"Text",
+                            "props":{"y":3,"x":63,"width":91,"text":"10","height":54,"fontSize":38,"font":"Microsoft YaHei","color":"#e8e4e4","align":"center"},
+                            "nodeParent":22,
+                            "label":"Text",
+                            "isDirectory":false,
+                            "isAniNode":true,
+                            "hasChild":false,
+                            "compId":23,
+                            "child":[
+                                ]
+                        }]
+                }],
+            "$HIDDEN":false
+        },
+        {
+            "x":15,
+            "type":"Button",
+            "props":{"y":210,"x":652,"width":179,"visible":false,"var":"stopDigBtn","stateNum":"1","skin":"ui/btn_stopDig.png","height":85,"anchorY":0.5,"anchorX":0.5},
+            "nodeParent":1,
+            "label":"Button(stopDigBtn)",
+            "isOpen":true,
+            "isDirectory":true,
+            "isAniNode":true,
+            "hasChild":true,
+            "compId":27,
+            "child":[
+                {
+                    "x":30,
+                    "type":"Image",
+                    "props":{"y":9,"x":38,"width":102,"skin":"ui/wordStopDig.png","height":39},
+                    "nodeParent":27,
+                    "label":"Image",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":29,
+                    "child":[
+                        ]
+                },
+                {
+                    "x":30,
+                    "type":"Label",
+                    "props":{"y":52,"x":50,"width":78,"var":"surplusWord","text":"还剩余9次","height":20,"fontSize":16,"color":"#e5dcdc","align":"center"},
+                    "nodeParent":27,
+                    "label":"Label(surplusWord)",
+                    "isDirectory":false,
+                    "isAniNode":true,
+                    "hasChild":false,
+                    "compId":30,
+                    "child":[
+                        ]
+                }],
+            "$HIDDEN":false
         }],
     "animations":[
         {

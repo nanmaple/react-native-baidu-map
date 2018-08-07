@@ -65,6 +65,7 @@ class GameViewLogic extends BaseGameViewLogic {
                 this.CheckLoad();
                 break;
             case Enum.ListenViewEnum.ShootDoor:
+                this.GameAniView.Set(true, Enum.GameAniView.DisabledAniView);
                 this.CtrlHandler.runWith([Enum.GameViewHandlerEnum.BetPos, null]); 
                 break;
             case Enum.ListenViewEnum.GameResult:
@@ -144,6 +145,7 @@ class GameViewLogic extends BaseGameViewLogic {
             case Enum.GameViewLogicEnum.BetPosError:
                 this.ShowAlert(0, data);
                 this.GameChipsView.Set(null, Enum.GameChipsView.BetPosError);
+                this.GameAniView.Set(false, Enum.GameAniView.DisabledAniView);
                 break;
             case Enum.GameViewLogicEnum.GetRecord:
                 this.GameRecordView.Set(data, Enum.GameRecordView.GetRecordData);

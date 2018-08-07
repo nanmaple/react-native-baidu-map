@@ -34,6 +34,10 @@ namespace Enum {
         /**
          * 获取记录
          */
-        GetRecord
+        GetRecord,
+        /**
+         * 自动挖矿
+         */
+        AutoBet
     }
 }

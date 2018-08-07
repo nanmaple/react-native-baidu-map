@@ -21,12 +21,6 @@ class MineEffect extends ui.MineEffectUI {
         this.zOrder = 100;
         Laya.stage.addChild(this);
         Laya.timer.frameLoop(1, this, this.BezierMove, [0.002,data])//主控制  0.0003自己调整
-        // Laya.Tween.to(this, { x: this.Pos2[0], y: this.Pos2[1] }, 800, Laya.Ease.expoOut, Laya.Handler.create(this, () => {
-        //     Laya.Tween.to(this, { x: this.Pos3[0], y: this.Pos3[1] }, 800, Laya.Ease.circIn, Laya.Handler.create(this, () => {
-        //         if (data) this.Fly()
-        //         else this.End()
-        //     }))
-        // }))
     }
 
     /**
@@ -37,6 +31,7 @@ class MineEffect extends ui.MineEffectUI {
         Laya.Pool.recover(this.PoolKey, this);
 
     }
+
     /**
      * 得分飞翔动画
      */
@@ -52,6 +47,7 @@ class MineEffect extends ui.MineEffectUI {
         })
         )
     }
+    
     /**
      * 类型：私有方法
      * 通过事件，向上通知
@@ -73,7 +69,7 @@ class MineEffect extends ui.MineEffectUI {
         this.t = arg * this.counts;
         if(this.t>1){
             Laya.timer.clear(this,this.BezierMove)
-            Laya.Tween.to(this, { x: this.Pos3[0], y: this.Pos3[1] }, 1000, Laya.Ease.sineOut, Laya.Handler.create(this, () => {
+            Laya.Tween.to(this, { x: this.Pos3[0], y: this.Pos3[1] }, 800, Laya.Ease.sineOut, Laya.Handler.create(this, () => {
                 if (data) this.ScoreFlyAni();
                 else this.AniEnd()
             }))

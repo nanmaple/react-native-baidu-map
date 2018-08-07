@@ -183,7 +183,7 @@ class MainGameLogic extends BaseGameLogic {
                 break;
             case Enum.GameViewHandlerEnum.BetPos:
                 if (100 <= data.Amount && data.Amount <= this.GetBalance()) {
-                    this.gameView.SetData(Enum.GameViewLogicEnum.BetPos,data.Amount);
+                    this.gameView.SetData(Enum.GameViewLogicEnum.BetPos, data);
                     this.SendBet(data);
                 }
                 else {
@@ -191,8 +191,23 @@ class MainGameLogic extends BaseGameLogic {
                     this.gameView.SetData(Enum.GameViewLogicEnum.GameRefreshBtn, null);
                 };
                 break;
-                case Enum.GameViewHandlerEnum.GetRecord:
+            case Enum.GameViewHandlerEnum.GetRecord:
                 this.GetGameRecord(data);
+                break;
+            case Enum.GameViewHandlerEnum.AutoBet:
+                if (data.digTimes < data.nowTime) {
+                    this.gameView.SetData(Enum.GameViewLogicEnum.AutoBetComplete, null)
+                    return
+                }
+                if (100 <= data.Amount && data.Amount <= this.GetBalance()) {
+                    this.gameView.SetData(Enum.GameViewLogicEnum.BetPos, data);
+                    this.SendBet(data);
+                }
+                else {
+                    this.gameView.SetData(BaseEnum.GameViewLogicEnum.Alert, LanguageUtils.Language.Get("BALANCE_SMALL"))
+                    this.gameView.SetData(Enum.GameViewLogicEnum.AutoBetComplete, null)
+                    this.gameView.SetData(Enum.GameViewLogicEnum.GameRefreshBtn, null);
+                };
                 break;
             default:
                 break;

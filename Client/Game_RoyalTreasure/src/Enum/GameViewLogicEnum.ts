@@ -27,6 +27,10 @@ namespace Enum {
          * 获取记录
          */
         GetRecord,
+        /**
+         * 自动投注结束
+         */
+        AutoBetComplete
 
     }
 }

@@ -7,8 +7,8 @@ class BaseTreasurePanel extends ui.TreasurePanelUI {
     protected listenEventKey: string = "";
     protected digX: number = 0;        //挖掘位置
     protected digY: number = 0;
-    protected mineX: number = 0;       //动画中出现宝藏位置
-    protected mineY: number = 0;
+    protected mineX: number = 410;       //动画中出现宝藏位置（默认）
+    protected mineY: number = 380;
     protected mineOdds: any = new Array();         //矿石赔率数组
     private starPos: any = [[50, 288, 700], [213, 238, 1000], [423, 38, 1200], [666, 255, 1400], [350, 371, 2100]];
     constructor(eventKey: string) {
@@ -22,9 +22,9 @@ class BaseTreasurePanel extends ui.TreasurePanelUI {
     public ResetScreen() {
         Laya.stage.removeChild(this.ui);
         this.ui = new ui.TreasurePanelUI();
-        this.ui.zOrder = 4;
+        this.ui.zOrder = 3;
         this.ui.cacheAs = "bitmap";
-        this.ui.y = 264;
+        this.ui.y = 307;
         Laya.stage.addChild(this.ui);
         this.ui.mineImg.on(Laya.Event.MOUSE_DOWN, this, this.EventNotification);
         this.ui.mineImg.mouseEnabled = false;

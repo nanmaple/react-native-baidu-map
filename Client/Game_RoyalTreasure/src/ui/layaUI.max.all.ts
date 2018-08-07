@@ -28,11 +28,19 @@ module ui {
 		public decreaseBtn:Laya.Button;
 		public maxBtn:Laya.Button;
 		public autoDigBtn:Laya.Button;
+		public autoDigTimes:Laya.Image;
+		public times_100:Laya.Image;
+		public times_50:Laya.Image;
+		public times_20:Laya.Image;
+		public times_10:Laya.Image;
+		public stopDigBtn:Laya.Button;
+		public surplusWord:Laya.Label;
 
-        public static  uiView:any ={"type":"View","props":{"width":750,"height":200},"child":[{"type":"Image","props":{"y":6,"x":-22,"width":793,"skin":"ui/footer.png"}},{"type":"Image","props":{"y":102,"x":290,"width":170,"skin":"ui/betNumBg.png","height":65},"child":[{"type":"Label","props":{"y":12,"x":10,"width":150,"var":"betNum","text":"100","height":41,"fontSize":34,"color":"#ffffff","align":"center"}}]},{"type":"Button","props":{"y":92,"x":480,"width":65,"var":"addBtn","stateNum":1,"skin":"ui/addBtn1.png","height":85}},{"type":"Button","props":{"y":92,"x":205,"width":65,"var":"decreaseBtn","stateNum":1,"skin":"ui/decreaseBtn1.png","height":85}},{"type":"Button","props":{"y":92,"x":4,"width":157,"var":"maxBtn","stateNum":1,"skin":"ui/maxBtn1.png","height":85},"child":[{"type":"Label","props":{"y":13,"x":0,"width":158,"text":"最大","height":58,"fontSize":40,"font":"Microsoft YaHei","color":"#703e3e","bold":true,"align":"center"}}]},{"type":"Button","props":{"y":92,"x":562,"width":179,"var":"autoDigBtn","stateNum":1,"skin":"ui/btn_autoDig.png","height":85},"child":[{"type":"Image","props":{"y":24,"x":27,"width":125,"skin":"ui/autoDigWord.png","height":36}}]}]};
+        public static  uiView:any ={"type":"View","props":{"width":750,"height":273},"child":[{"type":"Image","props":{"y":80,"x":-22,"width":793,"skin":"ui/footer.png"}},{"type":"Image","props":{"y":176,"x":290,"width":170,"skin":"ui/betNumBg.png","height":65},"child":[{"type":"Label","props":{"y":12,"x":10,"width":150,"var":"betNum","text":"100","height":41,"fontSize":34,"color":"#ffffff","align":"center"}}]},{"type":"Button","props":{"y":166,"x":480,"width":65,"var":"addBtn","stateNum":1,"skin":"ui/addBtn1.png","height":85}},{"type":"Button","props":{"y":166,"x":205,"width":65,"var":"decreaseBtn","stateNum":1,"skin":"ui/decreaseBtn1.png","height":85}},{"type":"Button","props":{"y":166,"x":4,"width":157,"var":"maxBtn","stateNum":1,"skin":"ui/maxBtn1.png","height":85},"child":[{"type":"Label","props":{"y":13,"x":0,"width":158,"text":"最大","height":58,"fontSize":40,"font":"Microsoft YaHei","color":"#703e3e","bold":true,"align":"center"}}]},{"type":"Button","props":{"y":209.5,"x":651.5,"width":179,"var":"autoDigBtn","stateNum":1,"skin":"ui/btn_autoDig.png","height":85,"anchorY":0.5,"anchorX":0.5},"child":[{"type":"Image","props":{"y":24,"x":27,"width":125,"skin":"ui/autoDigWord.png","height":36}}]},{"type":"Image","props":{"y":4,"x":583,"visible":false,"var":"autoDigTimes","skin":"ui/timesBg.png","scaleY":0.57,"scaleX":0.57},"child":[{"type":"Image","props":{"y":9,"x":11,"var":"times_100","skin":"ui/timesNumBg.png"},"child":[{"type":"Text","props":{"y":3,"x":63,"width":91,"text":"100","height":54,"fontSize":38,"font":"Microsoft YaHei","color":"#e8e4e4","align":"center"}}]},{"type":"Image","props":{"y":77,"x":11,"var":"times_50","skin":"ui/timesNumBg.png"},"child":[{"type":"Text","props":{"y":3,"x":63,"width":91,"text":"50","height":54,"fontSize":38,"font":"Microsoft YaHei","color":"#e8e4e4","align":"center"}}]},{"type":"Image","props":{"y":144,"x":11,"var":"times_20","skin":"ui/timesNumBg.png"},"child":[{"type":"Text","props":{"y":3,"x":63,"width":91,"text":"20","height":54,"fontSize":38,"font":"Microsoft YaHei","color":"#e8e4e4","align":"center"}}]},{"type":"Image","props":{"y":212,"x":11,"var":"times_10","skin":"ui/timesNumBg.png"},"child":[{"type":"Text","props":{"y":3,"x":63,"width":91,"text":"10","height":54,"fontSize":38,"font":"Microsoft YaHei","color":"#e8e4e4","align":"center"}}]}]},{"type":"Button","props":{"y":210,"x":652,"width":179,"visible":false,"var":"stopDigBtn","stateNum":1,"skin":"ui/btn_stopDig.png","height":85,"anchorY":0.5,"anchorX":0.5},"child":[{"type":"Image","props":{"y":9,"x":38,"width":102,"skin":"ui/wordStopDig.png","height":39}},{"type":"Label","props":{"y":52,"x":50,"width":78,"var":"surplusWord","text":"还剩余9次","height":20,"fontSize":16,"color":"#e5dcdc","align":"center"}}]}]};
         constructor(){ super()}
         createChildren():void {
-        
+        			View.regComponent("Text",laya.display.Text);
+
             super.createChildren();
             this.createView(ui.FootPanelUI.uiView);
 
@@ -193,7 +201,7 @@ module ui {
 		public mineImg:Laya.Image;
 		public car:Laya.Image;
 
-        public static  uiView:any ={"type":"View","props":{"width":750,"height":866},"child":[{"type":"Image","props":{"y":0,"x":0,"width":750,"var":"mineImg","skin":"ui/Mine.png","height":866}},{"type":"Image","props":{"y":577,"x":41,"var":"car","skin":"ui/car.png"}}]};
+        public static  uiView:any ={"type":"View","props":{"width":750,"height":755},"child":[{"type":"Image","props":{"y":0,"x":0,"width":750,"var":"mineImg","skin":"ui/Mine.png","height":755}},{"type":"Image","props":{"y":577,"x":41,"var":"car","skin":"ui/car.png"}}]};
         constructor(){ super()}
         createChildren():void {
         

@@ -23,7 +23,7 @@ class GameScrapeView extends BaseGameScrapeView implements IView {
      * 一般用于，当数据改变后，渲染需要延迟进行的情况
      */
     public Refresh(): void {
-
+        
     }
 
     /**
